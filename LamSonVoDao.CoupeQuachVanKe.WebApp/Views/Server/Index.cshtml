@@ -1,2 +1,16 @@
 ﻿
 <h1>Server</h1>
+
+<ul id="serverMenu" />
+
+
+<script>
+    var menuSource = [{ text: '<a href="/Medecin">Gestion des Médecins</a>', encoded: false }, { text: '<a href="/Aires">Gestion des Aires</a>', encoded: false }];
+
+    $(document).ready(function (e) {
+        $("#serverMenu").kendoMenu({
+            dataSource: menuSource
+        });
+    });
+
+</script>
