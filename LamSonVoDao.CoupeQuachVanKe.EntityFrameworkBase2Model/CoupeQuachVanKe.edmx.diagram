@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="60761735ac2840e5bf7a5556e1cc1c37" Name="Diagram1" ZoomLevel="95">
+        <EntityTypeShape EntityType="CoupeQuachVanKeContextModel.Aire" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQuachVanKeContextModel.CategoriePoid" Width="1.5" PointX="8.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQuachVanKeContextModel.Club" Width="1.5" PointX="3.75" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQuachVanKeContextModel.Competiteur" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQuachVanKeContextModel.Coupe" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQuachVanKeContextModel.Disponibilite" Width="1.5" PointX="8.25" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQuachVanKeContextModel.Encadrant" Width="1.5" PointX="6" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQuachVanKeContextModel.Epreuve" Width="2" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQuachVanKeContextModel.Medecin" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQuachVanKeContextModel.ResponsablesClub" Width="1.5" PointX="6" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQuachVanKeContextModel.ResponsablesCoupe" Width="1.5" PointX="3" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQuachVanKeContextModel.Resultat" Width="1.5" PointX="10.5" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_Aires_dbo_Coupes_CoupeId" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_Epreuves_dbo_Aires_Aire_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_CategoriePoids_dbo_Epreuves_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_Competiteurs_dbo_Clubs_ClubId" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_Encadrants_dbo_Clubs_ClubId" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_ResponsablesClub_dbo_Clubs_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_Resultats_dbo_Competiteurs_CompetiteurId" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_Encadrants_dbo_Coupes_Coupe_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_Medecins_dbo_Coupes_CoupeId" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_ResponsablesCoupe_dbo_Coupes_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_Disponibilites_dbo_Encadrants_EncadrantId" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_Resultats_dbo_Epreuves_Epreuve_Id1" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.FK_dbo_Resultats_dbo_Epreuves_EpreuveId" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.EncadrantEpreuve" ManuallyRouted="false" />
+        <AssociationConnector Association="CoupeQuachVanKeContextModel.EpreuveCompetiteurs" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

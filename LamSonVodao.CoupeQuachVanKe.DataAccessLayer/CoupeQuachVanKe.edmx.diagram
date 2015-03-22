@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="444ec3ae899d48229d7928e6323a2478" Name="Diagram1" ZoomLevel="97">
+        <EntityTypeShape EntityType="FGF_QVKModel.Aire" Width="1.5" PointX="7.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FGF_QVKModel.CategoriePoid" Width="1.5" PointX="12" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FGF_QVKModel.Club" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="FGF_QVKModel.Competiteur" Width="1.5" PointX="7.5" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FGF_QVKModel.Coupe" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FGF_QVKModel.Disponibilite" Width="1.5" PointX="12.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FGF_QVKModel.Encadrant" Width="1.5" PointX="10.5" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FGF_QVKModel.Epreuve" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FGF_QVKModel.Medecin" Width="1.5" PointX="7.5" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FGF_QVKModel.Responsable" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FGF_QVKModel.ResponsablesClub" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="FGF_QVKModel.Resultat" Width="1.5" PointX="12" PointY="7.375" IsExpanded="true" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Aires_dbo_Coupes_CoupeId" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Epreuves_dbo_Aires_Aire_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_CategoriePoids_dbo_Epreuves_CategoriePoidsId" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Clubs_dbo_ResponsablesClub_ResponsableClubId" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Competiteurs_dbo_Clubs_Club_Id1" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Competiteurs_dbo_Clubs_ClubId" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Encadrants_dbo_Clubs_Club_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Encadrants_dbo_Clubs_ClubId" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_ResponsablesClub_dbo_Clubs_ClubId" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Resultats_dbo_Competiteurs_CompetiteurId" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Coupes_dbo_ResponsablesClub_Responsable_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Encadrants_dbo_Coupes_Coupe_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Medecins_dbo_Coupes_CoupeId" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_ResponsablesClub_dbo_Coupes_CoupeId" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Disponibilites_dbo_Encadrants_EncadrantId" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Resultats_dbo_Epreuves_Epreuve_Id1" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_Resultats_dbo_Epreuves_EpreuveId" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.FK_dbo_ResponsablesClub_dbo_Responsables_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.CompetiteurEpreuve" ManuallyRouted="false" />
+        <AssociationConnector Association="FGF_QVKModel.EncadrantEpreuve" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

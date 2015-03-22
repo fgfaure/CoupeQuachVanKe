@@ -1,0 +1,138 @@
+﻿<h1>
+    Saisie des informations des compétiteurs et validation des inscriptions
+</h1>
+
+<div id="competiteursGrid"></div>
+<script>
+    $(document).ready(function (e) {
+        var competiteurDatasource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "GetCompetiteurs",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                update: {
+                    url: "UpdateCompetiteur",
+                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                destroy: {
+                    url: "DeleteCompetiteur",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                create: {
+                    url: "CreateCompetiteur",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        Nom: {
+                            //set validation rules
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        Prenom: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        Sexe: {
+                            type: "number",
+                            validation: { required: true }
+                        },
+                        Poids: {
+                            type: "number"
+                        },
+                        DateNaissance: {
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        InscriptionValidePourCoupe: {
+                            type: "boolean",
+                            validation: { required: true }
+                        },
+                        ClubId: {
+                            field: "ClubId",
+                            type: "number",
+                            defaultValue: 1
+                        },
+                        Categorie: {
+                            type: "number",
+                            validation: { required: true }
+                        },
+                        LicenceFFKDA: {
+                            type: "string",
+                            validation: { required: true }
+                        }
+                    }
+                }
+            }
+        });
+        var clubs = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "GetCompetiteurs",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                }
+            },
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        Nom: {
+                            //set validation rules
+                            type: "string",
+                            editable : false
+                        }
+                    }
+                }
+            }
+        });
+
+        $("#competiteursGrid").kendoGrid({
+            dataSource: competiteurDatasource,
+            pageable: false,
+            autosync : true,
+            height: 800,
+            toolbar: false,
+            columns: [
+                { field: "Nom", title: "Nom" },
+                { field: "Prenom", title: "Prénom" },
+                { field: "ClubId", title: "Club", values : clubs },
+                { field: "Sexe", title: "Sexe" },
+                { field: "DateNaissance", title: "Date de Naissance" },
+                { field: "Poids", title: "Poids" },
+                { field: "InscriptionValidePourCoupe", title: "Inscription validée" },
+                { field: "Categorie", title: "Catégorie" },
+                { field: "LicenceFFKDA", title: "N° Licence" },
+                { command: ["edit", "destroy"], title: "&nbsp;", width: "250px" }],
+            editable: "popup"
+        });
+    });
+
+</script>

@@ -1,0 +1,1305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FGF_QVKModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aires">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CoupeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CategoriePoids">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ValeurBasse" Type="real" Nullable="false" />
+          <Property Name="ValeurHaute" Type="real" Nullable="false" />
+          <Property Name="CategoriePoidsId" Type="int" />
+        </EntityType>
+        <EntityType Name="Clubs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="NumeroAffiliation" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ResponsableClubId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompetiteurEpreuve">
+          <Key>
+            <PropertyRef Name="CompetiteurId" />
+            <PropertyRef Name="EpreuveId" />
+          </Key>
+          <Property Name="CompetiteurId" Type="int" Nullable="false" />
+          <Property Name="EpreuveId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Competiteurs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Prenom" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Grade" Type="int" Nullable="false" />
+          <Property Name="Categorie" Type="int" Nullable="false" />
+          <Property Name="DateNaissance" Type="smalldatetime" Nullable="false" />
+          <Property Name="Sexe" Type="int" Nullable="false" />
+          <Property Name="LicenceFFKDA" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="AnneePratique" Type="int" Nullable="false" />
+          <Property Name="Poids" Type="int" />
+          <Property Name="InscriptionValidee" Type="bit" />
+          <Property Name="ClubId" Type="int" Nullable="false" />
+          <Property Name="Club_Id1" Type="int" />
+        </EntityType>
+        <EntityType Name="Coupes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="NombreTapis" Type="int" Nullable="false" />
+          <Property Name="Voie" Type="nvarchar" MaxLength="255" />
+          <Property Name="Numero" Type="int" />
+          <Property Name="Complement" Type="nvarchar" MaxLength="255" />
+          <Property Name="CodePostal" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="Ville" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DateDebut" Type="datetime" Nullable="false" />
+          <Property Name="DateFin" Type="datetime" Nullable="false" />
+          <Property Name="Responsable_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Disponibilites">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Matin" Type="bit" Nullable="false" />
+          <Property Name="EncadrantId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EncadrantEpreuve">
+          <Key>
+            <PropertyRef Name="EncadrantId" />
+            <PropertyRef Name="EpreuveId" />
+          </Key>
+          <Property Name="EncadrantId" Type="int" Nullable="false" />
+          <Property Name="EpreuveId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Encadrants">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Prenom" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="MailContact" Type="nvarchar" MaxLength="255" />
+          <Property Name="TailleTenue" Type="int" Nullable="false" />
+          <Property Name="EstCompetiteur" Type="bit" />
+          <Property Name="Sexe" Type="int" Nullable="false" />
+          <Property Name="Club_Id" Type="int" />
+          <Property Name="ClubId" Type="int" Nullable="false" />
+          <Property Name="Coupe_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Epreuves">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Statut" Type="int" Nullable="false" />
+          <Property Name="TypeEpreuve" Type="int" Nullable="false" />
+          <Property Name="Categorie" Type="int" Nullable="false" />
+          <Property Name="GenreCategorie" Type="int" Nullable="false" />
+          <Property Name="GradeAutorise" Type="int" Nullable="false" />
+          <Property Name="PoidsMini" Type="real" Nullable="false" />
+          <Property Name="PoidsMaxi" Type="real" Nullable="false" />
+          <Property Name="Aire_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Medecins">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Prenom" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Telephone" Type="nvarchar(max)" />
+          <Property Name="MailContact" Type="nvarchar" MaxLength="255" />
+          <Property Name="CoupeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Responsables">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Prenom" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Adresse" Type="nvarchar" MaxLength="255" />
+          <Property Name="Telephone" Type="nchar" MaxLength="14" />
+          <Property Name="EmailContact" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ResponsablesClub">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ClubId" Type="int" />
+          <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CoupeId" Type="int" />
+        </EntityType>
+        <EntityType Name="Resultats">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Classement" Type="int" Nullable="false" />
+          <Property Name="Score" Type="int" Nullable="false" />
+          <Property Name="Abandon" Type="bit" Nullable="false" />
+          <Property Name="Blessure" Type="bit" Nullable="false" />
+          <Property Name="Disqualification" Type="bit" Nullable="false" />
+          <Property Name="Absence" Type="bit" Nullable="false" />
+          <Property Name="Renvoi" Type="bit" Nullable="false" />
+          <Property Name="CompetiteurId" Type="int" Nullable="false" />
+          <Property Name="EpreuveId" Type="int" Nullable="false" />
+          <Property Name="Epreuve_Id1" Type="int" />
+        </EntityType>
+        <Association Name="FK_dbo_Aires_dbo_Coupes_CoupeId">
+          <End Role="Coupes" Type="Self.Coupes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Aires" Type="Self.Aires" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coupes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Aires">
+              <PropertyRef Name="CoupeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CategoriePoids_dbo_Epreuves_CategoriePoidsId">
+          <End Role="Epreuves" Type="Self.Epreuves" Multiplicity="0..1" />
+          <End Role="CategoriePoids" Type="Self.CategoriePoids" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Epreuves">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoriePoids">
+              <PropertyRef Name="CategoriePoidsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Clubs_dbo_ResponsablesClub_ResponsableClubId">
+          <End Role="ResponsablesClub" Type="Self.ResponsablesClub" Multiplicity="1" />
+          <End Role="Clubs" Type="Self.Clubs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResponsablesClub">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clubs">
+              <PropertyRef Name="ResponsableClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CompetiteurEpreuve_dbo_Competiteurs_EpreuveId">
+          <End Role="Competiteurs" Type="Self.Competiteurs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CompetiteurEpreuve" Type="Self.CompetiteurEpreuve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competiteurs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompetiteurEpreuve">
+              <PropertyRef Name="EpreuveId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CompetiteurEpreuve_dbo_Epreuves_CompetiteurId">
+          <End Role="Epreuves" Type="Self.Epreuves" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CompetiteurEpreuve" Type="Self.CompetiteurEpreuve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Epreuves">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompetiteurEpreuve">
+              <PropertyRef Name="CompetiteurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Competiteurs_dbo_Clubs_Club_Id1">
+          <End Role="Clubs" Type="Self.Clubs" Multiplicity="0..1" />
+          <End Role="Competiteurs" Type="Self.Competiteurs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clubs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Competiteurs">
+              <PropertyRef Name="Club_Id1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Competiteurs_dbo_Clubs_ClubId">
+          <End Role="Clubs" Type="Self.Clubs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Competiteurs" Type="Self.Competiteurs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clubs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Competiteurs">
+              <PropertyRef Name="ClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Coupes_dbo_ResponsablesClub_Responsable_Id">
+          <End Role="ResponsablesClub" Type="Self.ResponsablesClub" Multiplicity="0..1" />
+          <End Role="Coupes" Type="Self.Coupes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResponsablesClub">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Coupes">
+              <PropertyRef Name="Responsable_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Disponibilites_dbo_Encadrants_EncadrantId">
+          <End Role="Encadrants" Type="Self.Encadrants" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Disponibilites" Type="Self.Disponibilites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encadrants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Disponibilites">
+              <PropertyRef Name="EncadrantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_EncadrantEpreuve_dbo_Encadrants_EpreuveId">
+          <End Role="Encadrants" Type="Self.Encadrants" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EncadrantEpreuve" Type="Self.EncadrantEpreuve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encadrants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EncadrantEpreuve">
+              <PropertyRef Name="EpreuveId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_EncadrantEpreuve_dbo_Epreuves_EncadrantId">
+          <End Role="Epreuves" Type="Self.Epreuves" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EncadrantEpreuve" Type="Self.EncadrantEpreuve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Epreuves">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EncadrantEpreuve">
+              <PropertyRef Name="EncadrantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Encadrants_dbo_Clubs_Club_Id">
+          <End Role="Clubs" Type="Self.Clubs" Multiplicity="0..1" />
+          <End Role="Encadrants" Type="Self.Encadrants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clubs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Encadrants">
+              <PropertyRef Name="Club_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Encadrants_dbo_Clubs_ClubId">
+          <End Role="Clubs" Type="Self.Clubs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Encadrants" Type="Self.Encadrants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clubs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Encadrants">
+              <PropertyRef Name="ClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Encadrants_dbo_Coupes_Coupe_Id">
+          <End Role="Coupes" Type="Self.Coupes" Multiplicity="0..1" />
+          <End Role="Encadrants" Type="Self.Encadrants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coupes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Encadrants">
+              <PropertyRef Name="Coupe_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Epreuves_dbo_Aires_Aire_Id">
+          <End Role="Aires" Type="Self.Aires" Multiplicity="0..1" />
+          <End Role="Epreuves" Type="Self.Epreuves" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aires">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Epreuves">
+              <PropertyRef Name="Aire_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Medecins_dbo_Coupes_CoupeId">
+          <End Role="Coupes" Type="Self.Coupes" Multiplicity="1" />
+          <End Role="Medecins" Type="Self.Medecins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coupes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Medecins">
+              <PropertyRef Name="CoupeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ResponsablesClub_dbo_Clubs_ClubId">
+          <End Role="Clubs" Type="Self.Clubs" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ResponsablesClub" Type="Self.ResponsablesClub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clubs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResponsablesClub">
+              <PropertyRef Name="ClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ResponsablesClub_dbo_Coupes_CoupeId">
+          <End Role="Coupes" Type="Self.Coupes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ResponsablesClub" Type="Self.ResponsablesClub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coupes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResponsablesClub">
+              <PropertyRef Name="CoupeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ResponsablesClub_dbo_Responsables_Id">
+          <End Role="Responsables" Type="Self.Responsables" Multiplicity="1" />
+          <End Role="ResponsablesClub" Type="Self.ResponsablesClub" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Responsables">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResponsablesClub">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Resultats_dbo_Competiteurs_CompetiteurId">
+          <End Role="Competiteurs" Type="Self.Competiteurs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Resultats" Type="Self.Resultats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competiteurs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Resultats">
+              <PropertyRef Name="CompetiteurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Resultats_dbo_Epreuves_Epreuve_Id1">
+          <End Role="Epreuves" Type="Self.Epreuves" Multiplicity="0..1" />
+          <End Role="Resultats" Type="Self.Resultats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Epreuves">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Resultats">
+              <PropertyRef Name="Epreuve_Id1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Resultats_dbo_Epreuves_EpreuveId">
+          <End Role="Epreuves" Type="Self.Epreuves" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Resultats" Type="Self.Resultats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Epreuves">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Resultats">
+              <PropertyRef Name="EpreuveId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FGF_QVKModelStoreContainer">
+          <EntitySet Name="Aires" EntityType="Self.Aires" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoriePoids" EntityType="Self.CategoriePoids" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clubs" EntityType="Self.Clubs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompetiteurEpreuve" EntityType="Self.CompetiteurEpreuve" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Competiteurs" EntityType="Self.Competiteurs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Coupes" EntityType="Self.Coupes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Disponibilites" EntityType="Self.Disponibilites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EncadrantEpreuve" EntityType="Self.EncadrantEpreuve" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Encadrants" EntityType="Self.Encadrants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Epreuves" EntityType="Self.Epreuves" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Medecins" EntityType="Self.Medecins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Responsables" EntityType="Self.Responsables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResponsablesClub" EntityType="Self.ResponsablesClub" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resultats" EntityType="Self.Resultats" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Aires_dbo_Coupes_CoupeId" Association="Self.FK_dbo_Aires_dbo_Coupes_CoupeId">
+            <End Role="Coupes" EntitySet="Coupes" />
+            <End Role="Aires" EntitySet="Aires" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CategoriePoids_dbo_Epreuves_CategoriePoidsId" Association="Self.FK_dbo_CategoriePoids_dbo_Epreuves_CategoriePoidsId">
+            <End Role="Epreuves" EntitySet="Epreuves" />
+            <End Role="CategoriePoids" EntitySet="CategoriePoids" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Clubs_dbo_ResponsablesClub_ResponsableClubId" Association="Self.FK_dbo_Clubs_dbo_ResponsablesClub_ResponsableClubId">
+            <End Role="ResponsablesClub" EntitySet="ResponsablesClub" />
+            <End Role="Clubs" EntitySet="Clubs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CompetiteurEpreuve_dbo_Competiteurs_EpreuveId" Association="Self.FK_dbo_CompetiteurEpreuve_dbo_Competiteurs_EpreuveId">
+            <End Role="Competiteurs" EntitySet="Competiteurs" />
+            <End Role="CompetiteurEpreuve" EntitySet="CompetiteurEpreuve" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CompetiteurEpreuve_dbo_Epreuves_CompetiteurId" Association="Self.FK_dbo_CompetiteurEpreuve_dbo_Epreuves_CompetiteurId">
+            <End Role="Epreuves" EntitySet="Epreuves" />
+            <End Role="CompetiteurEpreuve" EntitySet="CompetiteurEpreuve" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Competiteurs_dbo_Clubs_Club_Id1" Association="Self.FK_dbo_Competiteurs_dbo_Clubs_Club_Id1">
+            <End Role="Clubs" EntitySet="Clubs" />
+            <End Role="Competiteurs" EntitySet="Competiteurs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Competiteurs_dbo_Clubs_ClubId" Association="Self.FK_dbo_Competiteurs_dbo_Clubs_ClubId">
+            <End Role="Clubs" EntitySet="Clubs" />
+            <End Role="Competiteurs" EntitySet="Competiteurs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Coupes_dbo_ResponsablesClub_Responsable_Id" Association="Self.FK_dbo_Coupes_dbo_ResponsablesClub_Responsable_Id">
+            <End Role="ResponsablesClub" EntitySet="ResponsablesClub" />
+            <End Role="Coupes" EntitySet="Coupes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Disponibilites_dbo_Encadrants_EncadrantId" Association="Self.FK_dbo_Disponibilites_dbo_Encadrants_EncadrantId">
+            <End Role="Encadrants" EntitySet="Encadrants" />
+            <End Role="Disponibilites" EntitySet="Disponibilites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_EncadrantEpreuve_dbo_Encadrants_EpreuveId" Association="Self.FK_dbo_EncadrantEpreuve_dbo_Encadrants_EpreuveId">
+            <End Role="Encadrants" EntitySet="Encadrants" />
+            <End Role="EncadrantEpreuve" EntitySet="EncadrantEpreuve" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_EncadrantEpreuve_dbo_Epreuves_EncadrantId" Association="Self.FK_dbo_EncadrantEpreuve_dbo_Epreuves_EncadrantId">
+            <End Role="Epreuves" EntitySet="Epreuves" />
+            <End Role="EncadrantEpreuve" EntitySet="EncadrantEpreuve" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Encadrants_dbo_Clubs_Club_Id" Association="Self.FK_dbo_Encadrants_dbo_Clubs_Club_Id">
+            <End Role="Clubs" EntitySet="Clubs" />
+            <End Role="Encadrants" EntitySet="Encadrants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Encadrants_dbo_Clubs_ClubId" Association="Self.FK_dbo_Encadrants_dbo_Clubs_ClubId">
+            <End Role="Clubs" EntitySet="Clubs" />
+            <End Role="Encadrants" EntitySet="Encadrants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Encadrants_dbo_Coupes_Coupe_Id" Association="Self.FK_dbo_Encadrants_dbo_Coupes_Coupe_Id">
+            <End Role="Coupes" EntitySet="Coupes" />
+            <End Role="Encadrants" EntitySet="Encadrants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Epreuves_dbo_Aires_Aire_Id" Association="Self.FK_dbo_Epreuves_dbo_Aires_Aire_Id">
+            <End Role="Aires" EntitySet="Aires" />
+            <End Role="Epreuves" EntitySet="Epreuves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Medecins_dbo_Coupes_CoupeId" Association="Self.FK_dbo_Medecins_dbo_Coupes_CoupeId">
+            <End Role="Coupes" EntitySet="Coupes" />
+            <End Role="Medecins" EntitySet="Medecins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ResponsablesClub_dbo_Clubs_ClubId" Association="Self.FK_dbo_ResponsablesClub_dbo_Clubs_ClubId">
+            <End Role="Clubs" EntitySet="Clubs" />
+            <End Role="ResponsablesClub" EntitySet="ResponsablesClub" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ResponsablesClub_dbo_Coupes_CoupeId" Association="Self.FK_dbo_ResponsablesClub_dbo_Coupes_CoupeId">
+            <End Role="Coupes" EntitySet="Coupes" />
+            <End Role="ResponsablesClub" EntitySet="ResponsablesClub" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ResponsablesClub_dbo_Responsables_Id" Association="Self.FK_dbo_ResponsablesClub_dbo_Responsables_Id">
+            <End Role="Responsables" EntitySet="Responsables" />
+            <End Role="ResponsablesClub" EntitySet="ResponsablesClub" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Resultats_dbo_Competiteurs_CompetiteurId" Association="Self.FK_dbo_Resultats_dbo_Competiteurs_CompetiteurId">
+            <End Role="Competiteurs" EntitySet="Competiteurs" />
+            <End Role="Resultats" EntitySet="Resultats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Resultats_dbo_Epreuves_Epreuve_Id1" Association="Self.FK_dbo_Resultats_dbo_Epreuves_Epreuve_Id1">
+            <End Role="Epreuves" EntitySet="Epreuves" />
+            <End Role="Resultats" EntitySet="Resultats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Resultats_dbo_Epreuves_EpreuveId" Association="Self.FK_dbo_Resultats_dbo_Epreuves_EpreuveId">
+            <End Role="Epreuves" EntitySet="Epreuves" />
+            <End Role="Resultats" EntitySet="Resultats" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FGF_QVKModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Aire">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CoupeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Coupe" Relationship="Self.FK_dbo_Aires_dbo_Coupes_CoupeId" FromRole="Aires" ToRole="Coupes" />
+          <NavigationProperty Name="Epreuves" Relationship="Self.FK_dbo_Epreuves_dbo_Aires_Aire_Id" FromRole="Aires" ToRole="Epreuves" />
+        </EntityType>
+        <EntityType Name="CategoriePoid">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ValeurBasse" Type="Single" Nullable="false" />
+          <Property Name="ValeurHaute" Type="Single" Nullable="false" />
+          <Property Name="CategoriePoidsId" Type="Int32" />
+          <NavigationProperty Name="Epreuve" Relationship="Self.FK_dbo_CategoriePoids_dbo_Epreuves_CategoriePoidsId" FromRole="CategoriePoids" ToRole="Epreuves" />
+        </EntityType>
+        <EntityType Name="Club">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumeroAffiliation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ResponsableClubId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ResponsablesClub" Relationship="Self.FK_dbo_Clubs_dbo_ResponsablesClub_ResponsableClubId" FromRole="Clubs" ToRole="ResponsablesClub" />
+          <NavigationProperty Name="Competiteurs" Relationship="Self.FK_dbo_Competiteurs_dbo_Clubs_Club_Id1" FromRole="Clubs" ToRole="Competiteurs" />
+          <NavigationProperty Name="Competiteurs1" Relationship="Self.FK_dbo_Competiteurs_dbo_Clubs_ClubId" FromRole="Clubs" ToRole="Competiteurs" />
+          <NavigationProperty Name="Encadrants" Relationship="Self.FK_dbo_Encadrants_dbo_Clubs_Club_Id" FromRole="Clubs" ToRole="Encadrants" />
+          <NavigationProperty Name="Encadrants1" Relationship="Self.FK_dbo_Encadrants_dbo_Clubs_ClubId" FromRole="Clubs" ToRole="Encadrants" />
+          <NavigationProperty Name="ResponsablesClubs" Relationship="Self.FK_dbo_ResponsablesClub_dbo_Clubs_ClubId" FromRole="Clubs" ToRole="ResponsablesClub" />
+        </EntityType>
+        <EntityType Name="Competiteur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Prenom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Grade" Type="Int32" Nullable="false" />
+          <Property Name="Categorie" Type="Int32" Nullable="false" />
+          <Property Name="DateNaissance" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Sexe" Type="Int32" Nullable="false" />
+          <Property Name="LicenceFFKDA" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AnneePratique" Type="Int32" Nullable="false" />
+          <Property Name="Poids" Type="Int32" />
+          <Property Name="InscriptionValidee" Type="Boolean" />
+          <Property Name="ClubId" Type="Int32" Nullable="false" />
+          <Property Name="Club_Id1" Type="Int32" />
+          <NavigationProperty Name="Club" Relationship="Self.FK_dbo_Competiteurs_dbo_Clubs_Club_Id1" FromRole="Competiteurs" ToRole="Clubs" />
+          <NavigationProperty Name="Club1" Relationship="Self.FK_dbo_Competiteurs_dbo_Clubs_ClubId" FromRole="Competiteurs" ToRole="Clubs" />
+          <NavigationProperty Name="Resultats" Relationship="Self.FK_dbo_Resultats_dbo_Competiteurs_CompetiteurId" FromRole="Competiteurs" ToRole="Resultats" />
+          <NavigationProperty Name="Epreuves" Relationship="Self.CompetiteurEpreuve" FromRole="Competiteurs" ToRole="Epreuves" />
+        </EntityType>
+        <EntityType Name="Coupe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NombreTapis" Type="Int32" Nullable="false" />
+          <Property Name="Voie" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Numero" Type="Int32" />
+          <Property Name="Complement" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CodePostal" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Ville" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateDebut" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateFin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Responsable_Id" Type="Int32" />
+          <NavigationProperty Name="Aires" Relationship="Self.FK_dbo_Aires_dbo_Coupes_CoupeId" FromRole="Coupes" ToRole="Aires" />
+          <NavigationProperty Name="ResponsablesClub" Relationship="Self.FK_dbo_Coupes_dbo_ResponsablesClub_Responsable_Id" FromRole="Coupes" ToRole="ResponsablesClub" />
+          <NavigationProperty Name="Encadrants" Relationship="Self.FK_dbo_Encadrants_dbo_Coupes_Coupe_Id" FromRole="Coupes" ToRole="Encadrants" />
+          <NavigationProperty Name="Medecins" Relationship="Self.FK_dbo_Medecins_dbo_Coupes_CoupeId" FromRole="Coupes" ToRole="Medecins" />
+          <NavigationProperty Name="ResponsablesClubs" Relationship="Self.FK_dbo_ResponsablesClub_dbo_Coupes_CoupeId" FromRole="Coupes" ToRole="ResponsablesClub" />
+        </EntityType>
+        <EntityType Name="Disponibilite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Matin" Type="Boolean" Nullable="false" />
+          <Property Name="EncadrantId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Encadrant" Relationship="Self.FK_dbo_Disponibilites_dbo_Encadrants_EncadrantId" FromRole="Disponibilites" ToRole="Encadrants" />
+        </EntityType>
+        <EntityType Name="Encadrant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Prenom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MailContact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TailleTenue" Type="Int32" Nullable="false" />
+          <Property Name="EstCompetiteur" Type="Boolean" />
+          <Property Name="Sexe" Type="Int32" Nullable="false" />
+          <Property Name="Club_Id" Type="Int32" />
+          <Property Name="ClubId" Type="Int32" Nullable="false" />
+          <Property Name="Coupe_Id" Type="Int32" />
+          <NavigationProperty Name="Club" Relationship="Self.FK_dbo_Encadrants_dbo_Clubs_Club_Id" FromRole="Encadrants" ToRole="Clubs" />
+          <NavigationProperty Name="Club1" Relationship="Self.FK_dbo_Encadrants_dbo_Clubs_ClubId" FromRole="Encadrants" ToRole="Clubs" />
+          <NavigationProperty Name="Coupe" Relationship="Self.FK_dbo_Encadrants_dbo_Coupes_Coupe_Id" FromRole="Encadrants" ToRole="Coupes" />
+          <NavigationProperty Name="Disponibilites" Relationship="Self.FK_dbo_Disponibilites_dbo_Encadrants_EncadrantId" FromRole="Encadrants" ToRole="Disponibilites" />
+          <NavigationProperty Name="Epreuves" Relationship="Self.EncadrantEpreuve" FromRole="Encadrants" ToRole="Epreuves" />
+        </EntityType>
+        <EntityType Name="Epreuve">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Statut" Type="Int32" Nullable="false" />
+          <Property Name="TypeEpreuve" Type="Int32" Nullable="false" />
+          <Property Name="Categorie" Type="Int32" Nullable="false" />
+          <Property Name="GenreCategorie" Type="Int32" Nullable="false" />
+          <Property Name="GradeAutorise" Type="Int32" Nullable="false" />
+          <Property Name="PoidsMini" Type="Single" Nullable="false" />
+          <Property Name="PoidsMaxi" Type="Single" Nullable="false" />
+          <Property Name="Aire_Id" Type="Int32" />
+          <NavigationProperty Name="Aire" Relationship="Self.FK_dbo_Epreuves_dbo_Aires_Aire_Id" FromRole="Epreuves" ToRole="Aires" />
+          <NavigationProperty Name="CategoriePoids" Relationship="Self.FK_dbo_CategoriePoids_dbo_Epreuves_CategoriePoidsId" FromRole="Epreuves" ToRole="CategoriePoids" />
+          <NavigationProperty Name="Resultats" Relationship="Self.FK_dbo_Resultats_dbo_Epreuves_Epreuve_Id1" FromRole="Epreuves" ToRole="Resultats" />
+          <NavigationProperty Name="Resultats1" Relationship="Self.FK_dbo_Resultats_dbo_Epreuves_EpreuveId" FromRole="Epreuves" ToRole="Resultats" />
+          <NavigationProperty Name="Competiteurs" Relationship="Self.CompetiteurEpreuve" FromRole="Epreuves" ToRole="Competiteurs" />
+          <NavigationProperty Name="Encadrants" Relationship="Self.EncadrantEpreuve" FromRole="Epreuves" ToRole="Encadrants" />
+        </EntityType>
+        <EntityType Name="Medecin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Prenom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telephone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MailContact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CoupeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Coupe" Relationship="Self.FK_dbo_Medecins_dbo_Coupes_CoupeId" FromRole="Medecins" ToRole="Coupes" />
+        </EntityType>
+        <EntityType Name="Responsable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Prenom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Adresse" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="14" FixedLength="true" Unicode="true" />
+          <Property Name="EmailContact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ResponsablesClub" Relationship="Self.FK_dbo_ResponsablesClub_dbo_Responsables_Id" FromRole="Responsables" ToRole="ResponsablesClub" />
+        </EntityType>
+        <EntityType Name="ResponsablesClub">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ClubId" Type="Int32" />
+          <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CoupeId" Type="Int32" />
+          <NavigationProperty Name="Clubs" Relationship="Self.FK_dbo_Clubs_dbo_ResponsablesClub_ResponsableClubId" FromRole="ResponsablesClub" ToRole="Clubs" />
+          <NavigationProperty Name="Club" Relationship="Self.FK_dbo_ResponsablesClub_dbo_Clubs_ClubId" FromRole="ResponsablesClub" ToRole="Clubs" />
+          <NavigationProperty Name="Coupes" Relationship="Self.FK_dbo_Coupes_dbo_ResponsablesClub_Responsable_Id" FromRole="ResponsablesClub" ToRole="Coupes" />
+          <NavigationProperty Name="Coupe" Relationship="Self.FK_dbo_ResponsablesClub_dbo_Coupes_CoupeId" FromRole="ResponsablesClub" ToRole="Coupes" />
+          <NavigationProperty Name="Responsable" Relationship="Self.FK_dbo_ResponsablesClub_dbo_Responsables_Id" FromRole="ResponsablesClub" ToRole="Responsables" />
+        </EntityType>
+        <EntityType Name="Resultat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Classement" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="Int32" Nullable="false" />
+          <Property Name="Abandon" Type="Boolean" Nullable="false" />
+          <Property Name="Blessure" Type="Boolean" Nullable="false" />
+          <Property Name="Disqualification" Type="Boolean" Nullable="false" />
+          <Property Name="Absence" Type="Boolean" Nullable="false" />
+          <Property Name="Renvoi" Type="Boolean" Nullable="false" />
+          <Property Name="CompetiteurId" Type="Int32" Nullable="false" />
+          <Property Name="EpreuveId" Type="Int32" Nullable="false" />
+          <Property Name="Epreuve_Id1" Type="Int32" />
+          <NavigationProperty Name="Competiteur" Relationship="Self.FK_dbo_Resultats_dbo_Competiteurs_CompetiteurId" FromRole="Resultats" ToRole="Competiteurs" />
+          <NavigationProperty Name="Epreuve" Relationship="Self.FK_dbo_Resultats_dbo_Epreuves_Epreuve_Id1" FromRole="Resultats" ToRole="Epreuves" />
+          <NavigationProperty Name="Epreuve1" Relationship="Self.FK_dbo_Resultats_dbo_Epreuves_EpreuveId" FromRole="Resultats" ToRole="Epreuves" />
+        </EntityType>
+        <Association Name="FK_dbo_Aires_dbo_Coupes_CoupeId">
+          <End Role="Coupes" Type="Self.Coupe" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Aires" Type="Self.Aire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coupes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Aires">
+              <PropertyRef Name="CoupeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Epreuves_dbo_Aires_Aire_Id">
+          <End Role="Aires" Type="Self.Aire" Multiplicity="0..1" />
+          <End Role="Epreuves" Type="Self.Epreuve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aires">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Epreuves">
+              <PropertyRef Name="Aire_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CategoriePoids_dbo_Epreuves_CategoriePoidsId">
+          <End Role="Epreuves" Type="Self.Epreuve" Multiplicity="0..1" />
+          <End Role="CategoriePoids" Type="Self.CategoriePoid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Epreuves">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoriePoids">
+              <PropertyRef Name="CategoriePoidsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Clubs_dbo_ResponsablesClub_ResponsableClubId">
+          <End Role="ResponsablesClub" Type="Self.ResponsablesClub" Multiplicity="1" />
+          <End Role="Clubs" Type="Self.Club" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResponsablesClub">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clubs">
+              <PropertyRef Name="ResponsableClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Competiteurs_dbo_Clubs_Club_Id1">
+          <End Role="Clubs" Type="Self.Club" Multiplicity="0..1" />
+          <End Role="Competiteurs" Type="Self.Competiteur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clubs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Competiteurs">
+              <PropertyRef Name="Club_Id1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Competiteurs_dbo_Clubs_ClubId">
+          <End Role="Clubs" Type="Self.Club" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Competiteurs" Type="Self.Competiteur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clubs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Competiteurs">
+              <PropertyRef Name="ClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Encadrants_dbo_Clubs_Club_Id">
+          <End Role="Clubs" Type="Self.Club" Multiplicity="0..1" />
+          <End Role="Encadrants" Type="Self.Encadrant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clubs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Encadrants">
+              <PropertyRef Name="Club_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Encadrants_dbo_Clubs_ClubId">
+          <End Role="Clubs" Type="Self.Club" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Encadrants" Type="Self.Encadrant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clubs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Encadrants">
+              <PropertyRef Name="ClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ResponsablesClub_dbo_Clubs_ClubId">
+          <End Role="Clubs" Type="Self.Club" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ResponsablesClub" Type="Self.ResponsablesClub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clubs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResponsablesClub">
+              <PropertyRef Name="ClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Resultats_dbo_Competiteurs_CompetiteurId">
+          <End Role="Competiteurs" Type="Self.Competiteur" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Resultats" Type="Self.Resultat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competiteurs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Resultats">
+              <PropertyRef Name="CompetiteurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Coupes_dbo_ResponsablesClub_Responsable_Id">
+          <End Role="ResponsablesClub" Type="Self.ResponsablesClub" Multiplicity="0..1" />
+          <End Role="Coupes" Type="Self.Coupe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResponsablesClub">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Coupes">
+              <PropertyRef Name="Responsable_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Encadrants_dbo_Coupes_Coupe_Id">
+          <End Role="Coupes" Type="Self.Coupe" Multiplicity="0..1" />
+          <End Role="Encadrants" Type="Self.Encadrant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coupes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Encadrants">
+              <PropertyRef Name="Coupe_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Medecins_dbo_Coupes_CoupeId">
+          <End Role="Coupes" Type="Self.Coupe" Multiplicity="1" />
+          <End Role="Medecins" Type="Self.Medecin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coupes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Medecins">
+              <PropertyRef Name="CoupeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ResponsablesClub_dbo_Coupes_CoupeId">
+          <End Role="Coupes" Type="Self.Coupe" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ResponsablesClub" Type="Self.ResponsablesClub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coupes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResponsablesClub">
+              <PropertyRef Name="CoupeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Disponibilites_dbo_Encadrants_EncadrantId">
+          <End Role="Encadrants" Type="Self.Encadrant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Disponibilites" Type="Self.Disponibilite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encadrants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Disponibilites">
+              <PropertyRef Name="EncadrantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Resultats_dbo_Epreuves_Epreuve_Id1">
+          <End Role="Epreuves" Type="Self.Epreuve" Multiplicity="0..1" />
+          <End Role="Resultats" Type="Self.Resultat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Epreuves">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Resultats">
+              <PropertyRef Name="Epreuve_Id1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Resultats_dbo_Epreuves_EpreuveId">
+          <End Role="Epreuves" Type="Self.Epreuve" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Resultats" Type="Self.Resultat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Epreuves">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Resultats">
+              <PropertyRef Name="EpreuveId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ResponsablesClub_dbo_Responsables_Id">
+          <End Role="Responsables" Type="Self.Responsable" Multiplicity="1" />
+          <End Role="ResponsablesClub" Type="Self.ResponsablesClub" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Responsables">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResponsablesClub">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CompetiteurEpreuve">
+          <End Role="Competiteurs" Type="Self.Competiteur" Multiplicity="*" />
+          <End Role="Epreuves" Type="Self.Epreuve" Multiplicity="*" />
+        </Association>
+        <Association Name="EncadrantEpreuve">
+          <End Role="Encadrants" Type="Self.Encadrant" Multiplicity="*" />
+          <End Role="Epreuves" Type="Self.Epreuve" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="FGF_QVKEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Aires" EntityType="Self.Aire" />
+          <EntitySet Name="CategoriePoids" EntityType="Self.CategoriePoid" />
+          <EntitySet Name="Clubs" EntityType="Self.Club" />
+          <EntitySet Name="Competiteurs" EntityType="Self.Competiteur" />
+          <EntitySet Name="Coupes" EntityType="Self.Coupe" />
+          <EntitySet Name="Disponibilites" EntityType="Self.Disponibilite" />
+          <EntitySet Name="Encadrants" EntityType="Self.Encadrant" />
+          <EntitySet Name="Epreuves" EntityType="Self.Epreuve" />
+          <EntitySet Name="Medecins" EntityType="Self.Medecin" />
+          <EntitySet Name="Responsables" EntityType="Self.Responsable" />
+          <EntitySet Name="ResponsablesClubs" EntityType="Self.ResponsablesClub" />
+          <EntitySet Name="Resultats" EntityType="Self.Resultat" />
+          <AssociationSet Name="FK_dbo_Aires_dbo_Coupes_CoupeId" Association="Self.FK_dbo_Aires_dbo_Coupes_CoupeId">
+            <End Role="Coupes" EntitySet="Coupes" />
+            <End Role="Aires" EntitySet="Aires" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Epreuves_dbo_Aires_Aire_Id" Association="Self.FK_dbo_Epreuves_dbo_Aires_Aire_Id">
+            <End Role="Aires" EntitySet="Aires" />
+            <End Role="Epreuves" EntitySet="Epreuves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CategoriePoids_dbo_Epreuves_CategoriePoidsId" Association="Self.FK_dbo_CategoriePoids_dbo_Epreuves_CategoriePoidsId">
+            <End Role="Epreuves" EntitySet="Epreuves" />
+            <End Role="CategoriePoids" EntitySet="CategoriePoids" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Clubs_dbo_ResponsablesClub_ResponsableClubId" Association="Self.FK_dbo_Clubs_dbo_ResponsablesClub_ResponsableClubId">
+            <End Role="ResponsablesClub" EntitySet="ResponsablesClubs" />
+            <End Role="Clubs" EntitySet="Clubs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Competiteurs_dbo_Clubs_Club_Id1" Association="Self.FK_dbo_Competiteurs_dbo_Clubs_Club_Id1">
+            <End Role="Clubs" EntitySet="Clubs" />
+            <End Role="Competiteurs" EntitySet="Competiteurs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Competiteurs_dbo_Clubs_ClubId" Association="Self.FK_dbo_Competiteurs_dbo_Clubs_ClubId">
+            <End Role="Clubs" EntitySet="Clubs" />
+            <End Role="Competiteurs" EntitySet="Competiteurs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Encadrants_dbo_Clubs_Club_Id" Association="Self.FK_dbo_Encadrants_dbo_Clubs_Club_Id">
+            <End Role="Clubs" EntitySet="Clubs" />
+            <End Role="Encadrants" EntitySet="Encadrants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Encadrants_dbo_Clubs_ClubId" Association="Self.FK_dbo_Encadrants_dbo_Clubs_ClubId">
+            <End Role="Clubs" EntitySet="Clubs" />
+            <End Role="Encadrants" EntitySet="Encadrants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ResponsablesClub_dbo_Clubs_ClubId" Association="Self.FK_dbo_ResponsablesClub_dbo_Clubs_ClubId">
+            <End Role="Clubs" EntitySet="Clubs" />
+            <End Role="ResponsablesClub" EntitySet="ResponsablesClubs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Resultats_dbo_Competiteurs_CompetiteurId" Association="Self.FK_dbo_Resultats_dbo_Competiteurs_CompetiteurId">
+            <End Role="Competiteurs" EntitySet="Competiteurs" />
+            <End Role="Resultats" EntitySet="Resultats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Coupes_dbo_ResponsablesClub_Responsable_Id" Association="Self.FK_dbo_Coupes_dbo_ResponsablesClub_Responsable_Id">
+            <End Role="ResponsablesClub" EntitySet="ResponsablesClubs" />
+            <End Role="Coupes" EntitySet="Coupes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Encadrants_dbo_Coupes_Coupe_Id" Association="Self.FK_dbo_Encadrants_dbo_Coupes_Coupe_Id">
+            <End Role="Coupes" EntitySet="Coupes" />
+            <End Role="Encadrants" EntitySet="Encadrants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Medecins_dbo_Coupes_CoupeId" Association="Self.FK_dbo_Medecins_dbo_Coupes_CoupeId">
+            <End Role="Coupes" EntitySet="Coupes" />
+            <End Role="Medecins" EntitySet="Medecins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ResponsablesClub_dbo_Coupes_CoupeId" Association="Self.FK_dbo_ResponsablesClub_dbo_Coupes_CoupeId">
+            <End Role="Coupes" EntitySet="Coupes" />
+            <End Role="ResponsablesClub" EntitySet="ResponsablesClubs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Disponibilites_dbo_Encadrants_EncadrantId" Association="Self.FK_dbo_Disponibilites_dbo_Encadrants_EncadrantId">
+            <End Role="Encadrants" EntitySet="Encadrants" />
+            <End Role="Disponibilites" EntitySet="Disponibilites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Resultats_dbo_Epreuves_Epreuve_Id1" Association="Self.FK_dbo_Resultats_dbo_Epreuves_Epreuve_Id1">
+            <End Role="Epreuves" EntitySet="Epreuves" />
+            <End Role="Resultats" EntitySet="Resultats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Resultats_dbo_Epreuves_EpreuveId" Association="Self.FK_dbo_Resultats_dbo_Epreuves_EpreuveId">
+            <End Role="Epreuves" EntitySet="Epreuves" />
+            <End Role="Resultats" EntitySet="Resultats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ResponsablesClub_dbo_Responsables_Id" Association="Self.FK_dbo_ResponsablesClub_dbo_Responsables_Id">
+            <End Role="Responsables" EntitySet="Responsables" />
+            <End Role="ResponsablesClub" EntitySet="ResponsablesClubs" />
+          </AssociationSet>
+          <AssociationSet Name="CompetiteurEpreuve" Association="Self.CompetiteurEpreuve">
+            <End Role="Competiteurs" EntitySet="Competiteurs" />
+            <End Role="Epreuves" EntitySet="Epreuves" />
+          </AssociationSet>
+          <AssociationSet Name="EncadrantEpreuve" Association="Self.EncadrantEpreuve">
+            <End Role="Encadrants" EntitySet="Encadrants" />
+            <End Role="Epreuves" EntitySet="Epreuves" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FGF_QVKModelStoreContainer" CdmEntityContainer="FGF_QVKEntities">
+          <EntitySetMapping Name="Aires">
+            <EntityTypeMapping TypeName="FGF_QVKModel.Aire">
+              <MappingFragment StoreEntitySet="Aires">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CoupeId" ColumnName="CoupeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoriePoids">
+            <EntityTypeMapping TypeName="FGF_QVKModel.CategoriePoid">
+              <MappingFragment StoreEntitySet="CategoriePoids">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ValeurBasse" ColumnName="ValeurBasse" />
+                <ScalarProperty Name="ValeurHaute" ColumnName="ValeurHaute" />
+                <ScalarProperty Name="CategoriePoidsId" ColumnName="CategoriePoidsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clubs">
+            <EntityTypeMapping TypeName="FGF_QVKModel.Club">
+              <MappingFragment StoreEntitySet="Clubs">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="NumeroAffiliation" ColumnName="NumeroAffiliation" />
+                <ScalarProperty Name="ResponsableClubId" ColumnName="ResponsableClubId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Competiteurs">
+            <EntityTypeMapping TypeName="FGF_QVKModel.Competiteur">
+              <MappingFragment StoreEntitySet="Competiteurs">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Categorie" ColumnName="Categorie" />
+                <ScalarProperty Name="DateNaissance" ColumnName="DateNaissance" />
+                <ScalarProperty Name="Sexe" ColumnName="Sexe" />
+                <ScalarProperty Name="LicenceFFKDA" ColumnName="LicenceFFKDA" />
+                <ScalarProperty Name="AnneePratique" ColumnName="AnneePratique" />
+                <ScalarProperty Name="Poids" ColumnName="Poids" />
+                <ScalarProperty Name="InscriptionValidee" ColumnName="InscriptionValidee" />
+                <ScalarProperty Name="ClubId" ColumnName="ClubId" />
+                <ScalarProperty Name="Club_Id1" ColumnName="Club_Id1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Coupes">
+            <EntityTypeMapping TypeName="FGF_QVKModel.Coupe">
+              <MappingFragment StoreEntitySet="Coupes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NombreTapis" ColumnName="NombreTapis" />
+                <ScalarProperty Name="Voie" ColumnName="Voie" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Complement" ColumnName="Complement" />
+                <ScalarProperty Name="CodePostal" ColumnName="CodePostal" />
+                <ScalarProperty Name="Ville" ColumnName="Ville" />
+                <ScalarProperty Name="DateDebut" ColumnName="DateDebut" />
+                <ScalarProperty Name="DateFin" ColumnName="DateFin" />
+                <ScalarProperty Name="Responsable_Id" ColumnName="Responsable_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Disponibilites">
+            <EntityTypeMapping TypeName="FGF_QVKModel.Disponibilite">
+              <MappingFragment StoreEntitySet="Disponibilites">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Matin" ColumnName="Matin" />
+                <ScalarProperty Name="EncadrantId" ColumnName="EncadrantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Encadrants">
+            <EntityTypeMapping TypeName="FGF_QVKModel.Encadrant">
+              <MappingFragment StoreEntitySet="Encadrants">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="MailContact" ColumnName="MailContact" />
+                <ScalarProperty Name="TailleTenue" ColumnName="TailleTenue" />
+                <ScalarProperty Name="EstCompetiteur" ColumnName="EstCompetiteur" />
+                <ScalarProperty Name="Sexe" ColumnName="Sexe" />
+                <ScalarProperty Name="Club_Id" ColumnName="Club_Id" />
+                <ScalarProperty Name="ClubId" ColumnName="ClubId" />
+                <ScalarProperty Name="Coupe_Id" ColumnName="Coupe_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Epreuves">
+            <EntityTypeMapping TypeName="FGF_QVKModel.Epreuve">
+              <MappingFragment StoreEntitySet="Epreuves">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Statut" ColumnName="Statut" />
+                <ScalarProperty Name="TypeEpreuve" ColumnName="TypeEpreuve" />
+                <ScalarProperty Name="Categorie" ColumnName="Categorie" />
+                <ScalarProperty Name="GenreCategorie" ColumnName="GenreCategorie" />
+                <ScalarProperty Name="GradeAutorise" ColumnName="GradeAutorise" />
+                <ScalarProperty Name="PoidsMini" ColumnName="PoidsMini" />
+                <ScalarProperty Name="PoidsMaxi" ColumnName="PoidsMaxi" />
+                <ScalarProperty Name="Aire_Id" ColumnName="Aire_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Medecins">
+            <EntityTypeMapping TypeName="FGF_QVKModel.Medecin">
+              <MappingFragment StoreEntitySet="Medecins">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="MailContact" ColumnName="MailContact" />
+                <ScalarProperty Name="CoupeId" ColumnName="CoupeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Responsables">
+            <EntityTypeMapping TypeName="FGF_QVKModel.Responsable">
+              <MappingFragment StoreEntitySet="Responsables">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Adresse" ColumnName="Adresse" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="EmailContact" ColumnName="EmailContact" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResponsablesClubs">
+            <EntityTypeMapping TypeName="FGF_QVKModel.ResponsablesClub">
+              <MappingFragment StoreEntitySet="ResponsablesClub">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ClubId" ColumnName="ClubId" />
+                <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+                <ScalarProperty Name="CoupeId" ColumnName="CoupeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resultats">
+            <EntityTypeMapping TypeName="FGF_QVKModel.Resultat">
+              <MappingFragment StoreEntitySet="Resultats">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Classement" ColumnName="Classement" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Abandon" ColumnName="Abandon" />
+                <ScalarProperty Name="Blessure" ColumnName="Blessure" />
+                <ScalarProperty Name="Disqualification" ColumnName="Disqualification" />
+                <ScalarProperty Name="Absence" ColumnName="Absence" />
+                <ScalarProperty Name="Renvoi" ColumnName="Renvoi" />
+                <ScalarProperty Name="CompetiteurId" ColumnName="CompetiteurId" />
+                <ScalarProperty Name="EpreuveId" ColumnName="EpreuveId" />
+                <ScalarProperty Name="Epreuve_Id1" ColumnName="Epreuve_Id1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CompetiteurEpreuve" TypeName="FGF_QVKModel.CompetiteurEpreuve" StoreEntitySet="CompetiteurEpreuve">
+            <EndProperty Name="Competiteurs">
+              <ScalarProperty Name="Id" ColumnName="EpreuveId" />
+            </EndProperty>
+            <EndProperty Name="Epreuves">
+              <ScalarProperty Name="Id" ColumnName="CompetiteurId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="EncadrantEpreuve" TypeName="FGF_QVKModel.EncadrantEpreuve" StoreEntitySet="EncadrantEpreuve">
+            <EndProperty Name="Encadrants">
+              <ScalarProperty Name="Id" ColumnName="EpreuveId" />
+            </EndProperty>
+            <EndProperty Name="Epreuves">
+              <ScalarProperty Name="Id" ColumnName="EncadrantId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

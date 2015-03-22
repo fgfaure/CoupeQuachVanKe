@@ -1,0 +1,84 @@
+﻿<div id="gridMedecins"></div>
+
+<script>
+
+    $(document).ready(function () {
+        var medecinDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "GetMedecins",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                update: {
+                    url: "Edit",
+                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                destroy: {
+                    url: "Delete",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                create: {
+                    url: "Create",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: true
+                        },
+                        Nom: {
+                            //set validation rules
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        Prenom: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "string",
+                            validation: { required: true, min: 1 }
+                        },
+                        Telephone: {
+                            type: "string",
+                            validation: { required: false, min: 14, max: 14 }
+                        },
+                        MailContact: {
+                            type: "string",
+                            validation: { required: false, min: 14, max: 14 }
+                        }
+                    }
+                }
+            }
+        });
+
+        $("#gridMedecins").kendoGrid({
+            dataSource: medecinDataSource,
+            pageable: false,
+            autosync : true,
+            height: 550,
+            toolbar: ["create"],
+            columns: [
+                { field: "Nom", title: "Nom" },
+                { field: "Prenom", title: "Prénom" },
+                { field: "Telephone", title: "Téléphone", width: "120px" },
+                { field: "MailContact", title: "Email de contact" },
+                { command: ["edit", "destroy"], title: "&nbsp;", width: "250px" }],
+            editable: "popup"
+        });
+    });
+</script>
