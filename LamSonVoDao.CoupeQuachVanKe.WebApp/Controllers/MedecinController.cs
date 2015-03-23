@@ -61,6 +61,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 });
 
                 var dbItem = this.medecinRepository.Get(m => m.Nom == medecin.Nom && m.Prenom == medecin.Prenom).First();
+                medecin.Id = dbItem.Id;
                 return Json(medecin);
             }
             catch

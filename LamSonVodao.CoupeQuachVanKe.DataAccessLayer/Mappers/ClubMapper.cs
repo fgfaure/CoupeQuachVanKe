@@ -21,7 +21,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
             this.Property(c => c.Nom).IsRequired();
             this.Property(c => c.Nom).HasMaxLength(255);
 
-            this.Property(c => c.NumeroAffiliation).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            this.Property(c => c.NumeroAffiliation).HasMaxLength(255);
             this.Property(c => c.NumeroAffiliation).IsRequired();           
         }
     }

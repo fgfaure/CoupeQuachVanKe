@@ -1,0 +1,94 @@
+﻿<div>
+    <div class="demo-section k-header">
+        <input name="files" id="files" type="file" />
+    </div>
+</div>
+<div id="gridClubs" />
+<script>
+    $(document).ready(function () {
+
+        $("#files").kendoUpload({
+            async: {
+                saveUrl: "Club/Save",
+                removeUrl: "Club/Remove",
+                autoUpload: true
+            }
+        });
+
+        var menuSource = [{ text: '<a href="/Medecin">Gestion des Médecins</a>', encoded: false }, { text: '<a href="/Aires">Gestion des Aires</a>', encoded: false }];
+        $("#serverMenu").kendoMenu({
+            dataSource: menuSource
+        });
+
+        var clubsDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "Club/Getclubs",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                update: {
+                    url: "Club/Edit",
+                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                destroy: {
+                    url: "Club/Delete",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                create: {
+                    url: "Club/Create",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        Nom: {
+                            //set validation rules
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        NumeroAffiliation: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "string",
+                            validation: { required: true }
+                        }
+                    }
+                }
+            }
+        });
+
+        $("#gridClubs").kendoGrid({
+            dataSource: clubsDataSource,
+            pageable: false,
+            autosync: true,
+            height: 550,
+            toolbar: ["create"],
+            columns: [
+                { field: "Nom", title: "Nom" },
+                { field: "NumeroAffiliation", title: "Numero d'Affiliation"},                
+                { command: ["edit", "destroy"], title: "&nbsp;", width: "250px" }],
+            editable: "popup"
+        });
+    });
+</script>

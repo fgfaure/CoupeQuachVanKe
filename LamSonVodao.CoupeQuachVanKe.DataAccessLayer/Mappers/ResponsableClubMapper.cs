@@ -33,7 +33,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
            this.Property(r => r.EmailContact).IsOptional();
            this.Property(r => r.EmailContact).HasMaxLength(255);
 
-           this.HasRequired(r => r.Club).WithRequiredDependent(club => club.Responsable);
+           this.HasRequired(r => r.Club).WithMany().HasForeignKey(responsable => responsable.ClubId).WillCascadeOnDelete(false);
        }
     }
 }
