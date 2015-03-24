@@ -14,7 +14,10 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
        {
            this.ToTable("ResponsablesClub");
 
-           this.HasKey(r => r.Id);
+           //this.HasKey(r => r.Id);
+
+           this.HasKey(r => r.ClubId);
+
            this.Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
            this.Property(r => r.Id).IsRequired();
 
@@ -33,7 +36,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
            this.Property(r => r.EmailContact).IsOptional();
            this.Property(r => r.EmailContact).HasMaxLength(255);
 
-           this.HasRequired(r => r.Club).WithMany().HasForeignKey(responsable => responsable.ClubId).WillCascadeOnDelete(false);
+           this.HasRequired(r => r.Club).WithRequiredDependent(u => u.Responsable);             
        }
     }
 }

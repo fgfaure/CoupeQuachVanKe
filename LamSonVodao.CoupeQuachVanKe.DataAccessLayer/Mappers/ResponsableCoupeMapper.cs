@@ -14,8 +14,6 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
        {
            this.ToTable("ResponsablesCoupe");
 
-           //this.HasKey(r => r.Id);
-
            this.HasKey(r => r.CoupeId);
 
            this.Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);

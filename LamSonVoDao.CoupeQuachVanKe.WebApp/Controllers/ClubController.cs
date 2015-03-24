@@ -255,29 +255,15 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                                     });
                                 }
 
-
-                            
+                                clubFromXLS.Responsable = responsableFromXLS;
+                                clubFromXLS.Competiteurs = competiteursFromXLS;
+                                clubFromXLS.Encadrants = encadrantsFromXLS;
 
                                 var clubFromDb = this.clubRepo.Get(club => string.Compare(club.NumeroAffiliation, clubFromXLS.NumeroAffiliation) == 0).FirstOrDefault();
                                 if (clubFromDb == null)
                                 {
                                     //ajout
-                                    this.clubRepo.Insert(clubFromXLS);
-                                    clubFromDb = this.clubRepo.Get(club => string.Compare(club.NumeroAffiliation, clubFromXLS.NumeroAffiliation) == 0).FirstOrDefault();
-                                    responsableFromXLS.ClubId = clubFromDb.Id;
-                                    for (int i = 0; i < competiteursFromXLS.Count; i++)
-                                    {
-                                        competiteursFromXLS[i].ClubId = clubFromDb.Id;
-                                    }
-                                    for (int i = 0; i < encadrantsFromXLS.Count; i++)
-                                    {
-                                        encadrantsFromXLS[i].ClubId = clubFromDb.Id;
-
-                                    }
-                                    clubFromDb.Responsable = responsableFromXLS;
-                                    clubFromDb.Competiteurs = competiteursFromXLS;
-                                    clubFromDb.Encadrants = encadrantsFromXLS;
-                                    this.clubRepo.Update(clubFromDb);
+                                    this.clubRepo.Insert(clubFromXLS);                                   
                                 }
                                 else
                                 {
@@ -291,12 +277,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                             }
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         if (excelReader != null)
                         {
                             excelReader.Close();
                         }
+
+                        return Content(ex.Message);
                     }
                     finally
                     {
