@@ -1,5 +1,6 @@
 ﻿using LamSonVodao.CoupeQuachVanKe.AccesPattern;
 using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
 using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
 using System;
 using System.Collections.Generic;
@@ -9,30 +10,14 @@ using System.Web.Mvc;
 
 namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
-    public class MedecinController : Controller
-    {
-        private UnitOfWork unitOfWork = new UnitOfWork();
-        private Repository<Medecin> medecinRepository;
-
-
-        public MedecinController()
-        {
-            this.medecinRepository = this.unitOfWork.Repository<Medecin>();
-        }
-
-        // GET: Medecin
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-
-        public JsonResult GetMedecins()
+    public class MedecinController : BaseController<Medecin>, ICrudController<Medecin, MedecinModel>
+    {         
+        public JsonResult Get()
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
-            result.Data = this.medecinRepository.GetAll().Select(m => new MedecinModel
+            result.Data = this.repository.GetAll().Select(m => new MedecinModel
             {
                 Nom = m.Nom,
                 Prenom = m.Prenom,
@@ -47,11 +32,11 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 
         // POST: Medecin/Create
         [HttpPost]
-        public ActionResult Create(MedecinModel medecin)
+        public JsonResult Create(MedecinModel medecin)
         {
             try
             {
-                this.medecinRepository.Insert(new Medecin
+                this.repository.Insert(new Medecin
                 {
                     Nom = medecin.Nom,
                     Prenom = medecin.Prenom,
@@ -60,47 +45,47 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                     CoupeId = 1
                 });
 
-                var dbItem = this.medecinRepository.Get(m => m.Nom == medecin.Nom && m.Prenom == medecin.Prenom).First();
+                var dbItem = this.repository.Get(m => m.Nom == medecin.Nom && m.Prenom == medecin.Prenom).First();
                 medecin.Id = dbItem.Id;
                 return Json(medecin);
             }
             catch
             {
-                return View();
+                throw;
             }
         }
 
         [HttpPost]
-        public ActionResult Edit(MedecinModel model)
+        public JsonResult Update(MedecinModel model)
         {
             try
             {
-                var dbmodel = this.medecinRepository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
                 dbmodel.MailContact = model.MailContact;
                 dbmodel.Nom = model.Nom;
                 dbmodel.Prenom = model.Prenom;
                 dbmodel.Telephone = model.Telephone;
-                this.medecinRepository.Update(dbmodel);
+                this.repository.Update(dbmodel);
                 return Json(model);
             }
             catch
             {
-                return View();
+                throw;
             }
         }
 
         [HttpPost]
-        public ActionResult Delete(MedecinModel model)
+        public JsonResult Delete(MedecinModel model)
         {
             try
             {
-                var dbItem = this.medecinRepository.GetById(model.Id);
-                this.medecinRepository.Delete(dbItem);
-                return RedirectToAction("Index");
+                var dbItem = this.repository.GetById(model.Id);
+                this.repository.Delete(dbItem);
+                return Json(model);
             }
             catch
             {
-                return View();
+                throw;
             }
         }
     }

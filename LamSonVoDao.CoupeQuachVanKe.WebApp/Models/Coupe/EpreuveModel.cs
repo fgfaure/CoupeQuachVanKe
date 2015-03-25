@@ -72,6 +72,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The categorie poids.
         /// </value>
-        public CategoriePoids CategoriePoids { get; set; }       
+        public CategoriePoidsModel CategoriePoids { get; set; }       
     }
 }

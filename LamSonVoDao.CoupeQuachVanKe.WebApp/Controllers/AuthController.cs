@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
 using LamSonVodao.CoupeQuachVanKe.AccesPattern;
+using Microsoft.Owin.Security;
 
 namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {    
@@ -56,11 +57,11 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                     new Claim(ClaimTypes.NameIdentifier, client.ClientName)
                 }, "ApplicationCookie");
 
-                    var ctx = Request.GetOwinContext();
+                    var ctx = Request.GetOwinContext();                    
                     var authManager = ctx.Authentication;
 
                     authManager.SignIn(identity);
-
+                    
                     client.IsConnected = true;
                     client.Ip = this.Request.UserHostAddress;
                     this.netClientRepository.Update(client);

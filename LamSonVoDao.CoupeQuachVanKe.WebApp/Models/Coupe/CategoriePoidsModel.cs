@@ -5,7 +5,7 @@ using System.Web;
 
 namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
 {
-    public class CategoriePoids
+    public class CategoriePoidsModel
     {
         public int Id { get; set; }
 
@@ -40,6 +40,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// The valeur haute.
         /// </value>
         public float ValeurHaute { get; set; }
-            
+        
+        /// <summary>
+        /// Gets or sets the epreuve identifier.
+        /// </summary>
+        /// <value>
+        /// The epreuve identifier.
+        /// </value>
+        public int EpreuveId { get; set; }
     }
 }

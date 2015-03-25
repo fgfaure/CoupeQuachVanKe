@@ -204,15 +204,25 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Areas\Server\ServerAreaRegistration.cs" />
+    <Compile Include="Contracts\ICrudController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AireController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CategoriePoidsController.cs" />
     <Compile Include="Controllers\ClubController.cs" />
+    <Compile Include="Controllers\CompetiteurController.cs" />
+    <Compile Include="Controllers\CoupeController.cs" />
+    <Compile Include="Controllers\DisponibiliteController.cs" />
+    <Compile Include="Controllers\EncadrantController.cs" />
+    <Compile Include="Controllers\EpreuveController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedecinController.cs" />
+    <Compile Include="Controllers\ResponsableClubController.cs" />
+    <Compile Include="Controllers\ResponsableCoupeController.cs" />
     <Compile Include="Controllers\SaisieController.cs" />
     <Compile Include="Controllers\SatelliteController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -220,7 +230,7 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Coupe\AireModel.cs" />
-    <Compile Include="Models\Coupe\CategoriePoids.cs" />
+    <Compile Include="Models\Coupe\CategoriePoidsModel.cs" />
     <Compile Include="Models\Coupe\ClubModel.cs" />
     <Compile Include="Models\Coupe\CompetiteurModel.cs" />
     <Compile Include="Models\Coupe\CoupeModel.cs" />
@@ -1122,6 +1132,15 @@
     <Content Include="Views\Server\Index.cshtml" />
     <Content Include="Views\Saisie\Index.cshtml" />
     <Content Include="Views\Club\Index.cshtml" />
+    <Content Include="Views\Aire\Index.cshtml" />
+    <Content Include="Views\CategoriePoids\Index.cshtml" />
+    <Content Include="Views\Competiteur\Index.cshtml" />
+    <Content Include="Views\Coupe\Index.cshtml" />
+    <Content Include="Views\Disponibilite\Index.cshtml" />
+    <Content Include="Views\Encadrant\Index.cshtml" />
+    <Content Include="Views\Epreuve\Index.cshtml" />
+    <Content Include="Views\ResponsableClub\Index.cshtml" />
+    <Content Include="Views\ResponsableCoupe\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Imports\" />
