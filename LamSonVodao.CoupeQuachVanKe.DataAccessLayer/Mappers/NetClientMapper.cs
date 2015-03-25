@@ -26,7 +26,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
 
             this.Property(netc => netc.Password).IsRequired();
 
-            this.HasRequired(netc => netc.ClientType).WithMany().HasForeignKey(netc => netc.NetClientTypeId);
+            this.HasRequired(netc => netc.ClientType).WithMany().HasForeignKey(netc => netc.NetClientTypeId).WillCascadeOnDelete(true);
         }
     }
 }

@@ -31,13 +31,6 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
             this.Property(epreuve => epreuve.GenreCategorie).IsRequired();
 
             this.Property(epreuve => epreuve.GradeAutorise).IsRequired();        
-
-            //this.HasMany(epreuve => epreuve.Encadrants)
-            //    .WithMany(encadrant => encadrant.EpreuveSurveillees)
-            //    .Map(epreuve => epreuve.ToTable("EncadrantEpreuve")
-            //        .MapLeftKey("EncadrantId")
-            //        .MapRightKey("EpreuveId"));
-
         }
     }
 }

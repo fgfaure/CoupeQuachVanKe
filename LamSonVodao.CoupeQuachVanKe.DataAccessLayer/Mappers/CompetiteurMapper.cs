@@ -48,7 +48,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
 
             this.Property(c => c.EquipeSongLuyen).IsRequired();
 
-            this.HasRequired(c => c.Club).WithMany(club => club.Competiteurs).HasForeignKey(c => c.ClubId).WillCascadeOnDelete(false);
+            this.HasRequired(c => c.Club).WithMany(club => club.Competiteurs).HasForeignKey(c => c.ClubId).WillCascadeOnDelete(true);
 
         }
     }

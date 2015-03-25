@@ -37,8 +37,6 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
             this.Property(coupe => coupe.DateDebut).IsRequired();
 
             this.Property(coupe => coupe.DateFin).IsRequired();
-
-//            this.HasRequired(coupe => coupe.Responsable).WithRequiredPrincipal(responsable => responsable.Coupe);
         }
     }
 }

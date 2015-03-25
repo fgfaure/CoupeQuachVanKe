@@ -72,7 +72,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer
                 string message = ex.ToString();
                 Console.WriteLine(message);
                 Debug.WriteLine(message);
-                throw ex;
+                throw;
             }
         }
     }

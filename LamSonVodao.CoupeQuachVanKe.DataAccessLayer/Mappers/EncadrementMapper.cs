@@ -28,8 +28,8 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
 
             this.Property(ee => ee.Role).IsRequired();
 
-            this.HasRequired(ee => ee.Encadrant).WithMany(encadrant => encadrant.EpreuveSurveillees).HasForeignKey(ee => ee.EncadrantId);
-            this.HasRequired(ee => ee.Epreuve).WithMany(epreuve => epreuve.Encadrements).HasForeignKey(ee => ee.EpreuveId);
+            this.HasRequired(ee => ee.Encadrant).WithMany(encadrant => encadrant.EpreuveSurveillees).HasForeignKey(ee => ee.EncadrantId).WillCascadeOnDelete(true);
+            this.HasRequired(ee => ee.Epreuve).WithMany(epreuve => epreuve.Encadrements).HasForeignKey(ee => ee.EpreuveId).WillCascadeOnDelete(true);
 
         }
     }

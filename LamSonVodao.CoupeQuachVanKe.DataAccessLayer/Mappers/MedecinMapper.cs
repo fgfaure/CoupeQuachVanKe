@@ -29,7 +29,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
             this.HasRequired(medecin => medecin.Coupe)
                 .WithMany(c => c.Medecins)
                 .HasForeignKey(medecin => medecin.CoupeId)
-                .WillCascadeOnDelete(false);  
+                .WillCascadeOnDelete(true);  
 
         }
     }

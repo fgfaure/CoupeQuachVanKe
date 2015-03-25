@@ -14,7 +14,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
         {
             this.ToTable("CategoriePoids");
 
-            this.HasKey(catPoids => catPoids.Id);
+            this.HasKey(catPoids => catPoids.EpreuveId);
             this.Property(catPoids => catPoids.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(catPoids => catPoids.Id).IsRequired();
 
@@ -28,7 +28,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
 
             this.Property(catPoids => catPoids.Description).IsRequired();
 
-            this.HasRequired(catpoids => catpoids.Epreuve).WithRequiredDependent(epreuve => epreuve.CategoriePoids);
+            this.HasRequired(catpoids => catpoids.Epreuve).WithRequiredDependent(epreuve => epreuve.CategoriePoids).WillCascadeOnDelete(true);
         }
     }
 }

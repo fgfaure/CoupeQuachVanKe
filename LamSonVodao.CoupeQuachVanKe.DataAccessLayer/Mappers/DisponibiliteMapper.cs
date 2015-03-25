@@ -26,7 +26,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
 
             this.HasRequired(d => d.Encadrant)
                 .WithMany(encadrant => encadrant.Disponibilites)
-                .HasForeignKey(d => d.EncadrantId).WillCascadeOnDelete(false);
+                .HasForeignKey(d => d.EncadrantId).WillCascadeOnDelete(true);
         }
 
     }

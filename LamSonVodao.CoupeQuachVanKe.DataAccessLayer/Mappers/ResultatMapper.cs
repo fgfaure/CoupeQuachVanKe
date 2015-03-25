@@ -32,8 +32,8 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
 
             this.Property(resultat => resultat.Renvoi).IsRequired();
             
-            this.HasRequired(resultat => resultat.Epreuve).WithMany(epreuve => epreuve.Resultats).HasForeignKey(resultat => resultat.EpreuveId);
-            this.HasRequired(resultat => resultat.Competiteur).WithMany(competiteur => competiteur.Resultats).HasForeignKey(resultat => resultat.CompetiteurId);            
+            this.HasRequired(resultat => resultat.Epreuve).WithMany(epreuve => epreuve.Resultats).HasForeignKey(resultat => resultat.EpreuveId).WillCascadeOnDelete(true);
+            this.HasRequired(resultat => resultat.Competiteur).WithMany(competiteur => competiteur.Resultats).HasForeignKey(resultat => resultat.CompetiteurId).WillCascadeOnDelete(true);          
         }
     }
 }

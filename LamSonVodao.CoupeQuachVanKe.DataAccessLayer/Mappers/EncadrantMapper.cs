@@ -30,7 +30,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
 
             this.Property(e => e.Sexe).IsRequired();
 
-            this.HasRequired(e => e.Club).WithMany(club => club.Encadrants).HasForeignKey(e => e.ClubId).WillCascadeOnDelete(false);
+            this.HasRequired(e => e.Club).WithMany(club => club.Encadrants).HasForeignKey(e => e.ClubId).WillCascadeOnDelete(true);
         }
     }
 }
