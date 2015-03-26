@@ -5,8 +5,6 @@
 
 namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
 {
-
-
     /// <summary>
     /// 
     /// </summary>

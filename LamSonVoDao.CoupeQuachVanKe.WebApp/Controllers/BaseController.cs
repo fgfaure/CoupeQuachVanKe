@@ -1,14 +1,14 @@
-﻿using LamSonVodao.CoupeQuachVanKe.AccesPattern;
-using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
+﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
+    using LamSonVodao.CoupeQuachVanKe.AccesPattern;
+    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+
     public class BaseController<Entity> : Controller where Entity : BaseEntity
     {
         protected UnitOfWork unitOfWork = new UnitOfWork();

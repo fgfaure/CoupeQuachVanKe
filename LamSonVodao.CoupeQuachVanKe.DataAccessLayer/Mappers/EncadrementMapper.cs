@@ -1,5 +1,4 @@
-﻿/// <copyright file="EpreuveEncadrantMapper.cs" company="ITESOFT">
-/// Copyright (c) 2015 All Right Reserved
+﻿/// <copyright file="EpreuveEncadrantMapper.cs" company="fgfaure">
 /// <author>fgf</author>
 /// </copyright>
 
@@ -14,9 +13,14 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
     using DataAccessLayer.Mappers;
     using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
 
-
+    /// <summary>
+    /// Mapper des encadrements
+    /// </summary>
     public class EncadrementMapper : DataMapper<Encadrement>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EncadrementMapper"/> class.
+        /// </summary>
         public EncadrementMapper()
         {
             this.ToTable("EncadrantsEpreuves");

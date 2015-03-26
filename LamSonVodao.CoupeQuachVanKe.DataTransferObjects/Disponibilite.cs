@@ -1,5 +1,5 @@
-﻿using System;
-using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+﻿using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+using System;
 
 namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
 {

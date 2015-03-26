@@ -11,6 +11,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/kendo")
+    <script src="@Url.Content("~/Scripts/cultures/kendo.culture.fr-FR.min.js")"></script>
 
 </head>
 <body>
@@ -26,7 +27,7 @@
             </div>
             @*<div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>                   
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
                 </ul>
             </div>*@
 
@@ -48,5 +49,8 @@
 
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script>
+        kendo.culture("fr-FR");
+    </script>
 </body>
 </html>

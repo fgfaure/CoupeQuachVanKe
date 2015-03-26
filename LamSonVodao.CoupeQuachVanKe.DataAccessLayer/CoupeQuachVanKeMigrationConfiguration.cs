@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LamSonVodao.CoupeQuachVanKe.DataAccessLayer;
-
-namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer
+﻿namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using LamSonVodao.CoupeQuachVanKe.DataAccessLayer;
+
     public class CoupeQuachVanKeMigrationConfiguration : DbMigrationsConfiguration<CoupeQuachVanKeContext>
     {
         public CoupeQuachVanKeMigrationConfiguration()

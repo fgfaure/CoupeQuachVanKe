@@ -1,20 +1,20 @@
-﻿using Excel;
-using LamSonVodao.CoupeQuachVanKe.AccesPattern;
-using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
-using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
-using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
-using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
-
-namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
+﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
+    using Excel;
+    using LamSonVodao.CoupeQuachVanKe.AccesPattern;
+    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.IO;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
+
     public class ClubController : BaseController<Club>, ICrudController<Club, ClubModel>
     {
         public JsonResult Get()

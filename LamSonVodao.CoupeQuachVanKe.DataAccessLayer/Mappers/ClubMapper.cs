@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
-
-namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
+﻿namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+
     public class ClubMapper : DataMapper<Club>
     {
         public ClubMapper()

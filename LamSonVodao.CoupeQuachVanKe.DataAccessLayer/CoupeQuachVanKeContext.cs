@@ -1,15 +1,16 @@
-﻿using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LamSonVodao.CoupeQuachVanKe.DataAccessLayer;
-using LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers;
-
+﻿
 namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer
 {
+    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using LamSonVodao.CoupeQuachVanKe.DataAccessLayer;
+    using LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers;
+
     public class CoupeQuachVanKeContext : DbContext
     {
         public CoupeQuachVanKeContext()

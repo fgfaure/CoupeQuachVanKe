@@ -1,18 +1,18 @@
-﻿using LamSonVoDao.CoupeQuachVanKe.WebApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Web;
-using System.Web.Mvc;
-using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
-using LamSonVodao.CoupeQuachVanKe.AccesPattern;
-using Microsoft.Owin.Security;
+﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
+{
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Security.Claims;
+    using System.Web;
+    using System.Web.Mvc;
+    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVodao.CoupeQuachVanKe.AccesPattern;
+    using Microsoft.Owin.Security;
 
-namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
-{    
     [AllowAnonymous]
     public class AuthController : Controller
     {

@@ -1,29 +1,17 @@
-﻿using LamSonVodao.CoupeQuachVanKe.DataAccessLayer;
-using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-
-namespace LamSonVodao.CoupeQuachVanKe.ConsoleApplication
+﻿namespace LamSonVodao.CoupeQuachVanKe.ConsoleApplication
 {
+    using LamSonVodao.CoupeQuachVanKe.DataAccessLayer;
+    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+
     class Program
     {
         static void Main(string[] args)
         {
-            //Database.SetInitializer(new DropCreateDatabaseAlways<CoupeQuachVanKeContext>());
             using (var context = new CoupeQuachVanKeContext())
             {
-                //var responsable = new ResponsableCoupe
-                //{
-                //    Nom = "Tran Van Ba",
-                //    Prenom = "Christophe",
-                //    EmailContact = "christophe.tranvaba@gmail.com",
-                //    Telephone = "00-00-00-00-00",
-                //    Adresse = "chez cricri"
-                //};
-
-              //  db.Responsables.Add(responsable);
-
                 var coupe = new Coupe()
                 {
                     Nom = "CoupeQVK2015",
@@ -45,19 +33,17 @@ namespace LamSonVodao.CoupeQuachVanKe.ConsoleApplication
                     }
                 };
 
-                var md = new Medecin{
-                        Nom = "GALLAUX",
-                        Prenom = "Jean-Pierre"
-                    };
-
-               // context.Entry(md).State = EntityState.Added;
-               //// db.Coupes.Add(coupe);
+                var md = new Medecin
+                {
+                    Nom = "GALLAUX",
+                    Prenom = "Jean-Pierre"
+                };
 
                 coupe.Medecins = new List<Medecin>();
                 coupe.Medecins.Add(md);
                 context.Entry(coupe).State = EntityState.Added;
 
-                
+
                 context.SaveChanges();
             }
         }

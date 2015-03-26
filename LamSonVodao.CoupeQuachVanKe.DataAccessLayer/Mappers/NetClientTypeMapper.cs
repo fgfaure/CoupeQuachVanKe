@@ -13,7 +13,6 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
     using System.Threading.Tasks;
     using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
 
-
     public class NetClientTypeMapper : DataMapper<NetClientType>
     {
         public NetClientTypeMapper()

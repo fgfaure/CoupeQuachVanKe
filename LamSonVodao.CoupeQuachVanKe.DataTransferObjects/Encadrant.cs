@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+﻿using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+using System.Collections.Generic;
 
 namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
 {

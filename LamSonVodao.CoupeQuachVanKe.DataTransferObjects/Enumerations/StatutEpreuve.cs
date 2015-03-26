@@ -9,6 +9,5 @@ namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations
         Assignee = 3,
         EnCours = 4,
         Terminee = 5
-
     }
 }
