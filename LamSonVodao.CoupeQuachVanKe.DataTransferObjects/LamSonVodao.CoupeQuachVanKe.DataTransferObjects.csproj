@@ -44,6 +44,7 @@
     <Compile Include="Aire.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="CategoriePoids.cs" />
+    <Compile Include="Enumerations\GenreEpreuve.cs" />
     <Compile Include="NetClient.cs" />
     <Compile Include="NetClientType.cs" />
     <Compile Include="Resultat.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Enumerations\StatutEpreuve.cs" />
     <Compile Include="ResponsableClub.cs" />
     <Compile Include="ResponsableCoupe.cs" />
+    <Compile Include="TypeEpreuve.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LamSonVodao.CoupeQuachVanKe.Contracts\LamSonVodao.CoupeQuachVanKe.Contracts.csproj">

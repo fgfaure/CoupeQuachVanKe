@@ -2,6 +2,8 @@
 {
     using LamSonVodao.CoupeQuachVanKe.AccesPattern;
     using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
     using System;
     using System.Collections.Generic;
@@ -32,7 +34,7 @@
             result.MaxJsonLength = Int32.MaxValue;
             result.Data = this.competiteursRepo.GetAll().Select(c => new CompetiteurModel
             {
-                Categorie = c.Categorie,
+                CategorieId = (int)c.Categorie,
                 ClubId = c.ClubId,
                 DateNaissance = c.DateNaissance,
                 Id = c.Id,
@@ -41,7 +43,7 @@
                 Nom = c.Nom,
                 Prenom = c.Prenom,
                 Poids = c.Poids,
-                Sexe = c.Sexe
+                GenreId = (int)c.Sexe
             });
             return result;
         }
@@ -66,14 +68,14 @@
             var dbItem = this.competiteursRepo.GetById(competiteur.Id);
             if (dbItem != null)
             {
-                dbItem.Categorie = competiteur.Categorie;
+                dbItem.Categorie = (CategoriePratiquant)competiteur.CategorieId;
                 dbItem.DateNaissance = competiteur.DateNaissance;
                 dbItem.InscriptionValidePourCoupe = competiteur.InscriptionValidePourCoupe;
                 dbItem.LicenceFFKDA = competiteur.LicenceFFKDA;
                 dbItem.Nom = competiteur.Nom;
                 dbItem.Prenom = competiteur.Prenom;
                 dbItem.Poids = competiteur.Poids;
-                dbItem.Sexe = competiteur.Sexe;
+                dbItem.Sexe = (Genre)competiteur.GenreId;
 
                 try
                 {
@@ -115,12 +117,12 @@
         public JsonResult CreateCompetiteur(CompetiteurModel competiteur)
         {
             Competiteur dbItem = new Competiteur
-            {                
-                Categorie = competiteur.Categorie,
+            {
+                Categorie = (CategoriePratiquant)competiteur.CategorieId,
                 ClubId = competiteur.ClubId,                
                 DateNaissance = competiteur.DateNaissance,
                 EquipeSongLuyen = competiteur.EquipeSongLuyen,
-                Grade = competiteur.Grade,                              
+                Grade = (Grade)competiteur.GradeId,                              
                 InscriptionValidePourCoupe = competiteur.InscriptionValidePourCoupe,
                 InscritPourBaiVuKhi = competiteur.InscritPourBaiVuKhi,
                 InscritPourCombat = competiteur.InscritPourCombat,
@@ -131,7 +133,7 @@
                 Nom = competiteur.Nom,
                 Prenom = competiteur.Prenom,
                 Poids = competiteur.Poids,                
-                Sexe = competiteur.Sexe
+                Sexe = (Genre)competiteur.GenreId
             };
 
             try

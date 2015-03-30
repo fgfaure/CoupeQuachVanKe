@@ -1,1 +1,284 @@
 ﻿
+    <div class="col-sm-2">
+        @RenderPage("../Shared/_Menu.cshtml")
+    </div>
+    <div class="col-sm-10">
+        <h2>Liste des Compétiteurs</h2>
+        <div id="competiteurs">
+        </div>
+    </div>
+
+<script>
+    $(document).ready(function () {
+        var categorieDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetCategories",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {              
+                model: {
+                    id: "value",
+                    fields: {
+                        value: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        text: {
+                            //set validation rules
+                            type: "string",
+                        }
+                    }
+                }
+            }
+        });
+        categorieDataSource.read();
+
+        var grades = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetGrades",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "value",
+                    fields: {
+                        value: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        text: {
+                            //set validation rules
+                            type: "string",
+                        }
+                    }
+                }
+            }
+        });
+        grades.read();
+
+        var clubsDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetClubs",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                parse : function(data)
+                {
+                    var clubs = [];
+                    for (var i = 0; i < data.length; i++) {
+                        var club = {
+                            value: data[i].Id,
+                            text: data[i].Nom                            
+                        };
+                        clubs.push(club);
+                    }
+                    return clubs;
+                },
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        Nom: {
+                            //set validation rules
+                            type: "string",                            
+                        }
+                    }
+                }
+            }
+        });
+        clubsDataSource.read();
+
+        var competiteurDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "Get",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                update: {
+                    url: "Update",
+                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                destroy: {
+                    url: "Delete",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                create: {
+                    url: "Create",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            editable: false,
+                            nullable: false
+                        },                       
+                        Nom: {
+                            editable: true,
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        Prenom: {
+                            editable: true,
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        DateNaissance: {
+                            editable: true,
+                            type: "date",
+                            validation: { required: true }
+                        },
+                        ClubId: {
+                            field: "ClubId",
+                            type: "number",
+                            defaultValue: 1
+                        },
+                        LicenceFFKDA: {
+                            editable: true,
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        GradeId: {
+                            editable: true,
+                            type: "number",
+                            defaultValue:1,
+                            validation: { required: true }
+                        },
+                        CategorieId: {
+                            type: "number",
+                            defaultValue: 1,
+                            type: "number",
+                            validation: { required: true }
+                        },
+                        NbAnneePratique: {
+                            editable: true,
+                            type: "string"
+                        },
+                        InscriptionValidePourCoupe: {
+                            editable: true,
+                            type: "boolean"
+                        },
+                        InscritPourBaiVuKhi: {
+                            editable: true,
+                            type: "boolean"
+                        },
+                        InscritPourQuyen: {
+                            editable: true,
+                            type: "boolean"
+                        },
+                        InscritPourSongLuyen: {
+                            editable: true,
+                            type: "boolean"
+                        },
+                        EquipeSongLuyen: {
+                            editable: true,
+                            type: "number"
+                        },
+                        InscritPourCombat: {
+                            editable: true,
+                            type: "boolean"
+                        },
+                        Poids: {
+                            editable: true,
+                            type: "number"
+                        }
+                    }
+                }
+            },
+            pageSize: 10
+        });
+
+        $("#competiteurs").kendoGrid({
+            dataSource: competiteurDataSource,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            sortable: true,
+            groupable: true,
+            filterable: true,
+            autosync: true,
+            toolbar: ["create"],
+            columns: [                   
+                    { field: "Nom", title: "Nom" },
+                    { field: "Prenom", title: "Prénom" },
+                    {
+                        field: "DateNaissance", title: "Date de Naissance", template: '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #',
+                        groupHeaderTemplate: 'Date de Naissance : #=  kendo.toString(value, "dd/MM/yyyy") #'
+                    },
+                     { field: "ClubId", width: "200px", values: clubsDataSource.data().toJSON(), title: "Club" },
+                    { field: "LicenceFFKDA", title: "Licence" },
+                    { field: "CategorieId", values: categorieDataSource.data().toJSON(), title: "Catégorie" },
+                     { field: "GradeId", values: grades.data().toJSON(), title: "Grade" },
+                    { field: "InscriptionValidePourCoupe", title: "Inscr. Ok", template: '<input type="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>' },
+                    { field: "InscritPourBaiVuKhi", title: "Bai Vu Khi", template: '<input type="checkbox" #= InscritPourBaiVuKhi ? "checked=checked" : "" # disabled="disabled" ></input>' },
+                    { field: "InscritPourQuyen", title: "Bai Quyen", template: '<input type="checkbox" #= InscritPourQuyen ? "checked=checked" : "" # disabled="disabled" ></input>' },
+                    { field: "InscritPourSongLuyen", title: "Song Luyen", template: '<input type="checkbox" #= InscritPourSongLuyen ? "checked=checked" : "" # disabled="disabled" ></input>' },
+                    { field: "EquipeSongLuyen", title: "Equipe", width : "65px" },
+                    { field: "InscritPourCombat", title: "Combat", template: '<input type="checkbox" #= InscritPourCombat ? "checked=checked" : "" # disabled="disabled" ></input>', width: "65px" },
+                    { field: "Poids", title: "Poids", width: "65px" }
+            ],
+            editable: "popup"
+        });
+    });
+
+</script>

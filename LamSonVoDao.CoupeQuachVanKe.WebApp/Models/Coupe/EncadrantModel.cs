@@ -1,6 +1,7 @@
 ﻿using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 
@@ -40,7 +41,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The taille tenue.
         /// </value>
-        public TailleTenue TailleTenue { get; set; }
+        public int TailleTenueId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [est competiteur].
@@ -56,7 +57,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The sexe.
         /// </value>
-        public Genre Sexe { get; set; }
+        public int GenreId { get; set; }
       
         /// <summary>
         /// Gets or sets the club identifier.
@@ -64,6 +65,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The club identifier.
         /// </value>
-        public int ClubId { get; set; }     
+        public int ClubId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the disponibilites.
+        /// </summary>
+        /// <value>
+        /// The disponibilites.
+        /// </value>
+        public IEnumerable<DisponibiliteModel> Disponibilites { get; set; }
     }
 }

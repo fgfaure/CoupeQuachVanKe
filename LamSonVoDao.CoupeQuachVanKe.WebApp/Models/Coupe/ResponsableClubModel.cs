@@ -47,7 +47,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The email contact.
         /// </value>
-        public string EmailContact { get; set; }
+        public string MailContact { get; set; }
 
         public int ClubId { get; set; }
     }

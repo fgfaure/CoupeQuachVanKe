@@ -32,7 +32,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The role.
         /// </value>
-        public Role Role { get; set; }
+        public string Role { get; set; }
 
     }
 }

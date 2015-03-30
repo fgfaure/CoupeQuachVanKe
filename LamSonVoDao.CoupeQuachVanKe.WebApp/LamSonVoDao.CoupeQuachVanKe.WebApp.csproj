@@ -170,6 +170,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\CategoriesPratiquant.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CategoriesPratiquant.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GenreEpreuves.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GenreEpreuves.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Genres.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Genres.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Grades.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Grades.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Roles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Roles.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -219,15 +244,20 @@
     <Compile Include="Controllers\EpreuveController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedecinController.cs" />
+    <Compile Include="Controllers\QVKApiController.cs" />
     <Compile Include="Controllers\ResponsableClubController.cs" />
     <Compile Include="Controllers\ResponsableCoupeController.cs" />
     <Compile Include="Controllers\SaisieController.cs" />
     <Compile Include="Controllers\SatelliteController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
+    <Compile Include="Controllers\TypeEpreuveController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\DataTransferObjectToModel.cs" />
+    <Compile Include="Helper\EnumConverter.cs" />
     <Compile Include="Helper\ExcelConverterHelper.cs" />
+    <Compile Include="Helper\ModelToDataTransferObject.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Coupe\AireModel.cs" />
@@ -244,12 +274,16 @@
     <Compile Include="Models\Coupe\ResponsableCoupeModel.cs" />
     <Compile Include="Models\Coupe\ResponsableClubModel.cs" />
     <Compile Include="Models\Coupe\ResultatModel.cs" />
+    <Compile Include="Models\Coupe\TypeEpreuveModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <None Include="Resources\grade.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Content Include="Views\TypeEpreuve\Index.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -1173,6 +1207,36 @@
       <Project>{ef080f29-bba4-4a6c-af34-88a16a9bf8d4}</Project>
       <Name>LamSonVodao.CoupeQuachVanKe.DataTransferObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\CategoriesPratiquant.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>CategoriesPratiquant.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Grades.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Grades.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Genres.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Genres.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GenreEpreuves.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GenreEpreuves.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Roles.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Roles.Designer.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

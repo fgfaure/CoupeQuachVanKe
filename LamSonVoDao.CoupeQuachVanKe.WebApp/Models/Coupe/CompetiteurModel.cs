@@ -6,9 +6,18 @@ using System.Web;
 
 namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class CompetiteurModel
     {
 
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
         public int Id { get; set; }
         /// <summary>
         /// Gets or sets the nom.
@@ -27,20 +36,20 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         public string Prenom { get; set; }
 
         /// <summary>
-        /// Gets or sets the grade.
+        /// Gets or sets the grade identifier.
         /// </summary>
         /// <value>
-        /// The grade.
+        /// The grade identifier.
         /// </value>
-        public Grade Grade { get; set; }
+        public int GradeId { get; set; }
 
         /// <summary>
-        /// Gets or sets the categorie.
+        /// Gets or sets the categorie identifier.
         /// </summary>
         /// <value>
-        /// The categorie.
+        /// The categorie identifier.
         /// </value>
-        public CategoriePratiquant Categorie { get; set; }
+        public int CategorieId { get; set; }
 
         /// <summary>
         /// Gets or sets the date naissance.
@@ -51,12 +60,12 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         public DateTime DateNaissance { get; set; }
 
         /// <summary>
-        /// Gets or sets the sexe.
+        /// Gets or sets the genre identifier.
         /// </summary>
         /// <value>
-        /// The sexe.
+        /// The genre identifier.
         /// </value>
-        public Genre Sexe { get; set; }
+        public int GenreId { get; set; }
 
         /// <summary>
         /// Gets or sets the licence ffkda.

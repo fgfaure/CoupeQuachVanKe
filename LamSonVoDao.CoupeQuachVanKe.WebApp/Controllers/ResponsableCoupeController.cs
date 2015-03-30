@@ -2,6 +2,7 @@
 {
     using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
     using System;
     using System.Collections.Generic;
@@ -19,7 +20,7 @@
             {
                 Id = r.Id,
                 Adresse = r.Adresse,
-                EmailContact = r.EmailContact,
+                MailContact = r.MailContact,
                 CoupeId = r.CoupeId,
                 Nom = r.Nom,
                 Prenom = r.Prenom,
@@ -35,7 +36,7 @@
                 var dbitem = new ResponsableCoupe
                 {
                     Adresse = model.Adresse,
-                    EmailContact = model.EmailContact,
+                    MailContact = model.MailContact,
                     CoupeId = model.CoupeId,
                     Nom = model.Nom,
                     Prenom = model.Prenom,
@@ -43,7 +44,7 @@
                 };
 
                 this.repository.Insert(dbitem);
-                return Json(model);
+                return Json(dbitem.ToModel());
 
             }
             catch
@@ -81,7 +82,7 @@
                 if (dbmodel != null)
                 {
                     dbmodel.Adresse = model.Adresse;
-                    dbmodel.EmailContact = model.EmailContact;
+                    dbmodel.MailContact = model.MailContact;
                     dbmodel.CoupeId = model.CoupeId;
                     dbmodel.Nom = model.Nom;
                     dbmodel.Prenom = model.Prenom;

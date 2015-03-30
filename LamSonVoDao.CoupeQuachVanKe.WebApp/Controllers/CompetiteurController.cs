@@ -1,7 +1,9 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
     using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
     using System;
     using System.Collections.Generic;
@@ -20,11 +22,11 @@
                 Id = competiteur.Id,                
                 Nom = competiteur.Nom,
                 Prenom = competiteur.Prenom,
-                Categorie = competiteur.Categorie,
+                CategorieId = (int)competiteur.Categorie,
                 ClubId = competiteur.ClubId,
                 DateNaissance = competiteur.DateNaissance,
                 EquipeSongLuyen = competiteur.EquipeSongLuyen,
-                Grade = competiteur.Grade,
+                GradeId = (int)competiteur.Grade,
                 InscriptionValidePourCoupe = competiteur.InscriptionValidePourCoupe,
                 InscritPourBaiVuKhi = competiteur.InscritPourBaiVuKhi,
                 InscritPourCombat = competiteur.InscritPourCombat,
@@ -33,7 +35,7 @@
                 LicenceFFKDA = competiteur.LicenceFFKDA,
                 NbAnneePratique = competiteur.NbAnneePratique,                
                 Poids = competiteur.Poids,
-                Sexe = competiteur.Sexe
+                GenreId = (int)competiteur.Sexe
             });
             return result;
         }
@@ -47,11 +49,11 @@
                     Id = model.Id,
                     Nom = model.Nom,
                     Prenom = model.Prenom,
-                    Categorie = model.Categorie,
+                    Categorie = (CategoriePratiquant)model.CategorieId,
                     ClubId = model.ClubId,
                     DateNaissance = model.DateNaissance,
                     EquipeSongLuyen = model.EquipeSongLuyen,
-                    Grade = model.Grade,
+                    Grade =  (Grade)model.GradeId,
                     InscriptionValidePourCoupe = model.InscriptionValidePourCoupe,
                     InscritPourBaiVuKhi = model.InscritPourBaiVuKhi,
                     InscritPourCombat = model.InscritPourCombat,
@@ -60,7 +62,7 @@
                     LicenceFFKDA = model.LicenceFFKDA,
                     NbAnneePratique = model.NbAnneePratique,
                     Poids = model.Poids,
-                    Sexe = model.Sexe
+                    Sexe =  (Genre)model.GenreId
                 };
 
                 this.repository.Insert(dbitem);
@@ -102,11 +104,11 @@
                 {
                     dbmodel.Nom = model.Nom;
                     dbmodel.Prenom = model.Prenom;
-                    dbmodel.Categorie = model.Categorie;
+                    dbmodel.Categorie = (CategoriePratiquant)model.CategorieId;
                     dbmodel.ClubId = model.ClubId;
                     dbmodel.DateNaissance = model.DateNaissance;
                     dbmodel.EquipeSongLuyen = model.EquipeSongLuyen;
-                    dbmodel.Grade = model.Grade;
+                    dbmodel.Grade = (Grade)model.GradeId;
                     dbmodel.InscriptionValidePourCoupe = model.InscriptionValidePourCoupe;
                     dbmodel.InscritPourBaiVuKhi = model.InscritPourBaiVuKhi;
                     dbmodel.InscritPourCombat = model.InscritPourCombat;
@@ -115,7 +117,7 @@
                     dbmodel.LicenceFFKDA = model.LicenceFFKDA;
                     dbmodel.NbAnneePratique = model.NbAnneePratique;
                     dbmodel.Poids = model.Poids;
-                    dbmodel.Sexe = model.Sexe;                 
+                    dbmodel.Sexe = (Genre)model.GenreId;
                     this.repository.Update(dbmodel);
                     return Json(model);
                 }

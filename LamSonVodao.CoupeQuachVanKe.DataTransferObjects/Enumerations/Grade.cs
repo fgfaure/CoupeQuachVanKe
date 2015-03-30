@@ -8,6 +8,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations
         Plus4emeCapACeintureMarron = 2,
         MoinsDeCeintureNoire = 3,
         CeintureNoire = 4,
-        TousGrades = 5
+        TousGrades = 5,
+        NonRenseigne = 99
     }
 }

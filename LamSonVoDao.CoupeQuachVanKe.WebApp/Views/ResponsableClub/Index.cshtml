@@ -1,1 +1,155 @@
 ﻿
+    <div class="col-sm-2">
+        @RenderPage("../Shared/_Menu.cshtml")
+    </div>
+    <div class="col-sm-10">
+        <h2>Liste des Responsables de Clubs</h2>
+        <div id="responsablesClub">
+        </div>
+    </div>
+
+<script>
+    $(document).ready(function () {
+        var clubs = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetClubs",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                parse: function (data) {
+                    var temp = [];
+                    for (var i = 0; i < data.length; i++) {
+                        temp.push({
+                            value: data[i].Id,
+                            text: data[i].Nom
+                        });
+                    }
+                    return temp;
+                },
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        Nom: {
+                            //set validation rules
+                            type: "string",
+                        }
+                    }
+                }
+            }
+        });
+        clubs.read();
+
+        var resp = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "Get",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                update: {
+                    url: "Update",
+                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                destroy: {
+                    url: "Delete",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                create: {
+                    url: "Create",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            pageSize : 10,
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: true
+                        },
+                        Nom: {
+                            //set validation rules
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        Prenom: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "string",
+                            validation: { required: true, min: 1 }
+                        },
+                        Telephone: {
+                            type: "string",
+                            validation: { required: false, min: 14, max: 14 }
+                        },
+                        MailContact: {
+                            type: "string",
+                            validation: { required: false }
+                        },
+                        ClubId: {
+                            type: "number",
+                            defaultValue: 1,
+                            type: "number",
+                            validation: { required: true }
+                        },
+                    }
+                }
+            }
+        });
+
+        $("#responsablesClub").kendoGrid({
+            dataSource: resp,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            sortable: true,
+            groupable: true,
+            filterable: true,
+            autosync: true,
+            toolbar: ["create"],
+            columns: [
+                    { field: "Nom", title: "Nom" },
+                    { field: "Prenom", title: "Prénom" },
+                    { field: "Telephone", title: "Téléphone" },
+                    { field: "MailContact", title: "Email de Contact" },
+                   { field: "ClubId", values: clubs.data().toJSON(), title: "Club" },
+                   { command: ["edit", "destroy"], title: "&nbsp;", width: "200px" }
+            ],
+            editable: "popup"
+        });
+    });
+</script>

@@ -32,7 +32,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The statut.
         /// </value>
-        public StatutEpreuve Statut { get; set; }
+        public string Statut { get; set; }
 
         /// <summary>
         /// Gets or sets the type epreuve.
@@ -40,7 +40,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The type epreuve.
         /// </value>
-        public TypeEpreuve TypeEpreuve { get; set; }
+        public string TypeEpreuve { get; set; }
 
         /// <summary>
         /// Gets or sets the categorie.
@@ -48,7 +48,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The categorie.
         /// </value>
-        public CategoriePratiquant Categorie { get; set; }
+        public string Categorie { get; set; }
 
         /// <summary>
         /// Gets or sets the genre categorie.
@@ -56,7 +56,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The genre categorie.
         /// </value>
-        public Genre GenreCategorie { get; set; }
+        public string GenreCategorie { get; set; }
 
         /// <summary>
         /// Gets or sets the grade autorise.
@@ -64,7 +64,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The grade autorise.
         /// </value>
-        public Grade GradeAutorise { get; set; }
+        public string GradeAutorise { get; set; }
 
         /// <summary>
         /// Gets or sets the categorie poids.

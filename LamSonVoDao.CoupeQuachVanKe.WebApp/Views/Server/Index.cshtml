@@ -1,16 +1,13 @@
 ﻿
-<h1>Server</h1>
-
-<ul id="serverMenu" />
-
+<div class="col-sm-2">
+    @RenderPage("../Shared/_Menu.cshtml")
+</div>
+<div class="col-sm-10">
+    <h2>Liste des Clubs</h2>
+    <div id="gridClubs">
+    </div>
+</div>
 
 <script>
-    var menuSource = [{ text: '<a href="/Medecin">Gestion des Médecins</a>', encoded: false }, { text: '<a href="/Aires">Gestion des Aires</a>', encoded: false }];
-
-    $(document).ready(function (e) {
-        $("#serverMenu").kendoMenu({
-            dataSource: menuSource
-        });
-    });
 
 </script>

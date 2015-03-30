@@ -1,10 +1,13 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
     using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
@@ -21,7 +24,7 @@
                 Date = dispo.Date,
                 EncadrantId = dispo.EncadrantId,
                 Matin = dispo.Matin,
-                Role = dispo.Role                
+                Role = dispo.Role.ToString()
             });
             return result;
         }
@@ -35,7 +38,7 @@
                     Date = model.Date,
                     EncadrantId = model.EncadrantId,
                     Matin = model.Matin,
-                    Role = model.Role
+                    Role = new EnumConverter<Role>().ConvertToEnum(model.Role)
                 };
 
                 this.repository.Insert(dbitem);
@@ -71,7 +74,7 @@
                     dbmodel.EncadrantId = model.EncadrantId;
                     dbmodel.Date = model.Date;
                     dbmodel.Matin = model.Matin;
-                    dbmodel.Role = model.Role;                    
+                    dbmodel.Role = new EnumConverter<Role>().ConvertToEnum(model.Role);                    
 
                     this.repository.Update(dbmodel);
                     return Json(model);

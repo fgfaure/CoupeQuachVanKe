@@ -68,6 +68,7 @@
     <Compile Include="Mappers\ResponsableCoupeMapper.cs" />
     <Compile Include="Mappers\ResponsableClubMapper.cs" />
     <Compile Include="Mappers\ResultatMapper.cs" />
+    <Compile Include="Mappers\TypeEpreuveMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

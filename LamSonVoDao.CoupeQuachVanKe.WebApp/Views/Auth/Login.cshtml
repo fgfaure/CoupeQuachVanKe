@@ -82,8 +82,7 @@
 
         $("#dropdownLog").kendoDropDownList({
             dataTextField: "logName",
-            dataValueField: "clientId",
-            optionLabel: "Choisir un compte",
+            dataValueField: "clientId",            
             dataSource: clients,
             change: function () {
                 validator.validate();

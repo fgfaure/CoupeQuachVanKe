@@ -27,7 +27,7 @@
                     {
                         Nom = "Tran Van Ba",
                         Prenom = "Christophe",
-                        EmailContact = "christophe.tranvaba@gmail.com",
+                        MailContact = "christophe.tranvaba@gmail.com",
                         Telephone = "00-00-00-00-00",
                         Adresse = "chez cricri"
                     }

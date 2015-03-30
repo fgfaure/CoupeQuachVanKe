@@ -22,36 +22,41 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             DateTime result = DateTime.FromOADate(double.Parse(input));
             int age = DateTime.Now.Year - result.Year;
             CategoriePratiquant categorie = CategoriePratiquant.NotSet;
-            switch (age)
+
+            if (age >= 8 && age<=9)
             {
-                case 8:
-                case 9:
-                    categorie = CategoriePratiquant.Pupilles;
-                    break;
-                case 10:
-                case 11:
-                    categorie = CategoriePratiquant.Benjamins;
-                    break;
-                case 12:
-                case 13:
-                    categorie = CategoriePratiquant.Minimes;
-                    break;
-                case 15:
-                case 14:
-                    categorie = CategoriePratiquant.Cadets;
-                    break;
-                case 16:
-                case 17:
-                    categorie = CategoriePratiquant.Juniors;
-                    break;
-                case 18:
-                case 35:
-                    categorie = CategoriePratiquant.Seniors;
-                    break;
-                default:
-                    categorie = CategoriePratiquant.Veterans;
-                    break;
+                categorie = CategoriePratiquant.Pupilles;
+
             }
+            else if (age >= 10 && age <= 11)
+            {
+                categorie = CategoriePratiquant.Benjamins;
+
+            }
+            else if(age >= 12 && age<=13)
+            {
+                categorie = CategoriePratiquant.Minimes;
+
+            }
+            else if (age >= 14 && age<=15)
+            {
+                categorie = CategoriePratiquant.Cadets;
+
+            }
+            else if (age >= 16 && age <= 17)
+            {
+                categorie = CategoriePratiquant.Juniors;
+
+            }
+            else if (age >= 18 && age <= 35)
+            {
+                categorie = CategoriePratiquant.Seniors;
+            }
+            else
+            {
+                categorie = CategoriePratiquant.Veterans;
+
+            }         
             return categorie;
         }
 
@@ -61,14 +66,10 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             {
                 return Genre.Masculin;
             }
-            else if (string.Compare(input.ToLowerInvariant(), Feminin.ToLowerInvariant(), StringComparison.InvariantCultureIgnoreCase) == 0)
-            {
-                return Genre.Feminin;
-            }
             else
             {
-                return Genre.Mixte;
-            }
+                return Genre.Feminin;
+            }        
         }
 
         internal static Grade ConvertToGrade(string input)
@@ -87,7 +88,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             }
             else
             {
-                return Grade.NotSet;
+                return Grade.NonRenseigne;
             }
         }
 

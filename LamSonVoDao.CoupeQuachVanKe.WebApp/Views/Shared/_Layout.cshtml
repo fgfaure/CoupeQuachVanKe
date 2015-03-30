@@ -6,17 +6,18 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/kendo/css")
-
-    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+      
     <script src="@Url.Content("~/Scripts/cultures/kendo.culture.fr-FR.min.js")"></script>
 
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -25,32 +26,29 @@
                 </button>
                 @Html.ActionLink("Gestion Coupe Quach Van ke", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            @*<div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                </ul>
-            </div>*@
-
+            
             @{
                 if (User.Identity.IsAuthenticated)
                 {@:<div class="navbar-brand float-right"><a href="@Url.Action("logout", "auth")">Déconnexion</a></div>
             }}
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container-fluid">
+        
         @RenderBody()
     </div>
-    <div>
-        <hr />
-        <footer style="margin-left:50px">
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+   
+    <footer class="footer"></footer>
 
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script>
-        kendo.culture("fr-FR");
+        kendo.culture("fr-FR");     
+
+        $(window).on('unload', function () {
+            $.ajax({
+                url: "Auth/LogOut"
+            });
+        });
     </script>
 </body>
 </html>

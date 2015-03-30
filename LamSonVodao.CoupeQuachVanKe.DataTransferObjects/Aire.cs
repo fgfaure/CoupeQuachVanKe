@@ -29,7 +29,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The coupe.
         /// </value>
-        public virtual Coupe Coupe { get; set; }
+        public Coupe Coupe { get; set; }
 
         /// <summary>
         /// Gets or sets the coupe identifier.

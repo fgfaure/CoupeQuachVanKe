@@ -44,7 +44,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The email contact.
         /// </value>
-        public string EmailContact { get; set; }
+        public string MailContact { get; set; }
                
     }
 }

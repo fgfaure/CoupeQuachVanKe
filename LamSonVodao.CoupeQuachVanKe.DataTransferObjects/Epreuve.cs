@@ -41,6 +41,14 @@ namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
         public TypeEpreuve TypeEpreuve { get; set; }
 
         /// <summary>
+        /// Gets or sets the type epreuve identifier.
+        /// </summary>
+        /// <value>
+        /// The type epreuve identifier.
+        /// </value>
+        public int TypeEpreuveId { get; set; }
+
+        /// <summary>
         /// Gets or sets the categorie.
         /// </summary>
         /// <value>
@@ -54,7 +62,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The genre categorie.
         /// </value>
-        public Genre GenreCategorie { get; set; }
+        public GenreEpreuve GenreCategorie { get; set; }
 
         /// <summary>
         /// Gets or sets the grade autorise.
@@ -79,7 +87,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
         /// The encadrants.
         /// </value>
         public virtual ICollection<Encadrement> Encadrements { get; set; }
-       
+
         /// <summary>
         /// Gets or sets the resultats.
         /// </summary>

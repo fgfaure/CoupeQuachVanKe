@@ -1,35 +1,35 @@
-﻿<div>
-    <ul id="serverMenu" />
-</div>
+﻿    <div class="col-sm-2">
+        @RenderPage("../Shared/_Menu.cshtml")
+    </div>
+    <div class="col-sm-10">
+        <h2>Liste des Médecins</h2>
+        <div id="gridMedecins">
+        </div>
+    </div>
 
-<div id="gridMedecins"/>
 <script>
-    $(document).ready(function () {
-        var menuSource = [{ text: '<a href="/Medecin">Gestion des Médecins</a>', encoded: false }, { text: '<a href="/Aires">Gestion des Aires</a>', encoded: false }];
-        $("#serverMenu").kendoMenu({
-            dataSource: menuSource
-        });
+    $(document).ready(function () { 
 
         var medecinDataSource = new kendo.data.DataSource({
             transport: {
                 read: {
-                    url: "/Medecin/Get",
+                    url: "Get",
                     dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                 },
                 update: {
-                    url: "/Medecin/Update",
+                    url: "Update",
                     dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                     contentType: "application/json",
                     type: "POST"
                 },
                 destroy: {
-                    url: "/Medecin/Delete",
+                    url: "Delete",
                     dataType: "json",
                     contentType: "application/json",
                     type: "POST"
                 },
                 create: {
-                    url: "/Medecin/Create",
+                    url: "Create",
                     dataType: "json",
                     contentType: "application/json",
                     type: "POST"
@@ -43,6 +43,7 @@
                     }
                 }
             },
+            pageSize : 10,
             schema: {
                 model: {
                     id: "Id",
@@ -78,7 +79,11 @@
 
         $("#gridMedecins").kendoGrid({
             dataSource: medecinDataSource,
-            pageable: false,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
             autosync: true,
             height: 550,
             toolbar: ["create"],
@@ -87,7 +92,7 @@
                 { field: "Prenom", title: "Prénom" },
                 { field: "Telephone", title: "Téléphone", width: "120px" },
                 { field: "MailContact", title: "Email de contact" },
-                { command: ["edit", "destroy"], title: "&nbsp;", width: "250px" }],
+                { command: ["edit", "destroy"], title: "&nbsp;", width: "200px" }],
             editable: "popup"
         });
     });

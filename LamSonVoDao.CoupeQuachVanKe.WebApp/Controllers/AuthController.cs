@@ -117,7 +117,10 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data =  this.netClientRepository.GetAll().Where(nc => !nc.IsConnected).Select(nc =>  new {clientId = nc.Id, logName = nc.ClientName});
+            
+            var list =  this.netClientRepository.GetAll().Where(nc => !nc.IsConnected).Select(nc =>  new {clientId = nc.Id, logName = nc.ClientName}).ToList();
+            list.Insert(0,new {clientId = -1, logName = "Choisissez un compte"});
+            result.Data = list;
             return result;
         }
 

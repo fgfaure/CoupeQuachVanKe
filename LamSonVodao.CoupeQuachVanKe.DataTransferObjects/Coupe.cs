@@ -119,6 +119,14 @@ namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
         /// The medecins.
         /// </value>
         public virtual ICollection<Medecin> Medecins { get; set; }
+
+        /// <summary>
+        /// Gets or sets the types epreuve.
+        /// </summary>
+        /// <value>
+        /// The types epreuve.
+        /// </value>
+        public virtual ICollection<TypeEpreuve> TypesEpreuve { get; set; }
        
     }
 }

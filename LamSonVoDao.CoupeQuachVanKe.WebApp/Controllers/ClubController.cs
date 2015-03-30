@@ -30,10 +30,59 @@
             return result;
         }
 
-      
+        [HttpPost]
+        public JsonResult Competiteurs(string id)
+        {
+            int parsed;
+            if (int.TryParse(id, out parsed))
+            {
+                var result = new JsonResult();
+                result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+                result.Data = this.unitOfWork.Repository<Competiteur>().GetAll().Where(e => e.ClubId == parsed).Select(c => c.ToModel());
+                return result;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid Id", "id");
+            }
 
+        }
+
+        [HttpPost]
+        public JsonResult Responsables(string id)
+        {
+            int parsed;
+            if (int.TryParse(id, out parsed))
+            {
+                var result = new JsonResult();
+                result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+                result.Data = this.unitOfWork.Repository<ResponsableClub>().GetAll().Where(e => e.ClubId == parsed).Select(c => c.ToModel());         
+                return result;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid Id", "id");
+            }
+        }
+
+        [HttpPost]
+        public JsonResult Encadrants(string id)
+        {
+            int parsed;
+            if (int.TryParse(id, out parsed))
+            {
+                var result = new JsonResult();
+                result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+                result.Data = this.unitOfWork.Repository<Encadrant>().GetAll().Where(e => e.ClubId == parsed).Select(e => e.ToModel());
+                return result;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid Id", "id");
+            }
+        }
         // POST: Club/Create
-       // [HttpPost]
+        // [HttpPost]
         public JsonResult Create(ClubModel club)
         {
             try
@@ -55,7 +104,7 @@
                 throw;
             }
         }
-       // [HttpPost]
+        // [HttpPost]
         public JsonResult Update(ClubModel model)
         {
             try
@@ -101,7 +150,7 @@
                     var physicalPath = Path.Combine(Server.MapPath("~/App_Data/Imports"), fileName);
 
                     // The files are not actually saved in this demo
-                    file.SaveAs(physicalPath);                    
+                    file.SaveAs(physicalPath);
 
                     IExcelDataReader excelReader = null;
 
@@ -109,7 +158,7 @@
                     {
 
                         using (FileStream stream = System.IO.File.Open(physicalPath, FileMode.Open, FileAccess.Read))
-                        {                            
+                        {
                             excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
                             DataSet result = excelReader.AsDataSet();
 
@@ -133,7 +182,7 @@
                                         Prenom = thirdRow.ItemArray[17].ToString(),
                                         Adresse = thirdRow.ItemArray[18].ToString(),
                                         Telephone = thirdRow.ItemArray[19].ToString(),
-                                        EmailContact = thirdRow.ItemArray[20].ToString()
+                                        MailContact = thirdRow.ItemArray[20].ToString()
                                     };
 
                                     List<Competiteur> competiteursFromXLS = new List<Competiteur>();
@@ -271,7 +320,7 @@
                                     System.IO.File.Move(physicalPath, Path.Combine(clubDirectory, fileName));
                                     // Return an empty string to signify success                                
                                 }
-                            } 
+                            }
                         }
                     }
                     catch (Exception)

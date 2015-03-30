@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LamSonVodao.CoupeQuachVanKe.AccesPattern;
+using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,5 +21,22 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Session_End(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Session_End");
+            UnitOfWork unitOfWork = new UnitOfWork();            
+            var ctx = Request.GetOwinContext();
+            var authManager = ctx.Authentication;
+
+            authManager.SignOut("ApplicationCookie");
+            var dbitem = unitOfWork.Repository<NetClient>().Get(nc => nc.ClientName == authManager.User.Claims.First().Value).FirstOrDefault();
+            if (dbitem != null)
+            {
+                dbitem.IsConnected = false;
+                unitOfWork.Repository<NetClient>().Update(dbitem);
+            }
+        }
+
     }
 }

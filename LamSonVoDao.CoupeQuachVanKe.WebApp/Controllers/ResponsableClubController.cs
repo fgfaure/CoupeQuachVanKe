@@ -19,7 +19,7 @@
             {
                 Id = r.Id,
                 Adresse = r.Adresse,
-                EmailContact = r.EmailContact,
+                MailContact = r.MailContact,
                 ClubId = r.ClubId,
                 Nom = r.Nom,
                 Prenom = r.Prenom,
@@ -35,7 +35,7 @@
                 var dbitem = new ResponsableClub
                 {                    
                     Adresse = model.Adresse,
-                    EmailContact = model.EmailContact,
+                    MailContact = model.MailContact,
                     ClubId = model.ClubId,
                     Nom = model.Nom,
                     Prenom = model.Prenom,
@@ -81,7 +81,7 @@
                 if (dbmodel != null)
                 {
                     dbmodel.Adresse = model.Adresse;
-                    dbmodel.EmailContact = model.EmailContact;
+                    dbmodel.MailContact = model.MailContact;
                     dbmodel.ClubId = model.ClubId;
                     dbmodel.Nom = model.Nom;
                     dbmodel.Prenom = model.Prenom;
