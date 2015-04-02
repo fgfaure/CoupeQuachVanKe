@@ -1,7 +1,7 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;

@@ -1,7 +1,7 @@
-﻿namespace LamSonVodao.CoupeQuachVanKe.ConsoleApplication
+﻿namespace LamSonVoDao.CoupeQuachVanKe.ConsoleApplication
 {
-    using LamSonVodao.CoupeQuachVanKe.DataAccessLayer;
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataAccessLayer;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;

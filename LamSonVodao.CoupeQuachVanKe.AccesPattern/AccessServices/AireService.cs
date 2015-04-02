@@ -3,15 +3,15 @@
 /// <author>fgf</author>
 /// </copyright>
 
-namespace LamSonVodao.CoupeQuachVanKe.AccesPattern.AccessServices
+namespace LamSonVoDao.CoupeQuachVanKe.AccesPattern.AccessServices
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using LamSonVodao.CoupeQuachVanKe.AccesPattern.AccessServiceContracts;
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.AccesPattern.AccessServiceContracts;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 
 
     public class AireService : IAireService

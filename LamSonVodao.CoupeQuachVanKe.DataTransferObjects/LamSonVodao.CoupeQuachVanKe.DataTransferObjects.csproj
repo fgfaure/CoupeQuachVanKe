@@ -45,6 +45,8 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="CategoriePoids.cs" />
     <Compile Include="Enumerations\GenreEpreuve.cs" />
+    <Compile Include="EpreuveTechnique.cs" />
+    <Compile Include="EpreuveCombat.cs" />
     <Compile Include="NetClient.cs" />
     <Compile Include="NetClientType.cs" />
     <Compile Include="Resultat.cs" />

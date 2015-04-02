@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 
-namespace LamSonVodao.CoupeQuachVanKe.AccesPattern.AccessServiceContracts
+namespace LamSonVoDao.CoupeQuachVanKe.AccesPattern.AccessServiceContracts
 {
     public interface ICategoriePoidsService
     {

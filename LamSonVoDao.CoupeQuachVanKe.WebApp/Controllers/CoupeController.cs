@@ -1,7 +1,8 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
     using System;
     using System.Collections.Generic;
@@ -133,6 +134,22 @@
             catch
             {
                 throw;
+            }
+        }
+
+        public JsonResult Responsables(string id)
+        {
+            int parsed;
+            if (int.TryParse(id, out parsed))
+            {
+                var result = new JsonResult();
+                result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+                result.Data = this.unitOfWork.Repository<ResponsableCoupe>().GetAll().Where(e => e.CoupeId == parsed).Select(e => e.ToModel());
+                return result;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid Id", "id");
             }
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
+namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
     /// <summary>
     /// 
@@ -48,5 +48,13 @@ namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
         /// The coupe identifier.
         /// </value>
         public int CoupeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="TypeEpreuve"/> is technique.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if technique; otherwise, <c>false</c>.
+        /// </value>
+        public bool Technique { get; set; }
     }
 }

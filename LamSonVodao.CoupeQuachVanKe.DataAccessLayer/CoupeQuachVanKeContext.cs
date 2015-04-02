@@ -1,15 +1,15 @@
 ﻿
-namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer
+namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer
 {
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using LamSonVodao.CoupeQuachVanKe.DataAccessLayer;
-    using LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers;
+    using LamSonVoDao.CoupeQuachVanKe.DataAccessLayer;
+    using LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers;
 
     public class CoupeQuachVanKeContext : DbContext
     {
@@ -22,14 +22,16 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer
         }
 
         public DbSet<Aire> Aires { get; set; }
-        public DbSet<CategoriePoids> CategoriesPoids { get; set; }
+        //public DbSet<CategoriePoids> CategoriesPoids { get; set; }
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Competiteur> Competiteurs { get; set; }
         public DbSet<Coupe> Coupes { get; set; }
         public DbSet<Disponibilite> Disponibilites { get; set; }
         public DbSet<Encadrant> Encadrants { get; set; }
         public DbSet<Encadrement> Encadrements { get; set; }
-        public DbSet<Epreuve> Epreuves { get; set; }
+        //public DbSet<Epreuve> Epreuves { get; set; }
+        public DbSet<EpreuveCombat> EpreuvesCombat { get; set; }
+        public DbSet<EpreuveTechnique> EpreuvesTechniques { get; set; }
         public DbSet<Medecin> Medecins { get; set; }
         public DbSet<ResponsableCoupe> Responsables { get; set; }
         public DbSet<ResponsableClub> ResponsableClub { get; set; }
@@ -46,14 +48,15 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {         
             modelBuilder.Configurations.Add(new AireMapper());
-            modelBuilder.Configurations.Add(new CategoriePoidsMapper());
+            //modelBuilder.Configurations.Add(new CategoriePoidsMapper());
             modelBuilder.Configurations.Add(new ClubMapper());
             modelBuilder.Configurations.Add(new CompetiteurMapper());
             modelBuilder.Configurations.Add(new CoupeMapper());
             modelBuilder.Configurations.Add(new DisponibiliteMapper());
             modelBuilder.Configurations.Add(new EncadrantMapper());
             modelBuilder.Configurations.Add(new EncadrementMapper());
-            modelBuilder.Configurations.Add(new EpreuveMapper());
+            modelBuilder.Configurations.Add(new EpreuveCombatMapper());
+            modelBuilder.Configurations.Add(new EpreuveTechniqueMapper());
             modelBuilder.Configurations.Add(new MedecinMapper());
             modelBuilder.Configurations.Add(new ResponsableCoupeMapper());
             modelBuilder.Configurations.Add(new ResponsableClubMapper());

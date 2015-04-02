@@ -1,11 +1,11 @@
-﻿namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer
+﻿namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 
     /// <summary>
     /// 

@@ -1,0 +1,321 @@
+﻿<div class="col-sm-2">
+    @RenderPage("../Shared/_Menu.cshtml")
+</div>
+<div class="col-sm-10">
+    <h2>Liste des Epreuves Combat</h2>
+    <div id="epreuvesCombat">
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var statuses = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetStatuses",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "value",
+                    fields: {
+                        value: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        text: {
+                            //set validation rules
+                            type: "string",
+                        }
+                    }
+                }
+            }
+        });
+        statuses.read();
+
+        var genres = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetGenreEpreuves",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "value",
+                    fields: {
+                        value: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        text: {
+                            //set validation rules
+                            type: "string",
+                        }
+                    }
+                }
+            }
+        });
+        genres.read();
+
+        var categories = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetCategories",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "value",
+                    fields: {
+                        value: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        text: {
+                            //set validation rules
+                            type: "string",
+                        }
+                    }
+                }
+            }
+        });
+        categories.read();
+
+        var grades = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetGrades",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "value",
+                    fields: {
+                        value: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        text: {
+                            //set validation rules
+                            type: "string",
+                        }
+                    }
+                }
+            }
+        });
+        grades.read();
+
+        var combats = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetTypeEpreuvesCombat",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                parse: function (data) {
+                    var ep = [{ value: 0, text: '-- Choisissez --' }];
+                    for (var i = 0; i < data.length; i++) {
+                        ep.push({
+                            value: data[i].Id,
+                            text: data[i].Nom
+                        });
+                    }
+                    
+                    return ep;
+                },
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        Nom: {
+                            //set validation rules
+                            type: "string",
+                        }
+                    }
+                }
+            }
+        });
+        combats.read();
+
+        var epreuves = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "Get",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                update: {
+                    url: "Update",
+                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                destroy: {
+                    url: "Delete",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                create: {
+                    url: "Create",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            editable: false,
+                            nullable: false
+                        },
+                        Nom: {
+                            editable: true,
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        Description: {
+                            editable: true,
+                            type: "string"
+                        },
+                        StatutId: {
+                            editable: false,
+                            type: "number",
+                            defaultValue: 1
+                        },
+                        TypeEpreuveId: {
+                            editable: true,
+                            type: "number",
+                            defaultValue: 1
+                        },
+                        CategorieId: {
+                            editable: true,
+                            type: "number",
+                            defaultValue: 1
+                        },
+                        GenreCategorieId: {
+                            editable: true,
+                            type: "number",
+                            defaultValue: 1,
+                        },
+                        GradeAutoriseId: {
+                            editable: true,
+                            type: "number",
+                            defaultValue: 1,
+                        },
+                        PoidsMini: {
+                            editable: true,
+                            type: "number",
+                            validation: { required: true }
+                        },
+                        PoidsMaxi: {
+                            editable: true,
+                            type: "number",
+                            validation: { required: true }
+                        }
+                    }
+                }
+            },
+            pageSize: 10
+        });
+
+        $("#epreuvesCombat").kendoGrid({
+            dataSource: epreuves,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            sortable: true,
+            groupable: true,
+            filterable: true,
+            autosync: true,
+            toolbar: ["create"],
+            columns: [
+                    { field: "Nom", title: "Nom" },
+                    { field: "Description", title: "Description" },
+                    { field: "TypeEpreuveId", title: "Type d'Epreuve", values: combats.data().toJSON() },
+                    { field: "CategorieId", title: "Catégorie", values: categories.data().toJSON() },
+                    { field: "GenreCategorieId", title: "Genre", values: genres.data().toJSON() },
+                    { field: "GradeAutoriseId", title: "Grade", values: grades.data().toJSON() },
+                    { field: "PoidsMini", title: "Poids min." },
+                    { field: "PoidsMaxi", title: "Poids max." },
+                    { field: "StatutId", title: "Statut", values: statuses.data().toJSON() },
+                    { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }
+            ],
+            editable: "popup"
+        });
+    });
+</script>
+

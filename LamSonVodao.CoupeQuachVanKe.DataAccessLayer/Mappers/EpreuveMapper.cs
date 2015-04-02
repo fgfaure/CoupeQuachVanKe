@@ -1,6 +1,6 @@
-﻿namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
+﻿namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers
 {
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -26,13 +26,13 @@
 
             this.Property(epreuve => epreuve.Statut).IsRequired();            
 
-            this.Property(epreuve => epreuve.Categorie).IsRequired();
+            this.Property(epreuve => epreuve.CategoriePratiquant).IsRequired();
 
             this.Property(epreuve => epreuve.GenreCategorie).IsRequired();
 
-            this.Property(epreuve => epreuve.GradeAutorise).IsRequired();            
+            this.Property(epreuve => epreuve.GradeAutorise).IsRequired();
 
-            this.HasRequired(epreuve => epreuve.TypeEpreuve).WithMany(te => te.Epreuves).HasForeignKey(te => te.TypeEpreuveId);
+            this.HasRequired(epreuve => epreuve.TypeEpreuve).WithMany(te => te.Epreuves).HasForeignKey(te => te.TypeEpreuveId).WillCascadeOnDelete(true);            
         }
     }
 }

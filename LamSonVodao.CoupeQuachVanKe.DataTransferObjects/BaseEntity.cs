@@ -3,9 +3,9 @@
 /// <author>fgf</author>
 /// </copyright>
 
-namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
+namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
-    using LamSonVodao.CoupeQuachVanKe.Contracts;
+    using LamSonVoDao.CoupeQuachVanKe.Contracts;
 
 
     /// <summary>

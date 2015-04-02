@@ -3,9 +3,9 @@
 /// <author>fgf</author>
 /// </copyright>
 
-namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
+namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
 
 
     /// <summary>

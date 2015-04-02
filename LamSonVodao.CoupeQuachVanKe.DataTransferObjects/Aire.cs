@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
+namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
     /// <summary>
     /// 

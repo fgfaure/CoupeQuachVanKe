@@ -1,4 +1,4 @@
-﻿namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer
+﻿namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using LamSonVodao.CoupeQuachVanKe.DataAccessLayer;
+    using LamSonVoDao.CoupeQuachVanKe.DataAccessLayer;
 
     public class CoupeQuachVanKeMigrationConfiguration : DbMigrationsConfiguration<CoupeQuachVanKeContext>
     {

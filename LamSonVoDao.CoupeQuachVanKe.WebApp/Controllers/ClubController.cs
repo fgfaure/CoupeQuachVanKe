@@ -1,9 +1,9 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
     using Excel;
-    using LamSonVodao.CoupeQuachVanKe.AccesPattern;
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+    using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
     using System;
     using System.Collections.Generic;
@@ -159,7 +159,7 @@
 
                         using (FileStream stream = System.IO.File.Open(physicalPath, FileMode.Open, FileAccess.Read))
                         {
-                            excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+                            excelReader = ExcelReaderFactory.CreateBinaryReader(stream, false, ReadOption.Loose);
                             DataSet result = excelReader.AsDataSet();
 
                             if (result.Tables != null && result.Tables.Count == 3)
@@ -317,8 +317,7 @@
                                         Directory.CreateDirectory(clubDirectory);
                                     }
 
-                                    System.IO.File.Move(physicalPath, Path.Combine(clubDirectory, fileName));
-                                    // Return an empty string to signify success                                
+                                    System.IO.File.Move(physicalPath, Path.Combine(clubDirectory, fileName));            
                                 }
                             }
                         }

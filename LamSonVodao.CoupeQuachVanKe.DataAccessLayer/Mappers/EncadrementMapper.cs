@@ -2,7 +2,7 @@
 /// <author>fgf</author>
 /// </copyright>
 
-namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
+namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
     using System.Text;
     using System.Threading.Tasks;
     using DataAccessLayer.Mappers;
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 
     /// <summary>
     /// Mapper des encadrements

@@ -1,12 +1,12 @@
-﻿using LamSonVodao.CoupeQuachVanKe.DataAccessLayer;
-using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+﻿using LamSonVoDao.CoupeQuachVanKe.DataAccessLayer;
+using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LamSonVodao.CoupeQuachVanKe.AccesPattern
+namespace LamSonVoDao.CoupeQuachVanKe.AccesPattern
 {
 /// <summary>
 /// 

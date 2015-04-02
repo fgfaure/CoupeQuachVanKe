@@ -1,6 +1,6 @@
-﻿namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
+﻿namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers
 {
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;

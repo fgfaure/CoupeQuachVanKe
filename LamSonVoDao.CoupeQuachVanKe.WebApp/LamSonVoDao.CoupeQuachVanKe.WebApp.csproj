@@ -195,6 +195,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Roles.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\StatutEpreuves.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StatutEpreuves.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\TypesEpreuves.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TypesEpreuves.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -241,7 +251,8 @@
     <Compile Include="Controllers\CoupeController.cs" />
     <Compile Include="Controllers\DisponibiliteController.cs" />
     <Compile Include="Controllers\EncadrantController.cs" />
-    <Compile Include="Controllers\EpreuveController.cs" />
+    <Compile Include="Controllers\EpreuveCombatController.cs" />
+    <Compile Include="Controllers\EpreuveTechniqueController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedecinController.cs" />
     <Compile Include="Controllers\QVKApiController.cs" />
@@ -268,7 +279,8 @@
     <Compile Include="Models\Coupe\DisponibiliteModel.cs" />
     <Compile Include="Models\Coupe\EncadrantModel.cs" />
     <Compile Include="Models\Coupe\EncadrementModel.cs" />
-    <Compile Include="Models\Coupe\EpreuveModel.cs" />
+    <Compile Include="Models\Coupe\EpreuveCombatModel.cs" />
+    <Compile Include="Models\Coupe\EpreuveTechniqueModel.cs" />
     <Compile Include="Models\Coupe\MedecinModel.cs" />
     <Compile Include="Models\Coupe\NetClientModel.cs" />
     <Compile Include="Models\Coupe\ResponsableCoupeModel.cs" />
@@ -284,6 +296,8 @@
     <Compile Include="Startup.cs" />
     <Content Include="Views\TypeEpreuve\Index.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\EpreuveTechnique\Index.cshtml" />
+    <Content Include="Views\EpreuveCombat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -1236,6 +1250,18 @@
     <Content Include="App_GlobalResources\Roles.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Roles.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\TypesEpreuves.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>TypesEpreuves.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\StatutEpreuves.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>StatutEpreuves.Designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <PropertyGroup>

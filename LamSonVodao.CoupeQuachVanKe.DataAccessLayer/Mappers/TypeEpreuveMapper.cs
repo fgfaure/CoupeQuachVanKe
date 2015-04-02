@@ -1,4 +1,4 @@
-﻿using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+﻿using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
+namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers
 {
     public class TypeEpreuveMapper : DataMapper<TypeEpreuve>
     {
@@ -24,6 +24,8 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
 
             this.Property(te => te.Description).IsOptional();
             this.Property(te => te.Description).IsFixedLength().HasMaxLength(14);
+
+            this.Property(te => te.Technique).IsRequired();
 
             this.HasRequired(te => te.Coupe)
             .WithMany(c => c.TypesEpreuve)

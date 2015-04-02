@@ -1,6 +1,6 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts
 {
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
     using System;
     using System.Collections.Generic;
     using System.Linq;

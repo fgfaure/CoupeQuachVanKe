@@ -1,10 +1,231 @@
 ﻿
-    <div class="col-sm-2">
-        @RenderPage("../Shared/_Menu.cshtml")
+<div class="col-sm-2">
+    @RenderPage("../Shared/_Menu.cshtml")
+</div>
+<div class="col-sm-10">
+    <h2>Liste des Coupes</h2>
+    <div id="coupes">
     </div>
-    <div class="col-sm-10">
-        <h2>Liste des Coupes</h2>
-        <div id="coupes">
+</div>
+<script type="text/x-kendo-template" id="template">
+    <div class="tabstrip">
+        <ul>          
+            <li class="k-state-active">
+                Responsable
+            </li>
+        </ul>        
+        <div>
+            <div id="responsable">
+            </div>
         </div>
     </div>
 
+</script>
+<script>
+    function dateTimeEditor(container, options) {
+        $('<input data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field + '" data-format="' + options.format + '"/>')
+                .appendTo(container)
+                .kendoDateTimePicker({});
+    }
+
+    $(document).ready(function () {
+        var coupesDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "Get",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                update: {
+                    url: "Update",
+                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                destroy: {
+                    url: "Delete",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                create: {
+                    url: "Create",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            pagesize: 10,
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        Nom: {
+                            //set validation rules
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        Description: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "string"
+                        },
+                        NombreTapis: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "number",
+                            validation: { required: true }
+                        },
+                        Voie: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "string"
+                        },
+                        Numero: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "string"
+                        },
+                        Complement: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "string"
+                        },
+                        CodePostal: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        Ville: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        DateDebut: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "date",
+                            validation: { required: true }
+                        },
+                        DateFin: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            type: "date",
+                            validation: { required: true }
+                        }
+                    }
+                }
+            }
+        });
+
+        $("#coupes").kendoGrid({
+            dataSource: coupesDataSource,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },          
+            autosync: true,
+            toolbar: ["create"],
+            detailTemplate: kendo.template($("#template").html()),
+            detailInit: detailInit,
+            columns: [
+                { field: "Nom", title: "Nom" },
+                { field: "Description", title: "Description" },
+                { field: "DateDebut", title: "Date Début", format: "{0:yyyy-MM-dd HH:mm}", editor: dateTimeEditor, width: "115px" },
+                { field: "DateFin", title: "Date Fin", format: "{0:yyyy-MM-dd HH:mm}", editor: dateTimeEditor, width: "115px" },
+                { field: "NombreTapis", title: "Tapis", width: "75px" },
+                  { field: "Numero", title: "Numéro", width: "75px" },
+                  { field: "Voie", title: "Voie" },
+                  { field: "Complement", title: "Complément" },
+                  { field: "CodePostal", title: "Code Postal", width: "95px" },
+                  { field: "Ville", title: "Ville" },
+                { command: ["edit", "destroy"], title: "&nbsp;", width:"190px" }],
+            editable: "inline"
+        });
+
+        function detailInit(e) {
+            var detailRow = e.detailRow;
+
+            detailRow.find(".tabstrip").kendoTabStrip({
+                animation: {
+                    open: { effects: "fadeIn" }
+                }
+            });
+
+            detailRow.find("#responsable").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "Responsables",
+                            dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                            contentType: "application/json",
+                            type: "POST",
+                            data: {
+                                id: e.data.Id
+                            }
+                        },
+                        update: function (e) {
+                            console.log("update form");
+                        },
+                        parameterMap: function (options) {
+                            return JSON.stringify(options);
+                        }
+                    },
+                    pageSize: 10,
+                    schema: {
+                        model: {
+                            id: "Id",
+                            fields: {
+                                Id: {
+                                    editable: false,
+                                    nullable: false
+                                },
+                                Nom: {
+                                    editable: true,
+                                    type: "string",
+                                    validation: { required: true }
+                                },
+                                Prenom: {
+                                    editable: true,
+                                    type: "string",
+                                    validation: { required: true }
+                                },
+                                Adresse: {
+                                    editable: true,
+                                    type: "string",
+                                    validation: { required: false }
+                                },
+                                MailContact: {
+                                    type: "string"
+                                },
+                                Telephone: {
+                                    editable: false,
+                                    type: "string",
+                                    validation: { required: false }
+                                }
+                            }
+                        }
+                    },
+                    pageSize: 10
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "Nom", title: "Nom" },
+                    { field: "Prenom", title: "Prénom" },
+                    { field: "Adresse", title: "Adresse" },
+                    { field: "MailContact", title: "Email de Contact" },
+                     { field: "Telephone", title: "Téléphone" }
+                ]
+            });
+        }
+    });
+</script>

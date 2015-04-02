@@ -1,4 +1,4 @@
-﻿namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
+﻿namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 
    public class ResponsableClubMapper : DataMapper<ResponsableClub>
     {

@@ -1,4 +1,4 @@
-﻿using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+﻿using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
 using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
 using System;
@@ -21,7 +21,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 Nom = m.Nom,
                 Description = m.Description,
                 Id = m.Id,
-                CoupeId = m.CoupeId
+                CoupeId = m.CoupeId,
+                Technique = m.Technique
             });
 
             return result;
@@ -38,6 +39,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 {
                     Nom = typeEpreuve.Nom,
                     Description = typeEpreuve.Description,
+                    Technique = typeEpreuve.Technique,
                     CoupeId = typeEpreuve.CoupeId
                 });
 
@@ -59,7 +61,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
                 dbmodel.Description = model.Description;
                 dbmodel.Nom = model.Nom;
-                dbmodel.CoupeId = model.CoupeId;                
+                dbmodel.CoupeId = model.CoupeId;
+                dbmodel.Technique = model.Technique;
                 this.repository.Update(dbmodel);
                 return Json(model);
             }

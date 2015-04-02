@@ -87,7 +87,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The date fin.
         /// </value>
-        public DateTime DateFin { get; set; }       
+        public DateTime DateFin { get; set; }    
        
     }
 }

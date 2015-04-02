@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LamSonVodao.CoupeQuachVanKe.Contracts
+namespace LamSonVoDao.CoupeQuachVanKe.Contracts
 {
     public interface IRepository<T> 
     {

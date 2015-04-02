@@ -1,8 +1,8 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
-    using LamSonVodao.CoupeQuachVanKe.AccesPattern;
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+    using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
     using Resources;
@@ -57,13 +57,19 @@
         /// </summary>
         private Repository<Medecin> medecins;
         /// <summary>
-        /// The epreuves
+        /// The epreuves combat
         /// </summary>
-        private Repository<Epreuve> epreuves;
+        private Repository<EpreuveCombat> epreuvesCombat;
+        /// <summary>
+        /// The epreuves techniques
+        /// </summary>
+        private Repository<EpreuveTechnique> epreuvesTechniques;
         /// <summary>
         /// The categories poids
         /// </summary>
         private Repository<CategoriePoids> categoriesPoids;
+
+        private Repository<TypeEpreuve> typeEpreuves;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QVKApiController"/> class.
@@ -78,9 +84,10 @@
             this.responsableCoupe = this.unitOfWork.Repository<ResponsableCoupe>();
             this.aires = this.unitOfWork.Repository<Aire>();
             this.medecins = this.unitOfWork.Repository<Medecin>();
-            this.epreuves = this.unitOfWork.Repository<Epreuve>();
+            this.epreuvesCombat = this.unitOfWork.Repository<EpreuveCombat>();
+            this.epreuvesTechniques = this.unitOfWork.Repository<EpreuveTechnique>();
             this.categoriesPoids = this.unitOfWork.Repository<CategoriePoids>();
-
+            this.typeEpreuves = this.unitOfWork.Repository<TypeEpreuve>();
         }
 
         /// <summary>
@@ -183,25 +190,37 @@
         /// Gets the epreuves.
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetEpreuves()
+        public JsonResult GetEpreuvesCombat()
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.epreuves.GetAll().Select(ep => ep.ToModel());
+            result.Data = this.epreuvesCombat.GetAll().Select(ep => ep.ToModel());
             return result;
         }
 
         /// <summary>
-        /// Gets the categories poids.
+        /// Gets the epreuves.
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetCategoriesPoids()
+        public JsonResult GetEpreuvesTechniques()
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.categoriesPoids.GetAll().Select(cat => cat.ToModel());
+            result.Data = this.epreuvesTechniques.GetAll().Select(ep => ep.ToModel());
             return result;
         }
+
+        /////// <summary>
+        /////// Gets the categories poids.
+        /////// </summary>
+        /////// <returns></returns>
+        ////public JsonResult GetCategoriesPoids()
+        ////{
+        ////    var result = new JsonResult();
+        ////    result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+        ////    result.Data = this.categoriesPoids.GetAll().Select(cat => cat.ToModel());
+        ////    return result;
+        ////}
 
         /// <summary>
         /// Gets the categories.
@@ -272,6 +291,38 @@
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.Data = Enum.GetValues(typeof(Role)).Cast<Role>().Select(cp => new { value = cp, text = Roles.ResourceManager.GetString(cp.ToString()) });
+            return result;
+        }      
+
+        public JsonResult GetStatuses()
+        {
+            var result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = Enum.GetValues(typeof(StatutEpreuve)).Cast<StatutEpreuve>().Select(cp => new { value = cp, text = StatutEpreuves.ResourceManager.GetString(cp.ToString()) });
+            return result;
+        }    
+
+        public JsonResult GetTypeEpreuves()
+        {
+            var result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = this.typeEpreuves.GetAll().Select(t => t.ToModel());
+            return result;
+        }
+
+        public JsonResult GetTypeEpreuvesTechniques()
+        {
+            var result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = this.typeEpreuves.GetAll().Where(t => t.Technique).Select(t => t.ToModel());
+            return result;
+        }
+
+        public JsonResult GetTypeEpreuvesCombat()
+        {
+            var result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = this.typeEpreuves.GetAll().Where(t => !t.Technique).Select(t => t.ToModel());
             return result;
         }
     }

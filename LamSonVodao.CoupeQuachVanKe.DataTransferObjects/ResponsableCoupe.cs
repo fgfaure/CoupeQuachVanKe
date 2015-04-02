@@ -1,5 +1,5 @@
 ﻿
-namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
+namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
     /// <summary>
     /// 

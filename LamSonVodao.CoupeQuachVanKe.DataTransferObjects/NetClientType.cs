@@ -3,7 +3,7 @@
 /// <author>fgf</author>
 /// </copyright>
 
-namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
+namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
     /// <summary>
     /// 

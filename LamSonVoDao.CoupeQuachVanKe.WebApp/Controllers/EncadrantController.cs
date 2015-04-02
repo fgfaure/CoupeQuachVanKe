@@ -1,7 +1,9 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
     using System;
     using System.Collections.Generic;
@@ -13,22 +15,67 @@
     {
         public JsonResult Get()
         {
-            throw new NotImplementedException();
+            var result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = this.repository.GetAll().Select(enc => enc.ToModel());
+            return result;
         }
 
         public JsonResult Create(EncadrantModel model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var dbitem = model.ToDTO();                
+                this.repository.Insert(dbitem);
+                return Json(model);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public JsonResult Delete(EncadrantModel model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                if (dbmodel != null)
+                {
+                    this.repository.Delete(dbmodel);
+                    return Json(model);
+                }
+                else
+                {
+                    throw new ArgumentException("L'encadrant est absent de la base de données", "model");
+                }
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public JsonResult Update(EncadrantModel model)
         {
-            throw new NotImplementedException();
+            var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+            if (dbmodel != null)
+            {
+                dbmodel.ClubId = model.ClubId;
+                dbmodel.Nom = model.Nom;
+                dbmodel.EstCompetiteur = model.EstCompetiteur;
+                dbmodel.MailContact = model.MailContact;
+                dbmodel.Prenom = model.Prenom;
+                dbmodel.TailleTenue = (TailleTenue)model.TailleTenueId;
+                dbmodel.Sexe = (Genre)model.GenreId;                
+
+                this.repository.Update(dbmodel);
+                return Json(model);
+            }
+            else
+            {
+                throw new ArgumentException("La coupe est absente de la base de données", "model");
+            }
         }
     }
 }

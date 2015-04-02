@@ -9,8 +9,8 @@
     using System.Security.Claims;
     using System.Web;
     using System.Web.Mvc;
-    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
-    using LamSonVodao.CoupeQuachVanKe.AccesPattern;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
     using Microsoft.Owin.Security;
 
     [AllowAnonymous]

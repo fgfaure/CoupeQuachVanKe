@@ -1,4 +1,4 @@
-﻿using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+﻿using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
 using System;
 using System.Collections.Generic;
@@ -138,31 +138,46 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             return result;
         }
 
-        public static EpreuveModel ToModel(this Epreuve dto)
+        public static EpreuveTechniqueModel ToModel(this EpreuveTechnique dto)
         {
-            EpreuveModel result = new EpreuveModel();
+            EpreuveTechniqueModel result = new EpreuveTechniqueModel();
             result.Id = dto.Id;
-            result.Categorie = dto.Categorie.ToString();
-            result.Description = dto.Description;
-            result.CategoriePoids = dto.CategoriePoids.ToModel();
+            result.CategorieId = (int)dto.CategoriePratiquant;
+            result.Description = dto.Description;           
             result.Nom = dto.Nom;
-            result.GenreCategorie = dto.GenreCategorie.ToString();
-            result.GradeAutorise = dto.GradeAutorise.ToString();
-            result.Statut = dto.Statut.ToString();
-            result.TypeEpreuve = dto.TypeEpreuve.ToString();
+            result.GenreCategorieId = (int)dto.GenreCategorie;
+            result.GradeAutoriseId = (int)dto.GradeAutorise;
+            result.StatutId = (int)dto.Statut;
+            result.TypeEpreuveId = dto.TypeEpreuveId;
 
             return result;
         }
 
-        public static CategoriePoidsModel ToModel(this CategoriePoids dto)
+        public static EpreuveCombatModel ToModel(this EpreuveCombat dto)
         {
-            CategoriePoidsModel result = new CategoriePoidsModel();
+            EpreuveCombatModel result = new EpreuveCombatModel();
             result.Id = dto.Id;
-            result.Description = dto.Description;            
+            result.CategorieId = (int)dto.CategoriePratiquant;
+            result.Description = dto.Description;
             result.Nom = dto.Nom;
-            result.EpreuveId = dto.EpreuveId;
-            result.ValeurBasse = dto.ValeurBasse;
-            result.ValeurHaute = dto.ValeurHaute;
+            result.GenreCategorieId = (int)dto.GenreCategorie;
+            result.GradeAutoriseId = (int)dto.GradeAutorise;
+            result.StatutId = (int)dto.Statut;
+            result.TypeEpreuveId = dto.TypeEpreuve.Id;
+            result.PoidsMini = dto.PoidsMini;
+            result.PoidsMaxi = dto.PoidsMaxi;
+
+            return result;
+        }
+
+        public static TypeEpreuveModel ToModel(this TypeEpreuve dto)
+        {
+            TypeEpreuveModel result = new TypeEpreuveModel();
+            result.Id = dto.Id;            
+            result.Description = dto.Description;
+            result.Nom = dto.Nom;
+            result.Technique = dto.Technique;
+
             return result;
         }
 

@@ -29,7 +29,16 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The prenom.
         /// </value>
-        public string Description { get; set; }      
+        public string Description { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="TypeEpreuveModel"/> is technique.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if technique; otherwise, <c>false</c>.
+        /// </value>
+        public bool Technique { get; set; }
 
         /// <summary>
         /// Gets or sets the coupe identifier.

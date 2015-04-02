@@ -62,6 +62,8 @@
     <Compile Include="Mappers\EncadrantMapper.cs" />
     <Compile Include="Mappers\EncadrementMapper.cs" />
     <Compile Include="Mappers\EpreuveMapper.cs" />
+    <Compile Include="Mappers\EpreuveCombatMapper.cs" />
+    <Compile Include="Mappers\EpreuveTechniqueMapper.cs" />
     <Compile Include="Mappers\MedecinMapper.cs" />
     <Compile Include="Mappers\NetClientMapper.cs" />
     <Compile Include="Mappers\NetClientTypeMapper.cs" />

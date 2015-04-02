@@ -1,5 +1,5 @@
-﻿using LamSonVodao.CoupeQuachVanKe.AccesPattern;
-using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
+﻿using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
+using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 using System;
 using System.Collections.Generic;
 using System.Linq;

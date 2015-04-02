@@ -1,7 +1,7 @@
-﻿using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+﻿using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
 using System.Collections.Generic;
 
-namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
+namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
     /// <summary>
     /// 
@@ -54,7 +54,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The categorie.
         /// </value>
-        public CategoriePratiquant Categorie { get; set; }
+        public CategoriePratiquant CategoriePratiquant { get; set; }
 
         /// <summary>
         /// Gets or sets the genre categorie.
@@ -70,15 +70,7 @@ namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The grade autorise.
         /// </value>
-        public Grade GradeAutorise { get; set; }
-
-        /// <summary>
-        /// Gets or sets the categorie poids.
-        /// </summary>
-        /// <value>
-        /// The categorie poids.
-        /// </value>
-        public CategoriePoids CategoriePoids { get; set; }
+        public Grade GradeAutorise { get; set; }      
 
         /// <summary>
         /// Gets or sets the encadrants.

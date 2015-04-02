@@ -1,7 +1,7 @@
-﻿using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+﻿using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
 using System.Collections.Generic;
 
-namespace LamSonVodao.CoupeQuachVanKe.DataTransferOjbect
+namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
     /// <summary>
     /// 

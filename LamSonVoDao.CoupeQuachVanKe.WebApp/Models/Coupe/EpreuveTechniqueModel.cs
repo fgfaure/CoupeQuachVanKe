@@ -1,4 +1,4 @@
-﻿using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+﻿using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Web;
 
 namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
 {
-    public class EpreuveModel
+    public class EpreuveTechniqueModel
     {
         public int Id { get; set; }
 
@@ -32,7 +32,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The statut.
         /// </value>
-        public string Statut { get; set; }
+        public int StatutId { get; set; }
 
         /// <summary>
         /// Gets or sets the type epreuve.
@@ -40,7 +40,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The type epreuve.
         /// </value>
-        public string TypeEpreuve { get; set; }
+        public int TypeEpreuveId { get; set; }
 
         /// <summary>
         /// Gets or sets the categorie.
@@ -48,7 +48,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The categorie.
         /// </value>
-        public string Categorie { get; set; }
+        public int CategorieId { get; set; }
 
         /// <summary>
         /// Gets or sets the genre categorie.
@@ -56,7 +56,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The genre categorie.
         /// </value>
-        public string GenreCategorie { get; set; }
+        public int GenreCategorieId { get; set; }
 
         /// <summary>
         /// Gets or sets the grade autorise.
@@ -64,14 +64,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The grade autorise.
         /// </value>
-        public string GradeAutorise { get; set; }
+        public int GradeAutoriseId { get; set; }
 
-        /// <summary>
-        /// Gets or sets the categorie poids.
-        /// </summary>
-        /// <value>
-        /// The categorie poids.
-        /// </value>
-        public CategoriePoidsModel CategoriePoids { get; set; }       
     }
 }

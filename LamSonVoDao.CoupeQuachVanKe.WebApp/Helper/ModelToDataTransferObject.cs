@@ -1,5 +1,5 @@
-﻿using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect;
-using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+﻿using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
 using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
 using System;
 using System.Collections.Generic;
@@ -71,7 +71,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.MailContact = model.MailContact;
             result.Sexe = (Genre)model.GenreId;
             result.TailleTenue =(TailleTenue)model.TailleTenueId;
-
+            result.Disponibilites = (model.Disponibilites != null)?model.Disponibilites.Select(d => d.ToDTO()).ToList(): new List<Disponibilite>();
             return result;
         }
 

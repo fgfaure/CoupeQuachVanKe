@@ -111,6 +111,11 @@
                             editable: true,
                             type: "string",
                             validation: { required: false }
+                        },
+                        Technique: {
+                            editable: true,
+                            type: "boolean",
+                            validation: { required: false }
                         }
                     }
                 }
@@ -133,6 +138,7 @@
             columns: [
                     { field: "Nom", title: "Nom" },
                     { field: "Description", title: "Description" },
+                    { field: "Technique", title: "Technique", template: '<input type="checkbox" #= Technique ? "checked=checked" : "" # disabled="disabled" ></input>' },
                     { field: "CoupeId", width: "200px", values: coupes.data().toJSON(), title: "Coupe" },
                 { command: ["edit", "destroy"], title: "&nbsp;", width: "250px" }
             ],
