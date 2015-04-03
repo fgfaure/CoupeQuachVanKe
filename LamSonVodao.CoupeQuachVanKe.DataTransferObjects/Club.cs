@@ -37,7 +37,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The encadrants.
         /// </value>
-        public virtual ICollection<Encadrant> Encadrants { get; set; }
+        public ICollection<Encadrant> Encadrants { get; set; }
 
         /// <summary>
         /// Gets or sets the responsable.

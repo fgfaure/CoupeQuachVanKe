@@ -78,7 +78,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The disponibilites.
         /// </value>
-        public virtual ICollection<Disponibilite> Disponibilites { get; set; }
+        public ICollection<Disponibilite> Disponibilites { get; set; }
 
         /// <summary>
         /// Gets or sets the epreuves.
@@ -86,6 +86,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The epreuves.
         /// </value>
-        public virtual ICollection<Encadrement> EpreuveSurveillees { get; set; }        
+        public ICollection<Encadrement> EpreuveSurveillees { get; set; }        
     }
 }

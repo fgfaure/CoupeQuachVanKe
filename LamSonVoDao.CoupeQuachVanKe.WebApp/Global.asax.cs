@@ -37,6 +37,5 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp
                 unitOfWork.Repository<NetClient>().Update(dbitem);
             }
         }
-
     }
 }

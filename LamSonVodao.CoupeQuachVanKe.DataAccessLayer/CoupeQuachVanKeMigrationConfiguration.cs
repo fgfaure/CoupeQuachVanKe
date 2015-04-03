@@ -21,8 +21,8 @@
         {
             //besoin de créer le seeder
             //Console.WriteLine("seed");
-          new CoupeQuachVanKeSeeder(context).Seed();
+            new CoupeQuachVanKeSeeder(context).Seed();
         }
-    }
 #endif
+    }
 }

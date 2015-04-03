@@ -29,10 +29,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 var dbitem = new EpreuveCombat
                 {
                     CategoriePratiquant = (CategoriePratiquant)model.CategorieId,
-                    Description = model.Description,
                     GenreCategorie = (GenreEpreuve)model.GenreCategorieId,
                     GradeAutorise = (Grade)model.GradeAutoriseId,
-                    Nom = model.Nom,
                     Statut = StatutEpreuve.Fermee,
                     TypeEpreuveId = model.TypeEpreuveId,
                     PoidsMini = model.PoidsMini,
@@ -78,10 +76,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 if (dbmodel != null)
                 {
                     dbmodel.CategoriePratiquant = (CategoriePratiquant)model.CategorieId;
-                    dbmodel.Description = model.Description;
                     dbmodel.GenreCategorie = (GenreEpreuve)model.GenreCategorieId;
                     dbmodel.GradeAutorise = (Grade)model.GradeAutoriseId;
-                    dbmodel.Nom = model.Nom;
                     dbmodel.Statut = StatutEpreuve.Fermee;
                     dbmodel.TypeEpreuveId = model.TypeEpreuveId;
                     dbmodel.PoidsMini = model.PoidsMini;

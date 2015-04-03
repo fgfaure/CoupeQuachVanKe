@@ -143,8 +143,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             EpreuveTechniqueModel result = new EpreuveTechniqueModel();
             result.Id = dto.Id;
             result.CategorieId = (int)dto.CategoriePratiquant;
-            result.Description = dto.Description;           
-            result.Nom = dto.Nom;
             result.GenreCategorieId = (int)dto.GenreCategorie;
             result.GradeAutoriseId = (int)dto.GradeAutorise;
             result.StatutId = (int)dto.Statut;
@@ -157,9 +155,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
         {
             EpreuveCombatModel result = new EpreuveCombatModel();
             result.Id = dto.Id;
-            result.CategorieId = (int)dto.CategoriePratiquant;
-            result.Description = dto.Description;
-            result.Nom = dto.Nom;
+            result.CategorieId = (int)dto.CategoriePratiquant;            
             result.GenreCategorieId = (int)dto.GenreCategorie;
             result.GradeAutoriseId = (int)dto.GradeAutorise;
             result.StatutId = (int)dto.Statut;

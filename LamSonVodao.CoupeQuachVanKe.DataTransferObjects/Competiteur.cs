@@ -87,7 +87,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The club.
         /// </value>
-        public virtual Club Club { get; set; }
+        public Club Club { get; set; }
 
         /// <summary>
         /// Gets or sets the club identifier.
@@ -103,7 +103,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The epreuves.
         /// </value>
-        public virtual ICollection<Resultat> Resultats { get; set; }
+        public ICollection<Resultat> Resultats { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [inscrit pour quyen].

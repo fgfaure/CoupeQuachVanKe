@@ -20,10 +20,6 @@
 
             this.HasKey(epreuve => epreuve.Id);
 
-            this.Property(epreuve => epreuve.Nom).IsRequired().HasMaxLength(255);
-
-            this.Property(epreuve => epreuve.Description).IsOptional().HasMaxLength(255);
-
             this.Property(epreuve => epreuve.Statut).IsRequired();            
 
             this.Property(epreuve => epreuve.CategoriePratiquant).IsRequired();

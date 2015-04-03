@@ -46,7 +46,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {         
+        {                     
             modelBuilder.Configurations.Add(new AireMapper());
             //modelBuilder.Configurations.Add(new CategoriePoidsMapper());
             modelBuilder.Configurations.Add(new ClubMapper());

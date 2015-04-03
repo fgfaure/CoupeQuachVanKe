@@ -38,7 +38,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The encadrant.
         /// </value>
-        public virtual Encadrant Encadrant { get; set; }
+        public Encadrant Encadrant { get; set; }
 
         /// <summary>
         /// Gets or sets the encadrant identifier.

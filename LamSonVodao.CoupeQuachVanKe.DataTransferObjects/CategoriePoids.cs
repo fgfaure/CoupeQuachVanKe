@@ -44,7 +44,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The epreuve.
         /// </value>
-        public virtual Epreuve Epreuve { get; set; }
+        public Epreuve Epreuve { get; set; }
 
         /// <summary>
         /// Gets or sets the epreuve identifier.

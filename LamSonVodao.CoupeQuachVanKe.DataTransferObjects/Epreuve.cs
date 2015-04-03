@@ -7,23 +7,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
     /// 
     /// </summary>
     public class Epreuve : BaseEntity
-    {
-        /// <summary>
-        /// Gets or sets the nom.
-        /// </summary>
-        /// <value>
-        /// The nom.
-        /// </value>
-        public string Nom { get; set; }
-
-        /// <summary>
-        /// Gets or sets the description.
-        /// </summary>
-        /// <value>
-        /// The description.
-        /// </value>
-        public string Description { get; set; }
-
+    {      
         /// <summary>
         /// Gets or sets the statut.
         /// </summary>
@@ -78,7 +62,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The encadrants.
         /// </value>
-        public virtual ICollection<Encadrement> Encadrements { get; set; }
+        public ICollection<Encadrement> Encadrements { get; set; }
 
         /// <summary>
         /// Gets or sets the resultats.
@@ -86,6 +70,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The resultats.
         /// </value>
-        public virtual ICollection<Resultat> Resultats { get; set; }       
+        public ICollection<Resultat> Resultats { get; set; }
     }
 }

@@ -252,6 +252,7 @@
     <Compile Include="Controllers\DisponibiliteController.cs" />
     <Compile Include="Controllers\EncadrantController.cs" />
     <Compile Include="Controllers\EpreuveCombatController.cs" />
+    <Compile Include="Controllers\EpreuveVentileeController.cs" />
     <Compile Include="Controllers\EpreuveTechniqueController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedecinController.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <None Include="Properties\PublishProfiles\PublishLocal.pubxml" />
     <None Include="Resources\grade.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
@@ -298,6 +300,7 @@
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\EpreuveTechnique\Index.cshtml" />
     <Content Include="Views\EpreuveCombat\Index.cshtml" />
+    <Content Include="Views\EpreuveVentilee\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

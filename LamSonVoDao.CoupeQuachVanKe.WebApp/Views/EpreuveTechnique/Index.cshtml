@@ -3,11 +3,92 @@
 </div>
 <div class="col-sm-10">
     <h2>Liste des Epreuves Techniques</h2>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Ventiler les épreuves techniques</h3>
+        </div>
+        <div class="panel-body">
+            Affecter les compétiteurs inscrits aux épreuves techniques.
+            <button name="ventilationTechnique" id="vt">Ventiler</button>
+        </div>
+        <div id="epreuvesVentilees" />
+    </div>
+    <hr />
     <div id="epreuvesTechniques">
     </div>
 </div>
+<script type="text/x-kendo-template" id="template">
+    <div class="tabstrip">
+        <ul>
+            <li class="k-state-active">
+                Compétiteurs
+            </li>
+        </ul>
+        <div>
+            <div class='competiteurs'>
+            </div>
+        </div>
+    </div>
+</script>
+
 <script>
     $(document).ready(function () {
+
+        function detailInit(e) {
+            var detailRow = e.detailRow;
+
+            detailRow.find(".tabstrip").kendoTabStrip({
+                animation: {
+                    open: { effects: "fadeIn" }
+                }
+            });
+
+            detailRow.find(".competiteurs").kendoGrid({
+                dataSource: e.data.competiteurs,
+                scrollable: false,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                columns: [
+                    { field: "Nom", title: "Nom" },
+                    { field: "Prenom", title: "Prénom" }                    
+                ]
+            });
+
+        }
+
+        $("#vt").off('click').on('click', function () {
+            $.ajax({
+                url: 'Ventilation',
+                cache: false
+            }).success(function (data) {
+                $("#epreuvesVentilees").kendoGrid({
+                    dataSource: data,
+                    pageable: {
+                        refresh: true,
+                        pageSizes: true,
+                        buttonCount: 5
+                    },
+                    sortable: true,
+                    groupable: true,
+                    filterable: true,
+                    autosync: true,
+                    toolbar: ["create"],
+                    detailTemplate: kendo.template($("#template").html()),
+                    detailInit: detailInit,
+                    //dataBound: function () {
+                    //    this.expandRow(this.tbody.find("tr.k-master-row").first());
+                    //},
+                    columns: [
+                        { field: "epreuve", title: "Nom" }
+                    ]
+                });
+            });
+
+        });
         var statuses = new kendo.data.DataSource({
             transport: {
                 read: {
@@ -239,15 +320,15 @@
                             editable: false,
                             nullable: false
                         },
-                        Nom: {
-                            editable: true,
-                            type: "string",
-                            validation: { required: true }
-                        },
-                        Description: {
-                            editable: true,
-                            type: "string"
-                        },
+                        //Nom: {
+                        //    editable: true,
+                        //    type: "string",
+                        //    validation: { required: true }
+                        //},
+                        //Description: {
+                        //    editable: true,
+                        //    type: "string"
+                        //},
                         StatutId: {
                             editable: false,
                             type: "number",
@@ -292,8 +373,8 @@
             autosync: true,
             toolbar: ["create"],
             columns: [
-                    { field: "Nom", title: "Nom" },
-                    { field: "Description", title: "Description" },
+                    //{ field: "Nom", title: "Nom" },
+                    //{ field: "Description", title: "Description" },
                     { field: "TypeEpreuveId", title: "Type d'Epreuve", values: techniques.data().toJSON() },
                     { field: "CategorieId", title: "Catégorie", values: categories.data().toJSON() },
                     { field: "GenreCategorieId", title: "Genre", values: genres.data().toJSON() },
@@ -301,7 +382,10 @@
                     { field: "StatutId", title: "Statut", values: statuses.data().toJSON() },
                     { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }
             ],
-            editable: "popup"
+            editable: {
+                mode: "popup",
+                template: $("#popup_editor").html()
+            },
         });
     });
 </script>

@@ -102,7 +102,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The tapis.
         /// </value>
-        public virtual ICollection<Aire> Aires { get; set; }
+        public ICollection<Aire> Aires { get; set; }
 
         /// <summary>
         /// Gets or sets the encadrants.
@@ -110,7 +110,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The encadrants.
         /// </value>
-        public virtual ICollection<Encadrant> Encadrants { get; set; }
+        public ICollection<Encadrant> Encadrants { get; set; }
 
         /// <summary>
         /// Gets or sets the medecins.
@@ -118,7 +118,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The medecins.
         /// </value>
-        public virtual ICollection<Medecin> Medecins { get; set; }
+        public ICollection<Medecin> Medecins { get; set; }
 
         /// <summary>
         /// Gets or sets the types epreuve.
@@ -126,7 +126,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The types epreuve.
         /// </value>
-        public virtual ICollection<TypeEpreuve> TypesEpreuve { get; set; }
+        public ICollection<TypeEpreuve> TypesEpreuve { get; set; }
        
     }
 }
