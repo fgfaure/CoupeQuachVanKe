@@ -1,31 +1,31 @@
-﻿<h1>
-    Saisie des informations des compétiteurs et validation des inscriptions
-</h1>
-
-<div id="competiteursGrid"></div>
+﻿<div>
+    <div class="col-md-5 col-md-offset-1">
+        <h1>
+            Saisie des poids
+        </h1>
+        <hr />
+        <div id="combattantsGrid"></div>
+    </div>
+    <div class="col-md-5">
+        <h1>
+            Validation Inscription
+        </h1>
+        <hr />
+        <div id="competiteursGrid"></div>
+    </div>
+</div>
 <script>
     $(document).ready(function (e) {
         var competiteurDatasource = new kendo.data.DataSource({
+            group: { field: "ClubId" },
             transport: {
                 read: {
-                    url: "GetCompetiteurs",
+                    url: "Saisie/GetCompetiteurs",
                     dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                 },
                 update: {
-                    url: "UpdateCompetiteur",
+                    url: "Saisie/UpdateCompetiteur",
                     dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
-                    contentType: "application/json",
-                    type: "POST"
-                },
-                destroy: {
-                    url: "DeleteCompetiteur",
-                    dataType: "json",
-                    contentType: "application/json",
-                    type: "POST"
-                },
-                create: {
-                    url: "CreateCompetiteur",
-                    dataType: "json",
                     contentType: "application/json",
                     type: "POST"
                 },
@@ -33,9 +33,12 @@
                     if (operation !== "read" && options.models) {
                         return { models: kendo.stringify(options.models) };
                     }
+                    else {
+                        return kendo.stringify(options);
+                    }
                 }
             },
-            pageSize : 10,
+            pageSize: 25,
             schema: {
                 model: {
                     id: "Id",
@@ -47,55 +50,154 @@
                             nullable: false
                         },
                         Nom: {
-                            //set validation rules
-                            type: "string",
-                            validation: { required: true }
+                            editable: false,
+                            type: "string"
                         },
                         Prenom: {
                             //data type of the field {Number|String|Boolean|Date} default is String
-                            type: "string",
-                            validation: { required: true }
+                            editable: false,
+                            type: "string"
                         },
                         Sexe: {
                             type: "number",
                             validation: { required: true }
                         },
                         Poids: {
-                            type: "number"
+                            type: "number",
+                            editable: true
                         },
                         DateNaissance: {
-                            type: "string",
-                            validation: { required: true }
+                            editable: false,
+                            type: "date"
                         },
                         InscriptionValidePourCoupe: {
-                            type: "boolean",
-                            validation: { required: true }
+                            editable: true,
+                            type: "boolean"
                         },
                         ClubId: {
+                            editable: false,
                             field: "ClubId",
                             type: "number",
                             defaultValue: 1
                         },
                         Categorie: {
-                            type: "number",
-                            validation: { required: true }
+                            editable: false,
+                            type: "number"
                         },
                         LicenceFFKDA: {
-                            type: "string",
-                            validation: { required: true }
+                            editable: false,
+                            type: "string"
                         }
                     }
                 }
             }
         });
-        var clubs = new kendo.data.DataSource({
+
+        var combattantDS = new kendo.data.DataSource({
+            group: { field: "ClubId" },
             transport: {
                 read: {
-                    url: "GetCompetiteurs",
+                    url: "Saisie/GetCompetiteurs",
                     dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                update: {
+                    url: "Saisie/UpdateCompetiteur",
+                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            pageSize: 25,
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        Nom: {
+                            editable: false,
+                            type: "string"
+                        },
+                        Prenom: {
+                            //data type of the field {Number|String|Boolean|Date} default is String
+                            editable: false,
+                            type: "string"
+                        },
+                        Sexe: {
+                            type: "number",
+                            validation: { required: true }
+                        },
+                        Poids: {
+                            type: "number",
+                            editable: true
+                        },
+                        DateNaissance: {
+                            editable: false,
+                            type: "date"
+                        },
+                        InscriptionValidePourCoupe: {
+                            editable: true,
+                            type: "boolean"
+                        },
+                        ClubId: {
+                            editable: false,
+                            field: "ClubId",
+                            type: "number",
+                            defaultValue: 1
+                        },
+                        Categorie: {
+                            editable: false,
+                            type: "number"
+                        },
+                        LicenceFFKDA: {
+                            editable: false,
+                            type: "string"
+                        }
+                    }
+                }
+            }
+        });
+
+        var clubsDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetClubs",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
                 }
             },
             schema: {
+                parse: function (data) {
+                    var clubs = [];
+                    for (var i = 0; i < data.length; i++) {
+                        var club = {
+                            value: data[i].Id,
+                            text: data[i].Nom
+                        };
+                        clubs.push(club);
+                    }
+                    return clubs;
+                },
                 model: {
                     id: "Id",
                     fields: {
@@ -108,10 +210,56 @@
                         Nom: {
                             //set validation rules
                             type: "string",
-                            editable : false
                         }
                     }
                 }
+            }
+        });
+        clubsDataSource.read();
+
+        function weightEditor(container, options) {
+            $('<input data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field + '"/>')
+                    .appendTo(container)
+                    .kendoNumericTextBox({
+                        decimal: 1,
+                        min: 0,
+                        max: 150,
+                        step: 0.1,
+                        format: "#.000 kg"
+                    });
+        }
+
+        $("#combattantsGrid").kendoGrid({
+            dataSource: combattantDS,
+            pageable: {
+                refresh: true,
+                pageSize: 25,
+                pageSizes: [10, 25, 50]
+            },
+            autosync: true,
+            groupable: true,
+            filterable: true,
+            toolbar: false,
+            columns: [
+                { field: "Nom", title: "Nom", groupable: false },
+                { field: "Prenom", title: "Prénom", groupable: false, filterable: false },
+                { field: "ClubId", values: clubsDataSource.data().toJSON(), title: "Club" },
+                //{ field: "Sexe", title: "Sexe" },
+                {
+                    field: "DateNaissance", groupable: false, filterable: false, title: "Date de Naissance", template: '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #',
+                    groupHeaderTemplate: 'Date de Naissance : #=  kendo.toString(value, "dd/MM/yyyy") #'
+                },
+                { field: "Poids", groupable: false, filterable: false, title: "Poids", editor: weightEditor, template: '#= kendo.toString(Poids,"\\#.000 kg") #' },
+                //{ field: "InscriptionValidePourCoupe", title: "Inscription validée", groupable: false, filterable: false, template: '<input type="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>' },
+                //{ field: "CategorieId", title: "Catégorie" },
+                //{ field: "LicenceFFKDA", title: "N° Licence" },
+                //{ command: ["edit"], title: "&nbsp;" }
+            ],
+            editable: "incell",
+            save: function (e) {
+                setTimeout(function () {
+                    $('#combattantsGrid').data('kendoGrid').dataSource.sync();
+                });
             }
         });
 
@@ -119,24 +267,34 @@
             dataSource: competiteurDatasource,
             pageable: {
                 refresh: true,
-                pageSizes: true,
-                buttonCount: 5
+                pageSize: 25,
+                pageSizes: [10, 25, 50]
             },
-            autosync : true,
-            height: 800,
+            autosync: true,
+            groupable: true,
+            filterable: true,
             toolbar: false,
             columns: [
-                { field: "Nom", title: "Nom" },
-                { field: "Prenom", title: "Prénom" },
-                { field: "ClubId", title: "Club", values : clubs },
-                { field: "Sexe", title: "Sexe" },
-                { field: "DateNaissance", title: "Date de Naissance" },
-                { field: "Poids", title: "Poids" },
-                { field: "InscriptionValidePourCoupe", title: "Inscription validée" },
-                { field: "Categorie", title: "Catégorie" },
-                { field: "LicenceFFKDA", title: "N° Licence" },
-                { command: ["edit", "destroy"], title: "&nbsp;", width: "250px" }],
-            editable: "popup"
+                { field: "Nom", title: "Nom", groupable: false },
+                { field: "Prenom", title: "Prénom", groupable: false, filterable: false },
+                { field: "ClubId", values: clubsDataSource.data().toJSON(), title: "Club" },
+                //{ field: "Sexe", title: "Sexe" },
+                {
+                    field: "DateNaissance", groupable: false, filterable: false, title: "Date de Naissance", template: '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #',
+                    groupHeaderTemplate: 'Date de Naissance : #=  kendo.toString(value, "dd/MM/yyyy") #'
+                },
+                //{ field: "Poids", groupable: false, filterable: false, title: "Poids", editor: weightEditor },
+                { field: "InscriptionValidePourCoupe", title: "Inscription validée", groupable: false, filterable: false, template: '<input type="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>' },
+                //{ field: "CategorieId", title: "Catégorie" },
+                //{ field: "LicenceFFKDA", title: "N° Licence" },
+                //{ command: ["edit"], title: "&nbsp;" }
+            ],
+            editable: "incell",
+            save: function (e) {
+                setTimeout(function () {
+                    $('#competiteursGrid').data('kendoGrid').dataSource.sync();
+                });
+            }
         });
     });
 

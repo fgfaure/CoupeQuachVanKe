@@ -1,15 +1,9 @@
 ﻿
 namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer
 {
-    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
-    using System;
-    using System.Collections.Generic;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using LamSonVoDao.CoupeQuachVanKe.DataAccessLayer;
     using LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+    using System.Data.Entity;
 
     public class CoupeQuachVanKeContext : DbContext
     {
@@ -29,7 +23,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer
         public DbSet<Disponibilite> Disponibilites { get; set; }
         public DbSet<Encadrant> Encadrants { get; set; }
         public DbSet<Encadrement> Encadrements { get; set; }
-        //public DbSet<Epreuve> Epreuves { get; set; }
+        public DbSet<EquipeSongLuyen> Epreuves { get; set; }
         public DbSet<EpreuveCombat> EpreuvesCombat { get; set; }
         public DbSet<EpreuveTechnique> EpreuvesTechniques { get; set; }
         public DbSet<Medecin> Medecins { get; set; }
@@ -55,6 +49,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer
             modelBuilder.Configurations.Add(new DisponibiliteMapper());
             modelBuilder.Configurations.Add(new EncadrantMapper());
             modelBuilder.Configurations.Add(new EncadrementMapper());
+            modelBuilder.Configurations.Add(new EquipeSongLuyenMapper());
             modelBuilder.Configurations.Add(new EpreuveCombatMapper());
             modelBuilder.Configurations.Add(new EpreuveTechniqueMapper());
             modelBuilder.Configurations.Add(new MedecinMapper());

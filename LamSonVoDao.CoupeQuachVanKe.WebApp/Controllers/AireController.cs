@@ -1,14 +1,18 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
-    using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
-    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+    //using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
+    //using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
     using System;
+    using System.Data.Entity;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+
 
     public class AireController : BaseController<Aire>, ICrudController<Aire, AireModel>
     {
@@ -16,11 +20,12 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.repository.GetAll().Select(aire => new AireModel
+            result.Data = this.repository.Read().Select(aire => new AireModel
             {
                 Id = aire.Id,
                 Description = aire.Description,
-                CoupeId = aire.CoupeId
+                CoupeId = aire.CoupeId,
+                NetClientId = aire.ClientId
             });
             return result;
         }
@@ -32,11 +37,12 @@
                 var dbitem = new Aire
                 {
                     Description = model.Description,
-                    CoupeId = model.CoupeId
+                    CoupeId = model.CoupeId,
+                    ClientId = model.NetClientId
                 };
 
-                this.repository.Insert(dbitem);
-                return Json(model);
+                this.repository.Create(dbitem);                
+                return Json(dbitem.ToModel());
 
             }
             catch
@@ -49,7 +55,7 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     this.repository.Delete(dbmodel);
@@ -70,7 +76,7 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     dbmodel.Description = model.Description;

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
+﻿namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// 
     /// </summary>
@@ -46,6 +46,22 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// The responsable.
         /// </value>
         public ResponsableClub Responsable { get; set; }
-       
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [inscription is correct].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [inscription is correct]; otherwise, <c>false</c>.
+        /// </value>
+        public bool InscriptionIsCorrect { get; set; }
+
+        /// <summary>
+        /// Gets or sets the equipes song luyen.
+        /// </summary>
+        /// <value>
+        /// The equipes song luyen.
+        /// </value>
+        public ICollection<EquipeSongLuyen> EquipesSongLuyen { get; set; }
+
     }
 }

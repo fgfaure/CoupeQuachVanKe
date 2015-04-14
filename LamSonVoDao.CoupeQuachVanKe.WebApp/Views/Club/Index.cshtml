@@ -97,6 +97,16 @@
                 }
             },
             schema: {
+                parse: function (data) {
+                    var datas = [];
+                    for (var i = 0; i < data.length; i++) {
+                        datas.push({
+                            value: data[i].Id,
+                            text: data[i].Nom
+                        });
+                    }
+                    return datas;
+                },
                 model: {
                     id: "value",
                     fields: {

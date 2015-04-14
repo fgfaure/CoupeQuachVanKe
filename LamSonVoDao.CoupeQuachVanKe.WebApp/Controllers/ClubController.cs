@@ -1,7 +1,7 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
     using Excel;
-    using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
+
     using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
     using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
@@ -14,6 +14,7 @@
     using System.Web.Mvc;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
 
     public class ClubController : BaseController<Club>, ICrudController<Club, ClubModel>
     {
@@ -21,7 +22,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.repository.GetAll().Select(club => new ClubModel
+            result.Data = this.repository.Read().Select(club => new ClubModel
             {
                 Id = club.Id,
                 Nom = club.Nom,
@@ -38,7 +39,7 @@
             {
                 var result = new JsonResult();
                 result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-                result.Data = this.unitOfWork.Repository<Competiteur>().GetAll().Where(e => e.ClubId == parsed).Select(c => c.ToModel());
+                result.Data = this.unitOfWork.Repository<Competiteur>().Read().Where(e => e.ClubId == parsed).Select(c => c.ToModel());
                 return result;
             }
             else
@@ -56,7 +57,7 @@
             {
                 var result = new JsonResult();
                 result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-                result.Data = this.unitOfWork.Repository<ResponsableClub>().GetAll().Where(e => e.ClubId == parsed).Select(c => c.ToModel());         
+                result.Data = this.unitOfWork.Repository<ResponsableClub>().Read().Where(e => e.ClubId == parsed).Select(c => c.ToModel());
                 return result;
             }
             else
@@ -73,7 +74,7 @@
             {
                 var result = new JsonResult();
                 result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-                result.Data = this.unitOfWork.Repository<Encadrant>().GetAll().Where(e => e.ClubId == parsed).Select(e => e.ToModel());
+                result.Data = this.unitOfWork.Repository<Encadrant>().Read().Where(e => e.ClubId == parsed).Select(e => e.ToModel());
                 return result;
             }
             else
@@ -95,8 +96,8 @@
                     Competiteurs = new List<Competiteur>(),
                 };
 
-                this.repository.Insert(dbitem);
-                return Json(club);
+                this.repository.Create(dbitem);
+                return Json(dbitem.ToModel());
 
             }
             catch
@@ -109,12 +110,12 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 dbmodel.NumeroAffiliation = model.NumeroAffiliation;
                 dbmodel.Nom = model.Nom;
 
                 this.repository.Update(dbmodel);
-                return Json(model);
+                return Json(dbmodel.ToModel());
             }
             catch
             {
@@ -127,7 +128,7 @@
         {
             try
             {
-                var dbItem = this.repository.GetById(model.Id);
+                var dbItem = this.repository.Read(model.Id);
                 this.repository.Delete(dbItem);
                 return Json(new { success = true });
             }
@@ -195,23 +196,26 @@
                                             break;
                                         }
 
-                                        competiteursFromXLS.Add(new Competiteur
-                                        {
-                                            Nom = localRow.ItemArray[0].ToString(),
-                                            Prenom = localRow.ItemArray[1].ToString(),
-                                            DateNaissance = DateTime.FromOADate(double.Parse(localRow.ItemArray[2].ToString())),
-                                            Sexe = ExcelConverterHelper.ConvertToGenre(localRow.ItemArray[3].ToString()),
-                                            NbAnneePratique = ExcelConverterHelper.ConvertToInt(localRow.ItemArray[4].ToString()),
-                                            Grade = ExcelConverterHelper.ConvertToGrade(localRow.ItemArray[5].ToString()),
-                                            LicenceFFKDA = localRow.ItemArray[6].ToString(),
-                                            InscritPourQuyen = ExcelConverterHelper.ConvertToBool(localRow.ItemArray[7].ToString()),
-                                            InscritPourBaiVuKhi = ExcelConverterHelper.ConvertToBool(localRow.ItemArray[8].ToString()),
-                                            InscritPourSongLuyen = ExcelConverterHelper.ConvertToBool(localRow.ItemArray[9].ToString()),
-                                            EquipeSongLuyen = ExcelConverterHelper.ConvertToInt(localRow.ItemArray[11].ToString()),
-                                            InscritPourCombat = ExcelConverterHelper.ConvertToBool(localRow.ItemArray[12].ToString()),
-                                            Poids = ExcelConverterHelper.ConvertToInt(localRow.ItemArray[13].ToString()),
-                                            Categorie = ExcelConverterHelper.ConvertToCategorie(localRow.ItemArray[2].ToString())
-                                        });
+                                        var comp = ExcelConverterHelper.ConvertFromXLS(localRow);
+                                        competiteursFromXLS.Add(comp);
+
+                                        //competiteursFromXLS.Add(new Competiteur
+                                        //{
+                                        //    Nom = localRow.ItemArray[0].ToString(),
+                                        //    Prenom = localRow.ItemArray[1].ToString(),
+                                        //    DateNaissance = DateTime.FromOADate(double.Parse(localRow.ItemArray[2].ToString())),
+                                        //    Sexe = ExcelConverterHelper.ConvertToGenre(localRow.ItemArray[3].ToString()),
+                                        //    NbAnneePratique = ExcelConverterHelper.ConvertToInt(localRow.ItemArray[4].ToString()),
+                                        //    Grade = ExcelConverterHelper.ConvertToGrade(localRow.ItemArray[5].ToString()),
+                                        //    LicenceFFKDA = localRow.ItemArray[6].ToString(),
+                                        //    InscritPourQuyen = ExcelConverterHelper.ConvertToBool(localRow.ItemArray[7].ToString()),
+                                        //    InscritPourBaiVuKhi = ExcelConverterHelper.ConvertToBool(localRow.ItemArray[8].ToString()),
+                                        //    InscritPourSongLuyen = ExcelConverterHelper.ConvertToBool(localRow.ItemArray[9].ToString()),
+                                        //    EquipeSongLuyenId = ExcelConverterHelper.ConvertToInt(localRow.ItemArray[11].ToString()),
+                                        //    InscritPourCombat = ExcelConverterHelper.ConvertToBool(localRow.ItemArray[12].ToString()),
+                                        //    Poids = ExcelConverterHelper.ConvertToInt(localRow.ItemArray[13].ToString()),
+                                        //    CategoriePratiquantId = ExcelConverterHelper.ConvertToCategorie(localRow.ItemArray[2].ToString())
+                                        //});
                                     }
 
                                     List<Encadrant> encadrantsFromXLS = new List<Encadrant>();
@@ -296,11 +300,36 @@
                                     clubFromXLS.Competiteurs = competiteursFromXLS;
                                     clubFromXLS.Encadrants = encadrantsFromXLS;
 
-                                    var clubFromDb = this.repository.Get(club => string.Compare(club.NumeroAffiliation, clubFromXLS.NumeroAffiliation) == 0).FirstOrDefault();
+                                    var equipesSl = competiteursFromXLS.Where(c => c.InscritPourSongLuyen && c.EquipeSongLuyenNumero > 0).OrderBy(c => c.EquipeSongLuyenNumero);
+                                    var songluyens = new List<EquipeSongLuyen>();
+
+                                    foreach (var item in equipesSl)
+                                    {
+                                        var sl = songluyens.FirstOrDefault(e => e.Numero == item.EquipeSongLuyenNumero);
+                                        if (sl == null)
+                                        {
+                                            var esl = new EquipeSongLuyen();
+                                            esl.Nom = item.Nom;
+                                            esl.Numero = item.EquipeSongLuyenNumero;                                          
+                                            songluyens.Add(esl);
+                                        }
+                                        else
+                                        {
+                                            sl.Nom = string.Format("{0}/{1}", sl.Nom, item.Nom);
+
+                                        }
+                                    }
+
+                                    if (songluyens.Count > 0)
+                                    {
+                                        clubFromXLS.EquipesSongLuyen = songluyens;
+                                    }
+
+                                    var clubFromDb = this.repository.Read(club => string.Compare(club.NumeroAffiliation, clubFromXLS.NumeroAffiliation) == 0).FirstOrDefault();
                                     if (clubFromDb == null)
                                     {
                                         //ajout
-                                        this.repository.Insert(clubFromXLS);
+                                        this.repository.Create(clubFromXLS);
                                     }
                                     else
                                     {
@@ -317,7 +346,7 @@
                                         Directory.CreateDirectory(clubDirectory);
                                     }
 
-                                    System.IO.File.Move(physicalPath, Path.Combine(clubDirectory, fileName));            
+                                    System.IO.File.Move(physicalPath, Path.Combine(clubDirectory, fileName));
                                 }
                             }
                         }

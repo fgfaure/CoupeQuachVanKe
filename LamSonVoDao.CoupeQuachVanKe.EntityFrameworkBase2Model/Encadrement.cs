@@ -12,15 +12,11 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
     using System;
     using System.Collections.Generic;
     
-    public partial class CategoriePoid
+    public partial class Encadrement
     {
         public int Id { get; set; }
-        public string Nom { get; set; }
-        public string Description { get; set; }
-        public float ValeurBasse { get; set; }
-        public float ValeurHaute { get; set; }
-        public int EpreuveId { get; set; }
     
+        public virtual Encadrant Encadrant { get; set; }
         public virtual Epreuve Epreuve { get; set; }
     }
 }

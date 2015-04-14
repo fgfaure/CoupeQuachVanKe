@@ -64,12 +64,25 @@
         /// The epreuves techniques
         /// </summary>
         private Repository<EpreuveTechnique> epreuvesTechniques;
-        /// <summary>
-        /// The categories poids
-        /// </summary>
-        private Repository<CategoriePoids> categoriesPoids;
+        /////// <summary>
+        /////// The categories poids
+        /////// </summary>
+        ////private Repository<CategoriePoids> categoriesPoids;
 
+        /// <summary>
+        /// The type epreuves
+        /// </summary>
         private Repository<TypeEpreuve> typeEpreuves;
+
+        /// <summary>
+        /// The categories
+        /// </summary>
+        private Repository<CategoriePratiquant> categories;
+
+        /// <summary>
+        /// The clients
+        /// </summary>
+        private Repository<NetClient> clients;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QVKApiController"/> class.
@@ -86,8 +99,10 @@
             this.medecins = this.unitOfWork.Repository<Medecin>();
             this.epreuvesCombat = this.unitOfWork.Repository<EpreuveCombat>();
             this.epreuvesTechniques = this.unitOfWork.Repository<EpreuveTechnique>();
-            this.categoriesPoids = this.unitOfWork.Repository<CategoriePoids>();
+            ////this.categoriesPoids = this.unitOfWork.Repository<CategoriePoids>();
             this.typeEpreuves = this.unitOfWork.Repository<TypeEpreuve>();
+            this.categories = this.unitOfWork.Repository<CategoriePratiquant>();
+            this.clients = this.unitOfWork.Repository<NetClient>();
         }
 
         /// <summary>
@@ -98,7 +113,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.competiteurs.GetAll().Select(c => c.ToModel());
+            result.Data = this.competiteurs.Read().Select(c => c.ToModel());
             return result;
         }
 
@@ -110,7 +125,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.coupes.GetAll().Select(c => c.ToModel());
+            result.Data = this.coupes.Read().Select(c => c.ToModel());
             return result;
         }
 
@@ -122,7 +137,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.clubs.GetAll().Select(club => club.ToModel());
+            result.Data = this.clubs.Read().Select(club => club.ToModel());
             return result;
         }
 
@@ -134,7 +149,19 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.encadrants.GetAll().Select(encadrant => encadrant.ToModel());
+            result.Data = this.encadrants.Read().Select(encadrant => encadrant.ToModel());
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the clients.
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetClients()
+        {
+            var result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = this.clients.Read().Select(client => client.ToModel());
             return result;
         }
 
@@ -146,7 +173,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.responsables.GetAll().Select(r => r.ToModel());
+            result.Data = this.responsables.Read().Select(r => r.ToModel());
             return result;
         }
 
@@ -158,7 +185,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.responsableCoupe.GetAll().FirstOrDefault().ToModel();
+            result.Data = this.responsableCoupe.Read().FirstOrDefault().ToModel();
             return result;
         }
 
@@ -170,7 +197,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.aires.GetAll().Select(aire => aire.ToModel());
+            result.Data = this.aires.Read().Select(aire => aire.ToModel());
             return result;
         }
 
@@ -182,7 +209,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.medecins.GetAll().Select(md => md.ToModel());
+            result.Data = this.medecins.Read().Select(md => md.ToModel());
             return result;
         }
 
@@ -194,7 +221,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.epreuvesCombat.GetAll().Select(ep => ep.ToModel());
+            result.Data = this.epreuvesCombat.Read().Select(ep => ep.ToModel());
             return result;
         }
 
@@ -206,7 +233,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.epreuvesTechniques.GetAll().Select(ep => ep.ToModel());
+            result.Data = this.epreuvesTechniques.Read().Select(ep => ep.ToModel());
             return result;
         }
 
@@ -230,7 +257,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = Enum.GetValues(typeof(CategoriePratiquant)).Cast<CategoriePratiquant>().Select(cp => new { value = cp, text = CategoriesPratiquant.ResourceManager.GetString(cp.ToString()) });
+            result.Data = this.categories.Read().Select(c => c.ToModel()).ToList();
             return result;
         }
 
@@ -292,7 +319,7 @@
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.Data = Enum.GetValues(typeof(Role)).Cast<Role>().Select(cp => new { value = cp, text = Roles.ResourceManager.GetString(cp.ToString()) });
             return result;
-        }      
+        }
 
         public JsonResult GetStatuses()
         {
@@ -300,13 +327,13 @@
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.Data = Enum.GetValues(typeof(StatutEpreuve)).Cast<StatutEpreuve>().Select(cp => new { value = cp, text = StatutEpreuves.ResourceManager.GetString(cp.ToString()) });
             return result;
-        }    
+        }
 
         public JsonResult GetTypeEpreuves()
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.typeEpreuves.GetAll().Select(t => t.ToModel());
+            result.Data = this.typeEpreuves.Read().Select(t => t.ToModel());
             return result;
         }
 
@@ -314,7 +341,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.typeEpreuves.GetAll().Where(t => t.Technique).Select(t => t.ToModel());
+            result.Data = this.typeEpreuves.Read().Where(t => t.Technique).Select(t => t.ToModel());
             return result;
         }
 
@@ -322,7 +349,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.typeEpreuves.GetAll().Where(t => !t.Technique).Select(t => t.ToModel());
+            result.Data = this.typeEpreuves.Read().Where(t => !t.Technique).Select(t => t.ToModel());
             return result;
         }
     }

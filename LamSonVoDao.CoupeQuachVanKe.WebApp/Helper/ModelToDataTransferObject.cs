@@ -1,13 +1,13 @@
-﻿using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
-using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
-using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
+﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
 {
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+
     public static class ModelToDataTransferObject
     {
         public static Competiteur ToDTO(this CompetiteurModel model)
@@ -18,10 +18,10 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
                 result.Id = model.Id;
             }
 
-            result.Categorie = (CategoriePratiquant)model.CategorieId; 
+            result.CategoriePratiquantId = model.CategorieId; 
             result.ClubId = model.ClubId;
             result.DateNaissance = model.DateNaissance;
-            result.EquipeSongLuyen = model.EquipeSongLuyen;
+            result.EquipeSongLuyenNumero = model.EquipeSongLuyenId;
             result.Grade = (Grade)model.GradeId;
             result.InscriptionValidePourCoupe = model.InscriptionValidePourCoupe;
             result.InscritPourBaiVuKhi = model.InscritPourBaiVuKhi;
@@ -88,6 +88,20 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.Matin = model.Matin;
             result.Role = new EnumConverter<Role>().ConvertToEnum(model.Role);            
 
+            return result;
+        }
+
+        public static CategoriePratiquant ToDTO (this CategoriePratiquantModel model)
+        {
+            CategoriePratiquant result = new CategoriePratiquant();
+            if (model.Id != 0)
+            {
+                result.Id = model.Id;
+            }
+            result.Nom = model.Nom;
+            result.AgeMin = model.AgeMin;
+            result.AgeMax = model.AgeMax;
+            
             return result;
         }
     }    

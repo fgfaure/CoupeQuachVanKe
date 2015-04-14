@@ -8,17 +8,21 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+using Resources;
+using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
 
 namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
     public class EpreuveCombatController : BaseController<EpreuveCombat>, ICrudController<EpreuveCombat, EpreuveCombatModel>
     {
+        private Repository<CategoriePratiquant> categories = new UnitOfWork().Repository<CategoriePratiquant>();
+        private Repository<TypeEpreuve> types = new UnitOfWork().Repository<TypeEpreuve>();
 
         public JsonResult Get()
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.repository.GetAll().Select(et => et.ToModel());
+            result.Data = this.repository.Read().Select(et => et.ToModel());
             return result;
         }
 
@@ -26,9 +30,15 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             try
             {
+                var categorie = this.categories.Read(model.CategorieId).Nom;
+                var typeEpreuve = this.types.Read(model.TypeEpreuveId).Nom;
+                var genre = GenreEpreuves.ResourceManager.GetString(((GenreEpreuve)model.GenreCategorieId).ToString());
+                var grade = Grades.ResourceManager.GetString(((Grade)model.GradeAutoriseId).ToString());
+
                 var dbitem = new EpreuveCombat
                 {
-                    CategoriePratiquant = (CategoriePratiquant)model.CategorieId,
+                    Nom = string.Format("{0} {1} {2} {3} de {4}kgs à {5}kgs", typeEpreuve, categorie, genre, grade, model.PoidsMini, model.PoidsMaxi),
+                    CategoriePratiquantId = model.CategorieId,
                     GenreCategorie = (GenreEpreuve)model.GenreCategorieId,
                     GradeAutorise = (Grade)model.GradeAutoriseId,
                     Statut = StatutEpreuve.Fermee,
@@ -37,8 +47,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                     PoidsMaxi = model.PoidsMaxi
                 };
 
-                this.repository.Insert(dbitem);
-                return Json(model);
+                this.repository.Create(dbitem);
+                return Json(dbitem.ToModel());
 
             }
             catch
@@ -51,7 +61,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     this.repository.Delete(dbmodel);
@@ -72,10 +82,16 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var categorie = this.categories.Read(model.CategorieId).Nom;
+                var typeEpreuve = this.types.Read(model.TypeEpreuveId).Nom;
+                var genre = GenreEpreuves.ResourceManager.GetString(((GenreEpreuve)model.GenreCategorieId).ToString());
+                var grade = Grades.ResourceManager.GetString(((Grade)model.GradeAutoriseId).ToString());
+
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
-                    dbmodel.CategoriePratiquant = (CategoriePratiquant)model.CategorieId;
+                    dbmodel.Nom = string.Format("{0} {1} {2} {3} de {4}kgs à {5}kgs", typeEpreuve, categorie, genre, grade, model.PoidsMini, model.PoidsMaxi);
+                    dbmodel.CategoriePratiquantId = model.CategorieId;
                     dbmodel.GenreCategorie = (GenreEpreuve)model.GenreCategorieId;
                     dbmodel.GradeAutorise = (Grade)model.GradeAutoriseId;
                     dbmodel.Statut = StatutEpreuve.Fermee;
@@ -83,7 +99,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                     dbmodel.PoidsMini = model.PoidsMini;
                     dbmodel.PoidsMaxi = model.PoidsMaxi;
                     this.repository.Update(dbmodel);
-                    return Json(model);
+                    return Json(dbmodel.ToModel());
                 }
                 else
                 {

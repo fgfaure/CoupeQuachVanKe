@@ -89,7 +89,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The poids.
         /// </value>
-        public int Poids { get; set; }
+        public float Poids { get; set; }
 
         /// <summary>
         /// Gets or sets the club identifier.
@@ -145,6 +145,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The equipe song luyen.
         /// </value>
-        public int EquipeSongLuyen { get; set; }
+        public int EquipeSongLuyenId { get; set; }
     }
 }

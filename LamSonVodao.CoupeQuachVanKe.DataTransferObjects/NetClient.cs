@@ -20,7 +20,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The type of the client.
         /// </value>
-        public NetClientType ClientType { get; set; }
+        public NetClientType NetClientType { get; set; }
 
         /// <summary>
         /// Gets or sets the net client type identifier.
@@ -39,14 +39,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         public string Password { get; set; }
 
         /// <summary>
-        /// Gets or sets the confirm password.
-        /// </summary>
-        /// <value>
-        /// The confirm password.
-        /// </value>
-        public string ConfirmPassword { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether this instance is connected.
         /// </summary>
         /// <value>
@@ -61,5 +53,21 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// The ip.
         /// </value>
         public string Ip { get; set; }
+
+        /// <summary>
+        /// Gets or sets the aire.
+        /// </summary>
+        /// <value>
+        /// The aire.
+        /// </value>
+        public Aire Aire { get; set; }
+
+        /// <summary>
+        /// Gets or sets the aire identifier.
+        /// </summary>
+        /// <value>
+        /// The aire identifier.
+        /// </value>
+        public int AireId { get; set; }
     }
 }

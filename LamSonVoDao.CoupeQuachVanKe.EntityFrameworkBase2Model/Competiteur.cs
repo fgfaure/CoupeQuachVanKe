@@ -17,26 +17,30 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Competiteur()
         {
-            this.Resultats = new HashSet<Resultat>();
-            this.Epreuves = new HashSet<Epreuve>();
+            this.Participations = new HashSet<Participation>();
         }
     
         public int Id { get; set; }
         public string Nom { get; set; }
         public string Prenom { get; set; }
         public int Grade { get; set; }
-        public int Categorie { get; set; }
         public System.DateTime DateNaissance { get; set; }
         public int Sexe { get; set; }
         public string LicenceFFKDA { get; set; }
         public int AnneePratique { get; set; }
         public Nullable<int> Poids { get; set; }
-        public int ClubId { get; set; }
+        public int NbAnneePratique { get; set; }
+        public bool InscritPourQuyen { get; set; }
+        public bool InscritPourBaiVuKhi { get; set; }
+        public bool InscritPourCombat { get; set; }
+        public bool InscritPourSongLuyen { get; set; }
+        public bool InscriptionValidePourCoupe { get; set; }
+        public bool InscriptionIsCorrect { get; set; }
     
         public virtual Club Club { get; set; }
+        public virtual CategoriePratiquant CategoriePratiquant { get; set; }
+        public virtual EquipeSongLuyen EquipeSongLuyen { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Resultat> Resultats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Epreuve> Epreuves { get; set; }
+        public virtual ICollection<Participation> Participations { get; set; }
     }
 }

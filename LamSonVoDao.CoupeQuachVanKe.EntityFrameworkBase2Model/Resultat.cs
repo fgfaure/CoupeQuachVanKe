@@ -23,12 +23,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
         public bool Disqualification { get; set; }
         public bool Absence { get; set; }
         public bool Renvoi { get; set; }
-        public int CompetiteurId { get; set; }
-        public int EpreuveId { get; set; }
-        public Nullable<int> Epreuve_Id1 { get; set; }
     
-        public virtual Competiteur Competiteur { get; set; }
-        public virtual Epreuve Epreuve { get; set; }
-        public virtual Epreuve Epreuve1 { get; set; }
+        public virtual Participation Participation { get; set; }
     }
 }

@@ -12,16 +12,20 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
     using System;
     using System.Collections.Generic;
     
-    public partial class ResponsablesClub
+    public partial class TypeEpreuve
     {
-        public int Id { get; set; }
-        public int ClubId { get; set; }
-        public string Nom { get; set; }
-        public string Prenom { get; set; }
-        public string Adresse { get; set; }
-        public string Telephone { get; set; }
-        public string EmailContact { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TypeEpreuve()
+        {
+            this.Epreuves = new HashSet<Epreuve>();
+        }
     
-        public virtual Club Club { get; set; }
+        public int Id { get; set; }
+        public string Nom { get; set; }
+        public string Description { get; set; }
+        public bool Technique { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Epreuve> Epreuves { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
         public Encadrant()
         {
             this.Disponibilites = new HashSet<Disponibilite>();
-            this.Epreuves = new HashSet<Epreuve>();
+            this.Encadrements = new HashSet<Encadrement>();
         }
     
         public int Id { get; set; }
@@ -28,14 +28,12 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
         public int TailleTenue { get; set; }
         public Nullable<bool> EstCompetiteur { get; set; }
         public int Sexe { get; set; }
-        public int ClubId { get; set; }
-        public Nullable<int> Coupe_Id { get; set; }
+        public bool InscriptionIsCorrect { get; set; }
     
         public virtual Club Club { get; set; }
-        public virtual Coupe Coupe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Disponibilite> Disponibilites { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Epreuve> Epreuves { get; set; }
+        public virtual ICollection<Encadrement> Encadrements { get; set; }
     }
 }

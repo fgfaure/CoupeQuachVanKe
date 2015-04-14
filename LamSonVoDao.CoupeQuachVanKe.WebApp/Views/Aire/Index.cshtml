@@ -55,6 +55,52 @@
         });
         coupes.read();
 
+        var clients = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetClients",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                parse: function (data) {
+                    var coupes = [];
+                    for (var i = 0; i < data.length; i++) {
+                        coupes.push({
+                            value: data[i].Id,
+                            text: data[i].ClientName
+                        });
+                    }
+                    return coupes;
+                },
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        Nom: {
+                            //set validation rules
+                            type: "string",
+                        }
+                    }
+                }
+            }
+        });
+        clients.read();
+
         var aires = new kendo.data.DataSource({
             transport: {
                 read: {
@@ -108,7 +154,12 @@
                             field: "CoupeId",
                             type: "number",
                             defaultValue: 1
-                        }                       
+                        },
+                        NetClientId: {
+                            field: "NetClientId",
+                            type: "number",
+                            defaultValue: 1
+                        },
                     }
                 }
             }
@@ -126,6 +177,7 @@
             columns: [
                 { field: "Description", title: "Description" },
                 { field: "CoupeId", title: "Coupe", values: coupes.data().toJSON() },
+                { field: "NetClientId", title: "Table associée", values: clients.data().toJSON() },
                 { command: ["edit", "destroy"], title: "&nbsp;", width: "200px" }],
             editable: "popup"
         });

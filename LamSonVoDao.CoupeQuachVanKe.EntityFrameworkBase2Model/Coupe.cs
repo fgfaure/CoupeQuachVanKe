@@ -17,15 +17,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Coupe()
         {
-            this.Aires = new HashSet<Aire>();
-            this.Encadrants = new HashSet<Encadrant>();
+            this.Aire = new HashSet<Aire>();
+            this.Responsables = new HashSet<ResponsableCoupe>();
             this.Medecins = new HashSet<Medecin>();
         }
     
         public int Id { get; set; }
         public string Nom { get; set; }
         public string Description { get; set; }
-        public int NombreTapis { get; set; }
         public string Voie { get; set; }
         public Nullable<int> Numero { get; set; }
         public string Complement { get; set; }
@@ -35,11 +34,10 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
         public System.DateTime DateFin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Aire> Aires { get; set; }
+        public virtual ICollection<Aire> Aire { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Encadrant> Encadrants { get; set; }
+        public virtual ICollection<ResponsableCoupe> Responsables { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Medecin> Medecins { get; set; }
-        public virtual ResponsablesCoupe ResponsablesCoupe { get; set; }
     }
 }

@@ -41,15 +41,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// The type epreuve.
         /// </value>
         public int TypeEpreuveId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the categorie.
-        /// </summary>
-        /// <value>
-        /// The categorie.
-        /// </value>
-        public int CategorieId { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the genre categorie.
         /// </summary>
@@ -66,5 +58,12 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// </value>
         public int GradeAutoriseId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the categorie identifier.
+        /// </summary>
+        /// <value>
+        /// The categorie identifier.
+        /// </value>
+        public int CategorieId { get; set; }
     }
 }

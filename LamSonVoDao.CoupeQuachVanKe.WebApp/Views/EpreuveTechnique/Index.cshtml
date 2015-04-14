@@ -16,6 +16,11 @@
     <hr />
     <div id="epreuvesTechniques">
     </div>
+    <script type="text/x-kendo-template" id="template">
+        <div class="toolbar">
+            <button id="merge" style="width: 150px" name="Fusionner" />
+        </div>
+    </script>
 </div>
 <script type="text/x-kendo-template" id="template">
     <div class="tabstrip">
@@ -54,7 +59,7 @@
                 },
                 columns: [
                     { field: "Nom", title: "Nom" },
-                    { field: "Prenom", title: "Prénom" }                    
+                    { field: "Prenom", title: "Prénom" }
                 ]
             });
 
@@ -178,6 +183,16 @@
                 }
             },
             schema: {
+                parse: function (data) {
+                    var datas = [];
+                    for (var i = 0; i < data.length; i++) {
+                        datas.push({
+                            value: data[i].Id,
+                            text: data[i].Nom
+                        });
+                    }
+                    return datas;
+                },
                 model: {
                     id: "value",
                     fields: {
@@ -320,15 +335,10 @@
                             editable: false,
                             nullable: false
                         },
-                        //Nom: {
-                        //    editable: true,
-                        //    type: "string",
-                        //    validation: { required: true }
-                        //},
-                        //Description: {
-                        //    editable: true,
-                        //    type: "string"
-                        //},
+                        Nom: {
+                            editable: false,
+                            type: "string"
+                        },
                         StatutId: {
                             editable: false,
                             type: "number",
@@ -366,15 +376,18 @@
                 refresh: true,
                 pageSizes: true,
                 buttonCount: 5
-            },
+            },            
+            selectable: "multiple",
             sortable: true,
             groupable: true,
             filterable: true,
             autosync: true,
-            toolbar: ["create"],
+            toolbar: [{name : "create", text : "Ajouter"},{
+                name: "merge",
+                text: "Fusionner"}
+            ],
             columns: [
-                    //{ field: "Nom", title: "Nom" },
-                    //{ field: "Description", title: "Description" },
+                    { field: "Nom", title: "Nom" },
                     { field: "TypeEpreuveId", title: "Type d'Epreuve", values: techniques.data().toJSON() },
                     { field: "CategorieId", title: "Catégorie", values: categories.data().toJSON() },
                     { field: "GenreCategorieId", title: "Genre", values: genres.data().toJSON() },
@@ -386,6 +399,24 @@
                 mode: "popup",
                 template: $("#popup_editor").html()
             },
+        });
+
+        $(".k-grid-merge").off('click').on('click', function (e) {
+            var grid = $("#epreuvesTechniques").data('kendoGrid');
+            var selected = [];
+            $.each(grid.select(), function (i, e) {
+                selected.push(grid.dataItem(e));
+            });
+
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                async: true,
+                url: "Merge",
+                data: JSON.stringify(selected),
+                contentType: 'application/json',
+                dataType: 'json'
+            });
         });
     });
 </script>

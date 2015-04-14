@@ -9,7 +9,7 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
     public class MedecinController : BaseController<Medecin>, ICrudController<Medecin, MedecinModel>
     {         
         public JsonResult Get()
@@ -17,7 +17,7 @@
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
-            result.Data = this.repository.GetAll().Select(m => new MedecinModel
+            result.Data = this.repository.Read().Select(m => new MedecinModel
             {
                 Nom = m.Nom,
                 Prenom = m.Prenom,
@@ -36,7 +36,7 @@
         {
             try
             {
-                this.repository.Insert(new Medecin
+                this.repository.Create(new Medecin
                 {
                     Nom = medecin.Nom,
                     Prenom = medecin.Prenom,
@@ -45,7 +45,7 @@
                     CoupeId = 1
                 });
 
-                var dbItem = this.repository.Get(m => m.Nom == medecin.Nom && m.Prenom == medecin.Prenom).First();
+                var dbItem = this.repository.Read(m => m.Nom == medecin.Nom && m.Prenom == medecin.Prenom).First();
                 medecin.Id = dbItem.Id;
                 return Json(medecin);
             }
@@ -60,13 +60,13 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 dbmodel.MailContact = model.MailContact;
                 dbmodel.Nom = model.Nom;
                 dbmodel.Prenom = model.Prenom;
                 dbmodel.Telephone = model.Telephone;
                 this.repository.Update(dbmodel);
-                return Json(model);
+                return Json(dbmodel.ToModel());
             }
             catch
             {
@@ -79,7 +79,7 @@
         {
             try
             {
-                var dbItem = this.repository.GetById(model.Id);
+                var dbItem = this.repository.Read(model.Id);
                 this.repository.Delete(dbItem);
                 return Json(model);
             }

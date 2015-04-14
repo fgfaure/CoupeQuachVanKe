@@ -1,10 +1,10 @@
-﻿using LamSonVoDao.CoupeQuachVanKe.DataAccessLayer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model;
 
 namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
@@ -20,16 +20,15 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            using (var context = new CoupeQuachVanKeContext())
+            using (var context = new CoupeQVK2Container())
             {
-                var competiteurs = context.Competiteurs.Include(c => c.Resultats);
-                var resultats = context.Resultats.Include(r => r.Epreuve);
+                var competiteurs = context.Competiteurs.Include(c => c.Participations.Select(p => p.Resultat)).ToList();                
 
                 result.Data = competiteurs.Select(c => new
                 {
                     Nom = c.Nom,
                     Prenom = c.Prenom,
-                    EpreuvesId = c.Resultats.Where(r => r.CompetiteurId == c.Id).Select(r => new { rId = r.EpreuveId })
+                    EpreuvesId = c.Participations.Where(r => r.Epreuve.Id == c.Id).Select(r => new { rId = r.Epreuve.Id })
                 }).ToList();
             }
             return result;

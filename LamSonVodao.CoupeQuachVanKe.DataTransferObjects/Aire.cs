@@ -39,5 +39,21 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// </value>
         public int CoupeId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the client.
+        /// </summary>
+        /// <value>
+        /// The client.
+        /// </value>
+        public NetClient Client { get; set; }
+
+        /// <summary>
+        /// Gets or sets the client identifier.
+        /// </summary>
+        /// <value>
+        /// The client identifier.
+        /// </value>
+        public int ClientId { get; set; }
+
     }
 }

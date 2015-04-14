@@ -8,6 +8,7 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
 
     public class ResponsableClubController : BaseController<ResponsableClub>, ICrudController<ResponsableClub, ResponsableClubModel>
     {       
@@ -15,7 +16,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.repository.GetAll().Select(r => new ResponsableClubModel
+            result.Data = this.repository.Read().Select(r => new ResponsableClubModel
             {
                 Id = r.Id,
                 Adresse = r.Adresse,
@@ -42,8 +43,8 @@
                     Telephone = model.Telephone         
                 };
 
-                this.repository.Insert(dbitem);
-                return Json(model);
+                this.repository.Create(dbitem);
+                return Json(dbitem.ToModel());
 
             }
             catch
@@ -56,7 +57,7 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     this.repository.Delete(dbmodel);
@@ -77,7 +78,7 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     dbmodel.Adresse = model.Adresse;
@@ -88,7 +89,7 @@
                     dbmodel.Telephone = model.Telephone;
 
                     this.repository.Update(dbmodel);
-                    return Json(model);
+                    return Json(dbmodel.ToModel());
                 }
                 else
                 {

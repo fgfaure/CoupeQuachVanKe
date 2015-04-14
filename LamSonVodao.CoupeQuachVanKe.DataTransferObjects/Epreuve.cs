@@ -1,13 +1,21 @@
-﻿using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
-using System.Collections.Generic;
-
-namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
+﻿namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+    using System.Collections.Generic;
+
     /// <summary>
     /// 
     /// </summary>
     public class Epreuve : BaseEntity
     {      
+        /// <summary>
+        /// Gets or sets the nom.
+        /// </summary>
+        /// <value>
+        /// The nom.
+        /// </value>
+        public string Nom { get; set; }
+        
         /// <summary>
         /// Gets or sets the statut.
         /// </summary>
@@ -41,6 +49,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         public CategoriePratiquant CategoriePratiquant { get; set; }
 
         /// <summary>
+        /// Gets or sets the categorie identifier.
+        /// </summary>
+        /// <value>
+        /// The categorie identifier.
+        /// </value>
+        public int CategoriePratiquantId { get; set; }
+
+        /// <summary>
         /// Gets or sets the genre categorie.
         /// </summary>
         /// <value>
@@ -70,6 +86,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The resultats.
         /// </value>
-        public ICollection<Resultat> Resultats { get; set; }
+        public ICollection<Participation> Participations { get; set; }       
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is merged.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is merged; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsMerged { get; set; }
     }
 }

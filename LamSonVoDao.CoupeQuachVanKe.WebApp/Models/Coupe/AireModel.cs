@@ -32,5 +32,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// The coupe identifier.
         /// </value>
         public int CoupeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the net client identifier.
+        /// </summary>
+        /// <value>
+        /// The net client identifier.
+        /// </value>
+        public int NetClientId { get; set; }
     }
 }

@@ -1,0 +1,1341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CoupeQVK2.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="CoupeQVK2StoreContainer">
+    <EntitySet Name="Aires" EntityType="CoupeQVK2.Store.Aires" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Clubs" EntityType="CoupeQVK2.Store.Clubs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Competiteurs" EntityType="CoupeQVK2.Store.Competiteurs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Coupes" EntityType="CoupeQVK2.Store.Coupes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Disponibilites" EntityType="CoupeQVK2.Store.Disponibilites" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Encadrants" EntityType="CoupeQVK2.Store.Encadrants" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Epreuves" EntityType="CoupeQVK2.Store.Epreuves" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Medecins" EntityType="CoupeQVK2.Store.Medecins" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ResponsablesClubs" EntityType="CoupeQVK2.Store.ResponsablesClubs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ResponsablesCoupes" EntityType="CoupeQVK2.Store.ResponsablesCoupes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Resultats" EntityType="CoupeQVK2.Store.Resultats" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CategoriePratiquants" EntityType="CoupeQVK2.Store.CategoriePratiquants" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EquipesSongLuyen" EntityType="CoupeQVK2.Store.EquipesSongLuyen" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="NetClient" EntityType="CoupeQVK2.Store.NetClient" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="NetClientTypes" EntityType="CoupeQVK2.Store.NetClientTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TypeEpreuves" EntityType="CoupeQVK2.Store.TypeEpreuves" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ParticipationSet" EntityType="CoupeQVK2.Store.ParticipationSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Epreuves_EpreuveCombat" EntityType="CoupeQVK2.Store.Epreuves_EpreuveCombat" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Epreuves_EpreuveTechnique" EntityType="CoupeQVK2.Store.Epreuves_EpreuveTechnique" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CoupeAire" Association="CoupeQVK2.Store.CoupeAire">
+      <End Role="Coupe" EntitySet="Coupes" />
+      <End Role="Aire" EntitySet="Aires" />
+    </AssociationSet>
+    <AssociationSet Name="AireNetClient" Association="CoupeQVK2.Store.AireNetClient">
+      <End Role="Aire" EntitySet="Aires" />
+      <End Role="NetClient" EntitySet="NetClient" />
+    </AssociationSet>
+    <AssociationSet Name="AireEpreuve" Association="CoupeQVK2.Store.AireEpreuve">
+      <End Role="Aire" EntitySet="Aires" />
+      <End Role="Epreuve" EntitySet="Epreuves" />
+    </AssociationSet>
+    <AssociationSet Name="ClubResponsableClub" Association="CoupeQVK2.Store.ClubResponsableClub">
+      <End Role="Club" EntitySet="Clubs" />
+      <End Role="ResponsableClub" EntitySet="ResponsablesClubs" />
+    </AssociationSet>
+    <AssociationSet Name="ClubCompetiteur" Association="CoupeQVK2.Store.ClubCompetiteur">
+      <End Role="Club" EntitySet="Clubs" />
+      <End Role="Competiteur" EntitySet="Competiteurs" />
+    </AssociationSet>
+    <AssociationSet Name="ClubEncadrant" Association="CoupeQVK2.Store.ClubEncadrant">
+      <End Role="Club" EntitySet="Clubs" />
+      <End Role="Encadrant" EntitySet="Encadrants" />
+    </AssociationSet>
+    <AssociationSet Name="CompetiteurCategoriePratiquant" Association="CoupeQVK2.Store.CompetiteurCategoriePratiquant">
+      <End Role="Competiteur" EntitySet="Competiteurs" />
+      <End Role="CategoriePratiquant" EntitySet="CategoriePratiquants" />
+    </AssociationSet>
+    <AssociationSet Name="CoupeResponsableCoupe" Association="CoupeQVK2.Store.CoupeResponsableCoupe">
+      <End Role="Coupe" EntitySet="Coupes" />
+      <End Role="ResponsableCoupe" EntitySet="ResponsablesCoupes" />
+    </AssociationSet>
+    <AssociationSet Name="CoupeMedecin" Association="CoupeQVK2.Store.CoupeMedecin">
+      <End Role="Coupe" EntitySet="Coupes" />
+      <End Role="Medecin" EntitySet="Medecins" />
+    </AssociationSet>
+    <AssociationSet Name="EncadrantDisponibilite" Association="CoupeQVK2.Store.EncadrantDisponibilite">
+      <End Role="Encadrant" EntitySet="Encadrants" />
+      <End Role="Disponibilite" EntitySet="Disponibilites" />
+    </AssociationSet>
+    <AssociationSet Name="ParticipationResultat" Association="CoupeQVK2.Store.ParticipationResultat">
+      <End Role="Participation" EntitySet="ParticipationSet" />
+      <End Role="Resultat" EntitySet="Resultats" />
+    </AssociationSet>
+    <AssociationSet Name="EpreuveCategoriePratiquant" Association="CoupeQVK2.Store.EpreuveCategoriePratiquant">
+      <End Role="Epreuve" EntitySet="Epreuves" />
+      <End Role="CategoriePratiquant" EntitySet="CategoriePratiquants" />
+    </AssociationSet>
+    <AssociationSet Name="EquipeSongLuyenCompetiteur" Association="CoupeQVK2.Store.EquipeSongLuyenCompetiteur">
+      <End Role="EquipeSongLuyen" EntitySet="EquipesSongLuyen" />
+      <End Role="Competiteur" EntitySet="Competiteurs" />
+    </AssociationSet>
+    <AssociationSet Name="NetClientNetClientType" Association="CoupeQVK2.Store.NetClientNetClientType">
+      <End Role="NetClient" EntitySet="NetClient" />
+      <End Role="NetClientType" EntitySet="NetClientTypes" />
+    </AssociationSet>
+    <AssociationSet Name="TypeEpreuveEpreuve" Association="CoupeQVK2.Store.TypeEpreuveEpreuve">
+      <End Role="TypeEpreuve" EntitySet="TypeEpreuves" />
+      <End Role="Epreuve" EntitySet="Epreuves" />
+    </AssociationSet>
+    <AssociationSet Name="CompetiteurParticipation" Association="CoupeQVK2.Store.CompetiteurParticipation">
+      <End Role="Competiteur" EntitySet="Competiteurs" />
+      <End Role="Participation" EntitySet="ParticipationSet" />
+    </AssociationSet>
+    <AssociationSet Name="EpreuveParticipation" Association="CoupeQVK2.Store.EpreuveParticipation">
+      <End Role="Epreuve" EntitySet="Epreuves" />
+      <End Role="Participation" EntitySet="ParticipationSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EpreuveCombat_inherits_Epreuve" Association="CoupeQVK2.Store.FK_EpreuveCombat_inherits_Epreuve">
+      <End Role="Epreuve" EntitySet="Epreuves" />
+      <End Role="EpreuveCombat" EntitySet="Epreuves_EpreuveCombat" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EpreuveTechnique_inherits_Epreuve" Association="CoupeQVK2.Store.FK_EpreuveTechnique_inherits_Epreuve">
+      <End Role="Epreuve" EntitySet="Epreuves" />
+      <End Role="EpreuveTechnique" EntitySet="Epreuves_EpreuveTechnique" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Aires">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="CoupeId" Type="int" Nullable="false" />
+    <Property Name="Coupe_Id" Type="int" Nullable="false" />
+    <Property Name="NetClient_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Clubs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="NumeroAffiliation" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="InscriptionIsCorrect" Type="bit" Nullable="false" />
+    <Property Name="ResponsableClub_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Competiteurs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Prenom" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Grade" Type="int" Nullable="false" />
+    <Property Name="DateNaissance" Type="datetime" Nullable="false" />
+    <Property Name="Sexe" Type="int" Nullable="false" />
+    <Property Name="LicenceFFKDA" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="AnneePratique" Type="int" Nullable="false" />
+    <Property Name="Poids" Type="int" Nullable="true" />
+    <Property Name="NbAnneePratique" Type="int" Nullable="false" />
+    <Property Name="InscritPourQuyen" Type="bit" Nullable="false" />
+    <Property Name="InscritPourBaiVuKhi" Type="bit" Nullable="false" />
+    <Property Name="InscritPourCombat" Type="bit" Nullable="false" />
+    <Property Name="InscritPourSongLuyen" Type="bit" Nullable="false" />
+    <Property Name="InscriptionValidePourCoupe" Type="bit" Nullable="false" />
+    <Property Name="InscriptionIsCorrect" Type="bit" Nullable="false" />
+    <Property Name="Club_Id" Type="int" Nullable="false" />
+    <Property Name="CategoriePratiquant_Id" Type="int" Nullable="false" />
+    <Property Name="EquipeSongLuyen_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Coupes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Voie" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Numero" Type="int" Nullable="true" />
+    <Property Name="Complement" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="CodePostal" Type="nchar" Nullable="false" MaxLength="5" />
+    <Property Name="Ville" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="DateDebut" Type="datetime" Nullable="false" />
+    <Property Name="DateFin" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Disponibilites">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Matin" Type="bit" Nullable="false" />
+    <Property Name="Encadrant_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Encadrants">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Prenom" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="MailContact" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="TailleTenue" Type="int" Nullable="false" />
+    <Property Name="EstCompetiteur" Type="bit" Nullable="true" />
+    <Property Name="Sexe" Type="int" Nullable="false" />
+    <Property Name="InscriptionIsCorrect" Type="bit" Nullable="false" />
+    <Property Name="Club_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Epreuves">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Description" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Statut" Type="int" Nullable="false" />
+    <Property Name="GenreCategorie" Type="int" Nullable="false" />
+    <Property Name="GradeAutorise" Type="int" Nullable="false" />
+    <Property Name="IsMerged" Type="bit" Nullable="false" />
+    <Property Name="Aire_Id" Type="int" Nullable="false" />
+    <Property Name="CategoriePratiquant_Id" Type="int" Nullable="false" />
+    <Property Name="TypeEpreuve_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Medecins">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Prenom" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Telephone" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="MailContact" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Coupe_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ResponsablesClubs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Prenom" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Adresse" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Telephone" Type="nchar" Nullable="true" MaxLength="14" />
+    <Property Name="EmailContact" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="InscriptionIsCorrect" Type="bit" Nullable="false" />
+    <Property Name="MailContact" Type="nvarchar" Nullable="true" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="ResponsablesCoupes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Prenom" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Adresse" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Telephone" Type="nchar" Nullable="true" MaxLength="14" />
+    <Property Name="EmailContact" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="MailContact" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="Coupe_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Resultats">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InscriptionValidee" Type="bit" Nullable="false" />
+    <Property Name="Classement" Type="int" Nullable="false" />
+    <Property Name="Score" Type="int" Nullable="false" />
+    <Property Name="Abandon" Type="bit" Nullable="false" />
+    <Property Name="Blessure" Type="bit" Nullable="false" />
+    <Property Name="Disqualification" Type="bit" Nullable="false" />
+    <Property Name="Absence" Type="bit" Nullable="false" />
+    <Property Name="Renvoi" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategoriePratiquants">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="AgeMax" Type="int" Nullable="false" />
+    <Property Name="AgeMin" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EquipesSongLuyen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Numero" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NetClient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsConnected" Type="bit" Nullable="false" />
+    <Property Name="Ip" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="NetClientType_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NetClientTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientType" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="TypeEpreuves">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Technique" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ParticipationSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Resultat_Id" Type="int" Nullable="false" />
+    <Property Name="Competiteur_Id" Type="int" Nullable="false" />
+    <Property Name="Epreuve_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Epreuves_EpreuveCombat">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="PoidsMini" Type="real" Nullable="false" />
+    <Property Name="PoidsMaxi" Type="real" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Epreuves_EpreuveTechnique">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CoupeAire">
+    <End Role="Coupe" Type="CoupeQVK2.Store.Coupes" Multiplicity="1" />
+    <End Role="Aire" Type="CoupeQVK2.Store.Aires" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Coupe">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Aire">
+        <PropertyRef Name="Coupe_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AireNetClient">
+    <End Role="Aire" Type="CoupeQVK2.Store.Aires" Multiplicity="*" />
+    <End Role="NetClient" Type="CoupeQVK2.Store.NetClient" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="NetClient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Aire">
+        <PropertyRef Name="NetClient_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AireEpreuve">
+    <End Role="Aire" Type="CoupeQVK2.Store.Aires" Multiplicity="1" />
+    <End Role="Epreuve" Type="CoupeQVK2.Store.Epreuves" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Aire">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Epreuve">
+        <PropertyRef Name="Aire_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ClubResponsableClub">
+    <End Role="Club" Type="CoupeQVK2.Store.Clubs" Multiplicity="*" />
+    <End Role="ResponsableClub" Type="CoupeQVK2.Store.ResponsablesClubs" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ResponsableClub">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Club">
+        <PropertyRef Name="ResponsableClub_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ClubCompetiteur">
+    <End Role="Club" Type="CoupeQVK2.Store.Clubs" Multiplicity="1" />
+    <End Role="Competiteur" Type="CoupeQVK2.Store.Competiteurs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Club">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Competiteur">
+        <PropertyRef Name="Club_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ClubEncadrant">
+    <End Role="Club" Type="CoupeQVK2.Store.Clubs" Multiplicity="1" />
+    <End Role="Encadrant" Type="CoupeQVK2.Store.Encadrants" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Club">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Encadrant">
+        <PropertyRef Name="Club_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CompetiteurCategoriePratiquant">
+    <End Role="Competiteur" Type="CoupeQVK2.Store.Competiteurs" Multiplicity="*" />
+    <End Role="CategoriePratiquant" Type="CoupeQVK2.Store.CategoriePratiquants" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="CategoriePratiquant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Competiteur">
+        <PropertyRef Name="CategoriePratiquant_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CoupeResponsableCoupe">
+    <End Role="Coupe" Type="CoupeQVK2.Store.Coupes" Multiplicity="1" />
+    <End Role="ResponsableCoupe" Type="CoupeQVK2.Store.ResponsablesCoupes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Coupe">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ResponsableCoupe">
+        <PropertyRef Name="Coupe_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CoupeMedecin">
+    <End Role="Coupe" Type="CoupeQVK2.Store.Coupes" Multiplicity="1" />
+    <End Role="Medecin" Type="CoupeQVK2.Store.Medecins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Coupe">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Medecin">
+        <PropertyRef Name="Coupe_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EncadrantDisponibilite">
+    <End Role="Encadrant" Type="CoupeQVK2.Store.Encadrants" Multiplicity="1" />
+    <End Role="Disponibilite" Type="CoupeQVK2.Store.Disponibilites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Encadrant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Disponibilite">
+        <PropertyRef Name="Encadrant_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ParticipationResultat">
+    <End Role="Participation" Type="CoupeQVK2.Store.ParticipationSet" Multiplicity="*" />
+    <End Role="Resultat" Type="CoupeQVK2.Store.Resultats" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Resultat">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Participation">
+        <PropertyRef Name="Resultat_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EpreuveCategoriePratiquant">
+    <End Role="Epreuve" Type="CoupeQVK2.Store.Epreuves" Multiplicity="*" />
+    <End Role="CategoriePratiquant" Type="CoupeQVK2.Store.CategoriePratiquants" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="CategoriePratiquant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Epreuve">
+        <PropertyRef Name="CategoriePratiquant_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EquipeSongLuyenCompetiteur">
+    <End Role="EquipeSongLuyen" Type="CoupeQVK2.Store.EquipesSongLuyen" Multiplicity="1" />
+    <End Role="Competiteur" Type="CoupeQVK2.Store.Competiteurs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EquipeSongLuyen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Competiteur">
+        <PropertyRef Name="EquipeSongLuyen_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="NetClientNetClientType">
+    <End Role="NetClient" Type="CoupeQVK2.Store.NetClient" Multiplicity="*" />
+    <End Role="NetClientType" Type="CoupeQVK2.Store.NetClientTypes" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="NetClientType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="NetClient">
+        <PropertyRef Name="NetClientType_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TypeEpreuveEpreuve">
+    <End Role="TypeEpreuve" Type="CoupeQVK2.Store.TypeEpreuves" Multiplicity="1" />
+    <End Role="Epreuve" Type="CoupeQVK2.Store.Epreuves" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeEpreuve">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Epreuve">
+        <PropertyRef Name="TypeEpreuve_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CompetiteurParticipation">
+    <End Role="Competiteur" Type="CoupeQVK2.Store.Competiteurs" Multiplicity="1" />
+    <End Role="Participation" Type="CoupeQVK2.Store.ParticipationSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Competiteur">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Participation">
+        <PropertyRef Name="Competiteur_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EpreuveParticipation">
+    <End Role="Epreuve" Type="CoupeQVK2.Store.Epreuves" Multiplicity="1" />
+    <End Role="Participation" Type="CoupeQVK2.Store.ParticipationSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Epreuve">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Participation">
+        <PropertyRef Name="Epreuve_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EpreuveCombat_inherits_Epreuve">
+    <End Role="Epreuve" Type="CoupeQVK2.Store.Epreuves" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EpreuveCombat" Type="CoupeQVK2.Store.Epreuves_EpreuveCombat" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Epreuve">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EpreuveCombat">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EpreuveTechnique_inherits_Epreuve">
+    <End Role="Epreuve" Type="CoupeQVK2.Store.Epreuves" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EpreuveTechnique" Type="CoupeQVK2.Store.Epreuves_EpreuveTechnique" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Epreuve">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EpreuveTechnique">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CoupeQVK2" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="CoupeQVK2Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Aires" EntityType="CoupeQVK2.Aire" />
+          <EntitySet Name="Clubs" EntityType="CoupeQVK2.Club" />
+          <EntitySet Name="Competiteurs" EntityType="CoupeQVK2.Competiteur" />
+          <EntitySet Name="Coupes" EntityType="CoupeQVK2.Coupe" />
+          <EntitySet Name="Disponibilites" EntityType="CoupeQVK2.Disponibilite" />
+          <EntitySet Name="Encadrants" EntityType="CoupeQVK2.Encadrant" />
+          <EntitySet Name="Epreuves" EntityType="CoupeQVK2.Epreuve" />
+          <EntitySet Name="Medecins" EntityType="CoupeQVK2.Medecin" />
+          <EntitySet Name="ResponsablesClubs" EntityType="CoupeQVK2.ResponsableClub" />
+          <EntitySet Name="ResponsablesCoupes" EntityType="CoupeQVK2.ResponsableCoupe" />
+          <EntitySet Name="Resultats" EntityType="CoupeQVK2.Resultat" />
+          <EntitySet Name="CategoriePratiquants" EntityType="CoupeQVK2.CategoriePratiquant" />
+          <EntitySet Name="EquipesSongLuyen" EntityType="CoupeQVK2.EquipeSongLuyen" />
+          <EntitySet Name="NetClient" EntityType="CoupeQVK2.NetClient" />
+          <EntitySet Name="NetClientTypes" EntityType="CoupeQVK2.NetClientType" />
+          <EntitySet Name="TypeEpreuves" EntityType="CoupeQVK2.TypeEpreuve" />
+          <EntitySet Name="Participations" EntityType="CoupeQVK2.Participation" />
+          <AssociationSet Name="CoupeAire" Association="CoupeQVK2.CoupeAire">
+            <End Role="Coupe" EntitySet="Coupes" />
+            <End Role="Aire" EntitySet="Aires" />
+          </AssociationSet>
+          <AssociationSet Name="AireNetClient" Association="CoupeQVK2.AireNetClient">
+            <End Role="Aire" EntitySet="Aires" />
+            <End Role="NetClient" EntitySet="NetClient" />
+          </AssociationSet>
+          <AssociationSet Name="AireEpreuve" Association="CoupeQVK2.AireEpreuve">
+            <End Role="Aire" EntitySet="Aires" />
+            <End Role="Epreuve" EntitySet="Epreuves" />
+          </AssociationSet>
+          <AssociationSet Name="ClubResponsableClub" Association="CoupeQVK2.ClubResponsableClub">
+            <End Role="Club" EntitySet="Clubs" />
+            <End Role="ResponsableClub" EntitySet="ResponsablesClubs" />
+          </AssociationSet>
+          <AssociationSet Name="ClubCompetiteur" Association="CoupeQVK2.ClubCompetiteur">
+            <End Role="Club" EntitySet="Clubs" />
+            <End Role="Competiteur" EntitySet="Competiteurs" />
+          </AssociationSet>
+          <AssociationSet Name="ClubEncadrant" Association="CoupeQVK2.ClubEncadrant">
+            <End Role="Club" EntitySet="Clubs" />
+            <End Role="Encadrant" EntitySet="Encadrants" />
+          </AssociationSet>
+          <AssociationSet Name="CompetiteurCategoriePratiquant" Association="CoupeQVK2.CompetiteurCategoriePratiquant">
+            <End Role="Competiteur" EntitySet="Competiteurs" />
+            <End Role="CategoriePratiquant" EntitySet="CategoriePratiquants" />
+          </AssociationSet>
+          <AssociationSet Name="CoupeResponsableCoupe" Association="CoupeQVK2.CoupeResponsableCoupe">
+            <End Role="Coupe" EntitySet="Coupes" />
+            <End Role="ResponsableCoupe" EntitySet="ResponsablesCoupes" />
+          </AssociationSet>
+          <AssociationSet Name="CoupeMedecin" Association="CoupeQVK2.CoupeMedecin">
+            <End Role="Coupe" EntitySet="Coupes" />
+            <End Role="Medecin" EntitySet="Medecins" />
+          </AssociationSet>
+          <AssociationSet Name="EncadrantDisponibilite" Association="CoupeQVK2.EncadrantDisponibilite">
+            <End Role="Encadrant" EntitySet="Encadrants" />
+            <End Role="Disponibilite" EntitySet="Disponibilites" />
+          </AssociationSet>
+          <AssociationSet Name="ParticipationResultat" Association="CoupeQVK2.ParticipationResultat">
+            <End Role="Participation" EntitySet="Participations" />
+            <End Role="Resultat" EntitySet="Resultats" />
+          </AssociationSet>
+          <AssociationSet Name="EpreuveCategoriePratiquant" Association="CoupeQVK2.EpreuveCategoriePratiquant">
+            <End Role="Epreuve" EntitySet="Epreuves" />
+            <End Role="CategoriePratiquant" EntitySet="CategoriePratiquants" />
+          </AssociationSet>
+          <AssociationSet Name="EquipeSongLuyenCompetiteur" Association="CoupeQVK2.EquipeSongLuyenCompetiteur">
+            <End Role="EquipeSongLuyen" EntitySet="EquipesSongLuyen" />
+            <End Role="Competiteur" EntitySet="Competiteurs" />
+          </AssociationSet>
+          <AssociationSet Name="NetClientNetClientType" Association="CoupeQVK2.NetClientNetClientType">
+            <End Role="NetClient" EntitySet="NetClient" />
+            <End Role="NetClientType" EntitySet="NetClientTypes" />
+          </AssociationSet>
+          <AssociationSet Name="TypeEpreuveEpreuve" Association="CoupeQVK2.TypeEpreuveEpreuve">
+            <End Role="TypeEpreuve" EntitySet="TypeEpreuves" />
+            <End Role="Epreuve" EntitySet="Epreuves" />
+          </AssociationSet>
+          <AssociationSet Name="CompetiteurParticipation" Association="CoupeQVK2.CompetiteurParticipation">
+            <End Role="Competiteur" EntitySet="Competiteurs" />
+            <End Role="Participation" EntitySet="Participations" />
+          </AssociationSet>
+          <AssociationSet Name="EpreuveParticipation" Association="CoupeQVK2.EpreuveParticipation">
+            <End Role="Epreuve" EntitySet="Epreuves" />
+            <End Role="Participation" EntitySet="Participations" />
+          </AssociationSet>
+          <EntitySet Name="EncadrementSet" EntityType="CoupeQVK2.Encadrement" />
+          <AssociationSet Name="EncadrantEncadrement" Association="CoupeQVK2.EncadrantEncadrement">
+            <End Role="Encadrant" EntitySet="Encadrants" />
+            <End Role="Encadrement" EntitySet="EncadrementSet" />
+          </AssociationSet>
+          <AssociationSet Name="EpreuveEncadrement" Association="CoupeQVK2.EpreuveEncadrement">
+            <End Role="Epreuve" EntitySet="Epreuves" />
+            <End Role="Encadrement" EntitySet="EncadrementSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Aire">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CoupeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Coupe" Relationship="CoupeQVK2.CoupeAire" FromRole="Aire" ToRole="Coupe" />
+          <NavigationProperty Name="NetClient" Relationship="CoupeQVK2.AireNetClient" FromRole="Aire" ToRole="NetClient" />
+          <NavigationProperty Name="Epreuves" Relationship="CoupeQVK2.AireEpreuve" FromRole="Aire" ToRole="Epreuve" />
+        </EntityType>
+        <EntityType Name="Club">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NumeroAffiliation" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="InscriptionIsCorrect" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ResponsableClub" Relationship="CoupeQVK2.ClubResponsableClub" FromRole="Club" ToRole="ResponsableClub" />
+          <NavigationProperty Name="Competiteurs" Relationship="CoupeQVK2.ClubCompetiteur" FromRole="Club" ToRole="Competiteur" />
+          <NavigationProperty Name="Encadrants" Relationship="CoupeQVK2.ClubEncadrant" FromRole="Club" ToRole="Encadrant" />
+        </EntityType>
+        <EntityType Name="Competiteur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Grade" Type="Int32" Nullable="false" />
+          <Property Name="DateNaissance" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Sexe" Type="Int32" Nullable="false" />
+          <Property Name="LicenceFFKDA" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AnneePratique" Type="Int32" Nullable="false" />
+          <Property Name="Poids" Type="Int32" />
+          <Property Name="NbAnneePratique" Type="Int32" Nullable="false" />
+          <Property Name="InscritPourQuyen" Type="Boolean" Nullable="false" />
+          <Property Name="InscritPourBaiVuKhi" Type="Boolean" Nullable="false" />
+          <Property Name="InscritPourCombat" Type="Boolean" Nullable="false" />
+          <Property Name="InscritPourSongLuyen" Type="Boolean" Nullable="false" />
+          <Property Name="InscriptionValidePourCoupe" Type="Boolean" Nullable="false" />
+          <Property Name="InscriptionIsCorrect" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Club" Relationship="CoupeQVK2.ClubCompetiteur" FromRole="Competiteur" ToRole="Club" />
+          <NavigationProperty Name="CategoriePratiquant" Relationship="CoupeQVK2.CompetiteurCategoriePratiquant" FromRole="Competiteur" ToRole="CategoriePratiquant" />
+          <NavigationProperty Name="EquipeSongLuyen" Relationship="CoupeQVK2.EquipeSongLuyenCompetiteur" FromRole="Competiteur" ToRole="EquipeSongLuyen" />
+          <NavigationProperty Name="Participations" Relationship="CoupeQVK2.CompetiteurParticipation" FromRole="Competiteur" ToRole="Participation" />
+        </EntityType>
+        <EntityType Name="Coupe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Voie" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Numero" Type="Int32" />
+          <Property Name="Complement" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CodePostal" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="Ville" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateDebut" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateFin" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Aire" Relationship="CoupeQVK2.CoupeAire" FromRole="Coupe" ToRole="Aire" />
+          <NavigationProperty Name="Responsables" Relationship="CoupeQVK2.CoupeResponsableCoupe" FromRole="Coupe" ToRole="ResponsableCoupe" />
+          <NavigationProperty Name="Medecins" Relationship="CoupeQVK2.CoupeMedecin" FromRole="Coupe" ToRole="Medecin" />
+        </EntityType>
+        <EntityType Name="Disponibilite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Matin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Encadrant" Relationship="CoupeQVK2.EncadrantDisponibilite" FromRole="Disponibilite" ToRole="Encadrant" />
+        </EntityType>
+        <EntityType Name="Encadrant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MailContact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TailleTenue" Type="Int32" Nullable="false" />
+          <Property Name="EstCompetiteur" Type="Boolean" />
+          <Property Name="Sexe" Type="Int32" Nullable="false" />
+          <Property Name="InscriptionIsCorrect" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Club" Relationship="CoupeQVK2.ClubEncadrant" FromRole="Encadrant" ToRole="Club" />
+          <NavigationProperty Name="Disponibilites" Relationship="CoupeQVK2.EncadrantDisponibilite" FromRole="Encadrant" ToRole="Disponibilite" />
+          <NavigationProperty Name="Encadrements" Relationship="CoupeQVK2.EncadrantEncadrement" FromRole="Encadrant" ToRole="Encadrement" />
+        </EntityType>
+        <EntityType Name="Epreuve">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Statut" Type="Int32" Nullable="false" />
+          <Property Name="GenreCategorie" Type="Int32" Nullable="false" />
+          <Property Name="GradeAutorise" Type="Int32" Nullable="false" />
+          <Property Name="IsMerged" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Aire" Relationship="CoupeQVK2.AireEpreuve" FromRole="Epreuve" ToRole="Aire" />
+          <NavigationProperty Name="CategoriePratiquant" Relationship="CoupeQVK2.EpreuveCategoriePratiquant" FromRole="Epreuve" ToRole="CategoriePratiquant" />
+          <NavigationProperty Name="TypeEpreuve" Relationship="CoupeQVK2.TypeEpreuveEpreuve" FromRole="Epreuve" ToRole="TypeEpreuve" />
+          <NavigationProperty Name="Participations" Relationship="CoupeQVK2.EpreuveParticipation" FromRole="Epreuve" ToRole="Participation" />
+          <NavigationProperty Name="Encadrements" Relationship="CoupeQVK2.EpreuveEncadrement" FromRole="Epreuve" ToRole="Encadrement" />
+        </EntityType>
+        <EntityType Name="Medecin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MailContact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Coupe" Relationship="CoupeQVK2.CoupeMedecin" FromRole="Medecin" ToRole="Coupe" />
+        </EntityType>
+        <EntityType Name="ResponsableClub">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Adresse" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="14" FixedLength="true" Unicode="true" />
+          <Property Name="EmailContact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="InscriptionIsCorrect" Type="Boolean" Nullable="false" />
+          <Property Name="MailContact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Club" Relationship="CoupeQVK2.ClubResponsableClub" FromRole="ResponsableClub" ToRole="Club" />
+        </EntityType>
+        <EntityType Name="ResponsableCoupe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Adresse" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="14" FixedLength="true" Unicode="true" />
+          <Property Name="EmailContact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MailContact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Coupe" Relationship="CoupeQVK2.CoupeResponsableCoupe" FromRole="ResponsableCoupe" ToRole="Coupe" />
+        </EntityType>
+        <EntityType Name="Resultat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InscriptionValidee" Type="Boolean" Nullable="false" />
+          <Property Name="Classement" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="Int32" Nullable="false" />
+          <Property Name="Abandon" Type="Boolean" Nullable="false" />
+          <Property Name="Blessure" Type="Boolean" Nullable="false" />
+          <Property Name="Disqualification" Type="Boolean" Nullable="false" />
+          <Property Name="Absence" Type="Boolean" Nullable="false" />
+          <Property Name="Renvoi" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Participation" Relationship="CoupeQVK2.ParticipationResultat" FromRole="Resultat" ToRole="Participation" />
+        </EntityType>
+        <EntityType Name="CategoriePratiquant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AgeMax" Type="Int32" Nullable="false" />
+          <Property Name="AgeMin" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Competiteur" Relationship="CoupeQVK2.CompetiteurCategoriePratiquant" FromRole="CategoriePratiquant" ToRole="Competiteur" />
+          <NavigationProperty Name="Epreuve" Relationship="CoupeQVK2.EpreuveCategoriePratiquant" FromRole="CategoriePratiquant" ToRole="Epreuve" />
+        </EntityType>
+        <EntityType Name="EpreuveCombat" BaseType="CoupeQVK2.Epreuve">
+          <Property Name="PoidsMini" Type="Single" Nullable="false" />
+          <Property Name="PoidsMaxi" Type="Single" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EquipeSongLuyen">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Competiteurs" Relationship="CoupeQVK2.EquipeSongLuyenCompetiteur" FromRole="EquipeSongLuyen" ToRole="Competiteur" />
+        </EntityType>
+        <EntityType Name="NetClient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsConnected" Type="Boolean" Nullable="false" />
+          <Property Name="Ip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Aire" Relationship="CoupeQVK2.AireNetClient" FromRole="NetClient" ToRole="Aire" />
+          <NavigationProperty Name="NetClientType" Relationship="CoupeQVK2.NetClientNetClientType" FromRole="NetClient" ToRole="NetClientType" />
+        </EntityType>
+        <EntityType Name="NetClientType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NetClient" Relationship="CoupeQVK2.NetClientNetClientType" FromRole="NetClientType" ToRole="NetClient" />
+        </EntityType>
+        <EntityType Name="TypeEpreuve">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Technique" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Epreuves" Relationship="CoupeQVK2.TypeEpreuveEpreuve" FromRole="TypeEpreuve" ToRole="Epreuve" />
+        </EntityType>
+        <EntityType Name="Participation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Resultat" Relationship="CoupeQVK2.ParticipationResultat" FromRole="Participation" ToRole="Resultat" />
+          <NavigationProperty Name="Competiteur" Relationship="CoupeQVK2.CompetiteurParticipation" FromRole="Participation" ToRole="Competiteur" />
+          <NavigationProperty Name="Epreuve" Relationship="CoupeQVK2.EpreuveParticipation" FromRole="Participation" ToRole="Epreuve" />
+        </EntityType>
+        <EntityType Name="EpreuveTechnique" BaseType="CoupeQVK2.Epreuve" />
+        <Association Name="CoupeAire">
+          <End Type="CoupeQVK2.Coupe" Role="Coupe" Multiplicity="1" />
+          <End Type="CoupeQVK2.Aire" Role="Aire" Multiplicity="*" />
+        </Association>
+        <Association Name="AireNetClient">
+          <End Type="CoupeQVK2.Aire" Role="Aire" Multiplicity="1" />
+          <End Type="CoupeQVK2.NetClient" Role="NetClient" Multiplicity="1" />
+        </Association>
+        <Association Name="AireEpreuve">
+          <End Type="CoupeQVK2.Aire" Role="Aire" Multiplicity="1" />
+          <End Type="CoupeQVK2.Epreuve" Role="Epreuve" Multiplicity="*" />
+        </Association>
+        <Association Name="ClubResponsableClub">
+          <End Type="CoupeQVK2.Club" Role="Club" Multiplicity="1" />
+          <End Type="CoupeQVK2.ResponsableClub" Role="ResponsableClub" Multiplicity="1" />
+        </Association>
+        <Association Name="ClubCompetiteur">
+          <End Type="CoupeQVK2.Club" Role="Club" Multiplicity="1" />
+          <End Type="CoupeQVK2.Competiteur" Role="Competiteur" Multiplicity="*" />
+        </Association>
+        <Association Name="ClubEncadrant">
+          <End Type="CoupeQVK2.Club" Role="Club" Multiplicity="1" />
+          <End Type="CoupeQVK2.Encadrant" Role="Encadrant" Multiplicity="*" />
+        </Association>
+        <Association Name="CompetiteurCategoriePratiquant">
+          <End Type="CoupeQVK2.Competiteur" Role="Competiteur" Multiplicity="1" />
+          <End Type="CoupeQVK2.CategoriePratiquant" Role="CategoriePratiquant" Multiplicity="1" />
+        </Association>
+        <Association Name="CoupeResponsableCoupe">
+          <End Type="CoupeQVK2.Coupe" Role="Coupe" Multiplicity="1" />
+          <End Type="CoupeQVK2.ResponsableCoupe" Role="ResponsableCoupe" Multiplicity="*" />
+        </Association>
+        <Association Name="CoupeMedecin">
+          <End Type="CoupeQVK2.Coupe" Role="Coupe" Multiplicity="1" />
+          <End Type="CoupeQVK2.Medecin" Role="Medecin" Multiplicity="*" />
+        </Association>
+        <Association Name="EncadrantDisponibilite">
+          <End Type="CoupeQVK2.Encadrant" Role="Encadrant" Multiplicity="1" />
+          <End Type="CoupeQVK2.Disponibilite" Role="Disponibilite" Multiplicity="*" />
+        </Association>
+        <Association Name="ParticipationResultat">
+          <End Type="CoupeQVK2.Participation" Role="Participation" Multiplicity="1" />
+          <End Type="CoupeQVK2.Resultat" Role="Resultat" Multiplicity="1" />
+        </Association>
+        <Association Name="EpreuveCategoriePratiquant">
+          <End Type="CoupeQVK2.Epreuve" Role="Epreuve" Multiplicity="1" />
+          <End Type="CoupeQVK2.CategoriePratiquant" Role="CategoriePratiquant" Multiplicity="1" />
+        </Association>
+        <Association Name="EquipeSongLuyenCompetiteur">
+          <End Type="CoupeQVK2.EquipeSongLuyen" Role="EquipeSongLuyen" Multiplicity="1" />
+          <End Type="CoupeQVK2.Competiteur" Role="Competiteur" Multiplicity="*" />
+        </Association>
+        <Association Name="NetClientNetClientType">
+          <End Type="CoupeQVK2.NetClient" Role="NetClient" Multiplicity="1" />
+          <End Type="CoupeQVK2.NetClientType" Role="NetClientType" Multiplicity="1" />
+        </Association>
+        <Association Name="TypeEpreuveEpreuve">
+          <End Type="CoupeQVK2.TypeEpreuve" Role="TypeEpreuve" Multiplicity="1" />
+          <End Type="CoupeQVK2.Epreuve" Role="Epreuve" Multiplicity="*" />
+        </Association>
+        <Association Name="CompetiteurParticipation">
+          <End Type="CoupeQVK2.Competiteur" Role="Competiteur" Multiplicity="1" />
+          <End Type="CoupeQVK2.Participation" Role="Participation" Multiplicity="*" />
+        </Association>
+        <Association Name="EpreuveParticipation">
+          <End Type="CoupeQVK2.Epreuve" Role="Epreuve" Multiplicity="1" />
+          <End Type="CoupeQVK2.Participation" Role="Participation" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Encadrement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Encadrant" Relationship="CoupeQVK2.EncadrantEncadrement" FromRole="Encadrement" ToRole="Encadrant" />
+          <NavigationProperty Name="Epreuve" Relationship="CoupeQVK2.EpreuveEncadrement" FromRole="Encadrement" ToRole="Epreuve" />
+        </EntityType>
+        <Association Name="EncadrantEncadrement">
+          <End Type="CoupeQVK2.Encadrant" Role="Encadrant" Multiplicity="1" />
+          <End Type="CoupeQVK2.Encadrement" Role="Encadrement" Multiplicity="*" />
+        </Association>
+        <Association Name="EpreuveEncadrement">
+          <End Type="CoupeQVK2.Epreuve" Role="Epreuve" Multiplicity="1" />
+          <End Type="CoupeQVK2.Encadrement" Role="Encadrement" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CoupeQVK2StoreContainer" CdmEntityContainer="CoupeQVK2Container">
+    <EntitySetMapping Name="Aires">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.Aire)">
+        <MappingFragment StoreEntitySet="Aires">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CoupeId" ColumnName="CoupeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clubs">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.Club)">
+        <MappingFragment StoreEntitySet="Clubs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="NumeroAffiliation" ColumnName="NumeroAffiliation" />
+          <ScalarProperty Name="InscriptionIsCorrect" ColumnName="InscriptionIsCorrect" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Competiteurs">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.Competiteur)">
+        <MappingFragment StoreEntitySet="Competiteurs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="DateNaissance" ColumnName="DateNaissance" />
+          <ScalarProperty Name="Sexe" ColumnName="Sexe" />
+          <ScalarProperty Name="LicenceFFKDA" ColumnName="LicenceFFKDA" />
+          <ScalarProperty Name="AnneePratique" ColumnName="AnneePratique" />
+          <ScalarProperty Name="Poids" ColumnName="Poids" />
+          <ScalarProperty Name="NbAnneePratique" ColumnName="NbAnneePratique" />
+          <ScalarProperty Name="InscritPourQuyen" ColumnName="InscritPourQuyen" />
+          <ScalarProperty Name="InscritPourBaiVuKhi" ColumnName="InscritPourBaiVuKhi" />
+          <ScalarProperty Name="InscritPourCombat" ColumnName="InscritPourCombat" />
+          <ScalarProperty Name="InscritPourSongLuyen" ColumnName="InscritPourSongLuyen" />
+          <ScalarProperty Name="InscriptionValidePourCoupe" ColumnName="InscriptionValidePourCoupe" />
+          <ScalarProperty Name="InscriptionIsCorrect" ColumnName="InscriptionIsCorrect" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Coupes">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.Coupe)">
+        <MappingFragment StoreEntitySet="Coupes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Voie" ColumnName="Voie" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="Complement" ColumnName="Complement" />
+          <ScalarProperty Name="CodePostal" ColumnName="CodePostal" />
+          <ScalarProperty Name="Ville" ColumnName="Ville" />
+          <ScalarProperty Name="DateDebut" ColumnName="DateDebut" />
+          <ScalarProperty Name="DateFin" ColumnName="DateFin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Disponibilites">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.Disponibilite)">
+        <MappingFragment StoreEntitySet="Disponibilites">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Matin" ColumnName="Matin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Encadrants">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.Encadrant)">
+        <MappingFragment StoreEntitySet="Encadrants">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="MailContact" ColumnName="MailContact" />
+          <ScalarProperty Name="TailleTenue" ColumnName="TailleTenue" />
+          <ScalarProperty Name="EstCompetiteur" ColumnName="EstCompetiteur" />
+          <ScalarProperty Name="Sexe" ColumnName="Sexe" />
+          <ScalarProperty Name="InscriptionIsCorrect" ColumnName="InscriptionIsCorrect" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Epreuves">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.Epreuve)">
+        <MappingFragment StoreEntitySet="Epreuves">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Statut" ColumnName="Statut" />
+          <ScalarProperty Name="GenreCategorie" ColumnName="GenreCategorie" />
+          <ScalarProperty Name="GradeAutorise" ColumnName="GradeAutorise" />
+          <ScalarProperty Name="IsMerged" ColumnName="IsMerged" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.EpreuveCombat)">
+        <MappingFragment StoreEntitySet="Epreuves_EpreuveCombat">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PoidsMini" ColumnName="PoidsMini" />
+          <ScalarProperty Name="PoidsMaxi" ColumnName="PoidsMaxi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.EpreuveTechnique)">
+        <MappingFragment StoreEntitySet="Epreuves_EpreuveTechnique">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Medecins">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.Medecin)">
+        <MappingFragment StoreEntitySet="Medecins">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="MailContact" ColumnName="MailContact" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ResponsablesClubs">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.ResponsableClub)">
+        <MappingFragment StoreEntitySet="ResponsablesClubs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="Adresse" ColumnName="Adresse" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="EmailContact" ColumnName="EmailContact" />
+          <ScalarProperty Name="InscriptionIsCorrect" ColumnName="InscriptionIsCorrect" />
+          <ScalarProperty Name="MailContact" ColumnName="MailContact" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ResponsablesCoupes">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.ResponsableCoupe)">
+        <MappingFragment StoreEntitySet="ResponsablesCoupes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="Adresse" ColumnName="Adresse" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="EmailContact" ColumnName="EmailContact" />
+          <ScalarProperty Name="MailContact" ColumnName="MailContact" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Resultats">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.Resultat)">
+        <MappingFragment StoreEntitySet="Resultats">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="InscriptionValidee" ColumnName="InscriptionValidee" />
+          <ScalarProperty Name="Classement" ColumnName="Classement" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+          <ScalarProperty Name="Abandon" ColumnName="Abandon" />
+          <ScalarProperty Name="Blessure" ColumnName="Blessure" />
+          <ScalarProperty Name="Disqualification" ColumnName="Disqualification" />
+          <ScalarProperty Name="Absence" ColumnName="Absence" />
+          <ScalarProperty Name="Renvoi" ColumnName="Renvoi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategoriePratiquants">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.CategoriePratiquant)">
+        <MappingFragment StoreEntitySet="CategoriePratiquants">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="AgeMax" ColumnName="AgeMax" />
+          <ScalarProperty Name="AgeMin" ColumnName="AgeMin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EquipesSongLuyen">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.EquipeSongLuyen)">
+        <MappingFragment StoreEntitySet="EquipesSongLuyen">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NetClient">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.NetClient)">
+        <MappingFragment StoreEntitySet="NetClient">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="IsConnected" ColumnName="IsConnected" />
+          <ScalarProperty Name="Ip" ColumnName="Ip" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NetClientTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.NetClientType)">
+        <MappingFragment StoreEntitySet="NetClientTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ClientType" ColumnName="ClientType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TypeEpreuves">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.TypeEpreuve)">
+        <MappingFragment StoreEntitySet="TypeEpreuves">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Technique" ColumnName="Technique" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Participations">
+      <EntityTypeMapping TypeName="IsTypeOf(CoupeQVK2.Participation)">
+        <MappingFragment StoreEntitySet="ParticipationSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CoupeAire" TypeName="CoupeQVK2.CoupeAire" StoreEntitySet="Aires">
+      <EndProperty Name="Coupe">
+        <ScalarProperty Name="Id" ColumnName="Coupe_Id" />
+      </EndProperty>
+      <EndProperty Name="Aire">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AireNetClient" TypeName="CoupeQVK2.AireNetClient" StoreEntitySet="Aires">
+      <EndProperty Name="NetClient">
+        <ScalarProperty Name="Id" ColumnName="NetClient_Id" />
+      </EndProperty>
+      <EndProperty Name="Aire">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AireEpreuve" TypeName="CoupeQVK2.AireEpreuve" StoreEntitySet="Epreuves">
+      <EndProperty Name="Aire">
+        <ScalarProperty Name="Id" ColumnName="Aire_Id" />
+      </EndProperty>
+      <EndProperty Name="Epreuve">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ClubResponsableClub" TypeName="CoupeQVK2.ClubResponsableClub" StoreEntitySet="Clubs">
+      <EndProperty Name="ResponsableClub">
+        <ScalarProperty Name="Id" ColumnName="ResponsableClub_Id" />
+      </EndProperty>
+      <EndProperty Name="Club">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ClubCompetiteur" TypeName="CoupeQVK2.ClubCompetiteur" StoreEntitySet="Competiteurs">
+      <EndProperty Name="Club">
+        <ScalarProperty Name="Id" ColumnName="Club_Id" />
+      </EndProperty>
+      <EndProperty Name="Competiteur">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ClubEncadrant" TypeName="CoupeQVK2.ClubEncadrant" StoreEntitySet="Encadrants">
+      <EndProperty Name="Club">
+        <ScalarProperty Name="Id" ColumnName="Club_Id" />
+      </EndProperty>
+      <EndProperty Name="Encadrant">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CompetiteurCategoriePratiquant" TypeName="CoupeQVK2.CompetiteurCategoriePratiquant" StoreEntitySet="Competiteurs">
+      <EndProperty Name="CategoriePratiquant">
+        <ScalarProperty Name="Id" ColumnName="CategoriePratiquant_Id" />
+      </EndProperty>
+      <EndProperty Name="Competiteur">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CoupeResponsableCoupe" TypeName="CoupeQVK2.CoupeResponsableCoupe" StoreEntitySet="ResponsablesCoupes">
+      <EndProperty Name="Coupe">
+        <ScalarProperty Name="Id" ColumnName="Coupe_Id" />
+      </EndProperty>
+      <EndProperty Name="ResponsableCoupe">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CoupeMedecin" TypeName="CoupeQVK2.CoupeMedecin" StoreEntitySet="Medecins">
+      <EndProperty Name="Coupe">
+        <ScalarProperty Name="Id" ColumnName="Coupe_Id" />
+      </EndProperty>
+      <EndProperty Name="Medecin">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="EncadrantDisponibilite" TypeName="CoupeQVK2.EncadrantDisponibilite" StoreEntitySet="Disponibilites">
+      <EndProperty Name="Encadrant">
+        <ScalarProperty Name="Id" ColumnName="Encadrant_Id" />
+      </EndProperty>
+      <EndProperty Name="Disponibilite">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ParticipationResultat" TypeName="CoupeQVK2.ParticipationResultat" StoreEntitySet="ParticipationSet">
+      <EndProperty Name="Resultat">
+        <ScalarProperty Name="Id" ColumnName="Resultat_Id" />
+      </EndProperty>
+      <EndProperty Name="Participation">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="EpreuveCategoriePratiquant" TypeName="CoupeQVK2.EpreuveCategoriePratiquant" StoreEntitySet="Epreuves">
+      <EndProperty Name="CategoriePratiquant">
+        <ScalarProperty Name="Id" ColumnName="CategoriePratiquant_Id" />
+      </EndProperty>
+      <EndProperty Name="Epreuve">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="EquipeSongLuyenCompetiteur" TypeName="CoupeQVK2.EquipeSongLuyenCompetiteur" StoreEntitySet="Competiteurs">
+      <EndProperty Name="EquipeSongLuyen">
+        <ScalarProperty Name="Id" ColumnName="EquipeSongLuyen_Id" />
+      </EndProperty>
+      <EndProperty Name="Competiteur">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="NetClientNetClientType" TypeName="CoupeQVK2.NetClientNetClientType" StoreEntitySet="NetClient">
+      <EndProperty Name="NetClientType">
+        <ScalarProperty Name="Id" ColumnName="NetClientType_Id" />
+      </EndProperty>
+      <EndProperty Name="NetClient">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TypeEpreuveEpreuve" TypeName="CoupeQVK2.TypeEpreuveEpreuve" StoreEntitySet="Epreuves">
+      <EndProperty Name="TypeEpreuve">
+        <ScalarProperty Name="Id" ColumnName="TypeEpreuve_Id" />
+      </EndProperty>
+      <EndProperty Name="Epreuve">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CompetiteurParticipation" TypeName="CoupeQVK2.CompetiteurParticipation" StoreEntitySet="ParticipationSet">
+      <EndProperty Name="Competiteur">
+        <ScalarProperty Name="Id" ColumnName="Competiteur_Id" />
+      </EndProperty>
+      <EndProperty Name="Participation">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="EpreuveParticipation" TypeName="CoupeQVK2.EpreuveParticipation" StoreEntitySet="ParticipationSet">
+      <EndProperty Name="Epreuve">
+        <ScalarProperty Name="Id" ColumnName="Epreuve_Id" />
+      </EndProperty>
+      <EndProperty Name="Participation">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

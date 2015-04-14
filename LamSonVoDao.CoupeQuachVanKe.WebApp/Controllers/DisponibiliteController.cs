@@ -18,7 +18,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.repository.GetAll().Select(dispo => new DisponibiliteModel
+            result.Data = this.repository.Read().Select(dispo => new DisponibiliteModel
             {
                 Id = dispo.Id,
                 Date = dispo.Date,
@@ -41,8 +41,8 @@
                     Role = new EnumConverter<Role>().ConvertToEnum(model.Role)
                 };
 
-                this.repository.Insert(dbitem);
-                return Json(model);
+                this.repository.Create(dbitem);
+                return Json(dbitem.ToModel());
             }
             catch
             {
@@ -52,7 +52,7 @@
 
         public JsonResult Delete(DisponibiliteModel model)
         {
-            var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+            var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
             if (dbmodel != null)
             {
                 this.repository.Delete(dbmodel);
@@ -68,7 +68,7 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     dbmodel.EncadrantId = model.EncadrantId;
@@ -77,7 +77,7 @@
                     dbmodel.Role = new EnumConverter<Role>().ConvertToEnum(model.Role);                    
 
                     this.repository.Update(dbmodel);
-                    return Json(model);
+                    return Json(dbmodel.ToModel());
                 }
                 else
                 {

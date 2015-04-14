@@ -23,7 +23,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.repository.GetAll().Select(coupe => new CoupeModel
+            result.Data = this.repository.Read().Select(coupe => new CoupeModel
             {
                 Id = coupe.Id,
                 Description = coupe.Description,
@@ -63,8 +63,8 @@
                     Voie = model.Voie               
                 };
 
-                this.repository.Insert(dbitem);
-                return Json(model);
+                this.repository.Create(dbitem);
+                return Json(dbitem.ToModel());
             }
             catch
             {
@@ -82,7 +82,7 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     this.repository.Delete(dbmodel);
@@ -109,7 +109,7 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     dbmodel.Description = model.Description;
@@ -124,7 +124,7 @@
                     dbmodel.Voie = model.Voie;
 
                     this.repository.Update(dbmodel);
-                    return Json(model);
+                    return Json(dbmodel.ToModel());
                 }
                 else
                 {
@@ -144,7 +144,7 @@
             {
                 var result = new JsonResult();
                 result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-                result.Data = this.unitOfWork.Repository<ResponsableCoupe>().GetAll().Where(e => e.CoupeId == parsed).Select(e => e.ToModel());
+                result.Data = this.unitOfWork.Repository<ResponsableCoupe>().Read().Where(e => e.CoupeId == parsed).Select(e => e.ToModel());
                 return result;
             }
             else

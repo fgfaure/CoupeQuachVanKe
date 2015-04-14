@@ -61,7 +61,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.AccesPattern
         /// Gets all.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> Read()
         {
             return this.Entities.ToList();
         }
@@ -71,7 +71,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.AccesPattern
         /// </summary>
         /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
-        public IEnumerable<T> Get(Func<T, bool> predicate)
+        public IEnumerable<T> Read(Func<T, bool> predicate)
         {
             return this.Entities.ToList().Where(predicate);
         }
@@ -81,7 +81,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.AccesPattern
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public T GetById(object id)
+        public T Read(int id)
         {
             return this.Entities.Find(id);
         }
@@ -93,7 +93,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.AccesPattern
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException">entity</exception>
         /// <exception cref="System.Exception"></exception>
-        public bool Insert(T entity)
+        public bool Create(T entity)
         {
             try
             {
@@ -199,6 +199,17 @@ namespace LamSonVoDao.CoupeQuachVanKe.AccesPattern
             {
                 return this.Entities;
             }
+        }
+
+
+        /// <summary>
+        /// Reads the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <returns></returns>
+        public T Read(T entity)
+        {
+            return this.Entities.Find(entity.Id);
         }
     }
 }

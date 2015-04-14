@@ -1,4 +1,5 @@
-﻿using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+﻿
+using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
 using System;
 using System.Collections.Generic;
@@ -28,11 +29,10 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.Complement = dto.Complement;
             result.DateDebut = dto.DateDebut;
             result.DateFin = dto.DateFin;
-            result.Description = dto.Description;
-            result.NombreTapis = dto.NombreTapis;
-            result.Numero = dto.Numero;
+            result.Description = dto.Description;            
+            result.Numero = (int)dto.Numero;
             result.Ville = dto.Ville;
-            result.Voie = dto.Voie;            
+            result.Voie = dto.Voie;
             return result;
         }
 
@@ -40,10 +40,10 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
         {
             CompetiteurModel result = new CompetiteurModel();
             result.Id = dto.Id;
-            result.CategorieId = (int)dto.Categorie;
+            result.CategorieId = dto.CategoriePratiquantId;
             result.ClubId = dto.ClubId;
             result.DateNaissance = dto.DateNaissance;
-            result.EquipeSongLuyen = dto.EquipeSongLuyen;
+            result.EquipeSongLuyenId = dto.EquipeSongLuyenNumero;
             result.GradeId = (int)dto.Grade;
             result.InscriptionValidePourCoupe = dto.InscriptionValidePourCoupe;
             result.InscritPourBaiVuKhi = dto.InscritPourBaiVuKhi;
@@ -81,7 +81,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.ClubId = dto.ClubId;
             result.Nom = dto.Nom;
             result.Prenom = dto.Prenom;
-            result.EstCompetiteur = dto.EstCompetiteur;
+            result.EstCompetiteur = (bool)dto.EstCompetiteur;
             result.MailContact = dto.MailContact;
             result.GenreId = (int)dto.Sexe;
             result.TailleTenueId = (int)dto.TailleTenue;
@@ -142,7 +142,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
         {
             EpreuveTechniqueModel result = new EpreuveTechniqueModel();
             result.Id = dto.Id;
-            result.CategorieId = (int)dto.CategoriePratiquant;
+            result.Nom = dto.Nom;
+            result.CategorieId = dto.CategoriePratiquantId;
             result.GenreCategorieId = (int)dto.GenreCategorie;
             result.GradeAutoriseId = (int)dto.GradeAutorise;
             result.StatutId = (int)dto.Statut;
@@ -155,11 +156,12 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
         {
             EpreuveCombatModel result = new EpreuveCombatModel();
             result.Id = dto.Id;
-            result.CategorieId = (int)dto.CategoriePratiquant;            
+            result.Nom = dto.Nom;
+            result.CategorieId = dto.CategoriePratiquantId;
             result.GenreCategorieId = (int)dto.GenreCategorie;
             result.GradeAutoriseId = (int)dto.GradeAutorise;
             result.StatutId = (int)dto.Statut;
-            result.TypeEpreuveId = dto.TypeEpreuve.Id;
+            result.TypeEpreuveId = dto.TypeEpreuveId;
             result.PoidsMini = dto.PoidsMini;
             result.PoidsMaxi = dto.PoidsMaxi;
 
@@ -169,10 +171,35 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
         public static TypeEpreuveModel ToModel(this TypeEpreuve dto)
         {
             TypeEpreuveModel result = new TypeEpreuveModel();
-            result.Id = dto.Id;            
+            result.Id = dto.Id;
             result.Description = dto.Description;
             result.Nom = dto.Nom;
             result.Technique = dto.Technique;
+
+            return result;
+        }
+
+        public static CategoriePratiquantModel ToModel(this CategoriePratiquant dto)
+        {
+            CategoriePratiquantModel result = new CategoriePratiquantModel();
+
+            result.Id = dto.Id;
+            result.Nom = dto.Nom;
+            result.AgeMin = dto.AgeMin;
+            result.AgeMax = dto.AgeMax;
+
+            return result;
+        }
+
+        public static NetClientModel ToModel(this NetClient dto)
+        {
+            NetClientModel result = new NetClientModel();
+
+            result.Id = dto.Id;
+            result.ClientName = dto.ClientName;
+            result.IsConnected = dto.IsConnected;
+            result.Password = dto.Password;
+            result.NetClientTypeId = dto.NetClientTypeId;
 
             return result;
         }

@@ -16,7 +16,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.repository.GetAll().Select(r => new ResponsableCoupeModel
+            result.Data = this.repository.Read().Select(r => new ResponsableCoupeModel
             {
                 Id = r.Id,
                 Adresse = r.Adresse,
@@ -43,7 +43,7 @@
                     Telephone = model.Telephone
                 };
 
-                this.repository.Insert(dbitem);
+                this.repository.Create(dbitem);
                 return Json(dbitem.ToModel());
 
             }
@@ -57,7 +57,7 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     this.repository.Delete(dbmodel);
@@ -78,7 +78,7 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     dbmodel.Adresse = model.Adresse;
@@ -89,7 +89,7 @@
                     dbmodel.Telephone = model.Telephone;
 
                     this.repository.Update(dbmodel);
-                    return Json(model);
+                    return Json(dbmodel.ToModel());
                 }
                 else
                 {

@@ -14,12 +14,14 @@
         {
             this.ToTable("Aires");
 
-            this.HasKey(aire => aire.Id);
+            this.HasKey(aire => aire.ClientId);
             this.Property(aire => aire.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(aire => aire.Id).IsRequired();
 
             this.Property(aire => aire.Description).IsRequired();
             this.Property(aire => aire.Description).HasMaxLength(255);
+
+            this.HasRequired(aire => aire.Client).WithRequiredDependent(c => c.Aire).WillCascadeOnDelete(true);
 
             this.HasRequired(aire => aire.Coupe)
                 .WithMany(coupe => coupe.Aires)

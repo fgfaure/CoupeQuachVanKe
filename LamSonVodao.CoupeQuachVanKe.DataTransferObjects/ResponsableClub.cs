@@ -22,5 +22,12 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// </value>
         public int ClubId { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [inscription is correct].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [inscription is correct]; otherwise, <c>false</c>.
+        /// </value>
+        public bool InscriptionIsCorrect { get; set; }
     }
 }

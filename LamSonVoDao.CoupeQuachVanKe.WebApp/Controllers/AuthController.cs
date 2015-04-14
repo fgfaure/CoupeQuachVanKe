@@ -47,7 +47,7 @@
             try
             {
 
-                var client = this.netClientRepository.GetById(model.AccountId);
+                var client = this.netClientRepository.Read(model.AccountId);
 
                 bool isIdentified = string.Compare(client.Password, model.Password) == 0;
 
@@ -57,11 +57,11 @@
                     new Claim(ClaimTypes.NameIdentifier, client.ClientName)
                 }, "ApplicationCookie");
 
-                    var ctx = Request.GetOwinContext();                    
+                    var ctx = Request.GetOwinContext();
                     var authManager = ctx.Authentication;
 
                     authManager.SignIn(identity);
-                    
+
                     client.IsConnected = true;
                     client.Ip = this.Request.UserHostAddress;
                     this.netClientRepository.Update(client);
@@ -73,7 +73,7 @@
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -81,19 +81,19 @@
         private string GetRedirectUrl(NetClient client)
         {
             string result;
-           switch (client.NetClientTypeId)
-           {
-               case 1:
-                   result =  Url.Action("index", "server");
-                   break;
-               case 2:
-                   result = Url.Action("index", "satellite");
-                   break;
+            switch (client.NetClientTypeId)
+            {
+                case 1:
+                    result = Url.Action("index", "server");
+                    break;
+                case 2:
+                    result = Url.Action("index", "satellite");
+                    break;
                 default:
-                   result = Url.Action("index", "saisie");
-                   break;
-           }
-           return result;
+                    result = Url.Action("index", "saisie");
+                    break;
+            }
+            return result;
         }
 
         [HttpGet]
@@ -103,7 +103,7 @@
             var authManager = ctx.Authentication;
 
             authManager.SignOut("ApplicationCookie");
-            var dbitem = this.netClientRepository.Get(nc => nc.ClientName == authManager.User.Claims.First().Value).FirstOrDefault();
+            var dbitem = this.netClientRepository.Read(nc => nc.ClientName == authManager.User.Claims.First().Value).FirstOrDefault();
             if (dbitem != null)
             {
                 dbitem.IsConnected = false;
@@ -117,9 +117,9 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            
-            var list =  this.netClientRepository.GetAll().Where(nc => !nc.IsConnected).Select(nc =>  new {clientId = nc.Id, logName = nc.ClientName}).ToList();
-            list.Insert(0,new {clientId = -1, logName = "Choisissez un compte"});
+
+            var list = this.netClientRepository.Read().Where(nc => !nc.IsConnected).Select(nc => new { clientId = nc.Id, logName = nc.ClientName }).ToList();
+            list.Insert(0, new { clientId = -1, logName = "Choisissez un compte" });
             result.Data = list;
             return result;
         }
@@ -129,7 +129,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data =  this.netClientTypesRepository.GetAll() ;
+            result.Data = this.netClientTypesRepository.Read();
             return result;
         }
 
@@ -138,15 +138,15 @@
         {
             try
             {
-                this.netClientRepository.Insert(client);                
+                this.netClientRepository.Create(client);
                 return Json(new { success = true });
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, reason =  ex.Message});
+                return Json(new { success = false, reason = ex.Message });
             }
-            
-            
+
+
         }
 
         private string GetRedirectUrl(string returnUrl)

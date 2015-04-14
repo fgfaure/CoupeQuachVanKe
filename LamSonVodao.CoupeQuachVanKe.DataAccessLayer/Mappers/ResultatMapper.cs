@@ -15,8 +15,8 @@
             this.ToTable("Resultats");
 
             this.HasKey(resultat => resultat.Id);
-            this.Property(resultat => resultat.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            this.Property(resultat => resultat.Id).IsRequired();
+            //this.Property(resultat => resultat.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            //this.Property(resultat => resultat.Id).IsRequired();
 
             this.Property(resultat => resultat.Classement).IsRequired();            
 
@@ -31,9 +31,8 @@
             this.Property(resultat => resultat.Absence).IsRequired();
 
             this.Property(resultat => resultat.Renvoi).IsRequired();
-            
-            this.HasRequired(resultat => resultat.Epreuve).WithMany(epreuve => epreuve.Resultats).HasForeignKey(resultat => resultat.EpreuveId).WillCascadeOnDelete(true);
-            this.HasRequired(resultat => resultat.Competiteur).WithMany(competiteur => competiteur.Resultats).HasForeignKey(resultat => resultat.CompetiteurId).WillCascadeOnDelete(true);          
+
+            this.HasRequired(resultat => resultat.Participation).WithRequiredDependent(participation => participation.Resultat).WillCascadeOnDelete(true);
         }
     }
 }

@@ -1,25 +1,31 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
-    using LamSonVoDao.CoupeQuachVanKe.DataAccessLayer;
-    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
     using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
     using Resources;
     using System;
+    using System.Data.Entity;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 
     public class EpreuveTechniqueController : BaseController<EpreuveTechnique>, ICrudController<EpreuveTechnique, EpreuveTechniqueModel>
     {
+        private Repository<CategoriePratiquant> categories = new UnitOfWork().Repository<CategoriePratiquant>();
+        private Repository<TypeEpreuve> types = new UnitOfWork().Repository<TypeEpreuve>();
+
+
         public JsonResult Get()
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.repository.GetAll().Select(et => et.ToModel());
+            result.Data = this.repository.Read().Select(e => e.ToModel());
             return result;
         }
 
@@ -27,17 +33,22 @@
         {
             try
             {
+                var categorie = this.categories.Read(model.CategorieId).Nom;
+                var typeEpreuve = this.types.Read(model.TypeEpreuveId).Nom;
+                var genre = GenreEpreuves.ResourceManager.GetString(((GenreEpreuve)model.GenreCategorieId).ToString());
+                var grade = Grades.ResourceManager.GetString(((Grade)model.GradeAutoriseId).ToString());
                 var dbitem = new EpreuveTechnique
                 {
-                    CategoriePratiquant = (CategoriePratiquant)model.CategorieId,
+                    Nom = string.Format("{0} {1} {2} {3}", typeEpreuve, categorie, genre, grade),
+                    CategoriePratiquantId = model.CategorieId,
                     GenreCategorie = (GenreEpreuve)model.GenreCategorieId,
                     GradeAutorise = (Grade)model.GradeAutoriseId,
                     Statut = StatutEpreuve.Fermee,
                     TypeEpreuveId = model.TypeEpreuveId
                 };
 
-                this.repository.Insert(dbitem);
-                return Json(model);
+                this.repository.Create(dbitem);
+                return Json(dbitem.ToModel());
 
             }
             catch
@@ -50,7 +61,7 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     this.repository.Delete(dbmodel);
@@ -71,17 +82,17 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
-                    dbmodel.CategoriePratiquant = (CategoriePratiquant)model.CategorieId;                    
+                    dbmodel.CategoriePratiquantId = model.CategorieId;
                     dbmodel.GenreCategorie = (GenreEpreuve)model.GenreCategorieId;
-                    dbmodel.GradeAutorise = (Grade)model.GradeAutoriseId;                    
+                    dbmodel.GradeAutorise = (Grade)model.GradeAutoriseId;
                     dbmodel.Statut = StatutEpreuve.Fermee;
                     dbmodel.TypeEpreuveId = model.TypeEpreuveId;
 
                     this.repository.Update(dbmodel);
-                    return Json(model);
+                    return Json(dbmodel.ToModel());
                 }
                 else
                 {
@@ -93,109 +104,52 @@
                 throw;
             }
         }
-
-        public JsonResult Ventilation()
+        
+        [HttpPost]
+        public JsonResult Merge(IEnumerable<EpreuveTechniqueModel> models)
         {
-            var epreuvestechniques = this.repository.GetAll();
-            var competiteurs = this.unitOfWork.Repository<Competiteur>().GetAll();
-            var resultatsRepo = this.unitOfWork.Repository<Resultat>();
+            var result = new JsonResult();
+            var merged = new EpreuveTechnique();
+            models.OrderByDescending(m => m.CategorieId);
+            var categories = (from cat in this.unitOfWork.Repository<CategoriePratiquant>().Read()
+                              join model in models on cat.Id equals model.CategorieId
+                              select cat.Nom);
 
-            foreach (var resultat in resultatsRepo.GetAll())
+            merged.Nom = string.Join(" ", categories.ToArray());
+            merged.IsMerged = true;
+            merged.CategoriePratiquantId = models.First().CategorieId;
+            var isGenreMerged = models.GroupBy(m => m.GenreCategorieId).Distinct().Count() > 1;
+            if (isGenreMerged)
             {
-                resultatsRepo.Delete(resultat);
+                merged.GenreCategorie = GenreEpreuve.Mixte;
             }
-            try
+            else
             {
-                foreach (var competiteur in competiteurs.Where(c => c.InscritPourBaiVuKhi || c.InscritPourQuyen || c.InscritPourSongLuyen))
-                {
-                    foreach (var epreuve in epreuvestechniques)
-                    {
-                        if (epreuve.CategoriePratiquant == competiteur.Categorie && (epreuve.GenreCategorie == GenreEpreuve.Mixte || ((int)epreuve.GenreCategorie == (int)competiteur.Sexe)))
-                        {
-                            if (competiteur.InscritPourBaiVuKhi)
-                            {
-                                if (epreuve.GradeAutorise == Grade.TousGrades)
-                                {
-                                    resultatsRepo.Insert(new Resultat
-                                    {
-                                        EpreuveId = epreuve.Id,
-                                        CompetiteurId = competiteur.Id
-                                    });
-                                }
-                                else if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
-                                {
-                                     resultatsRepo.Insert(new Resultat
-                                    {
-                                        EpreuveId = epreuve.Id,
-                                        CompetiteurId = competiteur.Id
-                                    });
-                                }
-                            }
-
-                            if (competiteur.InscritPourQuyen)
-                            {
-                                if (epreuve.GradeAutorise == Grade.TousGrades)
-                                {
-                                     resultatsRepo.Insert(new Resultat
-                                    {
-                                        EpreuveId = epreuve.Id,
-                                        CompetiteurId = competiteur.Id
-                                    });
-                                }
-                                else if (epreuve.GradeAutorise == competiteur.Grade)
-                                {
-                                    resultatsRepo.Insert(new Resultat
-                                    {
-                                        EpreuveId = epreuve.Id,
-                                        CompetiteurId = competiteur.Id
-                                    });
-                                }
-                            }
-
-                            if (competiteur.InscritPourSongLuyen)
-                            {
-                                if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
-                                {
-                                    resultatsRepo.Insert(new Resultat
-                                    {
-                                        EpreuveId = epreuve.Id,
-                                        CompetiteurId = competiteur.Id
-                                    });
-                                }
-                                else if (epreuve.GradeAutorise == Grade.CeintureNoire && competiteur.Grade == Grade.CeintureNoire)
-                                {
-                                     resultatsRepo.Insert(new Resultat
-                                    {
-                                        EpreuveId = epreuve.Id,
-                                        CompetiteurId = competiteur.Id
-                                    });
-                                }
-                            }
-                        }
-                    }
-                }
-                var result = new JsonResult();
-                result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-                result.Data = new {};
-                return result;
-              
+                merged.GenreCategorie = (GenreEpreuve)models.First().GenreCategorieId;
             }
-            catch (Exception)
-            {                
-                throw;
+
+            merged.GradeAutorise = (Grade)models.First().GradeAutoriseId;
+            merged.Statut = StatutEpreuve.Fermee;
+            merged.TypeEpreuveId = models.First().TypeEpreuveId;
+
+            this.repository.Create(merged);
+
+            var idForNewEpreuve = merged.Id;
+
+            var partipations = this.unitOfWork.Repository<Participation>();
+
+            var participationsToChange = (from participation in partipations.Read()
+                                          join model in models
+                                          on participation.EpreuveId equals model.Id
+                                          select participation).ToList();
+
+            for (int i = 0; i < participationsToChange.Count(); i++)
+            {
+                participationsToChange[i].EpreuveId = idForNewEpreuve;
+                partipations.Update(participationsToChange[i]);
             }
+
+            return result;
         }
-
-        private IEnumerable<Competiteur> GetCompetiteurs(IEnumerable<Competiteur> competiteurs, List<Resultat> list)
-        {
-             var comps = new List<Competiteur>();
-
-            foreach (var resultat in list)
-            {
-                comps.Add(competiteurs.First(c => c.Id == resultat.CompetiteurId));
-            }
-
-            return comps;
-        }       
     }
 }

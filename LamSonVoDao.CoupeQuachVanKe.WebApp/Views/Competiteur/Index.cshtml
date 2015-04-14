@@ -26,7 +26,17 @@
                     }
                 }
             },
-            schema: {              
+            schema: {
+                parse: function (data) {
+                    var datas = [];
+                    for (var i = 0; i < data.length; i++) {
+                        datas.push({
+                            value: data[i].Id,
+                            text: data[i].Nom
+                        });
+                    }
+                    return datas;
+                },
                 model: {
                     id: "value",
                     fields: {
@@ -203,9 +213,9 @@
                             validation: { required: true }
                         },
                         CategorieId: {
+                            editable : true,
                             type: "number",
                             defaultValue: 1,
-                            type: "number",
                             validation: { required: true }
                         },
                         NbAnneePratique: {

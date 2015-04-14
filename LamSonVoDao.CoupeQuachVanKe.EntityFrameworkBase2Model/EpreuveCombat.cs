@@ -12,16 +12,9 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
     using System;
     using System.Collections.Generic;
     
-    public partial class ResponsablesCoupe
+    public partial class EpreuveCombat : Epreuve
     {
-        public int Id { get; set; }
-        public int CoupeId { get; set; }
-        public string Nom { get; set; }
-        public string Prenom { get; set; }
-        public string Adresse { get; set; }
-        public string Telephone { get; set; }
-        public string EmailContact { get; set; }
-    
-        public virtual Coupe Coupe { get; set; }
+        public float PoidsMini { get; set; }
+        public float PoidsMaxi { get; set; }
     }
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="00983cfbd46543cfb231d29e47239cb2" Name="Diagram1" ZoomLevel="86" >
+        <EntityTypeShape EntityType="CoupeQVK2.Aire" Width="1.5" PointX="7.125" PointY="4.75" />
+        <EntityTypeShape EntityType="CoupeQVK2.Club" Width="1.5" PointX="18.375" PointY="0.5" />
+        <EntityTypeShape EntityType="CoupeQVK2.Competiteur" Width="2.25" PointX="18.375" PointY="5.375" />
+        <EntityTypeShape EntityType="CoupeQVK2.Coupe" Width="1.5" PointX="7.125" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQVK2.Disponibilite" Width="1.5" PointX="12" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoupeQVK2.Encadrant" Width="1.5" PointX="14.375" PointY="0.5" />
+        <EntityTypeShape EntityType="CoupeQVK2.Epreuve" Width="1.5" PointX="10" PointY="5" />
+        <EntityTypeShape EntityType="CoupeQVK2.Medecin" Width="1.5" PointX="4.5" PointY="0.5" />
+        <EntityTypeShape EntityType="CoupeQVK2.ResponsableClub" Width="1.5" PointX="21.25" PointY="0.5" />
+        <EntityTypeShape EntityType="CoupeQVK2.ResponsableCoupe" Width="1.5" PointX="4.5" PointY="3.25" />
+        <EntityTypeShape EntityType="CoupeQVK2.Resultat" Width="1.5" PointX="12.625" PointY="11.5" />
+        <EntityTypeShape EntityType="CoupeQVK2.CategoriePratiquant" Width="1.5" PointX="15.375" PointY="6.5" />
+        <EntityTypeShape EntityType="CoupeQVK2.EpreuveCombat" Width="1.5" PointX="10" PointY="11.125" />
+        <EntityTypeShape EntityType="CoupeQVK2.EquipeSongLuyen" Width="1.5" PointX="21.375" PointY="6.5" />
+        <EntityTypeShape EntityType="CoupeQVK2.NetClient" Width="1.5" PointX="4.5" PointY="6.75" />
+        <EntityTypeShape EntityType="CoupeQVK2.NetClientType" Width="1.5" PointX="4.5" PointY="9.625" />
+        <EntityTypeShape EntityType="CoupeQVK2.TypeEpreuve" Width="1.5" PointX="9.875" PointY="2.375" />
+        <EntityTypeShape EntityType="CoupeQVK2.Participation" Width="1.5" PointX="13.125" PointY="8.875" />
+        <EntityTypeShape EntityType="CoupeQVK2.EpreuveTechnique" Width="1.5" PointX="8" PointY="11.25" />
+        <AssociationConnector Association="CoupeQVK2.CoupeAire" />
+        <AssociationConnector Association="CoupeQVK2.AireNetClient" />
+        <AssociationConnector Association="CoupeQVK2.AireEpreuve" />
+        <AssociationConnector Association="CoupeQVK2.ClubResponsableClub" />
+        <AssociationConnector Association="CoupeQVK2.ClubCompetiteur" />
+        <AssociationConnector Association="CoupeQVK2.ClubEncadrant" />
+        <AssociationConnector Association="CoupeQVK2.CompetiteurCategoriePratiquant" />
+        <AssociationConnector Association="CoupeQVK2.CoupeResponsableCoupe" />
+        <AssociationConnector Association="CoupeQVK2.CoupeMedecin" />
+        <AssociationConnector Association="CoupeQVK2.EncadrantDisponibilite" />
+        <AssociationConnector Association="CoupeQVK2.ParticipationResultat" />
+        <AssociationConnector Association="CoupeQVK2.EpreuveCategoriePratiquant" />
+        <AssociationConnector Association="CoupeQVK2.EquipeSongLuyenCompetiteur" />
+        <AssociationConnector Association="CoupeQVK2.NetClientNetClientType" />
+        <AssociationConnector Association="CoupeQVK2.TypeEpreuveEpreuve" />
+        <AssociationConnector Association="CoupeQVK2.CompetiteurParticipation" />
+        <AssociationConnector Association="CoupeQVK2.EpreuveParticipation" />
+        <InheritanceConnector EntityType="CoupeQVK2.EpreuveCombat" />
+        <InheritanceConnector EntityType="CoupeQVK2.EpreuveTechnique" ManuallyRouted="false" >
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="CoupeQVK2.Encadrement" Width="1.5" PointX="12.875" PointY="5" />
+        <AssociationConnector Association="CoupeQVK2.EncadrantEncadrement" />
+        <AssociationConnector Association="CoupeQVK2.EpreuveEncadrement" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,9 +1,9 @@
-﻿using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
-using System;
-using System.Collections.Generic;
-
-namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
+﻿namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// 
     /// </summary>
@@ -39,7 +39,15 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The categorie.
         /// </value>
-        public CategoriePratiquant Categorie { get; set; }
+        public CategoriePratiquant CategoriePratiquant { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categorie pratiquant identifier.
+        /// </summary>
+        /// <value>
+        /// The categorie pratiquant identifier.
+        /// </value>
+        public int CategoriePratiquantId { get; set; }
 
         /// <summary>
         /// Gets or sets the date naissance.
@@ -79,7 +87,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The poids.
         /// </value>
-        public int Poids { get; set; }
+        public float Poids { get; set; }
 
         /// <summary>
         /// Gets or sets the club.
@@ -103,7 +111,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The epreuves.
         /// </value>
-        public ICollection<Resultat> Resultats { get; set; }
+        public ICollection<Participation> Participations { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [inscrit pour quyen].
@@ -145,13 +153,22 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// </value>
         public bool InscriptionValidePourCoupe { get; set; }
 
+
         /// <summary>
-        /// Gets or sets the equipe song luyen.
+        /// Gets or sets the equipe song luyen numero.
         /// </summary>
         /// <value>
-        /// The equipe song luyen.
+        /// The equipe song luyen numero.
         /// </value>
-        public int EquipeSongLuyen { get; set; }
+        public int EquipeSongLuyenNumero { get; set; }     
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [inscription is correct].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [inscription is correct]; otherwise, <c>false</c>.
+        /// </value>
+        public bool InscriptionIsCorrect { get; set; }
 
     }
 }

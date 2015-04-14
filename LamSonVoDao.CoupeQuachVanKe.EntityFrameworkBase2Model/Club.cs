@@ -24,11 +24,12 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
         public int Id { get; set; }
         public string Nom { get; set; }
         public string NumeroAffiliation { get; set; }
+        public bool InscriptionIsCorrect { get; set; }
     
+        public virtual ResponsableClub ResponsableClub { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Competiteur> Competiteurs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Encadrant> Encadrants { get; set; }
-        public virtual ResponsablesClub ResponsablesClub { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp
             var authManager = ctx.Authentication;
 
             authManager.SignOut("ApplicationCookie");
-            var dbitem = unitOfWork.Repository<NetClient>().Get(nc => nc.ClientName == authManager.User.Claims.First().Value).FirstOrDefault();
+            var dbitem = unitOfWork.Repository<NetClient>().Read(nc => nc.ClientName == authManager.User.Claims.First().Value).FirstOrDefault();
             if (dbitem != null)
             {
                 dbitem.IsConnected = false;

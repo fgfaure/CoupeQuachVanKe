@@ -1,0 +1,192 @@
+﻿<div class="col-sm-2">
+    @RenderPage("../Shared/_Menu.cshtml")
+</div>
+<div class="col-sm-10">
+    <div class="left">
+        <h2>Ventilation des Epreuves Technique</h2>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Ventiler les épreuves techniques</h3>
+            </div>
+            <div class="panel-body">
+                Affecter les compétiteurs inscrits aux épreuves techniques.
+                <button name="ventilationTechnique" id="vt">Ventiler</button>
+            </div>
+            <div id="techniquesVentilees" />
+        </div>
+    </div>
+    <div class="right">
+        <h2>Ventilation des Epreuves Combat</h2>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Ventiler les épreuves combat</h3>
+            </div>
+            <div class="panel-body">
+                Affecter les compétiteurs inscrits aux épreuves combats.
+                <button name="ventilationCombat" id="vc">Ventiler</button>
+            </div>
+            <div id="combatVentilees" />
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#vt").off('click').on('click', function () {
+            $.ajax({
+                url: 'VentilationTechnique',
+                cache: false
+            }).success(function (data) {
+                if (data.success) {
+                    //rafraichir la source de données des ventilations techniques
+                    var grid = $("#techniquesVentilees").data('kendoGrid');
+                    grid.dataSource.read();
+                }
+                else {
+                    alert("erreur serveur");
+                }
+            });
+
+        });
+
+        $("#vc").off('click').on('click', function () {
+            $.ajax({
+                url: 'VentilationCombat',
+                cache: false
+            }).success(function (data) {
+                if (data.success) {
+                    //rafraichir la source de données des ventilations techniques
+                    var grid = $("#combatVentilees").data('kendoGrid');
+                    grid.dataSource.read();
+                }
+                else {
+                    alert("erreur serveur");
+                }
+            });
+
+        });
+
+        var techniques = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "GetInscriptionTechnique",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "epreuveId",
+                    fields: {
+                        epreuveId: {
+                            editable: false,
+                            nullable: false
+                        },
+                        epreuve: {
+                            editable: false,
+                            type: "string"
+                        },
+                        nom: {
+                            editable: false,
+                            type: "string"
+                        },
+                        prenom: {
+                            editable: false,
+                            type: "string"
+                        }
+                    }
+                }
+            },
+            pageSize: 10
+        });
+
+        $("#techniquesVentilees").kendoGrid({
+            dataSource: techniques,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            selectable: "multiple",
+            sortable: true,
+            groupable: true,
+            filterable: true,
+            autosync: true,
+            columns: [
+                    { field: "epreuve", title: "Epreuve" },
+                    { field: "nom", title: "Nom" },
+                    { field: "prenom", title: "Prénom" }
+            ]
+        });
+
+        var combats = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "GetInscriptionCombat",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "epreuveId",
+                    fields: {
+                        epreuveId: {
+                            editable: false,
+                            nullable: false
+                        },
+                        epreuve: {
+                            editable: false,
+                            type: "string"
+                        },
+                        nom: {
+                            editable: false,
+                            type: "string"
+                        },
+                        prenom: {
+                            editable: false,
+                            type: "string"
+                        }
+                    }
+                }
+            },
+            pageSize: 10
+        });
+
+        $("#combatVentilees").kendoGrid({
+            dataSource: combats,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            selectable: "multiple",
+            sortable: true,
+            groupable: true,
+            filterable: true,
+            autosync: true,
+            columns: [
+                    { field: "epreuve", title: "Epreuve" },
+                    { field: "nom", title: "Nom" },
+                    { field: "prenom", title: "Prénom" }
+            ]
+        });
+
+    });
+</script>

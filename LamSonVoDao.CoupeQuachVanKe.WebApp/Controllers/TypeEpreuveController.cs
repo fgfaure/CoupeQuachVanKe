@@ -16,7 +16,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
-            result.Data = this.repository.GetAll().Select(m => new TypeEpreuveModel
+            result.Data = this.repository.Read().Select(m => new TypeEpreuveModel
             {
                 Nom = m.Nom,
                 Description = m.Description,
@@ -35,7 +35,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             try
             {
-                this.repository.Insert(new TypeEpreuve
+                this.repository.Create(new TypeEpreuve
                 {
                     Nom = typeEpreuve.Nom,
                     Description = typeEpreuve.Description,
@@ -43,7 +43,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                     CoupeId = typeEpreuve.CoupeId
                 });
 
-                var dbItem = this.repository.Get(m => m.Nom == typeEpreuve.Nom && m.CoupeId == typeEpreuve.CoupeId).First();
+                var dbItem = this.repository.Read(m => m.Nom == typeEpreuve.Nom && m.CoupeId == typeEpreuve.CoupeId).First();
                 typeEpreuve.Id = dbItem.Id;
                 return Json(typeEpreuve);
             }
@@ -58,7 +58,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 dbmodel.Description = model.Description;
                 dbmodel.Nom = model.Nom;
                 dbmodel.CoupeId = model.CoupeId;
@@ -77,7 +77,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             try
             {
-                var dbItem = this.repository.GetById(model.Id);
+                var dbItem = this.repository.Read(model.Id);
                 this.repository.Delete(dbItem);
                 return Json(model);
             }

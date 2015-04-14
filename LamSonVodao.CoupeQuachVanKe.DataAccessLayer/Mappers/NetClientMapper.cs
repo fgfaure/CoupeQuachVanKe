@@ -24,9 +24,9 @@
 
             this.Property(netc => netc.Ip).IsOptional();
 
-            this.Property(netc => netc.Password).IsRequired();
+            this.Property(netc => netc.Password).IsRequired();            
 
-            this.HasRequired(netc => netc.ClientType).WithMany().HasForeignKey(netc => netc.NetClientTypeId).WillCascadeOnDelete(true);
+            this.HasRequired(netc => netc.NetClientType).WithMany().HasForeignKey(netc => netc.NetClientTypeId).WillCascadeOnDelete(true);
         }
     }
 }

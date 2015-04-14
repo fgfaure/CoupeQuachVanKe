@@ -17,31 +17,24 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Epreuve()
         {
-            this.Resultats = new HashSet<Resultat>();
-            this.Resultats1 = new HashSet<Resultat>();
-            this.Encadrants = new HashSet<Encadrant>();
-            this.Competiteurs = new HashSet<Competiteur>();
+            this.Participations = new HashSet<Participation>();
+            this.Encadrements = new HashSet<Encadrement>();
         }
     
         public int Id { get; set; }
         public string Nom { get; set; }
         public string Description { get; set; }
         public int Statut { get; set; }
-        public int TypeEpreuve { get; set; }
-        public int Categorie { get; set; }
         public int GenreCategorie { get; set; }
         public int GradeAutorise { get; set; }
-        public Nullable<int> Aire_Id { get; set; }
+        public bool IsMerged { get; set; }
     
         public virtual Aire Aire { get; set; }
-        public virtual CategoriePoid CategoriePoid { get; set; }
+        public virtual CategoriePratiquant CategoriePratiquant { get; set; }
+        public virtual TypeEpreuve TypeEpreuve { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Resultat> Resultats { get; set; }
+        public virtual ICollection<Participation> Participations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Resultat> Resultats1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Encadrant> Encadrants { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Competiteur> Competiteurs { get; set; }
+        public virtual ICollection<Encadrement> Encadrements { get; set; }
     }
 }

@@ -25,6 +25,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
         public int CoupeId { get; set; }
     
         public virtual Coupe Coupe { get; set; }
+        public virtual NetClient NetClient { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Epreuve> Epreuves { get; set; }
     }

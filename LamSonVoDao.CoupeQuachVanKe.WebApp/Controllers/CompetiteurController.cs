@@ -17,15 +17,15 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.repository.GetAll().Select(competiteur => new CompetiteurModel
+            result.Data = this.repository.Read().Select(competiteur => new CompetiteurModel
             {
                 Id = competiteur.Id,                
                 Nom = competiteur.Nom,
                 Prenom = competiteur.Prenom,
-                CategorieId = (int)competiteur.Categorie,
+                CategorieId = competiteur.CategoriePratiquantId,
                 ClubId = competiteur.ClubId,
                 DateNaissance = competiteur.DateNaissance,
-                EquipeSongLuyen = competiteur.EquipeSongLuyen,
+                EquipeSongLuyenId = competiteur.EquipeSongLuyenNumero,
                 GradeId = (int)competiteur.Grade,
                 InscriptionValidePourCoupe = competiteur.InscriptionValidePourCoupe,
                 InscritPourBaiVuKhi = competiteur.InscritPourBaiVuKhi,
@@ -49,10 +49,10 @@
                     Id = model.Id,
                     Nom = model.Nom,
                     Prenom = model.Prenom,
-                    Categorie = (CategoriePratiquant)model.CategorieId,
+                    CategoriePratiquantId = model.CategorieId,
                     ClubId = model.ClubId,
                     DateNaissance = model.DateNaissance,
-                    EquipeSongLuyen = model.EquipeSongLuyen,
+                    EquipeSongLuyenNumero = model.EquipeSongLuyenId,
                     Grade =  (Grade)model.GradeId,
                     InscriptionValidePourCoupe = model.InscriptionValidePourCoupe,
                     InscritPourBaiVuKhi = model.InscritPourBaiVuKhi,
@@ -65,8 +65,8 @@
                     Sexe =  (Genre)model.GenreId
                 };
 
-                this.repository.Insert(dbitem);
-                return Json(model);
+                this.repository.Create(dbitem);
+                return Json(dbitem.ToModel());
             }
             catch
             {
@@ -78,7 +78,7 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     this.repository.Delete(dbmodel);
@@ -99,15 +99,15 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     dbmodel.Nom = model.Nom;
                     dbmodel.Prenom = model.Prenom;
-                    dbmodel.Categorie = (CategoriePratiquant)model.CategorieId;
+                    dbmodel.CategoriePratiquantId = model.CategorieId;
                     dbmodel.ClubId = model.ClubId;
                     dbmodel.DateNaissance = model.DateNaissance;
-                    dbmodel.EquipeSongLuyen = model.EquipeSongLuyen;
+                    dbmodel.EquipeSongLuyenNumero = model.EquipeSongLuyenId;
                     dbmodel.Grade = (Grade)model.GradeId;
                     dbmodel.InscriptionValidePourCoupe = model.InscriptionValidePourCoupe;
                     dbmodel.InscritPourBaiVuKhi = model.InscritPourBaiVuKhi;

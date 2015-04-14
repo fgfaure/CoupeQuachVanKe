@@ -18,7 +18,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
         public int Role { get; set; }
         public System.DateTime Date { get; set; }
         public bool Matin { get; set; }
-        public int EncadrantId { get; set; }
     
         public virtual Encadrant Encadrant { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
+
     using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
     using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
@@ -17,7 +18,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.repository.GetAll().Select(enc => enc.ToModel());
+            result.Data = this.repository.Read().Select(enc => enc.ToModel());
             return result;
         }
 
@@ -26,8 +27,8 @@
             try
             {
                 var dbitem = model.ToDTO();                
-                this.repository.Insert(dbitem);
-                return Json(model);
+                this.repository.Create(dbitem);
+                return Json(dbitem.ToModel());
             }
             catch
             {
@@ -39,7 +40,7 @@
         {
             try
             {
-                var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+                var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
                     this.repository.Delete(dbmodel);
@@ -58,7 +59,7 @@
 
         public JsonResult Update(EncadrantModel model)
         {
-            var dbmodel = this.repository.Get(m => m.Id == model.Id).First();
+            var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
             if (dbmodel != null)
             {
                 dbmodel.ClubId = model.ClubId;
@@ -70,7 +71,7 @@
                 dbmodel.Sexe = (Genre)model.GenreId;                
 
                 this.repository.Update(dbmodel);
-                return Json(model);
+                return Json(dbmodel.ToModel());
             }
             else
             {

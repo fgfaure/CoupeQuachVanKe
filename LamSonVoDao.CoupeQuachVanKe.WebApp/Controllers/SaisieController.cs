@@ -32,9 +32,9 @@
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.MaxJsonLength = Int32.MaxValue;
-            result.Data = this.competiteursRepo.GetAll().Select(c => new CompetiteurModel
+            result.Data = this.competiteursRepo.Read(c => c.InscritPourCombat).Select(c => new CompetiteurModel
             {
-                CategorieId = (int)c.Categorie,
+                CategorieId = c.CategoriePratiquantId,
                 ClubId = c.ClubId,
                 DateNaissance = c.DateNaissance,
                 Id = c.Id,
@@ -54,7 +54,7 @@
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.MaxJsonLength = Int32.MaxValue;
-            result.Data = this.competiteursRepo.GetAll().Select(c => new ClubModel
+            result.Data = this.competiteursRepo.Read().Select(c => new ClubModel
             {
                 Id = c.ClubId,
                 Nom = c.Club.Nom
@@ -65,87 +65,30 @@
         [HttpPost]
         public JsonResult UpdateCompetiteur(CompetiteurModel competiteur)
         {
-            var dbItem = this.competiteursRepo.GetById(competiteur.Id);
+            var dbItem = this.competiteursRepo.Read(competiteur.Id);
             if (dbItem != null)
             {
-                dbItem.Categorie = (CategoriePratiquant)competiteur.CategorieId;
-                dbItem.DateNaissance = competiteur.DateNaissance;
+                dbItem.CategoriePratiquantId = competiteur.CategorieId;
+                //dbItem.DateNaissance = competiteur.DateNaissance;
                 dbItem.InscriptionValidePourCoupe = competiteur.InscriptionValidePourCoupe;
-                dbItem.LicenceFFKDA = competiteur.LicenceFFKDA;
-                dbItem.Nom = competiteur.Nom;
-                dbItem.Prenom = competiteur.Prenom;
+                //dbItem.LicenceFFKDA = competiteur.LicenceFFKDA;
+                //dbItem.Nom = competiteur.Nom;
+                //dbItem.Prenom = competiteur.Prenom;
                 dbItem.Poids = competiteur.Poids;
-                dbItem.Sexe = (Genre)competiteur.GenreId;
+                //dbItem.Sexe = (Genre)competiteur.GenreId;
 
                 try
                 {
                     this.competiteursRepo.Update(dbItem);
-                    return Json(new { success = true });
+                    return Json(dbItem.ToModel());
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-
-                    throw;
+                    return Json(new { success = false, reason =  ex.Message});
                 }
 
             }
             return Json(new { success = false, reason = "compétiteur absent de la base." });
-        }
-
-        [HttpPost]
-        public JsonResult DeleteCompetiteur(CompetiteurModel competiteur)
-        {
-            var dbItem = this.competiteursRepo.GetById(competiteur.Id);
-            if (dbItem != null)
-            {
-                try
-                {
-                    this.competiteursRepo.Delete(dbItem);
-                    return Json(new { success = true });
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-            }
-            return Json(new { success = false, reason = "compétiteur absent de la base." });
-        }
-
-        [HttpPost]
-        public JsonResult CreateCompetiteur(CompetiteurModel competiteur)
-        {
-            Competiteur dbItem = new Competiteur
-            {
-                Categorie = (CategoriePratiquant)competiteur.CategorieId,
-                ClubId = competiteur.ClubId,                
-                DateNaissance = competiteur.DateNaissance,
-                EquipeSongLuyen = competiteur.EquipeSongLuyen,
-                Grade = (Grade)competiteur.GradeId,                              
-                InscriptionValidePourCoupe = competiteur.InscriptionValidePourCoupe,
-                InscritPourBaiVuKhi = competiteur.InscritPourBaiVuKhi,
-                InscritPourCombat = competiteur.InscritPourCombat,
-                InscritPourQuyen = competiteur.InscritPourQuyen,
-                InscritPourSongLuyen = competiteur.InscritPourSongLuyen,                
-                LicenceFFKDA = competiteur.LicenceFFKDA,
-                NbAnneePratique = competiteur.NbAnneePratique,
-                Nom = competiteur.Nom,
-                Prenom = competiteur.Prenom,
-                Poids = competiteur.Poids,                
-                Sexe = (Genre)competiteur.GenreId
-            };
-
-            try
-            {
-                this.competiteursRepo.Insert(dbItem);
-                return Json(new { success = true });
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
+        }       
     }
 }

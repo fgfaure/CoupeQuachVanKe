@@ -4,45 +4,28 @@
 /// </copyright>
 
 namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
-{
-
-
+{    
     /// <summary>
     /// 
     /// </summary>
     public class Resultat : BaseEntity
     {
-        /// <summary>
-        /// Gets or sets the competiteur.
-        /// </summary>
-        /// <value>
-        /// The competiteur.
-        /// </value>
-        public Competiteur Competiteur { get; set; }
 
         /// <summary>
-        /// Gets or sets the competiteur identifier.
+        /// Gets or sets the participation.
         /// </summary>
         /// <value>
-        /// The competiteur identifier.
+        /// The participation.
         /// </value>
-        public int CompetiteurId { get; set; }
+        public Participation Participation { get; set; }
 
         /// <summary>
-        /// Gets or sets the epreuve.
+        /// Gets or sets the participation identifier.
         /// </summary>
         /// <value>
-        /// The epreuve.
+        /// The participation identifier.
         /// </value>
-        public Epreuve Epreuve { get; set; }
-
-        /// <summary>
-        /// Gets or sets the epreuve identifier.
-        /// </summary>
-        /// <value>
-        /// The epreuve identifier.
-        /// </value>
-        public int EpreuveId { get; set; }
+        public int ParticipationId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [inscription validee].

@@ -22,9 +22,7 @@
 
             this.Property(c => c.Prenom).IsRequired().HasMaxLength(255);
 
-            this.Property(c => c.Grade).IsRequired();
-
-            this.Property(c => c.Categorie).IsRequired();
+            this.Property(c => c.Grade).IsRequired();            
 
             this.Property(c => c.DateNaissance).IsRequired().HasColumnType("smalldatetime");
 
@@ -46,10 +44,15 @@
 
             this.Property(c => c.InscritPourSongLuyen).IsRequired();
 
-            this.Property(c => c.EquipeSongLuyen).IsRequired();
+            this.Property(c => c.EquipeSongLuyenNumero).IsRequired();
 
             this.HasRequired(c => c.Club).WithMany(club => club.Competiteurs).HasForeignKey(c => c.ClubId).WillCascadeOnDelete(true);
 
+            this.HasRequired(c => c.CategoriePratiquant).WithMany(categorie => categorie.Competiteurs).HasForeignKey(
+                c => c.CategoriePratiquantId).WillCascadeOnDelete(false);
+
+            //this.HasOptional(c => c.EquipeSongLuyen).WithMany(e => e.Membres).HasForeignKey(c => c.EquipeSongLuyenId).WillCascadeOnDelete(false);
+            
         }
     }
 }

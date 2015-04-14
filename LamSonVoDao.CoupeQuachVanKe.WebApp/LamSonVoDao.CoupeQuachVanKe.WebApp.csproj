@@ -245,7 +245,6 @@
     <Compile Include="Controllers\AireController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\CategoriePoidsController.cs" />
     <Compile Include="Controllers\ClubController.cs" />
     <Compile Include="Controllers\CompetiteurController.cs" />
     <Compile Include="Controllers\CoupeController.cs" />
@@ -263,6 +262,7 @@
     <Compile Include="Controllers\SatelliteController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="Controllers\TypeEpreuveController.cs" />
+    <Compile Include="Controllers\VentilationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -274,6 +274,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Coupe\AireModel.cs" />
     <Compile Include="Models\Coupe\CategoriePoidsModel.cs" />
+    <Compile Include="Models\Coupe\CategoriePratiquantModel.cs" />
     <Compile Include="Models\Coupe\ClubModel.cs" />
     <Compile Include="Models\Coupe\CompetiteurModel.cs" />
     <Compile Include="Models\Coupe\CoupeModel.cs" />
@@ -301,6 +302,7 @@
     <Content Include="Views\EpreuveTechnique\Index.cshtml" />
     <Content Include="Views\EpreuveCombat\Index.cshtml" />
     <Content Include="Views\EpreuveVentilee\Index.cshtml" />
+    <Content Include="Views\Ventilation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -1216,13 +1218,13 @@
       <Project>{de2c890e-5b81-4ade-8a0e-4417d79d4986}</Project>
       <Name>LamSonVodao.CoupeQuachVanKe.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LamSonVodao.CoupeQuachVanKe.DataAccessLayer\LamSonVodao.CoupeQuachVanKe.DataAccessLayer.csproj">
-      <Project>{238a0ca8-4617-44fa-ac66-6f59cfc74d8f}</Project>
-      <Name>LamSonVodao.CoupeQuachVanKe.DataAccessLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LamSonVodao.CoupeQuachVanKe.DataTransferObjects\LamSonVodao.CoupeQuachVanKe.DataTransferObjects.csproj">
       <Project>{ef080f29-bba4-4a6c-af34-88a16a9bf8d4}</Project>
       <Name>LamSonVodao.CoupeQuachVanKe.DataTransferObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model\LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model.csproj">
+      <Project>{4b9fe7ac-5a2e-4101-8289-3068a1531a73}</Project>
+      <Name>LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

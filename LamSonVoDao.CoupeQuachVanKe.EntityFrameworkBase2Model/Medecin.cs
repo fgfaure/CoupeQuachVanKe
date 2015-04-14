@@ -19,7 +19,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model
         public string Prenom { get; set; }
         public string Telephone { get; set; }
         public string MailContact { get; set; }
-        public int CoupeId { get; set; }
     
         public virtual Coupe Coupe { get; set; }
     }

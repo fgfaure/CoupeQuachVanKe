@@ -20,9 +20,11 @@
 
             this.HasKey(epreuve => epreuve.Id);
 
+            this.Property(epreuve => epreuve.Nom);
+
             this.Property(epreuve => epreuve.Statut).IsRequired();            
 
-            this.Property(epreuve => epreuve.CategoriePratiquant).IsRequired();
+            this.Property(epreuve => epreuve.CategoriePratiquantId).IsRequired();
 
             this.Property(epreuve => epreuve.GenreCategorie).IsRequired();
 
