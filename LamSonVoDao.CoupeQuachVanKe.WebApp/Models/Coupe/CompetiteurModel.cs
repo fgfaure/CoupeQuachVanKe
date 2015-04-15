@@ -146,5 +146,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// The equipe song luyen.
         /// </value>
         public int EquipeSongLuyenNumero { get; set; }
+
+        public bool ValidImport { get; set; }
     }
 }

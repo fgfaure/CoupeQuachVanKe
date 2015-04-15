@@ -45,6 +45,8 @@
             this.Property(c => c.InscritPourSongLuyen).IsRequired();
 
             this.Property(c => c.EquipeSongLuyenNumero).IsRequired();
+            
+            this.Property(c => c.ValidImport).IsRequired();
 
             this.HasRequired(c => c.CategoriePratiquant).WithMany(categorie => categorie.Competiteurs).HasForeignKey(
                 c => c.CategoriePratiquantId).WillCascadeOnDelete(false);            

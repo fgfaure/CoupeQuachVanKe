@@ -35,7 +35,8 @@
                 LicenceFFKDA = competiteur.LicenceFFKDA,
                 NbAnneePratique = competiteur.NbAnneePratique,                
                 Poids = competiteur.Poids,
-                GenreId = (int)competiteur.Sexe
+                GenreId = (int)competiteur.Sexe,
+                ValidImport = competiteur.ValidImport
             });
             return result;
         }
@@ -62,7 +63,8 @@
                     LicenceFFKDA = model.LicenceFFKDA,
                     NbAnneePratique = model.NbAnneePratique,
                     Poids = model.Poids,
-                    Sexe =  (Genre)model.GenreId
+                    Sexe =  (Genre)model.GenreId,
+                    ValidImport = true
                 };
 
                 this.repository.Create(dbitem);
@@ -118,6 +120,7 @@
                     dbmodel.NbAnneePratique = model.NbAnneePratique;
                     dbmodel.Poids = model.Poids;
                     dbmodel.Sexe = (Genre)model.GenreId;
+                    dbmodel.ValidImport = true;
                     this.repository.Update(dbmodel);
                     return Json(model);
                 }

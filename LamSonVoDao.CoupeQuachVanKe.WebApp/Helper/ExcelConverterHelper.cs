@@ -36,45 +36,7 @@
                     categorieid = cat.Id;
                     break;
                 }
-            }
-
-
-            //CategoriePratiquant categorie = CategoriePratiquant.NotSet;
-
-            //if (age >= 8 && age<=9)
-            //{
-            //    categorie = CategoriePratiquant.Pupilles;
-
-            //}
-            //else if (age >= 10 && age <= 11)
-            //{
-            //    categorie = CategoriePratiquant.Benjamins;
-
-            //}
-            //else if(age >= 12 && age<=13)
-            //{
-            //    categorie = CategoriePratiquant.Minimes;
-
-            //}
-            //else if (age >= 14 && age<=15)
-            //{
-            //    categorie = CategoriePratiquant.Cadets;
-
-            //}
-            //else if (age >= 16 && age <= 17)
-            //{
-            //    categorie = CategoriePratiquant.Juniors;
-
-            //}
-            //else if (age >= 18 && age <= 35)
-            //{
-            //    categorie = CategoriePratiquant.Seniors;
-            //}
-            //else
-            //{
-            //    categorie = CategoriePratiquant.Veterans;
-
-            //}         
+            }     
             return categorieid;
         }
 
@@ -153,24 +115,24 @@
         internal static Competiteur ConvertFromXLS(DataRow row)
         {
             var result = new Competiteur();
-            result.InscriptionIsCorrect = true;
+            result.ValidImport = true;
             try
             {
                 result.Nom = row.ItemArray[0].ToString();
                 result.Prenom = row.ItemArray[1].ToString();
                 result.LicenceFFKDA = row.ItemArray[6].ToString();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                result.InscriptionIsCorrect = false;
+                result.ValidImport = false;
             }
             try
             {
                 result.DateNaissance = DateTime.FromOADate(double.Parse(row.ItemArray[2].ToString()));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                result.InscriptionIsCorrect = false;
+                result.ValidImport = false;
             }
             try
             {
@@ -178,7 +140,7 @@
             }
             catch (Exception ex)
             {
-                result.InscriptionIsCorrect = false;
+                result.ValidImport = false;
             }
             try
             {
@@ -186,17 +148,21 @@
                 result.EquipeSongLuyenNumero = ExcelConverterHelper.ConvertToInt(row.ItemArray[11].ToString());
                 result.Poids = ExcelConverterHelper.ConvertToInt(row.ItemArray[13].ToString());
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                result.InscriptionIsCorrect = false;
+                result.ValidImport = false;
             }
             try
             {
                 result.Grade = ExcelConverterHelper.ConvertToGrade(row.ItemArray[5].ToString());
+                if (result.Grade == Grade.NonRenseigne || result.Grade == Grade.NotSet)
+                {
+                    result.ValidImport = false;
+                }
             }
             catch (Exception ex)
             {
-                result.InscriptionIsCorrect = false;
+                result.ValidImport = false;
             }
             try
             {
@@ -206,18 +172,21 @@
                 result.InscritPourCombat = ExcelConverterHelper.ConvertToBool(row.ItemArray[12].ToString());
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                result.InscriptionIsCorrect = false;
+                result.ValidImport = false;
             }
             try
             {
                 result.CategoriePratiquantId = ExcelConverterHelper.ConvertToCategorie(row.ItemArray[2].ToString());
-
+                if (result.CategoriePratiquantId == 0)
+                {
+                    result.ValidImport = false;
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                result.InscriptionIsCorrect = false;
+                result.ValidImport = false;
             }
             return result;
         }

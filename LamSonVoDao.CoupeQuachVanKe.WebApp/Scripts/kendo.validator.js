@@ -144,6 +144,41 @@
             },
             rules: {
                 required: function(input) {
+                    /// <summary>
+                    /// s the specified input.
+                    /// </summary>
+                    /// <param name="input">The input.</param>
+                    /// <returns></returns>
+                    /// <summary>
+                    /// s the specified input.
+                    /// </summary>
+                    /// <param name="input">The input.</param>
+                    /// <returns></returns>
+                    /// <summary>
+                    /// s the specified input.
+                    /// </summary>
+                    /// <param name="input">The input.</param>
+                    /// <returns></returns>
+                    /// <summary>
+                    /// s the specified input.
+                    /// </summary>
+                    /// <param name="input">The input.</param>
+                    /// <returns></returns>
+                    /// <summary>
+                    /// s the specified input.
+                    /// </summary>
+                    /// <param name="input">The input.</param>
+                    /// <returns></returns>
+                    /// <summary>
+                    /// s the specified input.
+                    /// </summary>
+                    /// <param name="input">The input.</param>
+                    /// <returns></returns>
+                    /// <summary>
+                    /// s the specified input.
+                    /// </summary>
+                    /// <param name="input">The input.</param>
+                    /// <returns></returns>
                     var checkbox = input.filter("[type=checkbox]").length && !input.is(":checked"),
                         value = input.val();
 

@@ -9,6 +9,20 @@
     </div>
 
 <script>
+
+    function onDataBound() {
+        var grid = $("#competiteurs").data("kendoGrid");
+        var data = grid.dataSource.data();
+        $.each(data, function (i, row) {
+            var validImport = row.ValidImport;           
+
+            if (!validImport) {
+                //Change the background color of QtyReceived here
+                $('tr[data-uid="' + row.uid + '"]').css("background-color", "orange");
+            }
+        });
+    }
+
     $(document).ready(function () {
         var categorieDataSource = new kendo.data.DataSource({
             transport: {
@@ -249,6 +263,10 @@
                         Poids: {
                             editable: true,
                             type: "number"
+                        },
+                        ValidImport :{
+                            editable : false,
+                            type: "boolean"
                         }
                     }
                 }
@@ -288,6 +306,7 @@
                     { field: "Poids", title: "Poids", width: "65px" },
                     { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }
             ],
+            dataBound : onDataBound,
             editable: "popup"
         });
     });

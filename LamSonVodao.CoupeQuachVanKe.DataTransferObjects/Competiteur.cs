@@ -183,7 +183,7 @@
         /// <value>
         /// <c>true</c> if [inscription is correct]; otherwise, <c>false</c>.
         /// </value>
-        public bool InscriptionIsCorrect { get; set; }
+        public bool ValidImport { get; set; }
 
     }
 }
