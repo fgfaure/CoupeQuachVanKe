@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Alphabetical">
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Aire">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAggAAAAAAAAACAAAgAAAAAAAAAAQ=</HashCode>
+      <FileName>Aire.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.BaseEntity" Collapsed="true">
+    <Position X="21.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BaseEntity.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.CategoriePratiquant" Collapsed="true">
+    <Position X="16.5" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAgCABAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>CategoriePratiquant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Club" Collapsed="true">
+    <Position X="28.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEACAAAAAAAEAAAAAAAAAgCAAAQBAAAAAAAAAAAA=</HashCode>
+      <FileName>Club.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Competiteur" Collapsed="true">
+    <Position X="35" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAkAAABBAAAEUBACAhAAAAAiEQAABAACAAAAGABAA=</HashCode>
+      <FileName>Competiteur.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Coupe">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAABSAAAAgABABBAAIAAAAECAAgQAAAAAAAAABAAA=</HashCode>
+      <FileName>Coupe.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="TypesEpreuve" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Disponibilite" Collapsed="true">
+    <Position X="9.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAMAAAQAAAAAAAAAABAAAAAAAgAAA=</HashCode>
+      <FileName>Disponibilite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Encadrant" Collapsed="true">
+    <Position X="19" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAFQAAAAAAAAEAACAAAAAAACAAAAAAEKAAAACAEAA=</HashCode>
+      <FileName>Encadrant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Encadrement" Collapsed="true">
+    <Position X="30.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAABAAAAMAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Encadrement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Epreuve" Collapsed="true">
+    <Position X="38.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAkAhAAAAAAAAAgAAAAAiAAgBAAQAEAAAAAAAA=</HashCode>
+      <FileName>Epreuve.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.EpreuveCombat" Collapsed="true">
+    <Position X="37.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>EpreuveCombat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.EpreuveTechnique" Collapsed="true">
+    <Position X="39.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EpreuveTechnique.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.EquipeSongLuyen" Collapsed="true">
+    <Position X="21.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAACBAAA=</HashCode>
+      <FileName>EquipeSongLuyen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Medecin" Collapsed="true">
+    <Position X="32.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACACAAAgAKAAAAAAEAA=</HashCode>
+      <FileName>Medecin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.NetClient" Collapsed="true">
+    <Position X="41.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAQAAAAABAAAAAIAAAAAAAAAACQAAAIAAAIAA=</HashCode>
+      <FileName>NetClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.NetClientType">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NetClientType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Participation">
+    <Position X="12" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAgBAAAAAAAAACAAgAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Participation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Resultat" />
+      <Property Name="Competiteur" />
+      <Property Name="Epreuve" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Responsable" Collapsed="true">
+    <Position X="24.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAKAAQAAAEAA=</HashCode>
+      <FileName>Responsable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.ResponsableClub">
+    <Position X="23.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>ResponsableClub.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Club" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.ResponsableCoupe">
+    <Position X="25.75" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>ResponsableCoupe.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Coupe" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Resultat">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAABgAAIBCAAAAAAACAAAAiAAAAAAgAAA=</HashCode>
+      <FileName>Resultat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.TypeEpreuve" Collapsed="true">
+    <Position X="14.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAgACAAAAACACAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>TypeEpreuve.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

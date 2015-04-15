@@ -26,13 +26,16 @@
             return View();
         }
 
-        [HttpGet]
-        public JsonResult GetCompetiteurs()
+        [HttpPost]
+        public JsonResult GetCompetiteurs(bool all)
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.MaxJsonLength = Int32.MaxValue;
-            result.Data = this.competiteursRepo.Read(c => c.InscritPourCombat).Select(c => new CompetiteurModel
+            var competiteurs = this.competiteursRepo.Read();
+            if (all)
+            {
+                result.Data = competiteurs.Select(c => new CompetiteurModel
             {
                 CategorieId = c.CategoriePratiquantId,
                 ClubId = c.ClubId,
@@ -45,6 +48,23 @@
                 Poids = c.Poids,
                 GenreId = (int)c.Sexe
             });
+            }
+            else
+            {
+                result.Data = competiteurs.Where(c => c.InscritPourCombat).Select(c => new CompetiteurModel
+                {
+                    CategorieId = c.CategoriePratiquantId,
+                    ClubId = c.ClubId,
+                    DateNaissance = c.DateNaissance,
+                    Id = c.Id,
+                    InscriptionValidePourCoupe = c.InscriptionValidePourCoupe,
+                    LicenceFFKDA = c.LicenceFFKDA,
+                    Nom = c.Nom,
+                    Prenom = c.Prenom,
+                    Poids = c.Poids,
+                    GenreId = (int)c.Sexe
+                });
+            }
             return result;
         }
 
@@ -84,11 +104,11 @@
                 }
                 catch (Exception ex)
                 {
-                    return Json(new { success = false, reason =  ex.Message});
+                    return Json(new { success = false, reason = ex.Message });
                 }
 
             }
             return Json(new { success = false, reason = "compétiteur absent de la base." });
-        }       
+        }
     }
 }

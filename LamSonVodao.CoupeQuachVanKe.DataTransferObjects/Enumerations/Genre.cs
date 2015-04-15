@@ -1,5 +1,4 @@
-﻿
-namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations
+﻿namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations
 {
     public enum Genre
     {       

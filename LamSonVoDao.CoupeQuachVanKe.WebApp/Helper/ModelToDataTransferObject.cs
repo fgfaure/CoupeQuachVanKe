@@ -21,7 +21,7 @@
             result.CategoriePratiquantId = model.CategorieId; 
             result.ClubId = model.ClubId;
             result.DateNaissance = model.DateNaissance;
-            result.EquipeSongLuyenNumero = model.EquipeSongLuyenId;
+            result.EquipeSongLuyenNumero = model.EquipeSongLuyenNumero;
             result.Grade = (Grade)model.GradeId;
             result.InscriptionValidePourCoupe = model.InscriptionValidePourCoupe;
             result.InscritPourBaiVuKhi = model.InscritPourBaiVuKhi;

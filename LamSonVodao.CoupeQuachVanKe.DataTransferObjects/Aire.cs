@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
+﻿namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// 
     /// </summary>
@@ -54,6 +54,5 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// The client identifier.
         /// </value>
         public int ClientId { get; set; }
-
     }
 }

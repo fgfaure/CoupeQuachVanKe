@@ -7,15 +7,15 @@
     /// <summary>
     /// 
     /// </summary>
-    public class Competiteur : BaseEntity
+    public class Competiteur : Participant
     {
-        /// <summary>
-        /// Gets or sets the nom.
-        /// </summary>
-        /// <value>
-        /// The nom.
-        /// </value>
-        public string Nom { get; set; }
+        /////// <summary>
+        /////// Gets or sets the nom.
+        /////// </summary>
+        /////// <value>
+        /////// The nom.
+        /////// </value>
+        ////public string Nom { get; set; }
 
         /// <summary>
         /// Gets or sets the prenom.
@@ -89,27 +89,27 @@
         /// </value>
         public float Poids { get; set; }
 
-        /// <summary>
-        /// Gets or sets the club.
-        /// </summary>
-        /// <value>
-        /// The club.
-        /// </value>
-        public Club Club { get; set; }
+        /////// <summary>
+        /////// Gets or sets the club.
+        /////// </summary>
+        /////// <value>
+        /////// The club.
+        /////// </value>
+        ////public Club Club { get; set; }
+
+        /////// <summary>
+        /////// Gets or sets the club identifier.
+        /////// </summary>
+        /////// <value>
+        /////// The club identifier.
+        /////// </value>
+        ////public int ClubId { get; set; }
 
         /// <summary>
-        /// Gets or sets the club identifier.
+        /// Gets or sets the participations.
         /// </summary>
         /// <value>
-        /// The club identifier.
-        /// </value>
-        public int ClubId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the epreuves.
-        /// </summary>
-        /// <value>
-        /// The epreuves.
+        /// The participations.
         /// </value>
         public ICollection<Participation> Participations { get; set; }
 
@@ -153,14 +153,29 @@
         /// </value>
         public bool InscriptionValidePourCoupe { get; set; }
 
-
         /// <summary>
         /// Gets or sets the equipe song luyen numero.
         /// </summary>
         /// <value>
         /// The equipe song luyen numero.
         /// </value>
-        public int EquipeSongLuyenNumero { get; set; }     
+        public int EquipeSongLuyenNumero { get; set; }
+
+        /// <summary>
+        /// Gets or sets the equipe song luyen.
+        /// </summary>
+        /// <value>
+        /// The equipe song luyen.
+        /// </value>
+        public virtual EquipeSongLuyen EquipeSongLuyen { get; set; }
+
+        /// <summary>
+        /// Gets or sets the equipe song luyen identifier.
+        /// </summary>
+        /// <value>
+        /// The equipe song luyen identifier.
+        /// </value>
+        public int? EquipeSongLuyenId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [inscription is correct].

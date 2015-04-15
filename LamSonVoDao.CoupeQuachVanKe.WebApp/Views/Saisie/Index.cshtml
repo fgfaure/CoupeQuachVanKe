@@ -21,7 +21,12 @@
             transport: {
                 read: {
                     url: "Saisie/GetCompetiteurs",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: {
+                        all: true
+                    }
                 },
                 update: {
                     url: "Saisie/UpdateCompetiteur",
@@ -98,7 +103,12 @@
             transport: {
                 read: {
                     url: "Saisie/GetCompetiteurs",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    contentType: "application/json; charset=utf-8",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        all: false
+                    }
                 },
                 update: {
                     url: "Saisie/UpdateCompetiteur",
@@ -131,7 +141,6 @@
                             type: "string"
                         },
                         Prenom: {
-                            //data type of the field {Number|String|Boolean|Date} default is String
                             editable: false,
                             type: "string"
                         },
@@ -201,14 +210,11 @@
                 model: {
                     id: "Id",
                     fields: {
-                        Id: {
-                            //this field will not be editable (default value is true)
-                            editable: false,
-                            // a defaultValue will not be assigned (default value is false)
+                        Id: {                            
+                            editable: false,                            
                             nullable: false
                         },
                         Nom: {
-                            //set validation rules
                             type: "string",
                         }
                     }
@@ -243,17 +249,12 @@
             columns: [
                 { field: "Nom", title: "Nom", groupable: false },
                 { field: "Prenom", title: "Prénom", groupable: false, filterable: false },
-                { field: "ClubId", values: clubsDataSource.data().toJSON(), title: "Club" },
-                //{ field: "Sexe", title: "Sexe" },
+                { field: "ClubId", values: clubsDataSource.data().toJSON(), title: "Club" },                
                 {
                     field: "DateNaissance", groupable: false, filterable: false, title: "Date de Naissance", template: '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #',
                     groupHeaderTemplate: 'Date de Naissance : #=  kendo.toString(value, "dd/MM/yyyy") #'
                 },
-                { field: "Poids", groupable: false, filterable: false, title: "Poids", editor: weightEditor, template: '#= kendo.toString(Poids,"\\#.000 kg") #' },
-                //{ field: "InscriptionValidePourCoupe", title: "Inscription validée", groupable: false, filterable: false, template: '<input type="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>' },
-                //{ field: "CategorieId", title: "Catégorie" },
-                //{ field: "LicenceFFKDA", title: "N° Licence" },
-                //{ command: ["edit"], title: "&nbsp;" }
+                { field: "Poids", groupable: false, filterable: false, title: "Poids", editor: weightEditor, template: '#= kendo.toString(Poids,"\\#.000 kg") #' },                
             ],
             editable: "incell",
             save: function (e) {
@@ -277,17 +278,12 @@
             columns: [
                 { field: "Nom", title: "Nom", groupable: false },
                 { field: "Prenom", title: "Prénom", groupable: false, filterable: false },
-                { field: "ClubId", values: clubsDataSource.data().toJSON(), title: "Club" },
-                //{ field: "Sexe", title: "Sexe" },
+                { field: "ClubId", values: clubsDataSource.data().toJSON(), title: "Club" },                
                 {
                     field: "DateNaissance", groupable: false, filterable: false, title: "Date de Naissance", template: '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #',
                     groupHeaderTemplate: 'Date de Naissance : #=  kendo.toString(value, "dd/MM/yyyy") #'
-                },
-                //{ field: "Poids", groupable: false, filterable: false, title: "Poids", editor: weightEditor },
-                { field: "InscriptionValidePourCoupe", title: "Inscription validée", groupable: false, filterable: false, template: '<input type="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>' },
-                //{ field: "CategorieId", title: "Catégorie" },
-                //{ field: "LicenceFFKDA", title: "N° Licence" },
-                //{ command: ["edit"], title: "&nbsp;" }
+                },                
+                { field: "InscriptionValidePourCoupe", title: "Inscription validée", groupable: false, filterable: false, template: '<input type="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>' }               
             ],
             editable: "incell",
             save: function (e) {

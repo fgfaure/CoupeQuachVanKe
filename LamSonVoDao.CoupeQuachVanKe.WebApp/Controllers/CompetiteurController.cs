@@ -25,7 +25,7 @@
                 CategorieId = competiteur.CategoriePratiquantId,
                 ClubId = competiteur.ClubId,
                 DateNaissance = competiteur.DateNaissance,
-                EquipeSongLuyenId = competiteur.EquipeSongLuyenNumero,
+                EquipeSongLuyenNumero = competiteur.EquipeSongLuyenNumero,
                 GradeId = (int)competiteur.Grade,
                 InscriptionValidePourCoupe = competiteur.InscriptionValidePourCoupe,
                 InscritPourBaiVuKhi = competiteur.InscritPourBaiVuKhi,
@@ -52,7 +52,7 @@
                     CategoriePratiquantId = model.CategorieId,
                     ClubId = model.ClubId,
                     DateNaissance = model.DateNaissance,
-                    EquipeSongLuyenNumero = model.EquipeSongLuyenId,
+                    EquipeSongLuyenNumero = model.EquipeSongLuyenNumero,
                     Grade =  (Grade)model.GradeId,
                     InscriptionValidePourCoupe = model.InscriptionValidePourCoupe,
                     InscritPourBaiVuKhi = model.InscritPourBaiVuKhi,
@@ -107,7 +107,7 @@
                     dbmodel.CategoriePratiquantId = model.CategorieId;
                     dbmodel.ClubId = model.ClubId;
                     dbmodel.DateNaissance = model.DateNaissance;
-                    dbmodel.EquipeSongLuyenNumero = model.EquipeSongLuyenId;
+                    dbmodel.EquipeSongLuyenNumero = model.EquipeSongLuyenNumero;
                     dbmodel.Grade = (Grade)model.GradeId;
                     dbmodel.InscriptionValidePourCoupe = model.InscriptionValidePourCoupe;
                     dbmodel.InscritPourBaiVuKhi = model.InscritPourBaiVuKhi;

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
+namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers
 {
     public class ParticipationMapper : DataMapper<Participation>
     {

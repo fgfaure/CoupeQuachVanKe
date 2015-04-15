@@ -43,7 +43,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.CategorieId = dto.CategoriePratiquantId;
             result.ClubId = dto.ClubId;
             result.DateNaissance = dto.DateNaissance;
-            result.EquipeSongLuyenId = dto.EquipeSongLuyenNumero;
+            result.EquipeSongLuyenNumero = dto.EquipeSongLuyenNumero;
             result.GradeId = (int)dto.Grade;
             result.InscriptionValidePourCoupe = dto.InscriptionValidePourCoupe;
             result.InscritPourBaiVuKhi = dto.InscritPourBaiVuKhi;

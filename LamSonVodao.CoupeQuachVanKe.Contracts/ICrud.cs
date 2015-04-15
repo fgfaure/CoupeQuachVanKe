@@ -1,16 +1,15 @@
-﻿namespace LamSonVoDao.CoupeQuachVanKe.Contracts
+﻿namespace LamSonVodao.CoupeQuachVanKe.Contracts
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-
     /// <summary>
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IRepository<T> 
+    public interface ICrud<T> : IDisposable
     {
         /// <summary>
         /// Reads this instance.
@@ -40,7 +39,7 @@
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        bool Create(T entity);
+        int Create(T entity);
         /// <summary>
         /// Updates the specified entity.
         /// </summary>
@@ -53,7 +52,5 @@
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
         bool Delete(T entity);
-        //IQueryable<T> Table { get; }
-        //bool Save();       
     }
 }

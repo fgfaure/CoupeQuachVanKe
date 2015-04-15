@@ -1,4 +1,5 @@
-﻿namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
+﻿
+namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
     using System.Collections.Generic;
 
@@ -23,13 +24,21 @@
         /// </value>
         public string NumeroAffiliation { get; set; }
 
+        /////// <summary>
+        /////// Gets or sets the competiteurs.
+        /////// </summary>
+        /////// <value>
+        /////// The competiteurs.
+        /////// </value>
+        ////public ICollection<Competiteur> Competiteurs { get; set; }
+
         /// <summary>
-        /// Gets or sets the competiteurs.
+        /// Gets or sets the participants.
         /// </summary>
         /// <value>
-        /// The competiteurs.
+        /// The participants.
         /// </value>
-        public ICollection<Competiteur> Competiteurs { get; set; }
+         public ICollection<Participant> Participants { get; set; }
 
         /// <summary>
         /// Gets or sets the encadrants.
@@ -55,13 +64,13 @@
         /// </value>
         public bool InscriptionIsCorrect { get; set; }
 
-        /// <summary>
-        /// Gets or sets the equipes song luyen.
-        /// </summary>
-        /// <value>
-        /// The equipes song luyen.
-        /// </value>
-        public ICollection<EquipeSongLuyen> EquipesSongLuyen { get; set; }
+        /////// <summary>
+        /////// Gets or sets the equipes song luyen.
+        /////// </summary>
+        /////// <value>
+        /////// The equipes song luyen.
+        /////// </value>
+        ////public ICollection<EquipeSongLuyen> EquipesSongLuyen { get; set; }
 
     }
 }

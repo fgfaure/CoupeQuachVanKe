@@ -14,17 +14,11 @@
         {
             this.ToTable("EquipesSongLuyen");
 
-            this.HasKey(c => c.Id);
-            this.Property(c => c.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            this.Property(c => c.Id).IsRequired();
-
-            this.Property(c => c.Nom).IsRequired();
-
             this.Property(c => c.Numero).IsRequired();
 
-            this.HasRequired(c => c.Club).WithMany(club => club.EquipesSongLuyen).HasForeignKey(c => c.ClubId).WillCascadeOnDelete(false);
+            //this.HasRequired(c => c.Club).WithMany(club => club.EquipesSongLuyen).HasForeignKey(c => c.ClubId).WillCascadeOnDelete(false);
 
-            //this.HasMany(c => c.Membres).WithOptional(c => c.EquipeSongLuyen).HasForeignKey(e => e.EquipeSongLuyenId).WillCascadeOnDelete(false);
+            //this.HasMany(c => c.Competiteurs)..Map(e => e.EquipeSongLuyenId).WillCascadeOnDelete(false);
         }
     }
 }

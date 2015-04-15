@@ -1,6 +1,6 @@
 ﻿
 
-namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
+namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers
 {
     using LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers;
     using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
@@ -17,18 +17,11 @@ namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Mappers
         {
             this.ToTable("CategoriesPratiquant");
 
-            this.HasKey(cp => cp.Id);
-
-            //this.Property(cp => cp.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            this.HasKey(cp => cp.Id);        
 
             this.Property(cp => cp.AgeMax);
 
             this.Property(cp => cp.AgeMin);
-
-            //HasMany(cp => cp.Epreuves).WithMany(e => e.Categorie).Map(cp => cp.ToTable("CategoriesPratiquantsEpreuves")
-            //    .MapLeftKey("CategoriePratiquantId")
-            //    .MapRightKey("EpreuveId"));         
-
         }
     }
 }

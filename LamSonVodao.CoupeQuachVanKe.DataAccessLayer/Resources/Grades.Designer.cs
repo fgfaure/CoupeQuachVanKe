@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Resources {
+namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Resources {
     using System;
     
     

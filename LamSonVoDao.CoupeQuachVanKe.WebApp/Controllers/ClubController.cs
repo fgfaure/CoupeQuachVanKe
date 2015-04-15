@@ -93,7 +93,7 @@
                     Nom = club.Nom,
                     NumeroAffiliation = club.NumeroAffiliation,
                     Encadrants = new List<Encadrant>(),
-                    Competiteurs = new List<Competiteur>(),
+                    Participants = new List<Participant>(),
                 };
 
                 this.repository.Create(dbitem);
@@ -186,7 +186,7 @@
                                         MailContact = thirdRow.ItemArray[20].ToString()
                                     };
 
-                                    List<Competiteur> competiteursFromXLS = new List<Competiteur>();
+                                    List<Participant> competiteursFromXLS = new List<Participant>();
 
                                     for (int i = 2; i < sheetCompetiteurs.Rows.Count; i++)
                                     {
@@ -297,32 +297,35 @@
                                     }
 
                                     clubFromXLS.Responsable = responsableFromXLS;
-                                    clubFromXLS.Competiteurs = competiteursFromXLS;
+                                    clubFromXLS.Participants = competiteursFromXLS;
                                     clubFromXLS.Encadrants = encadrantsFromXLS;
 
-                                    var equipesSl = competiteursFromXLS.Where(c => c.InscritPourSongLuyen && c.EquipeSongLuyenNumero > 0).OrderBy(c => c.EquipeSongLuyenNumero);
-                                    var songluyens = new List<EquipeSongLuyen>();
+                                    var equipesSl = competiteursFromXLS.Cast<Competiteur>().Where(c => c.InscritPourSongLuyen && c.EquipeSongLuyenNumero > 0).OrderBy(c => c.EquipeSongLuyenNumero);
+                                    var songluyens = new List<Participant>();
 
                                     foreach (var item in equipesSl)
                                     {
-                                        var sl = songluyens.FirstOrDefault(e => e.Numero == item.EquipeSongLuyenNumero);
+
+                                        var sl = songluyens.Cast<EquipeSongLuyen>().FirstOrDefault(e => e.Numero == item.EquipeSongLuyenNumero);
                                         if (sl == null)
                                         {
                                             var esl = new EquipeSongLuyen();
                                             esl.Nom = item.Nom;
-                                            esl.Numero = item.EquipeSongLuyenNumero;                                          
+                                            esl.Numero = item.EquipeSongLuyenNumero;
+                                            esl.Competiteurs = new List<Competiteur>();
+                                            esl.Competiteurs.Add(item);
                                             songluyens.Add(esl);
                                         }
                                         else
                                         {
                                             sl.Nom = string.Format("{0}/{1}", sl.Nom, item.Nom);
-
+                                            sl.Competiteurs.Add(item);
                                         }
                                     }
 
                                     if (songluyens.Count > 0)
                                     {
-                                        clubFromXLS.EquipesSongLuyen = songluyens;
+                                        clubFromXLS.Participants = clubFromXLS.Participants.Union(songluyens).ToList();
                                     }
 
                                     var clubFromDb = this.repository.Read(club => string.Compare(club.NumeroAffiliation, clubFromXLS.NumeroAffiliation) == 0).FirstOrDefault();

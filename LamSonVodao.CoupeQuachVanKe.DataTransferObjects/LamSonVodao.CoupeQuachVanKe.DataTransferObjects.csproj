@@ -50,6 +50,7 @@
     <Compile Include="EquipeSongLuyen.cs" />
     <Compile Include="NetClient.cs" />
     <Compile Include="NetClientType.cs" />
+    <Compile Include="Participant.cs" />
     <Compile Include="Participation.cs" />
     <Compile Include="Resultat.cs" />
     <Compile Include="Encadrement.cs" />
@@ -80,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="DataTransferObjects.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

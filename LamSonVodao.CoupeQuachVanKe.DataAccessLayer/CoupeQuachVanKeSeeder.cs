@@ -9,7 +9,7 @@
     using System.Collections.ObjectModel;
     using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
     using System.Globalization;
-    using LamSonVodao.CoupeQuachVanKe.DataAccessLayer.Resources;
+    using LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Resources;
 
     /// <summary>
     /// 

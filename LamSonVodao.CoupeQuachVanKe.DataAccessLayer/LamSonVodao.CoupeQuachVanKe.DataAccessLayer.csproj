@@ -68,6 +68,7 @@
     <Compile Include="Mappers\MedecinMapper.cs" />
     <Compile Include="Mappers\NetClientMapper.cs" />
     <Compile Include="Mappers\NetClientTypeMapper.cs" />
+    <Compile Include="Mappers\ParticipantMapper.cs" />
     <Compile Include="Mappers\ParticipationMapper.cs" />
     <Compile Include="Mappers\ResponsableCoupeMapper.cs" />
     <Compile Include="Mappers\ResponsableClubMapper.cs" />

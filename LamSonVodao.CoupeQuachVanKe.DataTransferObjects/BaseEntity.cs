@@ -7,7 +7,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {
     using LamSonVoDao.CoupeQuachVanKe.Contracts;
 
-
     /// <summary>
     /// 
     /// </summary>

@@ -17,13 +17,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer
 
         public DbSet<Aire> Aires { get; set; }
         //public DbSet<CategoriePoids> CategoriesPoids { get; set; }
-        public DbSet<Club> Clubs { get; set; }
+        public DbSet<Club> Clubs { get; set; }        
         public DbSet<Competiteur> Competiteurs { get; set; }
         public DbSet<Coupe> Coupes { get; set; }
         public DbSet<Disponibilite> Disponibilites { get; set; }
         public DbSet<Encadrant> Encadrants { get; set; }
         public DbSet<Encadrement> Encadrements { get; set; }
-        public DbSet<EquipeSongLuyen> Epreuves { get; set; }
+        public DbSet<EquipeSongLuyen> EquipesSongLuyen { get; set; }
         public DbSet<EpreuveCombat> EpreuvesCombat { get; set; }
         public DbSet<EpreuveTechnique> EpreuvesTechniques { get; set; }
         public DbSet<Medecin> Medecins { get; set; }
