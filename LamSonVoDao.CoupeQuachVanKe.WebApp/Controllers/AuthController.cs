@@ -122,32 +122,7 @@
             list.Insert(0, new { clientId = -1, logName = "Choisissez un compte" });
             result.Data = list;
             return result;
-        }
-
-        [HttpGet]
-        public ActionResult GetClientTypes()
-        {
-            var result = new JsonResult();
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.netClientTypesRepository.Read();
-            return result;
-        }
-
-        [HttpPost]
-        public ActionResult RegisterClient(NetClient client)
-        {
-            try
-            {
-                this.netClientRepository.Create(client);
-                return Json(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, reason = ex.Message });
-            }
-
-
-        }
+        }       
 
         private string GetRedirectUrl(string returnUrl)
         {

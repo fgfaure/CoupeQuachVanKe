@@ -245,6 +245,7 @@
     <Compile Include="Controllers\AireController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\ClubController.cs" />
     <Compile Include="Controllers\CompetiteurController.cs" />
     <Compile Include="Controllers\CoupeController.cs" />
@@ -303,6 +304,7 @@
     <Content Include="Views\EpreuveCombat\Index.cshtml" />
     <Content Include="Views\EpreuveVentilee\Index.cshtml" />
     <Content Include="Views\Ventilation\Index.cshtml" />
+    <Content Include="Views\Client\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

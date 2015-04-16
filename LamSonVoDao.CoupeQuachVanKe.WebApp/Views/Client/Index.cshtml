@@ -1,0 +1,181 @@
+﻿
+
+<div class="col-sm-2">
+    @RenderPage("../Shared/_Menu.cshtml")
+</div>
+<div class="col-md-4">
+    <h2>Liste des clients réseaux inscrits</h2>
+    <div id="clients"></div>
+</div>
+<div class="stack col-md-4 pull-right">
+    <h2>Enregistrer un nouveau compte</h2>
+    <form id="registerForm" action="#">
+        <ul>
+            <li>
+                <label for="logAs">Nom</label>
+                <input id="logAs" class="k-textbox" name="logAs" required />
+                <span class="k-invalid-msg" data-for="logAs"></span>
+            </li>
+            <li>
+                <label for="account">Type de compte</label>
+                <input id="account" name="account" required />
+                <span class="k-invalid-msg" data-for="account"></span>
+            </li>
+            <li>
+                <label for="password1">Mot de Passe</label>
+                <input id="password1" class="k-textbox" type="password" name="password1" required />
+                <span class="k-invalid-msg" data-for="password1"></span>
+            </li>
+            <li>
+                <label for="password2">Confirmation</label>
+                <input id="password2" class="k-textbox" type="password" name="password2" required />
+                <span class="k-invalid-msg" data-for="password2"></span>
+            </li>
+            <li><a href="#" class="k-button" id="registerBtn">Enregistrer</a></li>
+        </ul>
+    </form>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        var clientTypes = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "GetClientTypes",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                }
+            }
+        });
+
+
+        var clients = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "GetClients",
+                    cache: false,
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                update: {
+                    url: "Update",
+                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                destroy: {
+                    url: "Delete",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            editable: false,
+                            nullable: false
+                        },
+                        ClientName: {
+                            editable: true,
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        IsConnected: {
+                            editable: true,
+                            type: "boolean"
+                        },
+                        Password: {
+                            editable: true,
+                            type: "string",
+                            validation: { required: true }
+                        }
+                    }
+                }
+            },
+            pageSize: 10
+        });
+
+        //var clients = new kendo.data.DataSource({
+        //    transport: {
+        //        read: {
+        //            url: "GetClients",
+        //            cache: false,
+        //            dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+        //        }
+        //    }
+        //});
+
+        var validator2 = $("#registerForm").kendoValidator({
+            messages: {
+                required: "Champ requis"
+            }
+        }).data("kendoValidator");
+
+        $("#account").kendoDropDownList({
+            dataTextField: "ClientType",
+            dataValueField: "Id",
+            optionLabel: "Choisir un type de compte",
+            dataSource: clientTypes,
+            change: function () {
+                validator2.validate();
+            }
+        });
+
+        $("#registerBtn").off('click').on('click', function (e) {
+            if (validator2.validate()) {
+                var client = {};
+                client.ClientName = $("#logAs").val();
+                client.NetClientTypeId = $("#account").data('kendoDropDownList').value();
+                client.Password = $("#password1").val();
+                client.ConfirmPassword = $("#password2").val();
+
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    async: true,
+                    url: "RegisterClient",
+                    data: JSON.stringify(client),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                }).fail(function (err) {
+                    console.log("unable to register");
+                }).success(function (result) {
+                    if (result.success) {
+                        $("#clients").data('kendoGrid').dataSource.read();
+                    }
+                });
+            }
+        });
+
+        $("#clients").kendoGrid({
+            dataSource: clients,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            sortable: false,
+            groupable: false,
+            filterable: false,
+            columns: [
+                    { field: "ClientName", title: "Client" },
+                    { field: "IsConnected", title: "Connecté", template: '<input type="checkbox" #= IsConnected ? "checked=checked" : "" # disabled="disabled" ></input>' },
+                    { field: "Password", title: "Mot de Passe" },
+                     { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }
+            ],
+            editable: "popup"
+        });
+    });
+</script>
