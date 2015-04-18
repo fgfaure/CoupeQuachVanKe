@@ -1,0 +1,495 @@
+﻿<style scoped>
+    .panel-heading a:after {
+        font-family: 'Glyphicons Halflings';
+        content: "\e114";
+        float: right;
+        color: white;
+    }
+
+    .panel-heading a.collapsed:after {
+        content: "\e080";
+    }
+</style>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="well well-lg"><h2>Bai Quyen - Catégorie Benjamins Masculins - Moins de Ceinture Noire</h2></div>
+        <div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <a data-toggle="collapse" data-target="#admins"
+                           href="#admins">
+                            Configuration des administrateurs et juges
+                        </a>
+                    </h3>
+                </div>
+                <div id="admins" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel panel-primary">                                  
+                                    <div class="panel-body">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="juges-addon">Juges : </span>
+                                            <input class="form-control" id="juges" aria-describedby="juges-addon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel panel-primary">                                   
+                                    <div class="panel-body">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="admins-addon">Administrateurs : </span>
+                                            <input class="form-horizontal" id="coms" aria-describedby="admins-addon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a data-toggle="collapse" data-target="#appel"
+                       href="#appel" class="collapsed">
+                        Appel des compétiteurs et vérification
+                    </a>
+                </h3>
+            </div>
+            <div id="appel" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div id="competiteurs"></div>
+                    <hr />
+                    <p class="text-right">Terminer l'appel et enregistrer les juges et administrateurs.      <button class="btn btn-success btn-lg right">Valider</button></p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a data-toggle="collapse" data-target="#epreuve"
+                       href="#epreuve" class="collapsed">
+                        Déroulement de l'épreuve
+                    </a>
+                </h3>
+            </div>
+            <div id="epreuve" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div id="grid"></div>
+                    <hr />
+                    <p class="text-right">Valider les résultats et terminer l'épreuve.      <button class="btn btn-success btn-lg right">Valider</button></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="http://cdn.kendostatic.com/2015.1.408/js/kendo.all.min.js"></script>
+<script>
+    function total(dataItem, score) {
+        var sum = 0;
+        var divider = 0;
+        if (score == "score") {
+            for (var i = 1; i < 4; i++) {
+                if (dataItem["note" + i] !== null && dataItem["note" + i] >= 0 && dataItem["note" + i] <= 20) {
+                    sum += dataItem["note" + i];
+                    divider += 1;
+                }
+            }
+        } else {
+            for (var j = 4; j < 7; j++) {
+                if (dataItem["note" + j] !== null && dataItem["note" + j] >= 0 && dataItem["note" + j] <= 20) {
+                    sum += dataItem["note" + j];
+                    divider += 1;
+                }
+            }
+        }
+        if (divider === 0) {
+            return "";
+        }
+        return sum;
+    }
+
+    var scoreEditor = function (container, options) {
+        $('<input data-bind="value:' + options.field + '"/>')
+            .appendTo(container)
+            .kendoNumericTextBox({
+                spinners: false,
+                decimals: 0,
+                min: 0,
+                max: 20,
+                format: "n0"
+            });
+    };
+
+    var data = [{
+        id: 1,
+        nom: "Oruko",
+        prenom: "Saki",
+        club: "Foot Clan",
+        note1: "",
+        note2: "",
+        note3: "",
+        note4: "",
+        note5: "",
+        note6: "",
+        score: "",
+        score2: ""
+    }, {
+        id: 2,
+        nom: "Amato",
+        prenom: "Yoshi",
+        club: "TMNT",
+        note1: "",
+        note2: "",
+        note3: "",
+        note4: "",
+        note5: "",
+        note6: "",
+        score: "",
+        score2: ""
+    }, {
+        id: 3,
+        nom: "O'Neil",
+        prenom: "April",
+        club: "Channel 6",
+        note1: "",
+        note2: "",
+        note3: "",
+        note4: "",
+        note5: "",
+        note6: "",
+        score: "",
+        score2: ""
+    }];
+
+    var encadrants = new kendo.data.DataSource({
+        error: function (jqXHR) {
+            $("#notification").data('kendoNotification').show({
+                title: "Erreur dans la récupération des encadrants."
+            }, "error");
+        },
+        transport: {
+            read: {
+                url: "../QVKApi/GetEncadrants",
+                dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                contentType: "application/json",
+                type: "POST"
+            },
+            parameterMap: function (options) {
+                return JSON.stringify(options);
+            }
+        },
+        schema: {
+            parse: function (data) {
+                var datas = [];
+                for (var i = 0; i < data.length; i++) {
+                    datas.push({
+                        id: data[i].Id,
+                        text: data[i].Nom + " " + data[i].Prenom
+                    });
+                }
+                return datas;
+            },
+            model: {
+                id: "Id",
+                fields: {
+                    Id: {
+                        editable: false,
+                        nullable: false
+                    },
+                    Nom: {
+                        editable: false,
+                        type: "string"
+                    },
+                    Prenom: {
+                        editable: false,
+                        type: "string"
+                    },
+                    MailContact: {
+                        editable: false,
+                        type: "string"
+                    },
+                    TailleTenueId: {
+                        editable: false,
+                        type: "number"
+                    },
+                    EstCompetiteur: {
+                        editable: false,
+                        type: "boolean"
+                    },
+                    GenreId: {
+                        editable: false,
+                        type: "number"
+                    }
+                }
+            }
+        }
+    });
+
+    var dataSource = new kendo.data.DataSource({
+        autoSync: true,
+        transport: {
+            read: function (operation) {
+                operation.success(data);
+            },
+            update: function (operation) {
+                operation.data.score = total(operation.data, "score");
+                var oldscore2 = operation.data.score2;
+                operation.data.score2 = total(operation.data, "score2");
+                operation.success(operation.data);
+                if (operation.data.score2 != oldscore2) {
+                    var dsSort = [];
+                    dsSort.push({
+                        field: "score2",
+                        dir: "desc"
+                    }, {
+                        field: "score",
+                        dir: "desc"
+                    });
+                    $("#grid").data('kendoGrid').dataSource.sort(dsSort);
+                }
+            }
+        },
+        sort: [{
+            field: "score",
+            dir: "desc"
+        }],
+        schema: {
+            model: {
+                id: "id",
+                fields: {
+                    nom: {
+                        type: "string",
+                        editable: false
+                    },
+                    prenom: {
+                        type: "string",
+                        editable: false
+                    },
+                    club: {
+                        type: "string",
+                        editable: false
+                    },
+                    note1: {
+                        type: "number"
+                    },
+                    note2: {
+                        type: "number"
+                    },
+                    note3: {
+                        type: "number"
+                    },
+                    note4: {
+                        type: "number"
+                    },
+                    note5: {
+                        type: "number"
+                    },
+                    note6: {
+                        type: "number"
+                    },
+                    score: {
+                        type: "number",
+                        editable: false
+                    },
+                    score2: {
+                        type: "number",
+                        editable: false
+                    }
+                }
+            }
+        },
+        pageSize: 4
+    });
+
+    $(document).ready(function () {
+        $("#juges").kendoMultiSelect({
+            placeholder: "Choisissez les juges...",
+            value: "Choisissez les juges...",
+            dataTextField: "text",
+            dataValueField: "id",
+            dataSource: encadrants,
+            maxSelectedItems: 3
+        });
+
+        $("#coms").kendoMultiSelect({
+            placeholder: "Choisissez les administrateurs...",
+            value: "Choisissez les administrateurs...",
+            dataTextField: "text",
+            dataValueField: "id",
+            dataSource: encadrants,
+            maxSelectedItems: 3
+        });
+
+        var competiteurDataSource = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des compétiteurs."
+                }, "error");
+            },
+            transport: {
+                read: {
+                    url: "GetPresentiel",
+                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                },
+                update: {
+                    url: "UpdatePresentiel",
+                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    contentType: "application/json",
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Mise à jour réussie."
+                        }, "success");
+                    }
+                },               
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            editable: false,
+                            nullable: false
+                        },
+                        NomPrenom: {
+                            editable: false,
+                            type: "string"
+                        },
+                        Club: {
+                            field: "Club",
+                            type: "string"
+                        },
+                        Present: {
+                            editable: true,
+                            type: "boolean"
+                        }
+                    }
+                }
+            },
+            pageSize: 10
+        });
+
+        $("#competiteurs").kendoGrid({
+            dataSource: competiteurDataSource,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },           
+            autosync: true,
+            toolbar: ["save"],
+            columns: [
+                    { field: "Nom", title: "Nom" },
+                    { field: "Prenom", title: "Prénom" },
+                    {
+                        field: "DateNaissance", title: "Date de Naissance", template: '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #',
+                        groupHeaderTemplate: 'Date de Naissance : #=  kendo.toString(value, "dd/MM/yyyy") #'
+                    },
+                     { field: "Club", width: "200px", title: "Club" },
+                     {field: "Present", title : "Présent", template: '<input type="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>'}
+            ],
+            editable: "incell"
+        });
+
+        $("#grid").kendoGrid({
+            dataSource: dataSource,
+            //toolbar: ["save"],
+            groupable: false,
+            sortable: false,
+            resizable: false,
+            reorderable: false,
+            pageable: false,
+            editable: "incell",
+            columns: [{
+                field: "nom",
+                title: "nom"
+            }, {
+                field: "prenom",
+                title: "prenom"
+            }, {
+                field: "club",
+                title: "club"
+            }, {
+                title: "Notes",
+                columns: [{
+                    title: "passage 1",
+                    width: 200,
+                    columns: [{
+                        field: "note1",
+                        editor: scoreEditor
+                    }, {
+                        field: "note2",
+                        editor: scoreEditor
+                    }, {
+                        field: "note3",
+                        editor: scoreEditor
+                    }, {
+                        field: "score",
+                        width: '60px',
+                        title: "Total"
+                    }]
+                }, {
+                    title: "passage 2",
+                    columns: [{
+                        field: "note4",
+                        editor: scoreEditor
+                    }, {
+                        field: "note5",
+                        editor: scoreEditor
+                    }, {
+                        field: "note6",
+                        editor: scoreEditor
+                    }, {
+                        field: "score2",
+                        width: '60px',
+                        title: "Total"
+                    }]
+                }]
+            }, {
+                title: "Classement",
+                template: function (dataItem) {
+                    console.log("toto");
+                    var grid = $("#grid").data('kendoGrid');
+                    if ((dataItem.score === null || dataItem.score === "") && (dataItem.score2 === null || dataItem.score2 === "")) {
+                        return "";
+                    }
+                    var rowIndex = grid.dataSource.view().indexOf(dataItem);
+                    return rowIndex + 1;
+                }
+            }],
+            dataBound: function (e) {
+                var gridDataSource = e.sender.dataSource;
+                for (var i = 0; i < gridDataSource.data().length; i++) {
+                    var dataItem = gridDataSource.at(i);
+                    var score1 = total(dataItem, "score");
+                    var score2 = total(dataItem, "score2");
+
+                    if (score1 != dataItem.score) {
+                        //                    console.log("set score");
+                        dataItem.score = score1;
+                    }
+                    if (score2 != dataItem.score2) {
+                        //                    console.log("set score2");
+                        dataItem.score2 = score2;
+                    }
+                }
+            }
+        });
+    });
+</script>

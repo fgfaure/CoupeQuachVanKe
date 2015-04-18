@@ -30,14 +30,25 @@
 
     $(document).ready(function () {
         var coupesDataSource = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur"
+                }, "error");
+            },            
             transport: {
                 read: {
                     url: "Get",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json"
                 },
                 update: {
                     url: "Update",
-                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Mise à jour réussie"
+                        }, "success");
+                    },
                     contentType: "application/json",
                     type: "POST"
                 },
@@ -45,11 +56,23 @@
                     url: "Delete",
                     dataType: "json",
                     contentType: "application/json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Effacement réussi"
+                        }, "success");
+                    },
                     type: "POST"
                 },
                 create: {
                     url: "Create",
                     dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Création réussie"
+                        }, "success");
+                    },
                     contentType: "application/json",
                     type: "POST"
                 },
@@ -147,7 +170,7 @@
                   { field: "CodePostal", title: "Code Postal", width: "95px" },
                   { field: "Ville", title: "Ville" },
                 { command: ["edit", "destroy"], title: "&nbsp;", width:"190px" }],
-            editable: "inline"
+            editable: "popup"
         });
 
         function detailInit(e) {
@@ -161,6 +184,11 @@
 
             detailRow.find("#responsable").kendoGrid({
                 dataSource: {
+                    error: function (jqXHR) {
+                        $("#notification").data('kendoNotification').show({
+                            title: "Erreur dans la récupération des Responsables."
+                        }, "error");
+                    },
                     transport: {
                         read: {
                             url: "Responsables",

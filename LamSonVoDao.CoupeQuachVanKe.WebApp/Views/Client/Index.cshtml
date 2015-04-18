@@ -42,6 +42,11 @@
     $(document).ready(function () {
 
         var clientTypes = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Impossible d'obtenir les clients réseaux."
+                }, "error");
+            },
             transport: {
                 read: {
                     url: "GetClientTypes",
@@ -62,13 +67,25 @@
                     url: "Update",
                     dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Mise à jour réussie."
+                        }, "success");
+                    }
                 },
                 destroy: {
                     url: "Delete",
                     dataType: "json",
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Suppression réussie."
+                        }, "success");
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -151,6 +168,9 @@
                     dataType: 'json',
                 }).fail(function (err) {
                     console.log("unable to register");
+                    $("#notification").data('kendoNotification').show({
+                        title: "Création d'un compte client échouée."
+                    }, "error");
                 }).success(function (result) {
                     if (result.success) {
                         $("#clients").data('kendoGrid').dataSource.read();

@@ -10,6 +10,11 @@
 <script>
     $(document).ready(function () {
         var tailles = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des tailles de tenue."
+                }, "error");
+            },
             transport: {
                 read: {
                     async: false,
@@ -48,6 +53,11 @@
         var genres = [{ value: 1, text: "Féminin" }, { value: 2, text: "Masculin" }];
 
         var clubsDataSource = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des clubs."
+                }, "error");
+            },
             transport: {
                 read: {
                     async: false,
@@ -104,19 +114,37 @@
                     url: "Update",
                     dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Mise à jour réussie."
+                        }, "success");
+                    }
                 },
                 destroy: {
                     url: "Delete",
                     dataType: "json",
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Suppression réussie."
+                        }, "success");
+                    }
                 },
                 create: {
                     url: "Create",
                     dataType: "json",
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Création réussie."
+                        }, "success");
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {

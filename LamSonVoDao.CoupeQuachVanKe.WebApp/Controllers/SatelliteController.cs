@@ -13,5 +13,15 @@
         {
             return View();
         }
+
+        public ActionResult EpreuveTechnique()
+        {
+            return View("EpreuveTechnique");
+        }
+
+        public ActionResult EpreuveCombat()
+        {
+            return View();
+        }
     }
 }

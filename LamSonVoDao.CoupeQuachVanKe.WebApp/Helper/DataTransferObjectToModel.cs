@@ -25,6 +25,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             CoupeModel result = new CoupeModel();
             result.Id = dto.Id;
             result.Nom = dto.Nom;
+            result.NombreTapis = dto.NombreTapis;
             result.CodePostal = dto.CodePostal;
             result.Complement = dto.Complement;
             result.DateDebut = dto.DateDebut;

@@ -18,7 +18,13 @@
 </div>
 <script>
     $(document).ready(function () {
+
         var clients = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Impossible d'obtenir les identifiants de connexion."
+                }, "error");
+            },
             transport: {
                 read: {
                     url: "GetClients",
@@ -64,6 +70,9 @@
                 }).fail(function (result) {
                     if (result.status != 200) {
                         console.log("unable to log in");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Connexion refusée!"
+                        }, "error");
                     }
                     else {
                         window.document.location = result.url;

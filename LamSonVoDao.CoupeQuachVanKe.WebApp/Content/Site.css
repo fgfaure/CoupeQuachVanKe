@@ -16,68 +16,78 @@ textarea {
     max-width: 280px;
 }
 
-.float-right{
-    float : right;
+.float-right {
+    float: right;
 }
 
-.float-left{
-    float : left;
+.float-left {
+    float: left;
 }
 
-li > label
-{
-    width : 150px;
+li > label {
+    width: 150px;
 }
 
 
-label.error
-{
-    font-size :small;
-    color : red;
+label.error {
+    font-size: small;
+    color: red;
     margin-left: 5px;
-    
 }
 
 
-div.stack{
-    width : 50%; 
+div.stack {
+    width: 50%;
 }
 
-div.stack > ul{
-    margin-top : 25px;
+    div.stack > ul {
+        margin-top: 25px;
+    }
+
+    div.stack > * > ul > li {
+        list-style: none;
+        height: 50px;
+    }
+
+ul {
+    padding-left: 5px;
 }
 
-div.stack > * > ul > li{
-    list-style : none;
-    height : 50px;
-}
-
-ul{
-    padding-left : 5px;
-}
-
-/* make sidebar nav vertical */ 
+/* make sidebar nav vertical */
 @media (min-width: 768px) {
-  .sidebar-nav .navbar .navbar-collapse {
-    padding: 0;
-    max-height: none;
-  }
-  .sidebar-nav .navbar ul {
-    float: none;
-  }
-  .sidebar-nav .navbar ul:not {
-    display: block;
-  }
-  .sidebar-nav .navbar li {
-    float: none;
-    display: block;
-  }
-  .sidebar-nav .navbar li a {
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
+    .sidebar-nav .navbar .navbar-collapse {
+        padding: 0;
+        max-height: none;
+    }
+
+    .sidebar-nav .navbar ul {
+        float: none;
+    }
+
+        .sidebar-nav .navbar ul:not {
+            display: block;
+        }
+
+    .sidebar-nav .navbar li {
+        float: none;
+        display: block;
+    }
+
+        .sidebar-nav .navbar li a {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
 }
 
 .k-grid tr td {
-  font-size: small;
+    font-size: small;
+}    
+
+.bigger-text{
+    font-size : 14pt;    
+    vertical-align : baseline;
+}
+
+.no-bottom-margin{    
+    margin-bottom: 0;
 }

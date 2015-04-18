@@ -11,9 +11,14 @@
 <script>
     $(document).ready(function () {
         var coupes = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Impossible d'obtenir les coupes."
+                }, "error");
+            },
             transport: {
                 read: {
-                    async: false,
+                    async: true,
                     url: "../QVKApi/GetCoupes",
                     dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                 },
@@ -66,19 +71,37 @@
                     url: "Update",
                     dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Mise à jour réussie."
+                        }, "success");
+                    }
                 },
                 destroy: {
                     url: "Delete",
                     dataType: "json",
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Suppression réussie."
+                        }, "success");
+                    }
                 },
                 create: {
                     url: "Create",
                     dataType: "json",
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Création réussie."
+                        }, "success");
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {

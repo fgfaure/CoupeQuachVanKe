@@ -45,7 +45,9 @@
                     grid.dataSource.read();
                 }
                 else {
-                    alert("erreur serveur");
+                    $("#notification").data('kendoNotification').show({
+                        title: "Erreur"
+                    }, "error");
                 }
             });
 
@@ -62,13 +64,20 @@
                     grid.dataSource.read();
                 }
                 else {
-                    alert("erreur serveur");
+                    $("#notification").data('kendoNotification').show({
+                        title: "Erreur"
+                    }, "error");
                 }
             });
 
         });
 
         var techniques = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des épreuves techniques."
+                }, "error");
+            },
             transport: {
                 read: {
                     url: "GetInscriptionTechnique",
@@ -129,6 +138,11 @@
         });
 
         var combats = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur des épreuves combat."
+                }, "error");
+            },
             transport: {
                 read: {
                     url: "GetInscriptionCombat",

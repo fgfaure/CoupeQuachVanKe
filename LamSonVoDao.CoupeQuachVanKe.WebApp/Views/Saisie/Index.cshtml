@@ -18,6 +18,11 @@
     $(document).ready(function (e) {
         var competiteurDatasource = new kendo.data.DataSource({
             group: { field: "ClubId" },
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des compétiteurs."
+                }, "error");
+            },
             transport: {
                 read: {
                     url: "Saisie/GetCompetiteurs",
@@ -32,7 +37,13 @@
                     url: "Saisie/UpdateCompetiteur",
                     dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Mise à jour réussie."
+                        }, "success");
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -100,6 +111,11 @@
 
         var combattantDS = new kendo.data.DataSource({
             group: { field: "ClubId" },
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des compétiteurs."
+                }, "error");
+            },
             transport: {
                 read: {
                     url: "Saisie/GetCompetiteurs",
@@ -114,7 +130,13 @@
                     url: "Saisie/UpdateCompetiteur",
                     dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Mise à jour réussie."
+                        }, "success");
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -180,6 +202,11 @@
         });
 
         var clubsDataSource = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des clubs."
+                }, "error");
+            },
             transport: {
                 read: {
                     async: false,

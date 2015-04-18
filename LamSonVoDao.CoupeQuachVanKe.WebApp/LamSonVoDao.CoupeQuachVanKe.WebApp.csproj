@@ -305,6 +305,8 @@
     <Content Include="Views\EpreuveVentilee\Index.cshtml" />
     <Content Include="Views\Ventilation\Index.cshtml" />
     <Content Include="Views\Client\Index.cshtml" />
+    <Content Include="Views\Satellite\EpreuveTechnique.cshtml" />
+    <Content Include="Views\Satellite\EpreuveCombat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -1223,10 +1225,6 @@
     <ProjectReference Include="..\LamSonVodao.CoupeQuachVanKe.DataTransferObjects\LamSonVodao.CoupeQuachVanKe.DataTransferObjects.csproj">
       <Project>{ef080f29-bba4-4a6c-af34-88a16a9bf8d4}</Project>
       <Name>LamSonVodao.CoupeQuachVanKe.DataTransferObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model\LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model.csproj">
-      <Project>{4b9fe7ac-5a2e-4101-8289-3068a1531a73}</Project>
-      <Name>LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -43,6 +43,11 @@
     $(document).ready(function () {
 
         var tailles = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur de récupération des tailles de tenues."
+                }, "error");
+            },
             transport: {
                 read: {
                     async: false,
@@ -81,6 +86,11 @@
         var genres = [{ value: 1, text: "Féminin" }, { value: 2, text: "Masculin" }];
 
         var categorieDataSource = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des catégories de pratiquant."
+                }, "error");
+            },
             transport: {
                 read: {
                     async: true,
@@ -127,6 +137,11 @@
         categorieDataSource.read();
 
         var grades = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des grades déclarés."
+                }, "error");
+            },
             transport: {
                 read: {
                     async: true,
@@ -176,6 +191,11 @@
         });
 
         var clubsDataSource = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Récupération des clubs inscrits : Echec!"
+                }, "error");
+            },
             transport: {
                 read: {
                     url: "Get",
@@ -185,19 +205,37 @@
                     url: "Update",
                     dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Mise à jour réussie."
+                        }, "success");
+                    }
                 },
                 destroy: {
                     url: "Delete",
                     dataType: "json",
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Suppression réussie."
+                        }, "success");
+                    }
                 },
                 create: {
                     url: "Create",
                     dataType: "json",
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Création réussie."
+                        }, "success");
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -269,6 +307,11 @@
 
             detailRow.find(".responsables").kendoGrid({
                 dataSource: {
+                    error: function (jqXHR) {
+                        $("#notification").data('kendoNotification').show({
+                            title: "Erreur dans la récupération des responsables."
+                        }, "error");
+                    },
                     transport: {
                         read: {
                             url: "Responsables",
@@ -336,6 +379,11 @@
 
             detailRow.find(".competiteurs").kendoGrid({
                 dataSource: {
+                    error: function (jqXHR) {
+                        $("#notification").data('kendoNotification').show({
+                            title: "Erreur dans la récupération des compétiteurs."
+                        }, "error");
+                    },
                     transport: {
                         read: {
                             url: "Competiteurs",
@@ -457,6 +505,11 @@
 
             detailRow.find(".encadrants").kendoGrid({
                 dataSource: {
+                    error: function (jqXHR) {
+                        $("#notification").data('kendoNotification').show({
+                            title: "Erreur dans la récupération des encadrants."
+                        }, "error");
+                    },
                     transport: {
                         read: {
                             url: "Encadrants",

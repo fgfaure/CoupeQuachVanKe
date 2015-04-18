@@ -9,6 +9,11 @@
 <script>
     $(document).ready(function () {
         var statuses = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des statuts d'Epreuve."
+                }, "error");
+            },
             transport: {
                 read: {
                     async: false,
@@ -45,6 +50,11 @@
         statuses.read();
 
         var genres = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des genres d'Epreuve."
+                }, "error");
+            },
             transport: {
                 read: {
                     async: false,
@@ -81,6 +91,11 @@
         genres.read();
 
         var categories = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des catégories d'Epreuve."
+                }, "error");
+            },
             transport: {
                 read: {
                     async: false,
@@ -127,6 +142,11 @@
         categories.read();
 
         var grades = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des grades."
+                }, "error");
+            },
             transport: {
                 read: {
                     async: false,
@@ -163,6 +183,11 @@
         grades.read();
 
         var combats = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des types d'épreuve de combat."
+                }, "error");
+            },
             transport: {
                 read: {
                     async: false,
@@ -210,6 +235,11 @@
         combats.read();
 
         var epreuves = new kendo.data.DataSource({
+            error: function (jqXHR) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur dans la récupération des épreuves de combat."
+                }, "error");
+            },
             transport: {
                 read: {
                     url: "Get",
@@ -219,19 +249,37 @@
                     url: "Update",
                     dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Mise à jour réussie."
+                        }, "success");
+                    }
                 },
                 destroy: {
                     url: "Delete",
                     dataType: "json",
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Suppression réussie."
+                        }, "success");
+                    }
                 },
                 create: {
                     url: "Create",
                     dataType: "json",
                     contentType: "application/json",
-                    type: "POST"
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        $("#notification").data('kendoNotification').show({
+                            title: "Création réussie."
+                        }, "success");
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {

@@ -4,12 +4,22 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-using LamSonVoDao.CoupeQuachVanKe.EntityFrameworkBase2Model;
+using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
+using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
 
 namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
     public class EpreuveVentileeController : Controller
     {
+        private Repository<Participation>  participations;
+        private Repository<Competiteur> competiteurs;
+        private UnitOfWork unitOfWork = new UnitOfWork();
+        
+        public EpreuveVentileeController()
+        {
+            this.competiteurs = this.unitOfWork.Repository<Competiteur>();
+            this.participations = this.unitOfWork.Repository<Participation>();
+        }
         // GET: EpreuvesVentilees
         public ActionResult Index()
         {
@@ -20,17 +30,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            using (var context = new CoupeQVK2Container())
-            {
-                var competiteurs = context.Competiteurs.Include(c => c.Participations.Select(p => p.Resultat)).ToList();                
-
-                result.Data = competiteurs.Select(c => new
+                          
+                result.Data = competiteurs.Read().Select(c => new
                 {
                     Nom = c.Nom,
                     Prenom = c.Prenom,
-                    EpreuvesId = c.Participations.Where(r => r.Epreuve.Id == c.Id).Select(r => new { rId = r.Epreuve.Id })
+                    EpreuvesId = participations.Read().Where(r => r.CompetiteurId == c.Id).Select(r => new { rId = r.EpreuveId })
                 }).ToList();
-            }
+           
             return result;
         }
     }
