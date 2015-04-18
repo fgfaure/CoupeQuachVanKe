@@ -20,11 +20,13 @@
 
             this.Property(netc => netc.IsConnected).IsRequired();            
 
-            this.Property(netc => netc.ClientName).IsRequired();
+            this.Property(netc => netc.ClientLogInName).IsRequired();
 
             this.Property(netc => netc.Ip).IsOptional();
 
-            this.Property(netc => netc.Password).IsRequired();            
+            this.Property(netc => netc.Password).IsRequired();
+
+            this.Property(netc => netc.AireId).IsOptional();
 
             this.HasRequired(netc => netc.NetClientType).WithMany().HasForeignKey(netc => netc.NetClientTypeId).WillCascadeOnDelete(true);
         }

@@ -1,0 +1,33 @@
+﻿
+<div class="col-sm-2">
+    @RenderPage("../Shared/_Menu.cshtml")
+</div>
+<div class="col-sm-10">
+    <h2>Affectation des Epreuves</h2>
+    <div id="epreuves">
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {       
+        var data = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "Get",
+                    cache: false,
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des affectations."
+                            }, "error");
+                        }
+                    }
+                }
+            }
+        });
+
+        data.read();
+    });
+</script>

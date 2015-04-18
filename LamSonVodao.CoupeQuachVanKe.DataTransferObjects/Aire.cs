@@ -39,13 +39,13 @@
         /// </value>
         public int CoupeId { get; set; }
 
-        /// <summary>
-        /// Gets or sets the client.
-        /// </summary>
-        /// <value>
-        /// The client.
-        /// </value>
-        public NetClient Client { get; set; }
+        /////// <summary>
+        /////// Gets or sets the client.
+        /////// </summary>
+        /////// <value>
+        /////// The client.
+        /////// </value>
+        ////public NetClient NetClient { get; set; }
 
         /// <summary>
         /// Gets or sets the client identifier.
@@ -53,6 +53,6 @@
         /// <value>
         /// The client identifier.
         /// </value>
-        public int ClientId { get; set; }
+        public int NetClientId { get; set; }
     }
 }

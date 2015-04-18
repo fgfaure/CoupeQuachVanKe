@@ -242,6 +242,7 @@
     <Compile Include="Areas\Server\ServerAreaRegistration.cs" />
     <Compile Include="Contracts\ICrudController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AffectationController.cs" />
     <Compile Include="Controllers\AireController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -252,7 +253,6 @@
     <Compile Include="Controllers\DisponibiliteController.cs" />
     <Compile Include="Controllers\EncadrantController.cs" />
     <Compile Include="Controllers\EpreuveCombatController.cs" />
-    <Compile Include="Controllers\EpreuveVentileeController.cs" />
     <Compile Include="Controllers\EpreuveTechniqueController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedecinController.cs" />
@@ -283,6 +283,7 @@
     <Compile Include="Models\Coupe\EncadrantModel.cs" />
     <Compile Include="Models\Coupe\EncadrementModel.cs" />
     <Compile Include="Models\Coupe\EpreuveCombatModel.cs" />
+    <Compile Include="Models\Coupe\EpreuveModel.cs" />
     <Compile Include="Models\Coupe\EpreuveTechniqueModel.cs" />
     <Compile Include="Models\Coupe\MedecinModel.cs" />
     <Compile Include="Models\Coupe\NetClientModel.cs" />
@@ -298,15 +299,16 @@
     <None Include="Resources\grade.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Content Include="Scripts\kendo.all.min.js" />
     <Content Include="Views\TypeEpreuve\Index.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\EpreuveTechnique\Index.cshtml" />
     <Content Include="Views\EpreuveCombat\Index.cshtml" />
-    <Content Include="Views\EpreuveVentilee\Index.cshtml" />
     <Content Include="Views\Ventilation\Index.cshtml" />
     <Content Include="Views\Client\Index.cshtml" />
     <Content Include="Views\Satellite\EpreuveTechnique.cshtml" />
     <Content Include="Views\Satellite\EpreuveCombat.cshtml" />
+    <Content Include="Views\Affectation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

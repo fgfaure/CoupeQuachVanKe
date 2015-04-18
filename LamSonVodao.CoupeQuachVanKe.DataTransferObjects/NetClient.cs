@@ -12,7 +12,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The name of the client.
         /// </value>
-        public string ClientName { get; set; }
+        public string ClientLogInName { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the client.
@@ -54,13 +54,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// </value>
         public string Ip { get; set; }
 
-        /// <summary>
-        /// Gets or sets the aire.
-        /// </summary>
-        /// <value>
-        /// The aire.
-        /// </value>
-        public Aire Aire { get; set; }
+        /////// <summary>
+        /////// Gets or sets the aire.
+        /////// </summary>
+        /////// <value>
+        /////// The aire.
+        /////// </value>
+        ////public Aire Aire { get; set; }
 
         /// <summary>
         /// Gets or sets the aire identifier.

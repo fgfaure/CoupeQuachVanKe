@@ -1,39 +1,404 @@
-﻿<div class="col-sm-2">
+﻿<style scoped>
+    .panel-heading a:after {
+        font-family: 'Glyphicons Halflings';
+        content: "\e114";
+        float: right;
+        color: white;
+    }
+
+    .panel-heading a.collapsed:after {
+        content: "\e080";
+    }
+</style>
+<div class="col-sm-2">
     @RenderPage("../Shared/_Menu.cshtml")
 </div>
 <div class="col-sm-10">
-    <div class="left">
-        <h2>Ventilation des Epreuves Technique</h2>
-        <div class="panel panel-default">
+    <div>
+        <h2>Ventilation des Epreuves</h2>
+    </div>
+    <div>
+        <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Ventiler les épreuves techniques</h3>
+                <h2 class="panel-title">
+                    <a data-toggle="collapse" data-target="#technique"
+                       href="#technique">
+                        Epreuves Techniques
+                    </a>
+                </h2>
             </div>
-            <div class="panel-body">
-                Affecter les compétiteurs inscrits aux épreuves techniques.
-                <button name="ventilationTechnique" id="vt">Ventiler</button>
+            <div id="technique" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="alert alert-warning" role="alert">
+                        Affecter les compétiteurs inscrits à toutes les épreuves techniques. Efface d'abord les inscriptions présentes!
+                        <button name="ventilationTechnique" class="btn btn-danger right" id="vt">Ventiler</button>
+                    </div>
+                    <div>
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <a data-toggle="collapse" data-target="#listTechnique"
+                                       href="#listTechnique" class="collapsed">
+                                        Liste des Epreuves Techniques
+                                    </a>
+                                </h3>
+                            </div>
+                            <div id="listTechnique" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div id="techniquesGrid" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#listTechniqueVentilee"
+                                           href="#listTechniqueVentilee" class="collapsed">
+                                            Liste des Epreuves Techniques Ventilées
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div id="listTechniqueVentilee" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div id="techniquesVentillees" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <a data-toggle="collapse" data-target="#countedTechs"
+                                       href="#countedTechs" class="collapsed">
+                                        Liste des Epreuves Techniques (compte des compétiteurs)
+                                    </a>
+                                </h3>
+                            </div>
+                            <div id="countedTechs" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div id="countedTechsGrid" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div id="techniquesVentilees" />
         </div>
     </div>
-    <div class="right">
-        <h2>Ventilation des Epreuves Combat</h2>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Ventiler les épreuves combat</h3>
-            </div>
+</div>
+<div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">
+                <a data-toggle="collapse" data-target="#combat"
+                   href="#combat" class="collapsed">
+                    Epreuves Combat
+                </a>
+            </h2>
+        </div>
+        <div id="combat" class="panel-collapse collapse">
             <div class="panel-body">
-                Affecter les compétiteurs inscrits aux épreuves combats.
-                <button name="ventilationCombat" id="vc">Ventiler</button>
+                <div class="alert alert-warning" role="alert">
+                    Affecter les compétiteurs inscrits à toutes les épreuves combat. Efface d'abord les inscriptions présentes!
+                    <button name="ventilationCombat" class="btn btn-danger right" id="vc">Ventiler</button>
+                </div>
+                <div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" data-target="#listCombat"
+                                   href="#listCombat" class="collapsed">
+                                    Liste des Epreuves Combat
+                                </a>
+                            </h3>
+                        </div>
+                        <div id="listCombat" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div id="combatGrid" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#listCombatVentilee"
+                                           href="#listCombatVentilee" class="collapsed">
+                                            Liste des Epreuves Combat Ventilées
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div id="listCombatVentilee" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div id="combatVentilees" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <a data-toggle="collapse" data-target="#countedCombat"
+                                       href="#countedCombat" class="collapsed">
+                                        Liste des Epreuves Combat (compte des compétiteurs)
+                                    </a>
+                                </h3>
+                            </div>
+                            <div id="countedCombat" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div id="countedCombatGrid" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div id="combatVentilees" />
         </div>
     </div>
 </div>
 
+<script type="text/x-kendo-template" id="template">
+    <div class="tabstrip">
+        <ul>
+            <li class="k-state-active">
+                Participants inscrits
+            </li>
+        </ul>
+        <div>
+            <div class="participants">
+            </div>
+        </div>
+    </div>
+
+</script>
 
 <script>
-    $(document).ready(function () {
+    function ventilate(e) {
+        e.preventDefault();
 
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+        $.ajax({
+            cache: false,
+            type: 'POST',
+            async: true,
+            url: "VentilerEpreuve",
+            data: JSON.stringify(dataItem),
+            contentType: 'application/json',
+            dataType: 'json',
+        }).fail(function (err) {
+            console.log("unable to ventilate");
+            $("#notification").data('kendoNotification').show({
+                title: "Erreur à la ventilation."
+            }, "error");
+        }).success(function (result) {
+            if (result.success) {
+                $("#notification").data('kendoNotification').show({
+                    title: dataItem.Nom + " Ventilation Ok."
+                }, "success");
+            }
+            else {
+                console.log("unable to ventilate");
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur à la ventilation."
+                }, "error");
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        var grades = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetGrades",
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des grades."
+                            }, "error");
+                        }
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "value",
+                    fields: {
+                        value: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        text: {
+                            //set validation rules
+                            type: "string",
+                        }
+                    }
+                }
+            }
+        });
+        grades.read();
+
+        function detailInit(e) {
+            var detailRow = e.detailRow;
+
+            detailRow.find(".tabstrip").kendoTabStrip({
+                animation: {
+                    open: { effects: "fadeIn" }
+                }
+            });
+
+            detailRow.find(".participants").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "Competiteurs",
+                            dataType: "json",
+                            contentType: "application/json",
+                            type: "POST",
+                            data: {
+                                id: e.data.Id
+                            },
+                            complete: function (jqXHR, textStatus) {
+                                console.log(textStatus, "update");
+                                if (textStatus === "error") {
+                                    $("#notification").data('kendoNotification').show({
+                                        title: "Echec Lecture des compétiteurs."
+                                    }, "error");
+                                }
+                            }
+                        },
+                        parameterMap: function (options) {
+                            return JSON.stringify(options);
+                        }
+                    },
+                    pageSize: 10,
+                    schema: {
+                        model: {
+                            id: "Id",
+                            fields: {
+                                Id: {
+                                    editable: false,
+                                    nullable: false
+                                },
+                                Nom: {
+                                    editable: false,
+                                    type: "string",
+                                    validation: { required: true }
+                                },
+                                Prenom: {
+                                    editable: false,
+                                    type: "string",
+                                    validation: { required: true }
+                                },
+                                GradeId: {
+                                    editable: false,
+                                    type: "number",
+                                    defaultValue: 1,
+                                    validation: { required: true }
+                                },
+                                CategorieId: {
+                                    type: "number",
+                                    defaultValue: 1,
+                                    type: "number",
+                                    validation: { required: true }
+                                }
+                            }
+                        }
+                    },
+                },
+                scrollable: false,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                columns: [
+                    { field: "Nom", title: "Nom" },
+                    { field: "Prenom", title: "Prénom" },
+                    { field: "CategorieId", values: categorieDataSource.data().toJSON(), title: "Catégorie" },
+                     { field: "GradeId", values: grades.data().toJSON(), title: "Grade" }
+                ]
+            });
+        }
+        var categorieDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    async: false,
+                    url: "../QVKApi/GetCategories",
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des catégories."
+                            }, "error");
+                        }
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                parse: function (data) {
+                    var datas = [];
+                    for (var i = 0; i < data.length; i++) {
+                        datas.push({
+                            value: data[i].Id,
+                            text: data[i].Nom
+                        });
+                    }
+                    return datas;
+                },
+                model: {
+                    id: "value",
+                    fields: {
+                        value: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        text: {
+                            //set validation rules
+                            type: "string",
+                        }
+                    }
+                }
+            }
+        });
+        categorieDataSource.read();
         $("#vt").off('click').on('click', function () {
             $.ajax({
                 url: 'VentilationTechnique',
@@ -41,7 +406,10 @@
             }).success(function (data) {
                 if (data.success) {
                     //rafraichir la source de données des ventilations techniques
-                    var grid = $("#techniquesVentilees").data('kendoGrid');
+                    $("#notification").data('kendoNotification').show({
+                        title: "Ventilation technique réussie."
+                    }, "success");
+                    var grid = $("#techniquesGrid").data('kendoGrid');
                     grid.dataSource.read();
                 }
                 else {
@@ -49,7 +417,11 @@
                         title: "Erreur"
                     }, "error");
                 }
-            });
+            }).fail(function (err) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur: " + err.statusText
+                }, "error");
+            });;
 
         });
 
@@ -60,6 +432,9 @@
             }).success(function (data) {
                 if (data.success) {
                     //rafraichir la source de données des ventilations techniques
+                    $("#notification").data('kendoNotification').show({
+                        title: "Ventilation combat réussie."
+                    }, "success");
                     var grid = $("#combatVentilees").data('kendoGrid');
                     grid.dataSource.read();
                 }
@@ -68,20 +443,180 @@
                         title: "Erreur"
                     }, "error");
                 }
+            }).fail(function (err) {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur: " + err.statusText
+                }, "error");
             });
 
         });
 
-        var techniques = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des épreuves techniques."
-                }, "error");
+        var countedTechniques = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "GetEpreuvesTechniquesWithCount",
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture."
+                            }, "error");
+                        }
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
             },
+            schema: {
+                model: {
+                    id: "EpreuveId",
+                    fields: {
+                        EpreuveId: {
+                            editable: false,
+                            nullable: false
+                        },
+                        Epreuve: {
+                            editable: false,
+                            type: "string"
+                        },
+                        Count: {
+                            editable: false,
+                            type: "number"
+                        }
+                    }
+                }
+            },
+            pageSize: 10
+        });
+
+        var countedCombat = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "GetEpreuvesCombatWithCount",
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture."
+                            }, "error");
+                        }
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "EpreuveId",
+                    fields: {
+                        EpreuveId: {
+                            editable: false,
+                            nullable: false
+                        },
+                        Epreuve: {
+                            editable: false,
+                            type: "string"
+                        },
+                        Count: {
+                            editable: false,
+                            type: "number"
+                        }
+                    }
+                }
+            },
+            pageSize: 10
+        });
+
+        var techniques = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "../QVKApi/GetEpreuvesTechniques",
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des inscriptions techniques."
+                            }, "error");
+                        }
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            editable: false,
+                            nullable: false
+                        },
+                        Nom: {
+                            editable: false,
+                            type: "string"
+                        }
+                    }
+                }
+            },
+            pageSize: 5
+        });
+
+        $("#techniquesGrid").kendoGrid({
+            dataSource: techniques,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            selectable: "multiple",
+            sortable: true,
+            groupable: true,
+            filterable: true,
+            detailTemplate: kendo.template($("#template").html()),
+            detailInit: detailInit,
+            autosync: true,
+            columns: [
+                    //{field : "Id", title : "Identifiant"},
+                    { field: "Nom", title: "Epreuve" },
+                    { command: { text: "Ventiler", click: ventilate }, title: " ", width: "92px" }
+            ]
+        });
+
+        var techVentilees = new kendo.data.DataSource({
+            group: { field: "epreuve" },
             transport: {
                 read: {
                     url: "GetInscriptionTechnique",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des inscriptions combats."
+                            }, "error");
+                        }
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -115,11 +650,11 @@
                     }
                 }
             },
-            pageSize: 10
+            pageSize: 5
         });
 
-        $("#techniquesVentilees").kendoGrid({
-            dataSource: techniques,
+        $("#techniquesVentillees").kendoGrid({
+            dataSource: techVentilees,
             pageable: {
                 refresh: true,
                 pageSizes: true,
@@ -130,6 +665,7 @@
             groupable: true,
             filterable: true,
             autosync: true,
+            resizable: true,
             columns: [
                     { field: "epreuve", title: "Epreuve" },
                     { field: "nom", title: "Nom" },
@@ -137,16 +673,84 @@
             ]
         });
 
+
         var combats = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur des épreuves combat."
-                }, "error");
+            transport: {
+                read: {
+                    url: "../QVKApi/GetEpreuvesCombat",
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des inscriptions techniques."
+                            }, "error");
+                        }
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
             },
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            editable: false,
+                            nullable: false
+                        },
+                        Nom: {
+                            editable: false,
+                            type: "string"
+                        }
+                    }
+                }
+            },
+            pageSize: 5
+        });
+
+        $("#combatGrid").kendoGrid({
+            dataSource: combats,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            selectable: "multiple",
+            sortable: true,
+            groupable: true,
+            filterable: true,
+            detailTemplate: kendo.template($("#template").html()),
+            detailInit: detailInit,
+            autosync: true,
+            columns: [
+                    //{field : "Id", title : "Identifiant"},
+                    { field: "Nom", title: "Epreuve" },
+                    { command: { text: "Ventiler", click: ventilate }, title: " ", width: "92px" }
+            ]
+        });
+
+
+        var combats = new kendo.data.DataSource({
+            group: { field: "epreuve" },
             transport: {
                 read: {
                     url: "GetInscriptionCombat",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des inscriptions combats."
+                            }, "error");
+                        }
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -195,12 +799,100 @@
             groupable: true,
             filterable: true,
             autosync: true,
+            resizable: true,
             columns: [
-                    { field: "epreuve", title: "Epreuve" },
+                    { field: "epreuve", title: "Epreuve", width: "350px" },
                     { field: "nom", title: "Nom" },
                     { field: "prenom", title: "Prénom" }
             ]
         });
 
+        $("#countedTechsGrid").kendoGrid({
+            dataSource: countedTechniques,
+            toolbar: [
+                {
+                    name: "mergeTechniques",
+                    text: "Fusionner",
+                    imageClass: "k-icon k-i-custom"
+                }
+            ],
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            selectable: "multiple",
+            sortable: true,
+            groupable: false,
+            filterable: true,
+            autosync: true,
+            resizable: true,
+            columns: [
+                    { field: "Epreuve", title: "Nom d'Epreuve" },
+                    { field: "Count", title: "Nb Comp.", width: "100px" }
+            ]
+        });
+
+        $("#countedCombatGrid").kendoGrid({
+            dataSource: countedCombat,
+            toolbar: [
+                {
+                    name: "mergeCombat",
+                    text: "Fusionner",
+                    imageClass: "k-icon k-i-custom"
+                }
+            ],
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            selectable: "multiple",
+            sortable: true,
+            groupable: false,
+            filterable: true,
+            autosync: true,
+            resizable: true,
+            columns: [
+                    { field: "Epreuve", title: "Nom d'Epreuve" },
+                    { field: "Count", title: "Nb Comp.", width: "100px" }
+            ]
+        });
+
+        $(".k-grid-mergeTechniques, .k-grid-mergeCombat").off('click').on('click', function (e) {            
+            var grid = ($(this).hasClass("k-grid-mergeTechniques")) ? $("#countedTechsGrid").data('kendoGrid') : $("#countedCombatGrid").data('kendoGrid');
+            var tech = ($(this).hasClass("k-grid-mergeTechniques"));
+            var selected = [];
+            $.each(grid.select(), function (i, e) {
+                selected.push(grid.dataItem(e));
+            });
+
+            if (selected.length < 2){
+                $("#notification").data('kendoNotification').show({
+                    title: "Au moins 2 épreuves pour fusion."
+                }, "info");
+            }
+            else {
+                $.ajax({
+                    cache: false,
+                    type: 'POST',
+                    async: true,
+                    url: "MergeEpreuve",
+                    data: kendo.stringify({areTechs : tech, epreuves:selected}),
+                    contentType: 'application/json',
+                    dataType: 'json'
+                }).success(function (jqXHR, textStatus) {
+                    console.log(textStatus, "update");
+                    $("#notification").data('kendoNotification').show({
+                        title: "Fusion réussie."
+                    }, "success");
+                    grid.dataSource.read();
+                }).fail(function () {
+                    $("#notification").data('kendoNotification').show({
+                        title: "Erreur Fusion"
+                    }, "error");
+                });
+            }            
+        });
     });
 </script>

@@ -57,7 +57,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.Poids = dto.Poids;
             result.Prenom = dto.Prenom;
             result.GenreId = (int)dto.Sexe;
-
+            result.ValidImport = dto.ValidImport;
             return result;
         }
 
@@ -122,7 +122,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.Id = dto.Id;
             result.CoupeId = dto.CoupeId;
             result.Description = dto.Description;
-
+            result.NetClientId = dto.NetClientId;
             return result;
         }
 
@@ -197,11 +197,10 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             NetClientModel result = new NetClientModel();
 
             result.Id = dto.Id;
-            result.ClientName = dto.ClientName;
+            result.ClientName = dto.ClientLogInName;
             result.IsConnected = dto.IsConnected;
             result.Password = dto.Password;
             result.NetClientTypeId = dto.NetClientTypeId;
-
             return result;
         }
 

@@ -17,12 +17,7 @@
 <script>
     $(document).ready(function (e) {
         var competiteurDatasource = new kendo.data.DataSource({
-            group: { field: "ClubId" },
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des compétiteurs."
-                }, "error");
-            },
+            group: { field: "ClubId" },            
             transport: {
                 read: {
                     url: "Saisie/GetCompetiteurs",
@@ -31,6 +26,14 @@
                     contentType: "application/json; charset=utf-8",
                     data: {
                         all: true
+                    },
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des compétiteurs."
+                            }, "error");
+                        }
                     }
                 },
                 update: {
@@ -40,9 +43,16 @@
                     type: "POST",
                     complete: function (jqXHR, textStatus) {
                         console.log(textStatus, "update");
-                        $("#notification").data('kendoNotification').show({
-                            title: "Mise à jour réussie."
-                        }, "success");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Mise à jour."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Mise à jour réussie."
+                            }, "success");
+                        }
                     }
                 },
                 parameterMap: function (options, operation) {
@@ -111,11 +121,6 @@
 
         var combattantDS = new kendo.data.DataSource({
             group: { field: "ClubId" },
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des compétiteurs."
-                }, "error");
-            },
             transport: {
                 read: {
                     url: "Saisie/GetCompetiteurs",
@@ -124,6 +129,14 @@
                     dataType: "json",
                     data: {
                         all: false
+                    },
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des compétiteurs."
+                            }, "error");
+                        }
                     }
                 },
                 update: {
@@ -133,9 +146,16 @@
                     type: "POST",
                     complete: function (jqXHR, textStatus) {
                         console.log(textStatus, "update");
-                        $("#notification").data('kendoNotification').show({
-                            title: "Mise à jour réussie."
-                        }, "success");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Mise à jour."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Mise à jour réussie."
+                            }, "success");
+                        }
                     }
                 },
                 parameterMap: function (options, operation) {
@@ -202,16 +222,19 @@
         });
 
         var clubsDataSource = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des clubs."
-                }, "error");
-            },
             transport: {
                 read: {
                     async: false,
                     url: "../QVKApi/GetClubs",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des clubs."
+                            }, "error");
+                        }
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {

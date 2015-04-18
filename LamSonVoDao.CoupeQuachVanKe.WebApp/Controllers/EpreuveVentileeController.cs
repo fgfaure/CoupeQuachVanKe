@@ -20,6 +20,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
             this.competiteurs = this.unitOfWork.Repository<Competiteur>();
             this.participations = this.unitOfWork.Repository<Participation>();
         }
+
         // GET: EpreuvesVentilees
         public ActionResult Index()
         {

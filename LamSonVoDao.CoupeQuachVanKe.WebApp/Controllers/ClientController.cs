@@ -55,9 +55,9 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 this.netClientRepository.Create(client);
                 return Json(new { success = true });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return Json(new { success = false, reason = ex.Message });
+                throw;
             }
         }
 
@@ -69,7 +69,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 var dbmodel = this.netClientRepository.Read(m => m.Id == model.Id).First();
                 dbmodel.Password = model.Password;
                 dbmodel.IsConnected = model.IsConnected;
-                dbmodel.ClientName = model.ClientName;
+                dbmodel.ClientLogInName = model.ClientName;
                 this.netClientRepository.Update(dbmodel);
                 return Json(dbmodel.ToModel());
             }

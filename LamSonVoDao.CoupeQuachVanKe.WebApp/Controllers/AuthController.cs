@@ -54,7 +54,7 @@
                 if (isIdentified)
                 {
                     var identity = new ClaimsIdentity(new[] {
-                    new Claim(ClaimTypes.NameIdentifier, client.ClientName)
+                    new Claim(ClaimTypes.NameIdentifier, client.ClientLogInName)
                 }, "ApplicationCookie");
 
                     var ctx = Request.GetOwinContext();
@@ -103,7 +103,7 @@
             var authManager = ctx.Authentication;
 
             authManager.SignOut("ApplicationCookie");
-            var dbitem = this.netClientRepository.Read(nc => nc.ClientName == authManager.User.Claims.First().Value).FirstOrDefault();
+            var dbitem = this.netClientRepository.Read(nc => nc.ClientLogInName == authManager.User.Claims.First().Value).FirstOrDefault();
             if (dbitem != null)
             {
                 dbitem.IsConnected = false;
@@ -118,7 +118,7 @@
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
 
-            var list = this.netClientRepository.Read().Where(nc => !nc.IsConnected).Select(nc => new { clientId = nc.Id, logName = nc.ClientName }).ToList();
+            var list = this.netClientRepository.Read().Where(nc => !nc.IsConnected).Select(nc => new { clientId = nc.Id, logName = nc.ClientLogInName }).ToList();
             list.Insert(0, new { clientId = -1, logName = "Choisissez un compte" });
             result.Data = list;
             return result;

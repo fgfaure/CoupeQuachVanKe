@@ -20,16 +20,19 @@
     $(document).ready(function () {
 
         var clients = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Impossible d'obtenir les identifiants de connexion."
-                }, "error");
-            },
             transport: {
                 read: {
                     url: "GetClients",
                     cache: false,
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des clients réseaux."
+                            }, "error");
+                        }
+                    }
                 }
             }
         });        

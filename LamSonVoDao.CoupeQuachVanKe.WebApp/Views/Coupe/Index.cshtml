@@ -30,24 +30,34 @@
 
     $(document).ready(function () {
         var coupesDataSource = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur"
-                }, "error");
-            },            
             transport: {
                 read: {
                     url: "Get",
-                    dataType: "json"
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des coupes."
+                            }, "error");
+                        }
+                    }
                 },
                 update: {
                     url: "Update",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {
                         console.log(textStatus, "update");
-                        $("#notification").data('kendoNotification').show({
-                            title: "Mise à jour réussie"
-                        }, "success");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Mise à jour."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Mise à jour réussie."
+                            }, "success");
+                        }
                     },
                     contentType: "application/json",
                     type: "POST"
@@ -57,10 +67,17 @@
                     dataType: "json",
                     contentType: "application/json",
                     complete: function (jqXHR, textStatus) {
-                        console.log(textStatus, "update");
-                        $("#notification").data('kendoNotification').show({
-                            title: "Effacement réussi"
-                        }, "success");
+                        console.log(textStatus, "delete");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Suppression."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Suppression réussie."
+                            }, "success");
+                        }
                     },
                     type: "POST"
                 },
@@ -68,10 +85,17 @@
                     url: "Create",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {
-                        console.log(textStatus, "update");
-                        $("#notification").data('kendoNotification').show({
-                            title: "Création réussie"
-                        }, "success");
+                        console.log(textStatus, "create");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Création."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Création réussie."
+                            }, "success");
+                        }
                     },
                     contentType: "application/json",
                     type: "POST"
@@ -184,11 +208,6 @@
 
             detailRow.find("#responsable").kendoGrid({
                 dataSource: {
-                    error: function (jqXHR) {
-                        $("#notification").data('kendoNotification').show({
-                            title: "Erreur dans la récupération des Responsables."
-                        }, "error");
-                    },
                     transport: {
                         read: {
                             url: "Responsables",
@@ -197,6 +216,14 @@
                             type: "POST",
                             data: {
                                 id: e.data.Id
+                            },
+                            complete: function (jqXHR, textStatus) {
+                                console.log(textStatus, "update");
+                                if (textStatus === "error") {
+                                    $("#notification").data('kendoNotification').show({
+                                        title: "Echec Lecture des responsables."
+                                    }, "error");
+                                }
                             }
                         },
                         update: function (e) {

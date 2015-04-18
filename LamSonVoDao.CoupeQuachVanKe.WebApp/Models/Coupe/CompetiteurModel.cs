@@ -147,6 +147,12 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// </value>
         public int EquipeSongLuyenNumero { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [valid import].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [valid import]; otherwise, <c>false</c>.
+        /// </value>
         public bool ValidImport { get; set; }
     }
 }

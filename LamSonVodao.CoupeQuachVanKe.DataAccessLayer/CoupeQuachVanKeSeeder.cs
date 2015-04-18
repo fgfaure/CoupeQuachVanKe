@@ -75,7 +75,7 @@
 
                 var netclient = new NetClient
                 {
-                    ClientName = "Table Centrale",
+                    ClientLogInName = "Table Centrale",
                     NetClientType = clienttype1,
                     Password = "123456",
                     IsConnected = false
@@ -112,8 +112,8 @@
                     Coupe = coupe,
                     Technique = false
                 };
-                #region Quyen Pupilles
 
+                #region catégories de pratiquant
                 var categorie1 = new CategoriePratiquant
                 {
                     Nom = "Pupilles",
@@ -163,7 +163,9 @@
                     AgeMin = 36,
                     AgeMax = 75
                 };
+                #endregion
 
+                #region Quyen Pupilles
                 var e1 = new EpreuveTechnique
                 {
                     CategoriePratiquant =categorie1,

@@ -10,16 +10,19 @@
 <script>
     $(document).ready(function () {
         var coupes = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des coupes."
-                }, "error");
-            },
             transport: {
                 read: {
                     async: false,
                     url: "../QVKApi/GetCoupes",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des coupes."
+                            }, "error");
+                        }
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -62,15 +65,18 @@
         coupes.read();
 
         var typeEpreuves = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des types d'épreuves."
-                }, "error");
-            },
             transport: {
                 read: {
                     url: "Get",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des types d'épreuves."
+                            }, "error");
+                        }
+                    }
                 },
                 update: {
                     url: "Update",
@@ -79,9 +85,16 @@
                     type: "POST",
                     complete: function (jqXHR, textStatus) {
                         console.log(textStatus, "update");
-                        $("#notification").data('kendoNotification').show({
-                            title: "Mise à jour réussie."
-                        }, "success");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Mise à jour."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Mise à jour réussie."
+                            }, "success");
+                        }
                     }
                 },
                 destroy: {
@@ -90,10 +103,17 @@
                     contentType: "application/json",
                     type: "POST",
                     complete: function (jqXHR, textStatus) {
-                        console.log(textStatus, "update");
-                        $("#notification").data('kendoNotification').show({
-                            title: "Suppression réussie."
-                        }, "success");
+                        console.log(textStatus, "delete");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Suppression."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Suppression réussie."
+                            }, "success");
+                        }
                     }
                 },
                 create: {
@@ -102,10 +122,17 @@
                     contentType: "application/json",
                     type: "POST",
                     complete: function (jqXHR, textStatus) {
-                        console.log(textStatus, "update");
-                        $("#notification").data('kendoNotification').show({
-                            title: "Création réussie."
-                        }, "success");
+                        console.log(textStatus, "create");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Création."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Création réussie."
+                            }, "success");
+                        }
                     }
                 },
                 parameterMap: function (options, operation) {

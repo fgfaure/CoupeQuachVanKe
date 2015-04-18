@@ -9,8 +9,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations
     public enum GenreEpreuve
     {
         NotSet = 0,
-        Masculin = 1,
-        Feminin = 2,
+        Feminin = 1,
+        Masculin = 2,        
         Mixte = 3
     }
 }

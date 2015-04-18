@@ -25,7 +25,7 @@
                 Id = aire.Id,
                 Description = aire.Description,
                 CoupeId = aire.CoupeId,
-                NetClientId = aire.ClientId
+                NetClientId = aire.NetClientId
             });
             return result;
         }
@@ -38,10 +38,22 @@
                 {
                     Description = model.Description,
                     CoupeId = model.CoupeId,
-                    ClientId = model.NetClientId
+                    NetClientId = model.NetClientId
                 };
 
-                this.repository.Create(dbitem);                
+                this.repository.Create(dbitem);
+                try
+                {
+                    var clients = this.unitOfWork.Repository<NetClient>();
+                    var client = clients.Read(model.NetClientId);
+                    client.AireId = dbitem.Id;
+                    clients.Update(client);
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
                 return Json(dbitem.ToModel());
 
             }
@@ -59,6 +71,18 @@
                 if (dbmodel != null)
                 {
                     this.repository.Delete(dbmodel);
+                    try
+                    {
+                        var clients = this.unitOfWork.Repository<NetClient>();
+                        var client = clients.Read(model.NetClientId);
+                        client.AireId = 0;
+                        clients.Update(client);
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
                     return Json(model);
                 }
                 else
@@ -81,7 +105,7 @@
                 {
                     dbmodel.Description = model.Description;
                     dbmodel.CoupeId = model.CoupeId;
-
+                    dbmodel.NetClientId = model.NetClientId;
                     this.repository.Update(dbmodel);
                     return Json(model);
                 }
@@ -94,6 +118,16 @@
             {
                 throw;
             }
+        }
+        
+        [HttpGet]
+        public JsonResult GetUnboundClients()
+        {
+            var result = new JsonResult();
+            var clients = this.unitOfWork.Repository<NetClient>().Read(nc => nc.AireId == 0).Select(nc => nc.ToModel());
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = clients;
+            return result;                        
         }
     }
 }

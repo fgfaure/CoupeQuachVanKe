@@ -10,7 +10,6 @@
         content: "\e080";
     }
 </style>
-<div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="well well-lg"><h2>Bai Quyen - Catégorie Benjamins Masculins - Moins de Ceinture Noire</h2></div>
         <div>
@@ -87,9 +86,9 @@
             </div>
         </div>
     </div>
-</div>
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/kendo.all.min.js")"></script>
 
-<script src="http://cdn.kendostatic.com/2015.1.408/js/kendo.all.min.js"></script>
+@*<script src="http://cdn.kendostatic.com/2015.1.408/js/kendo.all.min.js"></script>*@
 <script>
     function total(dataItem, score) {
         var sum = 0;
@@ -169,17 +168,20 @@
     }];
 
     var encadrants = new kendo.data.DataSource({
-        error: function (jqXHR) {
-            $("#notification").data('kendoNotification').show({
-                title: "Erreur dans la récupération des encadrants."
-            }, "error");
-        },
         transport: {
             read: {
                 url: "../QVKApi/GetEncadrants",
                 dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                 contentType: "application/json",
-                type: "POST"
+                type: "GET",
+                complete: function (jqXHR, textStatus) {
+                    console.log(textStatus, "update");
+                    if (textStatus === "error") {
+                        $("#notification").data('kendoNotification').show({
+                            title: "Echec Lecture des encadrants."
+                        }, "error");
+                    }
+                }
             },
             parameterMap: function (options) {
                 return JSON.stringify(options);
@@ -328,15 +330,18 @@
         });
 
         var competiteurDataSource = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des compétiteurs."
-                }, "error");
-            },
             transport: {
                 read: {
                     url: "GetPresentiel",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des compétiteurs."
+                            }, "error");
+                        }
+                    }
                 },
                 update: {
                     url: "UpdatePresentiel",
@@ -345,9 +350,16 @@
                     type: "POST",
                     complete: function (jqXHR, textStatus) {
                         console.log(textStatus, "update");
-                        $("#notification").data('kendoNotification').show({
-                            title: "Mise à jour réussie."
-                        }, "success");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Mise à jour."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Mise à jour réussie."
+                            }, "success");
+                        }
                     }
                 },               
                 parameterMap: function (options, operation) {

@@ -9,16 +9,19 @@
 <script>
     $(document).ready(function () {
         var statuses = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des statuts d'Epreuve."
-                }, "error");
-            },
             transport: {
                 read: {
                     async: false,
                     url: "../QVKApi/GetStatuses",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des statuts."
+                            }, "error");
+                        }
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -49,17 +52,20 @@
         });
         statuses.read();
 
-        var genres = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des genres d'Epreuve."
-                }, "error");
-            },
+        var genres = new kendo.data.DataSource({           
             transport: {
                 read: {
                     async: false,
                     url: "../QVKApi/GetGenreEpreuves",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des genres d'épreuve."
+                            }, "error");
+                        }
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -90,17 +96,20 @@
         });
         genres.read();
 
-        var categories = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des catégories d'Epreuve."
-                }, "error");
-            },
+        var categories = new kendo.data.DataSource({          
             transport: {
                 read: {
                     async: false,
                     url: "../QVKApi/GetCategories",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des catégories."
+                            }, "error");
+                        }
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -142,16 +151,19 @@
         categories.read();
 
         var grades = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des grades."
-                }, "error");
-            },
             transport: {
                 read: {
                     async: false,
                     url: "../QVKApi/GetGrades",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des grades."
+                            }, "error");
+                        }
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -183,16 +195,19 @@
         grades.read();
 
         var combats = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des types d'épreuve de combat."
-                }, "error");
-            },
             transport: {
                 read: {
                     async: false,
                     url: "../QVKApi/GetTypeEpreuvesCombat",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des types d'épreuve combat."
+                            }, "error");
+                        }
+                    }
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
@@ -235,15 +250,18 @@
         combats.read();
 
         var epreuves = new kendo.data.DataSource({
-            error: function (jqXHR) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur dans la récupération des épreuves de combat."
-                }, "error");
-            },
             transport: {
                 read: {
                     url: "Get",
-                    dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des épreuves."
+                            }, "error");
+                        }
+                    }
                 },
                 update: {
                     url: "Update",
@@ -252,9 +270,16 @@
                     type: "POST",
                     complete: function (jqXHR, textStatus) {
                         console.log(textStatus, "update");
-                        $("#notification").data('kendoNotification').show({
-                            title: "Mise à jour réussie."
-                        }, "success");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Mise à jour."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Mise à jour réussie."
+                            }, "success");
+                        }
                     }
                 },
                 destroy: {
@@ -263,10 +288,17 @@
                     contentType: "application/json",
                     type: "POST",
                     complete: function (jqXHR, textStatus) {
-                        console.log(textStatus, "update");
-                        $("#notification").data('kendoNotification').show({
-                            title: "Suppression réussie."
-                        }, "success");
+                        console.log(textStatus, "delete");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Suppression."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Suppression réussie."
+                            }, "success");
+                        }
                     }
                 },
                 create: {
@@ -275,10 +307,17 @@
                     contentType: "application/json",
                     type: "POST",
                     complete: function (jqXHR, textStatus) {
-                        console.log(textStatus, "update");
-                        $("#notification").data('kendoNotification').show({
-                            title: "Création réussie."
-                        }, "success");
+                        console.log(textStatus, "create");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Création."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Création réussie."
+                            }, "success");
+                        }
                     }
                 },
                 parameterMap: function (options, operation) {
@@ -349,7 +388,8 @@
                 refresh: true,
                 pageSizes: true,
                 buttonCount: 5
-            },
+            },            
+            selectable: "single",
             sortable: true,
             groupable: true,
             filterable: false,
@@ -362,8 +402,7 @@
                     { field: "GenreCategorieId", title: "Genre", values: genres.data().toJSON() },
                     { field: "GradeAutoriseId", title: "Grade", values: grades.data().toJSON() },
                     { field: "PoidsMini", title: "Poids min.", width :"95px"},
-                    { field: "PoidsMaxi", title: "Poids max.", width: "95px" },
-                    //{ field: "StatutId", title: "Statut", values: statuses.data().toJSON() },
+                    { field: "PoidsMaxi", title: "Poids max.", width: "95px" },                    
                     { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }
             ],
             editable: "popup"
