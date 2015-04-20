@@ -68,8 +68,7 @@
 
                     return Json(new { success = true, url = GetRedirectUrl(client) });
                 }
-                ModelState.AddModelError("", "Invalid password");
-                return Json(new { success = false });
+                throw new HttpException((int)HttpStatusCode.Unauthorized, "Invalid Credentials");
             }
             catch (Exception)
             {

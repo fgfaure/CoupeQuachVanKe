@@ -38,7 +38,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             var tapis = this.tapis.Read().Select(t => t.ToModel());
-            var clients = this.clients.Read().Select(c => c.ToModel());
+            var clients = this.clients.Read(c => c.NetClientTypeId == 2).Select(c => c.ToModel());
             var techniques = this.techniques.Read(e => e.Statut == StatutEpreuve.Fermee).Select(e => e.ToModel());
             var combat = this.combat.Read(e => e.Statut == StatutEpreuve.Fermee).Select(e => e.ToModel());
             result.Data = new { tapis = tapis, clients = clients, epreuves = techniques.Union(combat) };

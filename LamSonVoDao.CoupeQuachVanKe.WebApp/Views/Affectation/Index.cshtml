@@ -4,16 +4,23 @@
 </div>
 <div class="col-sm-10">
     <h2>Affectation des Epreuves</h2>
-    <div id="epreuves">
+    <div id="grilleAffectation">
     </div>
 </div>
 
 <script>
-    $(document).ready(function () {       
-        var data = new kendo.data.DataSource({
+    var tapis;
+    var epreuves;
+    function linkAreaToTrial(e){
+        //todo call server to create link between an area and a contest
+    }
+
+    $(document).ready(function () {
+        var source = new kendo.data.DataSource({
             transport: {
                 read: {
                     url: "Get",
+                    async: false,
                     cache: false,
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {
@@ -24,10 +31,112 @@
                             }, "error");
                         }
                     }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
                 }
+            },
+            schema: {
+                parse: function (data) {
+                    tapis = data.tapis;
+                    epreuves = [];
+                    for (var i = 0; i < data.epreuves.length; i++) {
+                        epreuves.push({
+                            value: data.epreuves[i].Id,
+                            text: data.epreuves[i].Nom
+                        });
+                    }
+                    return data;
+                }            
             }
         });
+        source.read();
 
-        data.read();
+        var epreuveTemplate = function (item) {
+            var epreuve = { text: '' };
+            for (var i = 0; i < epreuves.length; i++) {
+                if (item.EpreuveId != null && item.EpreuveId != undefined && epreuves[i].value == item.EpreuveId) {
+                    epreuve = epreuves[i];
+                    break;
+                }
+            }
+            return epreuve.text;
+        }
+
+        $("#grilleAffectation").kendoGrid({
+            dataSource: new kendo.data.DataSource({
+                transport: {
+                    read: function (options) {
+                        options.success(tapis);
+                    },
+                    update: function (options) {
+                        for (var i = 0; i < tapis.length; i++) {
+                            if (tapis[i].Id == options.data.Id) {
+                                tapis[i] = options.data;
+                                break;
+                            }
+                        }
+                        options.success(tapis);
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "Id",
+                        fields: {
+                            Id: {
+                                editable: false,
+                                nullable: false
+                            },
+                            Description: {
+                                //set validation rules
+                                type: "string",
+                                editable: false
+                            },
+                            EpreuveId: {
+                                field: "EpreuveId",
+                                type: "number",
+                                nullable: true
+                            }
+                        }
+                    }
+                }
+            }),
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            save: function (e) {
+                var epreuveId = $(e.container).find("[data-container-for='EpreuveId'] select").val();
+                if (e.model.EpreuveId != epreuveId) {
+                    e.model.EpreuveId = parseInt(epreuveId, 10);
+                }
+            },
+            autosync: false,
+            columns: [
+                { field: "Description", title: "Description" },
+                { field: "EpreuveId", title: "Epreuve", values: epreuves, template: epreuveTemplate },
+                 {
+                     command: [
+                         {
+                             name: "edit",
+                             text: "Editer"
+                         },
+                         {
+                         name: "linkAreaToTrial",
+                         text: "Associer",
+                         imageClass: "k-icon k-i-group",
+                         click: linkAreaToTrial
+                     }],
+                     title: " ", width: "225px"
+                 }],
+            editable: "inline"
+        });
+
     });
 </script>
