@@ -89,8 +89,14 @@
                 case 2:
                     result = Url.Action("index", "satellite");
                     break;
-                default:
+                case 3:
                     result = Url.Action("index", "saisie");
+                    break;
+                case 4:
+                    result = Url.Action("index", "accueil");
+                    break;
+                default:
+                    result = Url.Action("login", "auth");
                     break;
             }
             return result;

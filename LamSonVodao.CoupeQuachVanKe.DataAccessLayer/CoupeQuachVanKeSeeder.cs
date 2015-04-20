@@ -73,6 +73,11 @@
                     ClientType = "Saisie"
                 };
 
+                var clienttype4 = new NetClientType
+                {
+                    ClientType = "Accueil"
+                };
+
                 var netclient = new NetClient
                 {
                     ClientLogInName = "Table Centrale",
@@ -683,6 +688,8 @@
                 this.context.Entry(clienttype1).State = System.Data.Entity.EntityState.Added;
                 this.context.Entry(clienttype2).State = System.Data.Entity.EntityState.Added;
                 this.context.Entry(clienttype3).State = System.Data.Entity.EntityState.Added;
+                this.context.Entry(clienttype4).State = System.Data.Entity.EntityState.Added;
+
                 this.context.Entry(netclient).State = System.Data.Entity.EntityState.Added;
                 this.context.Entry(coupe).State = System.Data.Entity.EntityState.Added;
                 this.context.Entry(typeEpreuve1).State = System.Data.Entity.EntityState.Added;

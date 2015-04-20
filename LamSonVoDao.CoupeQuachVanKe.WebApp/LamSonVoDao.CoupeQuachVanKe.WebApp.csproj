@@ -242,6 +242,7 @@
     <Compile Include="Areas\Server\ServerAreaRegistration.cs" />
     <Compile Include="Contracts\ICrudController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccueilController.cs" />
     <Compile Include="Controllers\AffectationController.cs" />
     <Compile Include="Controllers\AireController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
@@ -309,6 +310,7 @@
     <Content Include="Views\Satellite\EpreuveTechnique.cshtml" />
     <Content Include="Views\Satellite\EpreuveCombat.cshtml" />
     <Content Include="Views\Affectation\Index.cshtml" />
+    <Content Include="Views\Accueil\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

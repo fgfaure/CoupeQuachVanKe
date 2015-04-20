@@ -14,7 +14,6 @@
     using System.Web.Mvc;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
     using LamSonVoDao.CoupeQuachVanKe.WebApp.Contracts;
-    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
 
     public class ClubController : BaseController<Club>, ICrudController<Club, ClubModel>
     {

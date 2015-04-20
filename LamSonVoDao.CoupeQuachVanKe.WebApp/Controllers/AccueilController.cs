@@ -1,22 +1,21 @@
-﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
-{
-    using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
-    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
-    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
-    using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
-    using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
+﻿using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
+using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
 
-    public class SaisieController : Controller
+namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
+{
+    public class AccueilController : Controller
     {
         private UnitOfWork unitOfWork = new UnitOfWork();
         private Repository<Competiteur> competiteursRepo;
 
-        public SaisieController()
+        public AccueilController()
         {
             this.competiteursRepo = this.unitOfWork.Repository<Competiteur>();
         }
@@ -33,7 +32,7 @@
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.MaxJsonLength = Int32.MaxValue;
             var competiteurs = this.competiteursRepo.Read();
-            result.Data = competiteurs.Where(c => c.InscritPourCombat).Select(c => new CompetiteurModel
+            result.Data = competiteurs.Select(c => new CompetiteurModel
             {
                 CategorieId = c.CategoriePratiquantId,
                 ClubId = c.ClubId,
@@ -46,7 +45,6 @@
                 Poids = c.Poids,
                 GenreId = (int)c.Sexe
             });
-
             return result;
         }
 
