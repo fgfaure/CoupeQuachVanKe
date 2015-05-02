@@ -3,17 +3,6 @@
 </div>
 <div class="col-sm-10">
     <h2>Liste des Epreuves Techniques</h2>
-    @*<div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Ventiler les épreuves techniques</h3>
-        </div>
-        <div class="panel-body">
-            Affecter les compétiteurs inscrits aux épreuves techniques.
-            <button name="ventilationTechnique" id="vt">Ventiler</button>
-        </div>
-        <div id="epreuvesVentilees" />
-    </div>
-    <hr />*@
     <div id="epreuvesTechniques">
     </div>
     <script type="text/x-kendo-template" id="template">
@@ -338,6 +327,7 @@
         var epreuves = new kendo.data.DataSource({
             transport: {
                 read: {
+                    cache: false,
                     url: "Get",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {
@@ -428,7 +418,7 @@
                             type: "string"
                         },
                         StatutId: {
-                            editable: false,
+                            editable: true,
                             type: "number",
                             defaultValue: 1
                         },

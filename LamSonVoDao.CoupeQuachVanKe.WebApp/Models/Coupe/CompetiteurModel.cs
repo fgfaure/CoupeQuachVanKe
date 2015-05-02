@@ -9,31 +9,31 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
     /// <summary>
     /// 
     /// </summary>
-    public class CompetiteurModel
+    public class CompetiteurModel : ParticipantModel
     {
 
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public int Id { get; set; }
-        /// <summary>
-        /// Gets or sets the nom.
-        /// </summary>
-        /// <value>
-        /// The nom.
-        /// </value>
-        public string Nom { get; set; }
+        /////// <summary>
+        /////// Gets or sets the identifier.
+        /////// </summary>
+        /////// <value>
+        /////// The identifier.
+        /////// </value>
+        ////public int Id { get; set; }
+        /////// <summary>
+        /////// Gets or sets the nom.
+        /////// </summary>
+        /////// <value>
+        /////// The nom.
+        /////// </value>
+        ////public string Nom { get; set; }
 
-        /// <summary>
-        /// Gets or sets the prenom.
-        /// </summary>
-        /// <value>
-        /// The prenom.
-        /// </value>
-        public string Prenom { get; set; }
+        /////// <summary>
+        /////// Gets or sets the prenom.
+        /////// </summary>
+        /////// <value>
+        /////// The prenom.
+        /////// </value>
+        ////public string Prenom { get; set; }
 
         /// <summary>
         /// Gets or sets the grade identifier.
@@ -91,13 +91,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// </value>
         public float Poids { get; set; }
 
-        /// <summary>
-        /// Gets or sets the club identifier.
-        /// </summary>
-        /// <value>
-        /// The club identifier.
-        /// </value>
-        public int ClubId { get; set; }
+        /////// <summary>
+        /////// Gets or sets the club identifier.
+        /////// </summary>
+        /////// <value>
+        /////// The club identifier.
+        /////// </value>
+        ////public int ClubId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [inscrit pour quyen].

@@ -252,6 +252,7 @@
         var epreuves = new kendo.data.DataSource({
             transport: {
                 read: {
+                    cache: false,
                     url: "Get",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {
@@ -342,7 +343,7 @@
                             type: "string"
                         },
                         StatutId: {
-                            editable: false,
+                            editable: true,
                             type: "number",
                             defaultValue: 1
                         },
@@ -401,6 +402,7 @@
                     { field: "CategorieId", title: "Catégorie", values: categories.data().toJSON() },
                     { field: "GenreCategorieId", title: "Genre", values: genres.data().toJSON() },
                     { field: "GradeAutoriseId", title: "Grade", values: grades.data().toJSON() },
+                     { field: "StatutId", title: "Statut", values: statuses.data().toJSON() },
                     { field: "PoidsMini", title: "Poids min.", width :"95px"},
                     { field: "PoidsMaxi", title: "Poids max.", width: "95px" },                    
                     { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }

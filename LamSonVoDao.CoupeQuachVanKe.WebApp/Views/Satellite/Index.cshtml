@@ -1,8 +1,80 @@
-﻿<h1>Satellite</h1>
-    <a class="btn btn-primary" role="button" href="/Satellite/EpreuveTechnique">Technique</a>
-    <a class="btn btn-primary" role="button" href="/Satellite/EpreuveCombat">Combat</a>
+﻿<div>
+    <div class="col-md-6 col-md-offset-3">
+        <h1>Interface de Gestion d'Epreuve</h1>
+        <hr />
+        <div id="buttons"></div>
+    </div>
+</div>
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/jquery.timer.js")"></script>
 <script>
-    $(document).ready(function (e) {
+    var timer;
+    var techBtn = $('<a class="btn btn-primary btn-lg" role="button" href="/Satellite/EpreuveTechnique">Ouvrir la gestion d\'Epreuve</a>');
+    var combBtn = $('<a class="btn btn-primary btn-lg" role="button" href="/Satellite/EpreuveCombat">Ouvrir la gestion d\'Epreuve</a>');
+    function ajaxCall() {
+        return $.ajax({
+            cache: false,
+            type: 'GET',
+            async: true,
+            url: "/Satellite/GetEpreuve",
+        });
+    }
 
+    function ajaxSucceeded(result) {
+        if (result.foundContest) {
+            $("#buttons").children().remove();
+            if (result.technique) {
+                $("#buttons").append(techBtn);
+            }
+            else {
+                $("#buttons").append(combBtn);
+            }
+            $("#notification").data('kendoNotification').show({
+                title: "Une nouvelle épreuve est disponible."
+            }, "success");
+            timer.stop();
+        }
+        else {
+            $("#notification").data('kendoNotification').show({
+                title: "Pas d'Epreuve affectée à votre table."
+            }, "info");           
+        }
+    }
+
+    function ajaxFailed(err) {
+        $("#notification").data('kendoNotification').show({
+            title: "Erreur."
+        }, "error");
+    }
+
+    $(document).ready(function (e) {              
+        $.ajax({
+            cache: false,
+            type: 'GET',
+            async: true,
+            url: "/Satellite/GetEpreuve",
+        }).success(function (result) {
+            if (result.foundContest)
+            {
+                $("#buttons").children().remove();
+                if (result.technique)
+                {
+                    $("#buttons").append(techBtn);
+                }
+                else {
+                    $("#buttons").append(combBtn);
+                }                
+            }
+            else {
+                $("#notification").data('kendoNotification').show({
+                    title: "Pas d'Epreuve affectée à votre table."
+                }, "info");
+                timer = $.timer(function () {
+                    ajaxCall()
+                        .success(ajaxSucceeded)
+                        .fail(ajaxFailed);
+                });
+                timer.set({ time: 30000, autostart: true });
+            }
+        }).fail(ajaxFailed);
     });
 </script>

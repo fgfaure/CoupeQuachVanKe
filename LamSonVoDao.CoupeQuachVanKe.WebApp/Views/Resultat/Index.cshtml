@@ -1,0 +1,291 @@
+﻿<style scoped>
+    .k-list-container {
+        width: auto !important;
+    }
+
+    .k-list {
+        width: 100% !important;
+    }
+
+    .k-widget.k-dropdown.k-header {
+        width: 100% !important;
+    }
+</style>
+<div class="col-sm-2">
+    @RenderPage("../Shared/_Menu.cshtml")
+</div>
+<div class="col-sm-10">
+    <h1>Résultats</h1>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">
+                Résultat par compétiteurs
+            </h2>
+        </div>
+        <div id="epreuve">
+            <div class="panel-body">
+                <div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <h3>Sélectionnez un club dans la liste ci-dessous</h3>
+                                <input id="dropForClubs" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <h3>Sélectionnez un compétiteur dans la liste ci-dessous</h3>
+                                <input id="dropForCompetiteurs" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="col-sm-12 col-md-12">
+            <div id="resultatCompetiteur" />
+        </div>
+    </div>
+</div>
+<hr />
+<div id="detailPanel" class="panel panel-primary hidden">
+    <div class="panel-heading">
+        <h2 class="panel-title">
+            Classement Club
+        </h2>
+    </div>
+    <div id="epreuve">
+        <div class="panel-body">
+            <div id="classement" />
+        </div>
+    </div>
+</div>
+<script>
+    var competiteurId;
+    var resultats = new kendo.data.DataSource({
+        transport: {
+            read: {
+                cache: false,
+                url: "GetResultatsFromCompetiteur",
+                dataType: "json",
+                type: "POST",
+                data: JSON.stringify({ id: competiteurId }),
+                complete: function (jqXHR, textStatus) {
+                    console.log(textStatus, "update");
+                    if (textStatus === "error") {
+                        $("#notification").data('kendoNotification').show({
+                            title: "Echec Lecture des Resultats."
+                        }, "error");
+                    }
+                }
+            },
+            update: {
+                url: "UpdateCompetiteurResultat",
+                dataType: "json",
+                contentType: "application/json",
+                type: "POST",
+                complete: function (jqXHR, textStatus) {
+                    console.log(textStatus, "update");
+                    if (textStatus === "error") {
+                        $("#notification").data('kendoNotification').show({
+                            title: "Echec Mise à jour."
+                        }, "error");
+                    }
+                    else {
+                        $("#notification").data('kendoNotification').show({
+                            title: "Mise à jour réussie."
+                        }, "success");
+                    }
+                }
+            },
+            parameterMap: function (options, operation) {
+                if (operation !== "read" && options.models) {
+                    return { models: kendo.stringify(options.models) };
+                }
+                else {
+                    return kendo.stringify(options);
+                }
+            }
+        },
+        schema: {
+            model: {
+                id: "ParticipationId",
+                fields: {
+                    ParticipationId: {
+                        editable: false,
+                        nullable: false
+                    },
+                    Nom: {
+                        editable: false,
+                        type: "string"
+                    },
+                    Prenom: {
+                        editable: false,
+                        type: "string"
+                    },
+                    ParticipantId: {
+                        editable: false,
+                        type: "number",
+                        defaultValue: 1
+                    },
+                    Epreuve: {
+                        editable: false,
+                        type: "number",
+                        defaultValue: 1
+                    },
+                    EpreuveId: {
+                        editable: false,
+                        type: "number",
+                        defaultValue: 1
+                    },
+                    ResultatId: {
+                        editable: false,
+                        type: "number",
+                        defaultValue: 1,
+                    },
+                    Classement: {
+                        editable: true,
+                        type: "number"
+                    },
+                    Score: {
+                        editable: true,
+                        type: "number"
+                    },
+                    Absence: {
+                        editable: true,
+                        type: "boolean"
+                    },
+                    InscriptionValidee: {
+                        editable: true,
+                        type: "boolean"
+                    },
+                    Blessure: {
+                        editable: true,
+                        type: "boolean"
+                    },
+                    Disqualification: {
+                        editable: true,
+                        type: "boolean"
+                    },
+                    Renvoi: {
+                        editable: true,
+                        type: "boolean"
+                    },
+                    Abandon: {
+                        editable: true,
+                        type: "boolean"
+                    }
+                }
+            }
+        },
+        pageSize: 10
+    });
+
+    function BuildGrid() {
+        $("#resultatCompetiteur").kendoGrid({
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            selectable: false,
+            sortable: false,
+            groupable: false,
+            filterable: false,
+            autosync: false,
+            columns: [
+                    { field: "Epreuve", title: "Epreuve" },
+                    { field: "Classement", title: "Classement" },
+                    { field: "Score", title: "Score" },
+                    { field: "Absence", title: "Absent" },
+                    { command: ["edit"], title: "&nbsp;", width: "190px" }
+            ],
+            editable: {
+                mode: "inline"
+            },
+        });
+    }
+
+    function RefreshGrid() {
+        competiteurId = $("#dropForCompetiteurs").data('kendoDropDownList').value();
+        if (parseInt(competiteurId, 10) > 0) {
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                async: true,
+                url: "GetResultatsFromCompetiteur",
+                data: JSON.stringify({ id: competiteurId }),
+                contentType: 'application/json',
+                dataType: 'json'
+            }).success(function (data) {
+                $("#resultatCompetiteur").data('kendoGrid').dataSource.data(data);
+            }).fail(function () {
+                $("#notification").data('kendoNotification').show({
+                    title: "Echec Lecture des resultats du competiteur."
+                }, "error");
+            });
+        }      
+    }
+    var clubId;
+    $(document).ready(function () {
+        $("#dropForClubs").kendoDropDownList({
+            optionLabel: "Choisissez un club...",
+            dataTextField: "Nom",
+            dataValueField: "Id",
+            dataSource: {
+                type: "json",
+                transport: {
+                    cache: false,
+                    read: "GetClubs"
+                }
+            },
+            change: function (e) {
+                clubId = $("#dropForClubs").data('kendoDropDownList').value();
+                if (parseInt(clubId, 10) > 0) {
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        async: true,
+                        url: "GetCompetiteursFromClub",
+                        data: JSON.stringify({ id: clubId }),
+                        contentType: 'application/json',
+                        dataType: 'json'
+                    }).success(function (data) {
+                        $("#dropForCompetiteurs").data('kendoDropDownList').enable(true);
+                        $("#dropForCompetiteurs").data('kendoDropDownList').dataSource.data(data);
+                    }).fail(function () {
+                        $("#notification").data('kendoNotification').show({
+                            title: "Echec Lecture des compétiteurs du club."
+                        }, "error");
+                    });
+                }
+            }
+        });
+
+        $("#dropForCompetiteurs").kendoDropDownList({
+            enable: false,
+            autoBind: false,
+            cascadeFrom: "clubs",
+            optionLabel: "Choisissez un compétiteur...",
+            dataTextField: "Nom",
+            dataValueField: "Id",
+            dataBound: function (e) {
+                BuildGrid();
+            },
+            change: function (e) {
+                RefreshGrid();
+            }
+        });
+
+        //$("#dropForClubs-list, #dropForCompetiteurs-list").css('width', $(".k-widget.k-dropdown.k-header").width());
+
+    });
+</script>

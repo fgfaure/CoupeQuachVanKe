@@ -128,6 +128,12 @@
             try
             {
                 var dbItem = this.repository.Read(model.Id);
+                var competiteursRepository = this.unitOfWork.Repository<Competiteur>();
+
+                foreach (var comp in competiteursRepository.Read().Where(c => c.ClubId == dbItem.Id))
+                {
+                    competiteursRepository.Delete(comp);
+                }
                 this.repository.Delete(dbItem);
                 return Json(new { success = true });
             }

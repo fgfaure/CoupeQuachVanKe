@@ -255,11 +255,13 @@
     <Compile Include="Controllers\EncadrantController.cs" />
     <Compile Include="Controllers\EpreuveCombatController.cs" />
     <Compile Include="Controllers\EpreuveTechniqueController.cs" />
+    <Compile Include="Controllers\GestionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedecinController.cs" />
     <Compile Include="Controllers\QVKApiController.cs" />
     <Compile Include="Controllers\ResponsableClubController.cs" />
     <Compile Include="Controllers\ResponsableCoupeController.cs" />
+    <Compile Include="Controllers\ResultatController.cs" />
     <Compile Include="Controllers\SaisieController.cs" />
     <Compile Include="Controllers\SatelliteController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
@@ -271,13 +273,17 @@
     <Compile Include="Helper\DataTransferObjectToModel.cs" />
     <Compile Include="Helper\EnumConverter.cs" />
     <Compile Include="Helper\ExcelConverterHelper.cs" />
+    <Compile Include="Helper\ModelConverter.cs" />
     <Compile Include="Helper\ModelToDataTransferObject.cs" />
+    <Compile Include="Helper\RankContest.cs" />
+    <Compile Include="Helper\TreeHelper.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Coupe\AireModel.cs" />
     <Compile Include="Models\Coupe\CategoriePoidsModel.cs" />
     <Compile Include="Models\Coupe\CategoriePratiquantModel.cs" />
     <Compile Include="Models\Coupe\ClubModel.cs" />
+    <Compile Include="Models\Coupe\CompetiteurConnection.cs" />
     <Compile Include="Models\Coupe\CompetiteurModel.cs" />
     <Compile Include="Models\Coupe\CoupeModel.cs" />
     <Compile Include="Models\Coupe\DisponibiliteModel.cs" />
@@ -288,9 +294,15 @@
     <Compile Include="Models\Coupe\EpreuveTechniqueModel.cs" />
     <Compile Include="Models\Coupe\MedecinModel.cs" />
     <Compile Include="Models\Coupe\NetClientModel.cs" />
+    <Compile Include="Models\Coupe\ParticipantModel.cs" />
+    <Compile Include="Models\Coupe\ParticipationCombatModel.cs" />
+    <Compile Include="Models\Coupe\ParticipationModel.cs" />
+    <Compile Include="Models\Coupe\ParticipationTechniqueModel.cs" />
     <Compile Include="Models\Coupe\ResponsableCoupeModel.cs" />
     <Compile Include="Models\Coupe\ResponsableClubModel.cs" />
     <Compile Include="Models\Coupe\ResultatModel.cs" />
+    <Compile Include="Models\Coupe\ScoreClub.cs" />
+    <Compile Include="Models\Coupe\TapisEpreuveModel.cs" />
     <Compile Include="Models\Coupe\TypeEpreuveModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -300,6 +312,7 @@
     <None Include="Resources\grade.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Content Include="Scripts\jquery.timer.js" />
     <Content Include="Scripts\kendo.all.min.js" />
     <Content Include="Views\TypeEpreuve\Index.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
@@ -311,6 +324,8 @@
     <Content Include="Views\Satellite\EpreuveCombat.cshtml" />
     <Content Include="Views\Affectation\Index.cshtml" />
     <Content Include="Views\Accueil\Index.cshtml" />
+    <Content Include="Views\Gestion\Index.cshtml" />
+    <Content Include="Views\Resultat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

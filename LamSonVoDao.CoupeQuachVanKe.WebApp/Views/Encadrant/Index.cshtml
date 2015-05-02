@@ -58,6 +58,7 @@
         var clubsDataSource = new kendo.data.DataSource({
             transport: {
                 read: {
+                    cache: false,
                     async: false,
                     url: "../QVKApi/GetClubs",
                     dataType: "json",
@@ -113,6 +114,7 @@
         var encadrants = new kendo.data.DataSource({
             transport: {
                 read: {
+                    cache: false,
                     url: "Get",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {

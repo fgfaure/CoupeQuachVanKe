@@ -16,7 +16,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers
 
             this.HasKey(p => p.Id);
 
-            this.HasRequired(p => p.Competiteur).WithMany(c => c.Participations).HasForeignKey(p => p.CompetiteurId).WillCascadeOnDelete(false);
+            this.HasRequired(p => p.Participant).WithMany(c => c.Participations).HasForeignKey(p => p.ParticipantId).WillCascadeOnDelete(false);
 
             this.HasRequired(p => p.Epreuve).WithMany(e => e.Participations).HasForeignKey(p => p.EpreuveId).WillCascadeOnDelete(false);
 

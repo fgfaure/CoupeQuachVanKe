@@ -43,7 +43,7 @@
                     CategoriePratiquantId = model.CategorieId,
                     GenreCategorie = (GenreEpreuve)model.GenreCategorieId,
                     GradeAutorise = (Grade)model.GradeAutoriseId,
-                    Statut = StatutEpreuve.Fermee,
+                    Statut = (StatutEpreuve)model.StatutId,
                     TypeEpreuveId = model.TypeEpreuveId
                 };
 
@@ -88,7 +88,7 @@
                     dbmodel.CategoriePratiquantId = model.CategorieId;
                     dbmodel.GenreCategorie = (GenreEpreuve)model.GenreCategorieId;
                     dbmodel.GradeAutorise = (Grade)model.GradeAutoriseId;
-                    dbmodel.Statut = StatutEpreuve.Fermee;
+                    dbmodel.Statut = (StatutEpreuve)model.StatutId;
                     dbmodel.TypeEpreuveId = model.TypeEpreuveId;
 
                     this.repository.Update(dbmodel);

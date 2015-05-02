@@ -108,7 +108,12 @@
             }
             else
             {
-                return int.Parse(input);
+                int parsed;
+                if (int.TryParse(input, out parsed))
+                {
+                    return parsed;
+                }
+                return 0;
             }
         }
 

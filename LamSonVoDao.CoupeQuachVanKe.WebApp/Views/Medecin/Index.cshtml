@@ -13,6 +13,7 @@
         var medecinDataSource = new kendo.data.DataSource({            
             transport: {
                 read: {
+                    cache: false,
                     url: "Get",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {

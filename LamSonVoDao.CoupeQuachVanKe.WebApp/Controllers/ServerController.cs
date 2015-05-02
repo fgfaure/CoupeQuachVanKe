@@ -1,5 +1,9 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
+    using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+    using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
+    using Resources;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -8,10 +12,9 @@
 
     public class ServerController : Controller
     {
-        // GET: Server
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Gestion");
         }
     }
 }

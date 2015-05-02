@@ -667,7 +667,7 @@
                 #region SongLuyen Seniors
                 var s7 = new EpreuveTechnique
                 {
-                    CategoriePratiquant =categorie7,
+                    CategoriePratiquant = categorie7,
                     GenreCategorie = DataTransferOjbect.Enumerations.GenreEpreuve.Mixte,
                     GradeAutorise = DataTransferOjbect.Enumerations.Grade.MoinsDeCeintureNoire,
                     Statut = DataTransferOjbect.Enumerations.StatutEpreuve.Fermee,
@@ -676,7 +676,7 @@
                 s7.Nom = BuildName(s7);
                 var s8 = new EpreuveTechnique
                 {
-                    CategoriePratiquant =categorie7,
+                    CategoriePratiquant = categorie7,
                     GenreCategorie = DataTransferOjbect.Enumerations.GenreEpreuve.Mixte,
                     GradeAutorise = DataTransferOjbect.Enumerations.Grade.CeintureNoire,
                     Statut = DataTransferOjbect.Enumerations.StatutEpreuve.Fermee,
@@ -684,6 +684,22 @@
                 };
                 s8.Nom = BuildName(s8);
                 #endregion
+
+
+                #region combats Benjamins
+                var cb = new EpreuveCombat
+                {
+                    CategoriePratiquant = categorie2,
+                    GenreCategorie = GenreEpreuve.Feminin,
+                    GradeAutorise = Grade.MoinsDeCeintureNoire,
+                    Statut = StatutEpreuve.Fermee,
+                    TypeEpreuve = typeEpreuve4,
+                    PoidsMini = 20,
+                    PoidsMaxi = 25
+                };
+
+                #endregion
+
 
                 this.context.Entry(clienttype1).State = System.Data.Entity.EntityState.Added;
                 this.context.Entry(clienttype2).State = System.Data.Entity.EntityState.Added;

@@ -6,17 +6,77 @@
     <h2>Affectation des Epreuves</h2>
     <div id="grilleAffectation">
     </div>
+    <hr />
+    <h2>Historique des Affectations</h2>
+    <div id="histoAffectation">
+    </div>
 </div>
 
 <script>
     var tapis;
     var epreuves;
-    function linkAreaToTrial(e){
-        //todo call server to create link between an area and a contest
+    var source;
+
+    function linkAreaToTrial(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+        $.ajax({
+            cache: false,
+            type: 'POST',
+            async: true,
+            url: "CreateLink",
+            data: kendo.stringify(dataItem),
+            contentType: 'application/json',
+        }).success(function (data) {
+            $("#notification").data('kendoNotification').show({
+                title: "Epreuve affectée."
+            }, "success");            
+            source.read();
+            epreuves.read();
+            var grid = $("#grilleAffectation").data('kendoGrid');
+            var columns = grid.columns;
+            columns[1].values = epreuves.data().toJSON();
+            grid.setOptions({columns: grid.columns});
+            grid.refresh();      
+            $("#histoAffectation").data('kendoGrid').dataSource.read();
+        }).fail(function () {
+            $("#notification").data('kendoNotification').show({
+                title: "Erreur à la sauvegarde du lien."
+            }, "error");
+        });
     }
 
     $(document).ready(function () {
-        var source = new kendo.data.DataSource({
+        epreuves = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "GetEpreuvesDisponibles",
+                    async: false,
+                    cache: false,
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des épreuves disponibles."
+                            }, "error");
+                        }
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            }
+        });
+        epreuves.read();
+
+        source = new kendo.data.DataSource({
             transport: {
                 read: {
                     url: "Get",
@@ -40,19 +100,26 @@
                         return kendo.stringify(options);
                     }
                 }
-            },
-            schema: {
-                parse: function (data) {
-                    tapis = data.tapis;
-                    epreuves = [];
-                    for (var i = 0; i < data.epreuves.length; i++) {
-                        epreuves.push({
-                            value: data.epreuves[i].Id,
-                            text: data.epreuves[i].Nom
-                        });
+            }, schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            editable: false,
+                            nullable: false
+                        },
+                        Description: {
+                            //set validation rules
+                            type: "string",
+                            editable: false
+                        },
+                        EpreuveId: {
+                            field: "EpreuveId",
+                            type: "number",
+                            nullable: true
+                        }
                     }
-                    return data;
-                }            
+                }
             }
         });
         source.read();
@@ -69,43 +136,7 @@
         }
 
         $("#grilleAffectation").kendoGrid({
-            dataSource: new kendo.data.DataSource({
-                transport: {
-                    read: function (options) {
-                        options.success(tapis);
-                    },
-                    update: function (options) {
-                        for (var i = 0; i < tapis.length; i++) {
-                            if (tapis[i].Id == options.data.Id) {
-                                tapis[i] = options.data;
-                                break;
-                            }
-                        }
-                        options.success(tapis);
-                    }
-                },
-                schema: {
-                    model: {
-                        id: "Id",
-                        fields: {
-                            Id: {
-                                editable: false,
-                                nullable: false
-                            },
-                            Description: {
-                                //set validation rules
-                                type: "string",
-                                editable: false
-                            },
-                            EpreuveId: {
-                                field: "EpreuveId",
-                                type: "number",
-                                nullable: true
-                            }
-                        }
-                    }
-                }
-            }),
+            dataSource: source,
             pageable: {
                 refresh: true,
                 pageSizes: true,
@@ -117,10 +148,10 @@
                     e.model.EpreuveId = parseInt(epreuveId, 10);
                 }
             },
-            autosync: false,
+            autosync: true,
             columns: [
                 { field: "Description", title: "Description" },
-                { field: "EpreuveId", title: "Epreuve", values: epreuves, template: epreuveTemplate },
+                { field: "EpreuveId", title: "Epreuve", values: epreuves.data().toJSON() },//, template: epreuveTemplate },
                  {
                      command: [
                          {
@@ -128,15 +159,76 @@
                              text: "Editer"
                          },
                          {
-                         name: "linkAreaToTrial",
-                         text: "Associer",
-                         imageClass: "k-icon k-i-group",
-                         click: linkAreaToTrial
-                     }],
+                             name: "linkAreaToTrial",
+                             text: "Associer",
+                             imageClass: "k-icon k-i-group",
+                             click: linkAreaToTrial
+                         }],
                      title: " ", width: "225px"
                  }],
             editable: "inline"
         });
 
+        $("#histoAffectation").kendoGrid({
+            dataSource: new kendo.data.DataSource({
+                group: { field: "TapisNom" },
+                transport: {
+                    read: {
+                        url: "GetHistorique",
+                        async: false,
+                        cache: false,
+                        dataType: "json",
+                        complete: function (jqXHR, textStatus) {
+                            console.log(textStatus, "update");
+                            if (textStatus === "error") {
+                                $("#notification").data('kendoNotification').show({
+                                    title: "Echec Lecture des affectations."
+                                }, "error");
+                            }
+                        }
+                    }
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            EpreuveId: {
+                                type: "number",
+                                editable: false
+                            },
+                            EpreuveNom: {
+                                type: "string",
+                                nullable: true
+                            },
+                            EpreuveStatut: {
+                                type: "string",
+                                editable: false
+                            },
+                            EpreuveStatutId: {
+                                type: "number",
+                                editable: false
+                            },
+                            TapisNom: {
+                                type: "string",
+                                editable: false
+                            },
+                            TapisId: {
+                                type: "number",
+                                editable: false
+                            }
+                        }
+                    }
+                }
+            }),
+            pageable: {
+                refresh: true,
+                pageSize: 25,
+                pageSizes: [10, 25, 50]
+            },
+            autosync: true,
+            columns: [
+               { field: "EpreuveNom", title: "Epreuve" },
+               { field: "EpreuveStatut", title: "Statut de l'Epreuve" },
+               { field: "TapisNom", title: "Tapis associé" }]
+        });
     });
 </script>

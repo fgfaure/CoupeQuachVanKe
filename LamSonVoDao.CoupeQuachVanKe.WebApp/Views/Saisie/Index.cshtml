@@ -13,6 +13,7 @@
             group: { field: "ClubId" },
             transport: {
                 read: {
+                    cache: false,
                     url: "Saisie/GetCompetiteurs",
                     contentType: "application/json; charset=utf-8",
                     type: "GET",
@@ -111,6 +112,7 @@
         var clubsDataSource = new kendo.data.DataSource({
             transport: {
                 read: {
+                    cache: false,
                     async: false,
                     url: "../QVKApi/GetClubs",
                     dataType: "json",

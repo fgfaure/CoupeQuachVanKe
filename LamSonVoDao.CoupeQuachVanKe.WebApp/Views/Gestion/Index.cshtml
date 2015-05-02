@@ -1,0 +1,166 @@
+﻿
+<div class="col-sm-2">
+    @RenderPage("../Shared/_Menu.cshtml")
+</div>
+<div class="col-sm-10">
+    <h1>Gestion de coupe</h1>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">
+                Statut des Epreuves <button id="refreshSource" class="btn btn-success btn-sm right">Rafraichir la source de données</button>
+            </h2>
+        </div>
+        <div id="epreuve">
+            <div class="panel-body">
+                <div id="etatEpreuves" />
+                <hr />
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<div id="detailPanel" class="panel panel-primary hidden">
+    <div class="panel-heading">
+        <h2 class="panel-title">
+            Nombre Compétiteurs par Epreuve
+        </h2>
+    </div>
+    <div id="epreuve">
+        <div class="panel-body">
+            <div id="detailsCompetiteur"></div>
+        </div>
+    </div>
+</div>
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/jquery.timer.js")"></script>
+<script>
+    var timer;
+
+    function refreshData() {
+        $("#etatEpreuves").data('kendoChart').dataSource.read();
+    }    
+
+    function ajaxFailed(err) {
+        $("#notification").data('kendoNotification').show({
+            title: "Erreur."
+        }, "error");
+    }
+
+    function onSeriesClick(e) {
+        var dataItem = e.dataItem;
+        var Statut = dataItem.Statut;
+
+        $.ajax({
+            cache: false,
+            type: 'POST',
+            async: true,
+            url: "GetDetails",
+            data: JSON.stringify({ id: Statut }),
+            contentType: 'application/json',
+            dataType: 'json'
+        }).success(function (jqXHR, textStatus) {
+            console.log(textStatus, "details ok");
+            $("#detailPanel").removeClass("hidden");
+            $("#detailsCompetiteur").kendoGrid({
+                dataSource: {
+                    data: jqXHR,
+                    schema: {
+                        model: {
+                            fields: {
+                                Nom: { type: "string" },
+                                Participants: { type: "number" }
+                            }
+                        }
+                    },
+                    aggregate: [
+                        { field: "Participants", aggregate: "sum" },
+                        { field: "Participants", aggregate: "min" },
+                        { field: "Participants", aggregate: "max" },
+                        { field: "Participants", aggregate: "average" }
+                    ],
+                    pageSize: 20
+                },
+                height: 350,
+                scrollable: true,
+                sortable: true,
+                filterable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "Nom",
+                        title: "Dénomination de l'Epreuve"
+                    },
+                    {
+                        field: "Participants",
+                        title: "# Compétiteurs",
+                        footerTemplate: "Total de Participants associés: #=sum# <br />(Min: #=min#, Max: #=max#)"
+                    },
+                ]
+            });
+        }).fail(function () {
+            $("#notification").data('kendoNotification').show({
+                title: "Erreur"
+            }, "error");
+        });
+    }
+
+    $(document).ready(function () {
+        $("#etatEpreuves").kendoChart({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "GetEpreuveStatut",
+                        dataType: "json"
+                    }
+                },
+                group: {
+                    field: "EpreuveStatut"
+                }
+            },
+            title: {
+                text: ""
+            },
+            legend: {
+                visible: false
+            },
+            chartArea: {
+                height: 200
+            },
+            seriesDefaults: {
+                type: "bar",
+                stack: {
+                    type: "100%"
+                }
+            }, transitions: true,
+            series: [{
+                colorField: "Couleur",
+                type: "bar",
+                stack: {
+                    type: "100%"
+                },
+                field: "Count"
+            }],
+            seriesClick: onSeriesClick,
+            tooltip: {
+                visible: true,
+                background: "#dedede",
+                template: function (e) {
+                    return e.dataItem.EpreuveStatut + ": <b>" + e.dataItem.Count + "</b>";
+                }
+            }
+        });
+
+
+        timer = $.timer(function () {
+            //var options = $("#etatEpreuves").data('kendoChart').options;
+            //options.transitions = true;
+            //$("#etatEpreuves").data('kendoChart').setOptions(options)
+            refreshData();
+        });
+        timer.set({ time: 30000, autostart: true });
+        $("#refreshSource").off('click').on('click', refreshData);
+    });
+</script>

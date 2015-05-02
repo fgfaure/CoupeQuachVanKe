@@ -2,6 +2,7 @@
 {
     using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// 
@@ -23,7 +24,7 @@
         /// The statut.
         /// </value>
         public StatutEpreuve Statut { get; set; }
-
+              
         /// <summary>
         /// Gets or sets the type epreuve.
         /// </summary>

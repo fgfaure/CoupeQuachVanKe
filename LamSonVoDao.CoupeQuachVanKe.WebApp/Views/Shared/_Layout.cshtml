@@ -24,12 +24,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Gestion Coupe Quach Van ke", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="#" class="navbar-brand">Gestion Coupe Quach Van ke</a>
+
             </div>
 
             @{
                 if (User.Identity.IsAuthenticated)
-                {@:<div class="navbar-brand float-right"><a href="@Url.Action("logout", "auth")">Déconnexion</a></div>
+                {
+                    @:<div class="navbar-brand float-right"><a title="Déconnexion" href="@Url.Action("logout", "auth")">@this.Request.GetOwinContext().Authentication.User.Claims.First().Value</a></div>
             }}
         </div>
     </div>
@@ -43,19 +45,19 @@
     @RenderSection("scripts", required: false)
     <script id="infoTemplate" type="text/x-kendo-template">
         <div class="alert alert-info no-bottom-margin">
-            <span class="glyphicon glyphicon-wrench bigger-text"> #= title #</span>           
+            <span class="glyphicon glyphicon-wrench bigger-text"> #= title #</span>
         </div>
     </script>
 
     <script id="errorTemplate" type="text/x-kendo-template">
         <div class="alert alert-danger no-bottom-margin">
-            <span class="glyphicon glyphicon-remove-circle bigger-text"> #= title #</span>            
+            <span class="glyphicon glyphicon-remove-circle bigger-text"> #= title #</span>
         </div>
     </script>
 
     <script id="successTemplate" type="text/x-kendo-template">
         <div class="alert alert-success no-bottom-margin">
-            <span class="glyphicon glyphicon-ok-circle bigger-text"> #= title #</span>           
+            <span class="glyphicon glyphicon-ok-circle bigger-text"> #= title #</span>
         </div>
     </script>
     <script>

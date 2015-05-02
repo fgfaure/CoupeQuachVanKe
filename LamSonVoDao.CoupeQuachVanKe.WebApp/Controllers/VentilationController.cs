@@ -49,11 +49,11 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
             }
 
             var temp = (from participation in participations
-                        join comp in competiteurs on participation.CompetiteurId equals comp.Id into comp_join
+                        join comp in competiteurs on participation.ParticipantId equals comp.Id into comp_join
                         join ep in epreuvesCombat on participation.EpreuveId equals ep.Id into ep_join
                         from competiteur in comp_join
                         from epreuve in ep_join
-                        where epreuve.Id == participation.EpreuveId && competiteur.Id == participation.CompetiteurId
+                        where epreuve.Id == participation.EpreuveId && competiteur.Id == participation.ParticipantId
                         group new { participation, competiteur, epreuve } by new
                         {
                             participation.EpreuveId,
@@ -87,11 +87,11 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 epreuvesTechniques.ElementAt(i).TypeEpreuve = this.unitOfWork.Repository<TypeEpreuve>().Read(epreuvesTechniques.ElementAt(i).TypeEpreuveId);
             }
             var temp = (from participation in participations
-                        join comp in competiteurs on participation.CompetiteurId equals comp.Id into comp_join
+                        join comp in competiteurs on participation.ParticipantId equals comp.Id into comp_join
                         join ep in epreuvesTechniques on participation.EpreuveId equals ep.Id into ep_join
                         from competiteur in comp_join
                         from epreuve in ep_join
-                        where epreuve.Id == participation.EpreuveId && competiteur.Id == participation.CompetiteurId
+                        where epreuve.Id == participation.EpreuveId && competiteur.Id == participation.ParticipantId
                         group new { participation, competiteur, epreuve } by new
                         {
                             participation.EpreuveId,
@@ -124,7 +124,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 
             var valuedTrials = (from participation in participations
                                 from comp in competiteurs
-                                where comp.Id == participation.CompetiteurId
+                                where comp.Id == participation.ParticipantId
                                 && participation.Epreuve != null
                                 group participation by participation.EpreuveId into filteredEpreuves
                                 select new
@@ -148,7 +148,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 
             var valuedTrials = (from participation in participations
                                 from comp in competiteurs
-                                where comp.Id == participation.CompetiteurId
+                                where comp.Id == participation.ParticipantId
                                 && participation.Epreuve != null
                                 group participation by participation.EpreuveId into filteredEpreuves
                                 select new
@@ -177,7 +177,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 
 
                 competiteursEpreuve = (from competiteur in competiteurs
-                                       join participation in participations on competiteur.Id equals participation.CompetiteurId
+                                       join participation in participations on competiteur.Id equals participation.ParticipantId
                                        where participation.EpreuveId == parsed
                                        select competiteur.ToModel()).ToList();
 
@@ -210,19 +210,20 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 
             try
             {
-                foreach (var competiteur in competiteurs.Read(c => c.InscritPourBaiVuKhi || c.InscritPourQuyen || c.InscritPourSongLuyen))
+                var competiteursTechniques = competiteurs.Read(c => c.InscritPourBaiVuKhi || c.InscritPourQuyen || c.InscritPourSongLuyen).ToList();
+                foreach (var competiteur in competiteursTechniques)
                 {
                     foreach (var epreuve in epreuvestechniques.Where(e => e.TypeEpreuveId < 3))
                     {
                         if (epreuve.CategoriePratiquantId == competiteur.CategoriePratiquantId && (epreuve.GenreCategorie == GenreEpreuve.Mixte || ((int)epreuve.GenreCategorie == (int)competiteur.Sexe)))
                         {
-                            if (competiteur.InscritPourBaiVuKhi && epreuve.TypeEpreuveId == 1)
+                            if (competiteur.InscritPourQuyen && epreuve.TypeEpreuveId == 1)
                             {
                                 if (epreuve.GradeAutorise == Grade.TousGrades)
                                 {
                                     participations.Create(new Participation
                                     {
-                                        CompetiteurId = competiteur.Id,
+                                        ParticipantId = competiteur.Id,
                                         EpreuveId = epreuve.Id,
                                         Resultat = new Resultat()
                                     });
@@ -231,21 +232,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                                 {
                                     participations.Create(new Participation
                                     {
-                                        CompetiteurId = competiteur.Id,
-                                        EpreuveId = epreuve.Id,
-                                        Resultat = new Resultat()
-                                    });
-                                }
-                            }
-
-
-                            if (competiteur.InscritPourQuyen && epreuve.TypeEpreuveId == 2)
-                            {
-                                if (epreuve.GradeAutorise == Grade.TousGrades)
-                                {
-                                    participations.Create(new Participation
-                                    {
-                                        CompetiteurId = competiteur.Id,
+                                        ParticipantId = competiteur.Id,
                                         EpreuveId = epreuve.Id,
                                         Resultat = new Resultat()
                                     });
@@ -254,7 +241,39 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                                 {
                                     participations.Create(new Participation
                                     {
-                                        CompetiteurId = competiteur.Id,
+                                        ParticipantId = competiteur.Id,
+                                        EpreuveId = epreuve.Id,
+                                        Resultat = new Resultat()
+                                    });
+                                }
+                            }
+
+
+                            if (competiteur.InscritPourBaiVuKhi && epreuve.TypeEpreuveId == 2)
+                            {
+                                if (epreuve.GradeAutorise == Grade.TousGrades)
+                                {
+                                    participations.Create(new Participation
+                                    {
+                                        ParticipantId = competiteur.Id,
+                                        EpreuveId = epreuve.Id,
+                                        Resultat = new Resultat()
+                                    });
+                                }
+                                else if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
+                                {
+                                    participations.Create(new Participation
+                                    {
+                                        ParticipantId = competiteur.Id,
+                                        EpreuveId = epreuve.Id,
+                                        Resultat = new Resultat()
+                                    });
+                                }
+                                else if (epreuve.GradeAutorise == competiteur.Grade)
+                                {
+                                    participations.Create(new Participation
+                                    {
+                                        ParticipantId = competiteur.Id,
                                         EpreuveId = epreuve.Id,
                                         Resultat = new Resultat()
                                     });
@@ -322,7 +341,16 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                             {
                                 participations.Create(new Participation
                                 {
-                                    CompetiteurId = competiteur.Id,
+                                    ParticipantId = competiteur.Id,
+                                    EpreuveId = epreuve.Id,
+                                    Resultat = new Resultat()
+                                });
+                            }
+                            else if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
+                            {
+                                participations.Create(new Participation
+                                {
+                                    ParticipantId = competiteur.Id,
                                     EpreuveId = epreuve.Id,
                                     Resultat = new Resultat()
                                 });
@@ -331,7 +359,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                             {
                                 participations.Create(new Participation
                                 {
-                                    CompetiteurId = competiteur.Id,
+                                    ParticipantId = competiteur.Id,
                                     EpreuveId = epreuve.Id,
                                     Resultat = new Resultat()
                                 });
@@ -349,6 +377,173 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         }
 
         [HttpPost]
+        public JsonResult VentilationEpreuve(string id)
+        {
+            int parsed;
+
+            if (int.TryParse(id, out parsed) && parsed > 0)
+            {
+                var epreuves = this.unitOfWork.Repository<Epreuve>().Read();
+                var participants = this.unitOfWork.Repository<Participant>();
+                var participations = this.unitOfWork.Repository<Participation>();
+                var typesEpreuves = this.unitOfWork.Repository<TypeEpreuve>().Read();
+
+                var epreuve = epreuves.FirstOrDefault(e => e.Id == parsed);
+
+                if (epreuve != null)
+                {
+                    foreach (var participation in participations.Read().Where(p => p.EpreuveId == parsed))
+                    {
+                        participations.Delete(participation);
+                    }
+
+                    if (epreuve.TypeEpreuve.Technique)
+                    {
+                        foreach (var participant in participants.Read().OfType<Competiteur>())
+                        {
+                            Competiteur competiteur = (Competiteur)participant;
+                            if (epreuve.CategoriePratiquantId == competiteur.CategoriePratiquantId && (epreuve.GenreCategorie == GenreEpreuve.Mixte || ((int)epreuve.GenreCategorie == (int)competiteur.Sexe)))
+                            {
+                                if (competiteur.InscritPourQuyen && epreuve.TypeEpreuveId == 1)
+                                {
+                                    if (epreuve.GradeAutorise == Grade.TousGrades)
+                                    {
+                                        participations.Create(new Participation
+                                        {
+                                            ParticipantId = competiteur.Id,
+                                            EpreuveId = epreuve.Id,
+                                            Resultat = new Resultat()
+                                        });
+                                    }
+                                    else if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
+                                    {
+                                        participations.Create(new Participation
+                                        {
+                                            ParticipantId = competiteur.Id,
+                                            EpreuveId = epreuve.Id,
+                                            Resultat = new Resultat()
+                                        });
+                                    }
+                                    else if (epreuve.GradeAutorise == competiteur.Grade)
+                                    {
+                                        participations.Create(new Participation
+                                        {
+                                            ParticipantId = competiteur.Id,
+                                            EpreuveId = epreuve.Id,
+                                            Resultat = new Resultat()
+                                        });
+                                    }
+                                }
+
+
+                                if (competiteur.InscritPourBaiVuKhi && epreuve.TypeEpreuveId == 2)
+                                {
+                                    if (epreuve.GradeAutorise == Grade.TousGrades)
+                                    {
+                                        participations.Create(new Participation
+                                        {
+                                            ParticipantId = competiteur.Id,
+                                            EpreuveId = epreuve.Id,
+                                            Resultat = new Resultat()
+                                        });
+                                    }
+                                    else if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
+                                    {
+                                        participations.Create(new Participation
+                                        {
+                                            ParticipantId = competiteur.Id,
+                                            EpreuveId = epreuve.Id,
+                                            Resultat = new Resultat()
+                                        });
+                                    }
+                                    else if (epreuve.GradeAutorise == competiteur.Grade)
+                                    {
+                                        participations.Create(new Participation
+                                        {
+                                            ParticipantId = competiteur.Id,
+                                            EpreuveId = epreuve.Id,
+                                            Resultat = new Resultat()
+                                        });
+                                    }
+                                }
+                            }
+                        }
+
+                        if (epreuve.TypeEpreuveId == 4)
+                        {
+                            foreach (var equipe in participants.Read().OfType<EquipeSongLuyen>())
+                            {
+                                var membres = participants.Read().Cast<Competiteur>().Where(c => c.EquipeSongLuyenNumero == equipe.Numero);
+                                var hasBlackBelt = membres.Select(m => m.Grade).Contains(Grade.CeintureNoire);
+
+                                if (membres.First().InscritPourSongLuyen && hasBlackBelt && epreuve.GradeAutorise == Grade.CeintureNoire)
+                                {
+                                    participations.Create(new Participation
+                                    {
+                                        ParticipantId = equipe.Id,
+                                        EpreuveId = parsed,
+                                        Resultat = new Resultat()
+                                    });
+                                }
+                                else if (membres.First().InscritPourSongLuyen && !hasBlackBelt && epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire)
+                                {
+                                    participations.Create(new Participation
+                                    {
+                                        ParticipantId = equipe.Id,
+                                        EpreuveId = parsed,
+                                        Resultat = new Resultat()
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var competiteur in participants.Read().Cast<Competiteur>().Where(c => c.InscritPourCombat))
+                        {
+                            if (epreuve.CategoriePratiquantId == competiteur.CategoriePratiquantId && (epreuve.GenreCategorie == GenreEpreuve.Mixte || ((int)epreuve.GenreCategorie == (int)competiteur.Sexe)) && (competiteur.Poids >= ((EpreuveCombat)epreuve).PoidsMini && competiteur.Poids < ((EpreuveCombat)epreuve).PoidsMaxi))
+                            {
+                                if (epreuve.GradeAutorise == Grade.TousGrades)
+                                {
+                                    participations.Create(new Participation
+                                    {
+                                        ParticipantId = competiteur.Id,
+                                        EpreuveId = epreuve.Id,
+                                        Resultat = new Resultat()
+                                    });
+                                }
+                                else if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
+                                {
+                                    participations.Create(new Participation
+                                    {
+                                        ParticipantId = competiteur.Id,
+                                        EpreuveId = epreuve.Id,
+                                        Resultat = new Resultat()
+                                    });
+                                }
+                                else if (epreuve.GradeAutorise == competiteur.Grade)
+                                {
+                                    participations.Create(new Participation
+                                    {
+                                        ParticipantId = competiteur.Id,
+                                        EpreuveId = epreuve.Id,
+                                        Resultat = new Resultat()
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    var result = new JsonResult();
+                    result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+                    result.Data = new { success = true };
+                    return result;
+                }
+            }
+
+            throw new ArgumentException("id can't be parsed");
+        }
+
+        [HttpPost]
         public JsonResult MergeEpreuve(IEnumerable<EpreuveModel> epreuves, string areTechs)
         {
             bool techEpreuve;
@@ -362,7 +557,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                     List<Epreuve> sources = new List<Epreuve>();
                     if (techEpreuve)
                     {
-
                         var matches = (from epreuve in epreuves
                                        from dbItem in this.epreuvestechniquesRepository.Read()
                                        where dbItem.Id == epreuve.EpreuveId
@@ -401,7 +595,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                     {
                         merged = new EpreuveCombat();
                     }
-                     
+
                     merged.IsMerged = true;
                     merged.CategoriePratiquantId = sources.First().CategoriePratiquantId;
                     var isGenreMerged = sources.GroupBy(m => m.GenreCategorie).Distinct().Count() > 1;
@@ -439,8 +633,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                         this.epreuvesCombatRepository.Create(merged as EpreuveCombat);
                     }
 
-                    //this.repository.Create(merged);
-
                     var idForNewEpreuve = merged.Id;
 
                     var partipations = this.unitOfWork.Repository<Participation>();
@@ -463,7 +655,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 {
                     throw;
                 }
-
             }
             else
             {

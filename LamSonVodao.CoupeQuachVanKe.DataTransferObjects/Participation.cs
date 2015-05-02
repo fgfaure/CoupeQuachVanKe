@@ -19,7 +19,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The competiteur.
         /// </value>
-        public Competiteur Competiteur { get; set; }
+        public Participant Participant { get; set; }
 
         /// <summary>
         /// Gets or sets the competiteur identifier.
@@ -27,7 +27,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The competiteur identifier.
         /// </value>
-        public int CompetiteurId { get; set; }
+        public int ParticipantId { get; set; }
 
         /// <summary>
         /// Gets or sets the epreuve.

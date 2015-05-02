@@ -10,38 +10,37 @@
         content: "\e080";
     }
 </style>
-    <div class="col-md-8 col-md-offset-2">
-        <div class="well well-lg"><h2>Bai Quyen - Catégorie Benjamins Masculins - Moins de Ceinture Noire</h2></div>
-        <div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" data-target="#admins"
-                           href="#admins">
-                            Configuration des administrateurs et juges
-                        </a>
-                    </h3>
-                </div>
-                <div id="admins" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="panel panel-primary">                                  
-                                    <div class="panel-body">
-                                        <div class="input-group">
-                                            <span class="input-group-addon" id="juges-addon">Juges : </span>
-                                            <input class="form-control" id="juges" aria-describedby="juges-addon">
-                                        </div>
+<div class="col-md-8 col-md-offset-2">
+    <div class="well well-lg"><h2>Epreuve @ViewBag.ContestName</h2></div>
+    <div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a id="a1" data-toggle="collapse" data-target="#admins"
+                       href="#admins">
+                        Configuration des administrateurs et juges
+                    </a>
+                </h3>
+            </div>
+            <div id="admins" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="juges-addon">Juges : </span>
+                                        <input class="form-control" id="juges" aria-describedby="juges-addon">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="panel panel-primary">                                   
-                                    <div class="panel-body">
-                                        <div class="input-group">
-                                            <span class="input-group-addon" id="admins-addon">Administrateurs : </span>
-                                            <input class="form-horizontal" id="coms" aria-describedby="admins-addon">
-                                        </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="admins-addon">Administrateurs : </span>
+                                        <input class="form-horizontal" id="coms" aria-describedby="admins-addon">
                                     </div>
                                 </div>
                             </div>
@@ -50,60 +49,60 @@
                 </div>
             </div>
         </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <a data-toggle="collapse" data-target="#appel"
-                       href="#appel" class="collapsed">
-                        Appel des compétiteurs et vérification
-                    </a>
-                </h3>
-            </div>
-            <div id="appel" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <div id="competiteurs"></div>
-                    <hr />
-                    <p class="text-right">Terminer l'appel et enregistrer les juges et administrateurs.      <button class="btn btn-success btn-lg right">Valider</button></p>
-                </div>
-            </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <a id="a2" data-toggle="collapse" data-target="#appel"
+                   href="#appel" class="collapsed">
+                    Appel des compétiteurs et vérification
+                </a>
+            </h3>
         </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <a data-toggle="collapse" data-target="#epreuve"
-                       href="#epreuve" class="collapsed">
-                        Déroulement de l'épreuve
-                    </a>
-                </h3>
-            </div>
-            <div id="epreuve" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <div id="grid"></div>
-                    <hr />
-                    <p class="text-right">Valider les résultats et terminer l'épreuve.      <button class="btn btn-success btn-lg right">Valider</button></p>
-
-                </div>
+        <div id="appel" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div id="competiteurs"></div>
+                <hr />
+                <p class="text-right">Terminer l'appel et enregistrer les juges et administrateurs.      <button class="btn btn-success btn-lg right" id="validatePresence">Valider</button></p>
             </div>
         </div>
     </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <a id="a3" @*data-toggle="collapse" data-target="#epreuve"
+                       href="#epreuve"*@ class="collapsed">
+                    Déroulement de l'épreuve
+                </a>
+            </h3>
+        </div>
+        <div id="epreuve" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div id="grid"></div>
+                <hr />
+                <p class="text-right">Valider les résultats et terminer l'épreuve.      <button id="validateContest" class="btn btn-success btn-lg right">Valider</button></p>
+
+            </div>
+        </div>
+    </div>
+</div>
 <script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/kendo.all.min.js")"></script>
 
-@*<script src="http://cdn.kendostatic.com/2015.1.408/js/kendo.all.min.js"></script>*@
 <script>
-    function total(dataItem, score) {
+    function total(dataItem, Score1) {
         var sum = 0;
         var divider = 0;
-        if (score == "score") {
+        if (Score1 == "Score1") {
             for (var i = 1; i < 4; i++) {
-                if (dataItem["note" + i] !== null && dataItem["note" + i] >= 0 && dataItem["note" + i] <= 20) {
-                    sum += dataItem["note" + i];
+                if (dataItem["Note" + i] !== null && dataItem["Note" + i] >= 0 && dataItem["Note" + i] <= 20) {
+                    sum += dataItem["Note" + i];
                     divider += 1;
                 }
             }
         } else {
             for (var j = 4; j < 7; j++) {
-                if (dataItem["note" + j] !== null && dataItem["note" + j] >= 0 && dataItem["note" + j] <= 20) {
-                    sum += dataItem["note" + j];
+                if (dataItem["Note" + j] !== null && dataItem["Note" + j] >= 0 && dataItem["Note" + j] <= 20) {
+                    sum += dataItem["Note" + j];
                     divider += 1;
                 }
             }
@@ -126,52 +125,14 @@
             });
     };
 
-    var data = [{
-        id: 1,
-        nom: "Oruko",
-        prenom: "Saki",
-        club: "Foot Clan",
-        note1: "",
-        note2: "",
-        note3: "",
-        note4: "",
-        note5: "",
-        note6: "",
-        score: "",
-        score2: ""
-    }, {
-        id: 2,
-        nom: "Amato",
-        prenom: "Yoshi",
-        club: "TMNT",
-        note1: "",
-        note2: "",
-        note3: "",
-        note4: "",
-        note5: "",
-        note6: "",
-        score: "",
-        score2: ""
-    }, {
-        id: 3,
-        nom: "O'Neil",
-        prenom: "April",
-        club: "Channel 6",
-        note1: "",
-        note2: "",
-        note3: "",
-        note4: "",
-        note5: "",
-        note6: "",
-        score: "",
-        score2: ""
-    }];
+    var competiteursPresents = [];
 
     var encadrants = new kendo.data.DataSource({
         transport: {
             read: {
+                cache: false,
                 url: "../QVKApi/GetEncadrants",
-                dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                dataType: "json",
                 contentType: "application/json",
                 type: "GET",
                 complete: function (jqXHR, textStatus) {
@@ -192,7 +153,7 @@
                 var datas = [];
                 for (var i = 0; i < data.length; i++) {
                     datas.push({
-                        id: data[i].Id,
+                        Id: data[i].Id,
                         text: data[i].Nom + " " + data[i].Prenom
                     });
                 }
@@ -238,20 +199,20 @@
         autoSync: true,
         transport: {
             read: function (operation) {
-                operation.success(data);
+                operation.success(competiteursPresents);
             },
             update: function (operation) {
-                operation.data.score = total(operation.data, "score");
-                var oldscore2 = operation.data.score2;
-                operation.data.score2 = total(operation.data, "score2");
+                operation.data.Score1 = total(operation.data, "Score1");
+                var oldscore2 = operation.data.Score2;
+                operation.data.Score2 = total(operation.data, "Score2");
                 operation.success(operation.data);
-                if (operation.data.score2 != oldscore2) {
+                if (operation.data.Score2 != oldscore2) {
                     var dsSort = [];
                     dsSort.push({
-                        field: "score2",
+                        field: "Score2",
                         dir: "desc"
                     }, {
-                        field: "score",
+                        field: "Score1",
                         dir: "desc"
                     });
                     $("#grid").data('kendoGrid').dataSource.sort(dsSort);
@@ -259,49 +220,53 @@
             }
         },
         sort: [{
-            field: "score",
+            field: "Score1",
             dir: "desc"
         }],
         schema: {
             model: {
-                id: "id",
+                id: "ParticipantId",
                 fields: {
-                    nom: {
+                    Nom: {
                         type: "string",
                         editable: false
                     },
-                    prenom: {
+                    Prenom: {
                         type: "string",
                         editable: false
                     },
-                    club: {
+                    Club: {
                         type: "string",
                         editable: false
                     },
-                    note1: {
+                    Note1: {
                         type: "number"
                     },
-                    note2: {
+                    Note2: {
                         type: "number"
                     },
-                    note3: {
+                    Note3: {
                         type: "number"
                     },
-                    note4: {
+                    Note4: {
                         type: "number"
                     },
-                    note5: {
+                    Note5: {
                         type: "number"
                     },
-                    note6: {
+                    Note6: {
                         type: "number"
                     },
-                    score: {
+                    Score1: {
                         type: "number",
                         editable: false
                     },
-                    score2: {
+                    Score2: {
                         type: "number",
+                        editable: false
+                    },
+                    Classement: {
+                        type: 'number',
                         editable: false
                     }
                 }
@@ -315,7 +280,7 @@
             placeholder: "Choisissez les juges...",
             value: "Choisissez les juges...",
             dataTextField: "text",
-            dataValueField: "id",
+            dataValueField: "Id",
             dataSource: encadrants,
             maxSelectedItems: 3
         });
@@ -324,7 +289,7 @@
             placeholder: "Choisissez les administrateurs...",
             value: "Choisissez les administrateurs...",
             dataTextField: "text",
-            dataValueField: "id",
+            dataValueField: "Id",
             dataSource: encadrants,
             maxSelectedItems: 3
         });
@@ -332,6 +297,7 @@
         var competiteurDataSource = new kendo.data.DataSource({
             transport: {
                 read: {
+                    cache: false,
                     url: "GetPresentiel",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {
@@ -343,25 +309,6 @@
                         }
                     }
                 },
-                update: {
-                    url: "UpdatePresentiel",
-                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
-                    contentType: "application/json",
-                    type: "POST",
-                    complete: function (jqXHR, textStatus) {
-                        console.log(textStatus, "update");
-                        if (textStatus === "error") {
-                            $("#notification").data('kendoNotification').show({
-                                title: "Echec Mise à jour."
-                            }, "error");
-                        }
-                        else {
-                            $("#notification").data('kendoNotification').show({
-                                title: "Mise à jour réussie."
-                            }, "success");
-                        }
-                    }
-                },               
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options.models) {
                         return { models: kendo.stringify(options.models) };
@@ -373,13 +320,17 @@
             },
             schema: {
                 model: {
-                    id: "Id",
+                    id: "ParticipantId",
                     fields: {
-                        Id: {
+                        ParticipantId: {
                             editable: false,
                             nullable: false
                         },
-                        NomPrenom: {
+                        Nom: {
+                            editable: false,
+                            type: "string"
+                        },
+                        Prenom: {
                             editable: false,
                             type: "string"
                         },
@@ -403,105 +354,183 @@
                 refresh: true,
                 pageSizes: true,
                 buttonCount: 5
-            },           
+            },
             autosync: true,
-            toolbar: ["save"],
             columns: [
                     { field: "Nom", title: "Nom" },
                     { field: "Prenom", title: "Prénom" },
-                    {
-                        field: "DateNaissance", title: "Date de Naissance", template: '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #',
-                        groupHeaderTemplate: 'Date de Naissance : #=  kendo.toString(value, "dd/MM/yyyy") #'
-                    },
                      { field: "Club", width: "200px", title: "Club" },
-                     {field: "Present", title : "Présent", template: '<input type="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>'}
+                     { field: "Present", title: "Présent", template: '<input type="checkbox" #= Present ? "checked=checked" : "" # disabled="disabled" ></input>' }
             ],
             editable: "incell"
         });
 
-        $("#grid").kendoGrid({
-            dataSource: dataSource,
-            //toolbar: ["save"],
-            groupable: false,
-            sortable: false,
-            resizable: false,
-            reorderable: false,
-            pageable: false,
-            editable: "incell",
-            columns: [{
-                field: "nom",
-                title: "nom"
-            }, {
-                field: "prenom",
-                title: "prenom"
-            }, {
-                field: "club",
-                title: "club"
-            }, {
-                title: "Notes",
-                columns: [{
-                    title: "passage 1",
-                    width: 200,
-                    columns: [{
-                        field: "note1",
-                        editor: scoreEditor
-                    }, {
-                        field: "note2",
-                        editor: scoreEditor
-                    }, {
-                        field: "note3",
-                        editor: scoreEditor
-                    }, {
-                        field: "score",
-                        width: '60px',
-                        title: "Total"
-                    }]
-                }, {
-                    title: "passage 2",
-                    columns: [{
-                        field: "note4",
-                        editor: scoreEditor
-                    }, {
-                        field: "note5",
-                        editor: scoreEditor
-                    }, {
-                        field: "note6",
-                        editor: scoreEditor
-                    }, {
-                        field: "score2",
-                        width: '60px',
-                        title: "Total"
-                    }]
-                }]
-            }, {
-                title: "Classement",
-                template: function (dataItem) {
-                    console.log("toto");
-                    var grid = $("#grid").data('kendoGrid');
-                    if ((dataItem.score === null || dataItem.score === "") && (dataItem.score2 === null || dataItem.score2 === "")) {
-                        return "";
-                    }
-                    var rowIndex = grid.dataSource.view().indexOf(dataItem);
-                    return rowIndex + 1;
-                }
-            }],
-            dataBound: function (e) {
-                var gridDataSource = e.sender.dataSource;
-                for (var i = 0; i < gridDataSource.data().length; i++) {
-                    var dataItem = gridDataSource.at(i);
-                    var score1 = total(dataItem, "score");
-                    var score2 = total(dataItem, "score2");
+        $("#validateContest").off('click').on('click', function (e) {
+            var grid = $("#grid").data('kendoGrid');
+            var results = [];
+            $.each(grid.dataSource.data(), function (i, e) {
+                results.push(e);
+            });
 
-                    if (score1 != dataItem.score) {
-                        //                    console.log("set score");
-                        dataItem.score = score1;
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                async: true,
+                url: "TerminerEpreuve",
+                data: kendo.stringify({ resultats: results }),
+                contentType: 'application/json',
+                dataType: 'json'
+            }).success(function (response) {
+                window.location.href = response.Uri;
+            }).fail(function () {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur à la clôture."
+                }, "error");
+            });
+        });
+
+        $("#validatePresence").off('click').on('click', function (e) {
+            var grid = $("#competiteurs").data('kendoGrid');
+            var competiteurs = [];
+            $.each(grid.dataSource.data(), function (i, e) {
+                competiteurs.push(e);
+            });
+
+            var encadrants = [];
+            $.each($("#juges").data('kendoMultiSelect').dataItems(), function (i, e) {
+                encadrants.push({ Id: e.Id, Role: "Arbitre" });
+            });
+            $.each($("#coms").data('kendoMultiSelect').dataItems(), function (i, e) {
+                encadrants.push({ Id: e.Id, Role: "Commissaire" });
+            });
+
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                async: true,
+                url: "UpdatePresentielTechnique",
+                data: kendo.stringify({ participations: competiteurs, encadrants: encadrants }),
+                contentType: 'application/json',
+                dataType: 'json'
+            }).success(function (result, textStatus) {
+                console.log(textStatus, "validation OK");
+                $("#notification").data('kendoNotification').show({
+                    title: "Appel des compétiteurs validé."
+                }, "success");
+                grid.dataSource.read(dataSource.data());
+                competiteursPresents = result;
+                $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    //toolbar: ["save"],
+                    groupable: false,
+                    sortable: false,
+                    resizable: false,
+                    reorderable: false,
+                    pageable: false,
+                    editable: "incell",
+                    columns: [{
+                        field: "Nom",
+                        title: "Nom",
+                        width: 150
+                    }, {
+                        field: "Prenom",
+                        title: "Prénom",
+                        width: 150
+                    }, {
+                        field: "Club",
+                        title: "Club",
+                        width: 200
+                    }, {
+                        title: "Notes",
+                        columns: [{
+                            title: "Passage 1",
+                            columns: [{
+                                field: "Note1",
+                                width: 60,
+                                editor: scoreEditor,
+                                title: "Juge 1"
+                            }, {
+                                field: "Note2",
+                                width: 60,
+                                editor: scoreEditor,
+                                title: "Juge 2"
+                            }, {
+                                field: "Note3",
+                                width: 60,
+                                editor: scoreEditor,
+                                title: "Juge 3"
+                            }, {
+                                field: "Score1",
+                                width: 60,
+                                title: "Total"
+                            }]
+                        }, {
+                            title: "Passage 2",
+                            columns: [{
+                                field: "Note4",
+                                width: 60,
+                                editor: scoreEditor,
+                                title: "Juge 1"
+                            }, {
+                                field: "Note5",
+                                width: 60,
+                                editor: scoreEditor,
+                                title: "Juge 2"
+                            }, {
+                                field: "Note6",
+                                width: 60,
+                                editor: scoreEditor,
+                                title: "Juge 3"
+                            }, {
+                                field: "Score2",
+                                width: 60,
+                                title: "Total"
+                            }]
+                        }]
+                    }, {
+                        field : "Classement",
+                        title: "Classement",
+                        width: 90,
+                        template: function (dataItem) {
+                            console.log("fetching total");
+                            var grid = $("#grid").data('kendoGrid');
+                            if ((dataItem.Score1 === null || dataItem.Score1 === "") && (dataItem.Score2 === null || dataItem.Score2 === "")) {
+                                return "";
+                            }
+                            var rowIndex = grid.dataSource.view().indexOf(dataItem);
+                            dataItem.Classement = rowIndex + 1;
+                            return rowIndex + 1;
+                        }
+                    }],
+                    dataBound: function (e) {
+                        var gridDataSource = e.sender.dataSource;
+                        for (var i = 0; i < gridDataSource.data().length; i++) {
+                            var dataItem = gridDataSource.at(i);
+                            var score1 = total(dataItem, "Score1");
+                            var Score2 = total(dataItem, "Score2");
+
+                            if (score1 != dataItem.Score1) {
+                                //                    console.log("set Score1");
+                                dataItem.Score1 = score1;
+                            }
+                            if (Score2 != dataItem.Score2) {
+                                //                    console.log("set Score2");
+                                dataItem.Score2 = Score2;
+                            }
+                        }
                     }
-                    if (score2 != dataItem.score2) {
-                        //                    console.log("set score2");
-                        dataItem.score2 = score2;
-                    }
-                }
-            }
+                });
+                $("#a1, #a2").not('.collapsed').trigger('click');
+                $("#a1, #a2").removeAttr('data-toggle').removeAttr('data-target').attr('href', "#").addClass("collapsed");
+                $("#a3").attr('data-toggle', 'collapse').attr('data-target', '#epreuve').attr('href', "#epreuve").removeClass("collapsed");
+                $("#a3").trigger('click')
+
+            }).fail(function () {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur de validation de l'appel"
+                }, "error");
+            });
+
         });
     });
 </script>

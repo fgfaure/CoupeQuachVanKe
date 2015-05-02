@@ -28,47 +28,52 @@
         /// The competiteurs
         /// </summary>
         private Repository<Competiteur> competiteurs;
+
         /// <summary>
         /// The coupes
         /// </summary>
         private Repository<Coupe> coupes;
+
         /// <summary>
         /// The clubs
         /// </summary>
         private Repository<Club> clubs;
+
         /// <summary>
         /// The encadrants
         /// </summary>
         private Repository<Encadrant> encadrants;
+
         /// <summary>
         /// The responsables
         /// </summary>
         private Repository<ResponsableClub> responsables;
+
         /// <summary>
         /// The responsable coupe
         /// </summary>
         private Repository<ResponsableCoupe> responsableCoupe;
+
         /// <summary>
         /// The aires
         /// </summary>
         private Repository<Aire> aires;
+
         /// <summary>
         /// The medecins
         /// </summary>
         private Repository<Medecin> medecins;
+
         /// <summary>
         /// The epreuves combat
         /// </summary>
         private Repository<EpreuveCombat> epreuvesCombat;
+
         /// <summary>
         /// The epreuves techniques
         /// </summary>
         private Repository<EpreuveTechnique> epreuvesTechniques;
-        /////// <summary>
-        /////// The categories poids
-        /////// </summary>
-        ////private Repository<CategoriePoids> categoriesPoids;
-
+       
         /// <summary>
         /// The type epreuves
         /// </summary>
@@ -85,6 +90,21 @@
         private Repository<NetClient> clients;
 
         /// <summary>
+        /// The resultats
+        /// </summary>
+        private Repository<Resultat> resultats;
+
+        /// <summary>
+        /// The participations
+        /// </summary>
+        private Repository<Participation> participations;
+
+        /// <summary>
+        /// The participants
+        /// </summary>
+        private Repository<Participant> participants;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="QVKApiController"/> class.
         /// </summary>
         public QVKApiController()
@@ -99,10 +119,12 @@
             this.medecins = this.unitOfWork.Repository<Medecin>();
             this.epreuvesCombat = this.unitOfWork.Repository<EpreuveCombat>();
             this.epreuvesTechniques = this.unitOfWork.Repository<EpreuveTechnique>();
-            ////this.categoriesPoids = this.unitOfWork.Repository<CategoriePoids>();
             this.typeEpreuves = this.unitOfWork.Repository<TypeEpreuve>();
             this.categories = this.unitOfWork.Repository<CategoriePratiquant>();
             this.clients = this.unitOfWork.Repository<NetClient>();
+            this.participants = this.unitOfWork.Repository<Participant>();
+            this.participations = this.unitOfWork.Repository<Participation>();
+            this.resultats = this.unitOfWork.Repository<Resultat>();
         }
 
         /// <summary>
@@ -321,6 +343,10 @@
             return result;
         }
 
+        /// <summary>
+        /// Gets the statuses.
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetStatuses()
         {
             var result = new JsonResult();
@@ -329,6 +355,10 @@
             return result;
         }
 
+        /// <summary>
+        /// Gets the type epreuves.
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetTypeEpreuves()
         {
             var result = new JsonResult();
@@ -337,6 +367,10 @@
             return result;
         }
 
+        /// <summary>
+        /// Gets the type epreuves techniques.
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetTypeEpreuvesTechniques()
         {
             var result = new JsonResult();
@@ -345,6 +379,10 @@
             return result;
         }
 
+        /// <summary>
+        /// Gets the type epreuves combat.
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetTypeEpreuvesCombat()
         {
             var result = new JsonResult();
@@ -352,5 +390,37 @@
             result.Data = this.typeEpreuves.Read().Where(t => !t.Technique).Select(t => t.ToModel());
             return result;
         }
-    }
+
+        public JsonResult GetClassementClubs()
+        {
+            var result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            var clubs = this.clubs.Read();
+            var participants = this.participants.Read();
+            var resultats = this.resultats.Read();
+            var participations = this.participations.Read();
+
+           List<ScoreClub> clubsAndScore = new List<ScoreClub>();
+
+            foreach (var club  in clubs)
+            {
+                var totalPoint = 0;
+                foreach (var participant in club.Participants.Where(p => p.Participations != null))
+                {
+                    foreach (var participation in participant.Participations)
+                    {
+                        totalPoint += participation.Resultat.Score;
+                    }
+                }
+                clubsAndScore.Add(new ScoreClub {
+                    Id = club.Id,
+                    Nom = club.Nom,
+                    Score = totalPoint
+                });
+            }
+
+            result.Data = clubsAndScore.OrderByDescending(a => a.Score).Take(6);
+            return result;
+        }
+    }    
 }

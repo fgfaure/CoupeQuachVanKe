@@ -30,7 +30,7 @@
 
             this.Property(epreuve => epreuve.GradeAutorise).IsRequired();
 
-            this.HasRequired(epreuve => epreuve.TypeEpreuve).WithMany(te => te.Epreuves).HasForeignKey(te => te.TypeEpreuveId).WillCascadeOnDelete(true);            
+            this.HasRequired(epreuve => epreuve.TypeEpreuve).WithMany(te => te.Epreuves).HasForeignKey(te => te.TypeEpreuveId).WillCascadeOnDelete(true);          
         }
     }
 }

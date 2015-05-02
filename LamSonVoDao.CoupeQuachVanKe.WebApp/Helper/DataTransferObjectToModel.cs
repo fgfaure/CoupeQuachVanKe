@@ -61,6 +61,16 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             return result;
         }
 
+        public static ParticipantModel ToModel(this Participant dto)
+        {
+            ParticipantModel result = new ParticipantModel();
+            result.Id = dto.Id;            
+            result.ClubId = dto.ClubId;           
+            result.Nom = dto.Nom;            
+            result.Prenom = dto.Prenom;         
+            return result;
+        }
+
         public static ResponsableClubModel ToModel(this ResponsableClub dto)
         {
             ResponsableClubModel result = new ResponsableClubModel();
@@ -123,6 +133,15 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.CoupeId = dto.CoupeId;
             result.Description = dto.Description;
             result.NetClientId = dto.NetClientId;
+            if (dto.Epreuves != null && dto.Epreuves.Count() > 0)
+            {
+                result.EpreuveId = dto.Epreuves.FirstOrDefault().Id.ToString();
+            }
+            else
+            {
+                result.EpreuveId = string.Empty;
+            }
+
             return result;
         }
 
@@ -204,5 +223,23 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             return result;
         }
 
+        public static ParticipationModel ToPresentielModel(this Competiteur dto, int epreuveId, bool present)
+        {
+
+            ParticipationModel result = new ParticipationModel();            
+            result.ParticipantId = dto.Id;
+            result.Nom = dto.Nom;
+            result.Prenom = dto.Prenom;
+            result.Present = present;
+            result.EpreuveId = epreuveId;
+            result.ClubId = dto.ClubId;
+            if (dto.Club != null)
+            {
+                result.Club = dto.Club.Nom;
+            }
+
+            return result;
+
+        }
     }
 }

@@ -56,7 +56,7 @@
                     var identity = new ClaimsIdentity(new[] {
                     new Claim(ClaimTypes.NameIdentifier, client.ClientLogInName)
                 }, "ApplicationCookie");
-
+                    
                     var ctx = Request.GetOwinContext();
                     var authManager = ctx.Authentication;
 

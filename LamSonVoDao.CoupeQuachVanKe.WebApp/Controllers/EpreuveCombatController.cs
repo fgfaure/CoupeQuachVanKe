@@ -35,13 +35,15 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 var genre = GenreEpreuves.ResourceManager.GetString(((GenreEpreuve)model.GenreCategorieId).ToString());
                 var grade = Grades.ResourceManager.GetString(((Grade)model.GradeAutoriseId).ToString());
 
+                var nom = BuildEpreuveName(model, categorie, typeEpreuve, genre, grade);
+
                 var dbitem = new EpreuveCombat
                 {
-                    Nom = string.Format("{0} {1} {2} {3} de {4}kgs à {5}kgs", typeEpreuve, categorie, genre, grade, model.PoidsMini, model.PoidsMaxi),
+                    Nom = nom,
                     CategoriePratiquantId = model.CategorieId,
                     GenreCategorie = (GenreEpreuve)model.GenreCategorieId,
                     GradeAutorise = (Grade)model.GradeAutoriseId,
-                    Statut = StatutEpreuve.Fermee,
+                    Statut = (StatutEpreuve)model.StatutId,
                     TypeEpreuveId = model.TypeEpreuveId,
                     PoidsMini = model.PoidsMini,
                     PoidsMaxi = model.PoidsMaxi
@@ -56,7 +58,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 throw;
             }
         }
-
+    
         public JsonResult Delete(EpreuveCombatModel model)
         {
             try
@@ -86,15 +88,15 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 var typeEpreuve = this.types.Read(model.TypeEpreuveId).Nom;
                 var genre = GenreEpreuves.ResourceManager.GetString(((GenreEpreuve)model.GenreCategorieId).ToString());
                 var grade = Grades.ResourceManager.GetString(((Grade)model.GradeAutoriseId).ToString());
-
+                var nom = BuildEpreuveName(model, categorie, typeEpreuve, genre, grade);
                 var dbmodel = this.repository.Read(m => m.Id == model.Id).First();
                 if (dbmodel != null)
                 {
-                    dbmodel.Nom = string.Format("{0} {1} {2} {3} de {4}kgs à {5}kgs", typeEpreuve, categorie, genre, grade, model.PoidsMini, model.PoidsMaxi);
+                    dbmodel.Nom = nom;
                     dbmodel.CategoriePratiquantId = model.CategorieId;
                     dbmodel.GenreCategorie = (GenreEpreuve)model.GenreCategorieId;
                     dbmodel.GradeAutorise = (Grade)model.GradeAutoriseId;
-                    dbmodel.Statut = StatutEpreuve.Fermee;
+                    dbmodel.Statut = (StatutEpreuve)model.StatutId;
                     dbmodel.TypeEpreuveId = model.TypeEpreuveId;
                     dbmodel.PoidsMini = model.PoidsMini;
                     dbmodel.PoidsMaxi = model.PoidsMaxi;
@@ -111,5 +113,25 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 throw;
             }
         }
+
+        private static string BuildEpreuveName(EpreuveCombatModel model, string categorie, string typeEpreuve, string genre, string grade)
+        {
+            var nom = string.Empty;
+
+            if (model.PoidsMini == 0)
+            {
+                nom = string.Format("{0} {1} {2} {3} -{4} kgs", typeEpreuve, categorie, genre, grade, model.PoidsMaxi);
+            }
+            else if (model.PoidsMaxi == 1000)
+            {
+                nom = string.Format("{0} {1} {2} {3} +{4} kgs", typeEpreuve, categorie, genre, grade, model.PoidsMini);
+            }
+            else
+            {
+                nom = string.Format("{0} {1} {2} {3} de {4}kgs à {5}kgs", typeEpreuve, categorie, genre, grade, model.PoidsMini, model.PoidsMaxi);
+            }
+            return nom;
+        }
+
     }
 }

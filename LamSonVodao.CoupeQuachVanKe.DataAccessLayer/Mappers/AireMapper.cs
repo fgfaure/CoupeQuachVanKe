@@ -27,7 +27,7 @@
 
             this.HasRequired(aire => aire.Coupe)
                 .WithMany(coupe => coupe.Aires)
-                .HasForeignKey(aire => aire.CoupeId).WillCascadeOnDelete(true);
+                .HasForeignKey(aire => aire.CoupeId).WillCascadeOnDelete(false);
         }
     }
 }

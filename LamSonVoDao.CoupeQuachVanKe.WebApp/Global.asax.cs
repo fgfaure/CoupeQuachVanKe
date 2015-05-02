@@ -37,5 +37,17 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp
                 unitOfWork.Repository<NetClient>().Update(dbitem);
             }
         }
+
+        protected void Application_End(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Application_End");
+            UnitOfWork unitOfWork = new UnitOfWork();
+            var clients = unitOfWork.Repository<NetClient>();
+            foreach (var client in clients.Read())
+            {
+                client.IsConnected = false;
+                clients.Update(client);
+            }
+        }
     }
 }

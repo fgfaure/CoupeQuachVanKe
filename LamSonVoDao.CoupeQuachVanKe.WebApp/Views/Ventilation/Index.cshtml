@@ -92,6 +92,7 @@
     </div>
 </div>
 <div>
+    <div>
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h2 class="panel-title">
@@ -194,8 +195,8 @@
             cache: false,
             type: 'POST',
             async: true,
-            url: "VentilerEpreuve",
-            data: JSON.stringify(dataItem),
+            url: "VentilationEpreuve",
+            data: JSON.stringify({id : dataItem.Id}),
             contentType: 'application/json',
             dataType: 'json',
         }).fail(function (err) {
@@ -276,6 +277,7 @@
                 dataSource: {
                     transport: {
                         read: {
+                            cache: false,
                             url: "Competiteurs",
                             dataType: "json",
                             contentType: "application/json",
@@ -454,6 +456,7 @@
         var countedTechniques = new kendo.data.DataSource({
             transport: {
                 read: {
+                    cache: false,
                     url: "GetEpreuvesTechniquesWithCount",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {
@@ -499,6 +502,7 @@
         var countedCombat = new kendo.data.DataSource({
             transport: {
                 read: {
+                    cache: false,
                     url: "GetEpreuvesCombatWithCount",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {
@@ -607,6 +611,7 @@
             group: { field: "epreuve" },
             transport: {
                 read: {
+                    cache: false,
                     url: "GetInscriptionTechnique",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {
@@ -741,6 +746,7 @@
             group: { field: "epreuve" },
             transport: {
                 read: {
+                    cache: false,
                     url: "GetInscriptionCombat",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {

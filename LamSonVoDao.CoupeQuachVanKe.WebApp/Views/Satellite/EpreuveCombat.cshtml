@@ -1,6 +1,645 @@
-﻿<div class="well-lg"></div>
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        Combat
+﻿<style scoped>
+    a.collapsed {
+        text-decoration: none;
+    }
+
+    .panel-heading a:after {
+        font-family: 'Glyphicons Halflings';
+        content: "\e114";
+        float: right;
+        color: white;
+    }
+
+    .panel-heading a.collapsed:after {
+        content: "\e080";
+    }
+</style>
+<div class="col-md-8 col-md-offset-2">
+    <div class="well well-lg"><h2>Epreuve @ViewBag.ContestName</h2></div>
+    <div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a id="a1" data-toggle="collapse" data-target="#admins"
+                       href="#admins">
+                        Configuration des administrateurs et juges
+                    </a>
+                </h3>
+            </div>
+            <div id="admins" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="juges-addon">Juges : </span>
+                                        <input class="form-control" id="juges" aria-describedby="juges-addon">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="admins-addon">Administrateurs : </span>
+                                        <input class="form-control" id="coms" aria-describedby="admins-addon">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <a id="a2" data-toggle="collapse" data-target="#appel"
+                   href="#appel" class="collapsed">
+                    Appel des compétiteurs et vérification
+                </a>
+            </h3>
+        </div>
+        <div id="appel" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div id="competiteurs"></div>
+                <hr />
+                <p class="text-right">Terminer l'appel et enregistrer les juges et administrateurs.      <button class="btn btn-success btn-lg right" id="validatePresence">Valider</button></p>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <a id="a3" @*data-toggle="collapse" data-target="#epreuve"
+                       href="#epreuve"*@ class="collapsed">
+                    Déroulement de l'épreuve
+                </a>
+            </h3>
+        </div>
+        <div id="epreuve" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="panel panel-info" id="epreuve">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a id="a4" data-toggle="collapse" data-target="#combatPanel"
+                               href="#combatPanel">
+                                Combats éliminatoires
+                            </a>
+                        </h4>
+
+                    </div>
+                    <div id="combatPanel" class="panel-collapse collapse in">
+                        <div class="panel-body" id="combatDiagram"></div>
+                    </div>
+                </div>
+
+                <div class="panel panel-info" id="petiteFinaleContainer">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a id="a5" data-toggle="collapse" data-target="#pfPanel"
+                               href="#pfPanel">
+                                Petite Finale
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="pfPanel" class="panel-collapse collapse in">
+                        <div class="panel-body" id="petiteFinaleDiagram"></div>
+                    </div>
+                </div>
+                <p class="text-right">Valider les résultats et terminer l'épreuve.      <button id="validateContest" class="btn btn-success btn-lg right">Valider</button></p>
+            </div>
+        </div>
+        @*<div id="epreuve" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Combats</div>
+                        <div class="panel-body">
+                            <div id="combatDiagram"></div>
+                        </div>
+                    </div>
+                    <div id="petiteFinaleContainer" class="panel panel-default">
+                        <div class="panel-heading">Petite Finale</div>
+                        <div class="panel-body">
+                            <div id="petiteFinaleDiagram"></div>
+                        </div>
+                    </div>
+
+
+                    <hr />
+                    <p class="text-right">Valider les résultats et terminer l'épreuve.      <button id="validateContest" class="btn btn-success btn-lg right">Valider</button></p>
+
+                </div>
+            </div>*@
     </div>
 </div>
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/kendo.all.min.js")"></script>
+<script>
+    var count = 0;
+    var silverColor = "#c0c0c0";
+    var bronzeColor = "#CD7F32";
+    var competiteursPresents = [];
+    var pfCompetiteurs = [{
+        Vainqueur: null,
+        Couleur: bronzeColor,
+        Children: [],
+        Rank: 0,
+        Id: 1,
+        ParticipantId: 0,
+        Nom: "",
+        Prenom: "",
+        Club: null,
+        ClubId: 0,
+        EpreuveId: 0
+    }];
+
+    //var connexions = [];
+    var encadrants = new kendo.data.DataSource({
+        transport: {
+            read: {
+                cache: false,
+                url: "../QVKApi/GetEncadrants",
+                dataType: "json",
+                contentType: "application/json",
+                type: "GET",
+                complete: function (jqXHR, textStatus) {
+                    console.log(textStatus, "update");
+                    if (textStatus === "error") {
+                        $("#notification").data('kendoNotification').show({
+                            title: "Echec Lecture des encadrants."
+                        }, "error");
+                    }
+                }
+            },
+            parameterMap: function (options) {
+                return JSON.stringify(options);
+            }
+        },
+        schema: {
+            parse: function (data) {
+                var datas = [];
+                for (var i = 0; i < data.length; i++) {
+                    datas.push({
+                        Id: data[i].Id,
+                        text: data[i].Nom + " " + data[i].Prenom
+                    });
+                }
+                return datas;
+            },
+            model: {
+                id: "Id",
+                fields: {
+                    Id: {
+                        editable: false,
+                        nullable: false
+                    },
+                    Nom: {
+                        editable: false,
+                        type: "string"
+                    },
+                    Prenom: {
+                        editable: false,
+                        type: "string"
+                    },
+                    MailContact: {
+                        editable: false,
+                        type: "string"
+                    },
+                    TailleTenueId: {
+                        editable: false,
+                        type: "number"
+                    },
+                    EstCompetiteur: {
+                        editable: false,
+                        type: "boolean"
+                    },
+                    GenreId: {
+                        editable: false,
+                        type: "number"
+                    }
+                }
+            }
+        }
+    });
+
+    function visualTemplate(options) {
+        var dataviz = kendo.dataviz;
+        var g = new dataviz.diagram.Group();
+        var dataItem = options.dataItem;
+        console.log("visualTemplate " + dataItem.Nom);
+
+        g.append(new dataviz.diagram.Rectangle({
+            width: 165,
+            height: 30,
+            fill: dataItem.Couleur
+        }));
+
+        var fillTextColor = (dataItem.Couleur === "#FF0000" || dataItem.Couleur === "#0000FF") ? "#dedede" : "#000000";
+
+        g.append(new dataviz.diagram.TextBlock({
+            text: dataItem.Nom + ' ' + dataItem.Prenom,
+            x: 5,
+            y: 5,
+            fill: fillTextColor
+        }));
+
+        g.append(new dataviz.diagram.Rectangle({
+            width: 30,
+            x: 165,
+            height: 30,
+            fill: "ffffff"
+        }));
+
+        var textNode = "";
+
+        if (dataItem.Vainqueur !== null) {
+            textNode = (dataItem.Vainqueur) ? "G" : "P";
+        }
+
+        g.append(new dataviz.diagram.TextBlock({
+            text: textNode,
+            x: 175,
+            y: 6,
+            fill: "#000000"
+        }));
+
+        return g;
+    }
+
+    function findTreeviewNodeById(haystack, needle) {
+        var uid = null;
+
+        for (var i = 0; i < haystack.length; i++) {
+            haystack[i].load();
+            if (haystack[i].ParticipantId == needle) {
+                uid = haystack[i].uid;
+            }
+            else if (haystack[i].Children != null) {
+                uid = findTreeviewNodeById(haystack[i].Children, needle);
+            }
+
+            if (uid != null)
+                break;
+        }
+
+        return uid;
+    }
+   
+
+    function cloneProperties(o1, o2) {
+        o1.Nom = o2.Nom;
+        o1.ParticipantId = o2.ParticipantId;
+        o1.Club = o2.Club;
+        o1.Prenom = o2.Prenom;
+        o1.EpreuveId = o2.EpreuveId;
+        o1.ClubId = o2.ClubId;
+
+        if (o1.parentNode && o1.parentNode() === undefined) {
+            o1.Vainqueur = o2.Vainqueur;
+        }
+    }
+
+    function setConsolationSource(competiteur) {
+        var consolationCompetiteurs = pfCompetiteurs[0].Children;
+        var count = consolationCompetiteurs.filter(function (item) {
+            return item.ParticipantId && item.ParticipantId === competiteur.ParticipantId;
+        }).length;
+
+        if (count == 0) {
+            var c = {
+                ParticipantId: competiteur.ParticipantId,
+                Nom: competiteur.Nom,
+                Club: competiteur.Club,
+                Prenom: competiteur.Prenom,
+                EpreuveId: competiteur.EpreuveId,
+                ClubId: competiteur.ClubId,
+                Vainqueur: null,
+                Couleur: (consolationCompetiteurs.length == 0) ? "#0000FF" : "#FF0000"
+            }
+            pfCompetiteurs[0].Children.push(c);
+        }
+
+        if (pfCompetiteurs[0].Children.length == 2) {
+            createDiagram('#petiteFinaleDiagram', pfCompetiteurs);
+            $("#petiteFinaleContainer").show();
+            setTimeout(function () {
+                $("#a4").trigger('click')
+            }, 750);
+        }
+    }
+
+    function createDiagram(selector, source) {
+        var kendodatasource = new kendo.data.HierarchicalDataSource({
+            transport: {
+                read: function (e) {
+                    console.log("reading competiteurs");
+                    e.success(source);
+                    $("div [data-role$='surface'").css('width', 'auto');
+                    var options = $(selector).data('kendoDiagram').options;
+                    var verticalSeparation = options.layout.verticalSeparation;
+                    var shapeHeight = options.shapeDefaults.height;
+                    var computed = count * shapeHeight + (count + 3) * verticalSeparation;
+                    if (source[0].Couleur == bronzeColor) {
+                        computed = 2 * shapeHeight + 5 * verticalSeparation;
+                    }
+
+                    $(selector + " > div [data-role$='surface'").css('height', computed);
+                },
+                update: function (e) {
+                    var competiteur = e.data;
+                    console.log("updating compétiteurs");
+                    var uid = findTreeviewNodeById(competiteurDataSource.data(), competiteur.ParticipantId);
+                    var item = competiteurDataSource.getByUid(uid);
+                    item.set('Vainqueur', competiteur.Vainqueur);
+                    competiteurDataSource.read();
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read") {
+                        return { models: kendo.stringify(options.models || [options]) };
+                    }
+                }
+            },
+            error: function (e) {
+                alert("Status: " + e.status + "; Error message: " + e.errorThrown);
+            },
+            schema: {
+                model: {
+                    id: "id",
+                    fields: {
+                        id: { from: "Id", type: "number", editable: false },
+                        Nom: { type: "string", editable: false },
+                        Couleur: { type: "string", editable: false },
+                        Vainqueur: { type: "boolean", editable: true, nullable: true },
+                        Rank: { type: "number", editable: false, nullable: false },
+                        Classement: { type: "string", editable: false }
+                    },
+                    children: "Children"
+                }
+            }
+        });
+
+        $(selector).kendoDiagram({
+            dataSource: kendodatasource,
+            //connectionDataSource: connectionsDataSource,
+            layout: {
+                type: "tree",
+                subtype: "left",
+                horizontalSeparation: 50,
+                verticalSeparation: 25
+            },
+            editable: {
+                resize: false,
+                tools: [""]
+            },
+            shapeDefaults: {
+                visual: visualTemplate,
+                height: 30,
+                content: {
+                    fontSize: 14,
+                    align: "left",
+                    color: "#DEDEDE"
+                },
+                editable: {
+                    tools: ["edit"],
+                    connect: false
+                }
+            },
+            connectionDefaults: {
+                editable: false,
+                selection: false
+            },
+            zoomRate: 1,
+            zoomMax: 1,
+            zoomMin: 1,
+            edit: function (e) {
+                console.log("edit");
+
+            },
+            save: function (e) {
+                console.log("save");
+                if (e.shape.Vainqueur === null) {
+                    e.shape.Vainqueur = false;
+                }
+                var siblings = e.shape.parent();
+                var sibling = {};
+                if (e.shape.parent().length == 2) {
+                    for (var i = 0; i < siblings.length; i++) {
+                        if (siblings[i].uid != e.shape.uid) {
+                            sibling = siblings[i];
+                            break;
+                        }
+                    }
+
+                    sibling.Vainqueur = !e.shape.Vainqueur
+                    if (e.shape.Vainqueur) {
+                        cloneProperties(sibling.parentNode(), e.shape);
+                        if (e.shape.Rank === 2) {
+                            setConsolationSource(sibling);
+                        }
+                    }
+                    else {
+                        cloneProperties(sibling.parentNode(), sibling);
+                        if (e.shape.Rank === 2) {
+                            setConsolationSource(e.shape);
+                        }
+                    }
+                }
+                kendodatasource.sync();
+                $(selector).data('kendoDiagram').setDataSource(kendodatasource);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("#petiteFinaleContainer").hide();
+
+        $("#juges").kendoMultiSelect({
+            placeholder: "Choisissez les juges...",
+            value: "Choisissez les juges...",
+            dataTextField: "text",
+            dataValueField: "Id",
+            dataSource: encadrants,
+            maxSelectedItems: 4
+        });
+
+        $("#coms").kendoMultiSelect({
+            placeholder: "Choisissez les administrateurs...",
+            value: "Choisissez les administrateurs...",
+            dataTextField: "text",
+            dataValueField: "Id",
+            dataSource: encadrants,
+            maxSelectedItems: 3
+        });
+
+        var competiteurDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    cache: false,
+                    url: "GetPresentiel",
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des compétiteurs."
+                            }, "error");
+                        }
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "ParticipantId",
+                    fields: {
+                        ParticipantId: {
+                            editable: false,
+                            nullable: false
+                        },
+                        Nom: {
+                            editable: false,
+                            type: "string"
+                        },
+                        Prenom: {
+                            editable: false,
+                            type: "string"
+                        },
+                        Club: {
+                            field: "Club",
+                            type: "string"
+                        },
+                        Present: {
+                            editable: true,
+                            type: "boolean"
+                        },
+                        Rank: { type: "number", editable: false, nullable: false },
+                        Classement: { type: "string", editable: false }
+                    }
+                }
+            },
+            pageSize: 10
+        });
+
+        $("#competiteurs").kendoGrid({
+            dataSource: competiteurDataSource,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            autosync: true,
+            columns: [
+                    { field: "Nom", title: "Nom" },
+                    { field: "Prenom", title: "Prénom" },
+                     { field: "Club", width: "200px", title: "Club" },
+                     { field: "Present", title: "Présent", template: '<input type="checkbox" #= Present ? "checked=checked" : "" # disabled="disabled" ></input>' }
+            ],
+            editable: "incell"
+        });
+
+        $("#validateContest").off('click').on('click', function (e) {
+            var ds = $("#combatDiagram").data('kendoDiagram').dataSource;
+            var first = ds.at(0);
+            first.Classement = 1;
+
+            var secondTemp = ds.at(0).Children.filter(function (item) {
+                return item.Nom != ds.at(0).Nom && item.ParticipantId != ds.at(0).ParticipantId;
+            })[0];
+            secondTemp.Classement = 2;
+            var second = {
+                Nom: secondTemp.Nom,
+                Prenom: secondTemp.Prenom
+            }
+
+            var thirdDS = $("#petiteFinaleDiagram").data('kendoDiagram').dataSource;
+            var third = thirdDS.at(0);
+
+            var uid = findTreeviewNodeById(ds.data(), third.ParticipantId);
+
+            var original = ds.getByUid(uid);
+            original.Classement = 3;
+
+            var fourth = thirdDS.at(0).Children.filter(function (item) {
+                return item.Nom != thirdDS.at(0).Nom && item.ParticipantId != thirdDS.at(0).ParticipantId;
+            })[0];
+
+            uid = findTreeviewNodeById(ds.data(), fourth.ParticipantId);
+            original = ds.getByUid(uid);
+            original.Classement = 4;
+
+            var competiteursClassés = [first, second, third];
+
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                async: true,
+                url: "TerminerEpreuveCombat",
+                data: kendo.stringify({ resultats: ds.data() }),
+                contentType: 'application/json',
+                dataType: 'json'
+            }).success(function (response) {
+                window.location.href = response.Uri;
+            }).fail(function () {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur à la clôture."
+                }, "error");
+            });
+        });
+
+        $("#validatePresence").off('click').on('click', function (e) {
+            var grid = $("#competiteurs").data('kendoGrid');
+            var competiteurs = [];
+            $.each(grid.dataSource.data(), function (i, e) {
+                competiteurs.push(e);
+            });
+
+            var encadrants = [];
+            $.each($("#juges").data('kendoMultiSelect').dataItems(), function (i, e) {
+                encadrants.push({ Id: e.Id, Role: "Arbitre" });
+            });
+            $.each($("#coms").data('kendoMultiSelect').dataItems(), function (i, e) {
+                encadrants.push({ Id: e.Id, Role: "Commissaire" });
+            });
+
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                async: true,
+                url: "UpdatePresentielCombat",
+                data: kendo.stringify({ participations: competiteurs, encadrants: encadrants }),
+                contentType: 'application/json',
+                dataType: 'json'
+            }).success(function (result, textStatus) {
+                console.log(textStatus, "validation OK");
+                $("#notification").data('kendoNotification').show({
+                    title: "Appel des compétiteurs validé."
+                }, "success");
+                competiteursPresents = result.competiteurs;
+                count = result.count;
+                //connexions = result.connexions;
+                createDiagram("#combatDiagram", competiteursPresents);
+                $("#a1, #a2").not('.collapsed').trigger('click');
+                $("#a1, #a2").removeAttr('data-toggle').removeAttr('data-target').attr('href', "#").addClass("collapsed");
+                $("#a3").attr('data-toggle', 'collapse').attr('data-target', '#epreuve').attr('href', "#epreuve").removeClass("collapsed");
+                $("#a3").trigger('click');
+            }).fail(function () {
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur Validation Appel"
+                }, "error");
+            });
+
+        });
+
+        $(".k-layer[data-role$='surface']").css
+    });
+</script>

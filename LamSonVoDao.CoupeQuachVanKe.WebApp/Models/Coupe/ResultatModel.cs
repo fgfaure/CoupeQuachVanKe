@@ -16,15 +16,31 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The identifier.
         /// </value>
-        public int Id { get; set; }
+        public int ResultatId { get; set; }
 
         /// <summary>
-        /// Gets or sets the competiteur identifier.
+        /// Gets or sets the nom.
         /// </summary>
         /// <value>
-        /// The competiteur identifier.
+        /// The nom.
         /// </value>
-        public int CompetiteurId { get; set; }
+        public string Nom { get; set; }
+
+        /// <summary>
+        /// Gets or sets the prenom.
+        /// </summary>
+        /// <value>
+        /// The prenom.
+        /// </value>
+        public string Prenom { get; set; }
+
+        /// <summary>
+        /// Gets or sets the participant identifier.
+        /// </summary>
+        /// <value>
+        /// The participant identifier.
+        /// </value>
+        public int ParticipantId { get; set; }
 
         /// <summary>
         /// Gets or sets the epreuve identifier.
@@ -33,6 +49,22 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// The epreuve identifier.
         /// </value>
         public int EpreuveId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the epreuve.
+        /// </summary>
+        /// <value>
+        /// The epreuve.
+        /// </value>
+        public string Epreuve { get; set; }
+
+        /// <summary>
+        /// Gets or sets the participation identifier.
+        /// </summary>
+        /// <value>
+        /// The participation identifier.
+        /// </value>
+        public int ParticipationId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [inscription validee].

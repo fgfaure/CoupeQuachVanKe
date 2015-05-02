@@ -40,5 +40,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// The net client identifier.
         /// </value>
         public int NetClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the epreuve identifier.
+        /// </summary>
+        /// <value>
+        /// The epreuve identifier.
+        /// </value>
+        public string EpreuveId { get; set; }
     }
 }

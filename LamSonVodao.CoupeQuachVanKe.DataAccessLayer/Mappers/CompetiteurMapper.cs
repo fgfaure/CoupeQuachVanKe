@@ -20,7 +20,7 @@
 
             //this.Property(c => c.Nom).IsRequired().HasMaxLength(255);
 
-            this.Property(c => c.Prenom).IsRequired().HasMaxLength(255);
+            //this.Property(c => c.Prenom).IsRequired().HasMaxLength(255);
 
             this.Property(c => c.Grade).IsRequired();            
 

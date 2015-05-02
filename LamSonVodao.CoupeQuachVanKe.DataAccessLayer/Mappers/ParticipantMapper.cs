@@ -15,11 +15,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers
         {
             this.ToTable("Participants");
 
-            //this.HasKey(epreuve => epreuve.Id);           
+            this.HasKey(epreuve => epreuve.Id);           
             this.Property(epreuve => epreuve.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(epreuve => epreuve.Id).IsRequired();
 
             this.Property(c => c.Nom).IsRequired().HasMaxLength(255);
+
+            this.Property(c => c.Prenom).IsOptional().HasMaxLength(255);
 
             this.HasRequired(c => c.Club).WithMany(club => club.Participants).HasForeignKey(c => c.ClubId).WillCascadeOnDelete(true);
         }

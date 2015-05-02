@@ -18,6 +18,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         public string Nom { get; set; }
 
         /// <summary>
+        /// Gets or sets the prenom.
+        /// </summary>
+        /// <value>
+        /// The prenom.
+        /// </value>
+        public string Prenom { get; set; }
+
+        /// <summary>
         /// Gets or sets the club.
         /// </summary>
         /// <value>
@@ -32,6 +40,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// The club identifier.
         /// </value>
         public int ClubId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the participations.
+        /// </summary>
+        /// <value>
+        /// The participations.
+        /// </value>
+        public ICollection<Participation> Participations { get; set; }
 
     }
 }

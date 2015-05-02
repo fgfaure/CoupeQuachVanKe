@@ -199,6 +199,7 @@
         var clubsDataSource = new kendo.data.DataSource({
             transport: {
                 read: {
+                    cache: false,
                     url: "Get",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {
@@ -339,6 +340,7 @@
                 dataSource: {                    
                     transport: {
                         read: {
+                            cache: false,
                             url: "Responsables",
                             dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                             contentType: "application/json",
@@ -414,6 +416,7 @@
                 dataSource: {
                     transport: {
                         read: {
+                            cache: false,
                             url: "Competiteurs",
                             dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                             contentType: "application/json",
@@ -543,6 +546,7 @@
                 dataSource: {
                     transport: {
                         read: {
+                            cache: false,
                             url: "Encadrants",
                             dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                             contentType: "application/json",
