@@ -6,8 +6,10 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
     /// <summary>
     /// 
     /// </summary>
-    public class EquipeSongLuyen : Participant
+    public class Equipe : Participant
     {
+
+        public string TeamName { get; set; }
         ///// <summary>
         ///// Gets or sets the nom.
         ///// </summary>

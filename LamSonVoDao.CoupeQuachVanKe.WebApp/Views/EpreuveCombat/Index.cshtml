@@ -6,6 +6,7 @@
     <div id="epreuvesCombat">
     </div>
 </div>
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/kendo.all.min.js")"></script>
 <script>
     $(document).ready(function () {
         var statuses = new kendo.data.DataSource({
@@ -376,6 +377,10 @@
                             editable: true,
                             type: "number",
                             validation: { required: true }
+                        },
+                        IsMerged: {
+                            editable: false,
+                            type: "boolean"
                         }
                     }
                 }
@@ -393,9 +398,16 @@
             selectable: "single",
             sortable: true,
             groupable: true,
-            filterable: false,
+            filterable: true,
             autosync: true,
-            toolbar: ["create"],
+            toolbar: [{ name: "excel", text: "Exporter en Excel" },
+                { name: "create", text: "Ajouter" }],
+            excel: {
+                allPages : true,
+                fileName: "EpreuvesCombat.xlsx",
+                proxyURL: "ExcelSave",
+                filterable: true
+            },            
             columns: [
                     { field: "Nom", title: "Nom" },
                     { field: "TypeEpreuveId", title: "Type d'Epreuve", values: combats.data().toJSON(), width: "150px" },
@@ -404,7 +416,8 @@
                     { field: "GradeAutoriseId", title: "Grade", values: grades.data().toJSON() },
                      { field: "StatutId", title: "Statut", values: statuses.data().toJSON() },
                     { field: "PoidsMini", title: "Poids min.", width :"95px"},
-                    { field: "PoidsMaxi", title: "Poids max.", width: "95px" },                    
+                    { field: "PoidsMaxi", title: "Poids max.", width: "95px" },  
+                    { field: "IsMerged", title: "Fusion", template: '<input type="checkbox" #= IsMerged ? "checked=checked" : "" # disabled="disabled" ></input>' },
                     { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }
             ],
             editable: "popup"

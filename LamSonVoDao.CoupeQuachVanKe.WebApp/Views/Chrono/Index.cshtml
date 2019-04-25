@@ -279,10 +279,6 @@
                         <input id="categories" type="text" class="form-control" />
                     </div>
                 </div>
-                <div id="cat2" style="height:10%" class="row">
-                </div>
-                <div style="height:10%">
-                </div>
             </div>
             <div class="col-sm-4 full-height" id="P2">
                 <div class="points btn-group btn-group-justified" style="height:10%">
@@ -390,7 +386,7 @@
         </div>
     </div>
     <script>
-        var timers = [90, 90, 120, 120, 120, 120, 90];
+        var timers, defaultTimers = [90, 90, 90, 120, 120, 120, 120, 90];
         var timer;
         var currentTime;
         var pauseTimer;
@@ -404,28 +400,7 @@
         var p1exits = 0;
         var p2exits = 0;
         var reprise1 = true;
-        var data = [{
-            text: "Pupilles",
-            value: "1"
-        }, {
-            text: "Benjamins",
-            value: "2"
-        }, {
-            text: "Minimes",
-            value: "3"
-        }, {
-            text: "Cadets",
-            value: "4"
-        }, {
-            text: "Juniors",
-            value: "5"
-        }, {
-            text: "Séniors",
-            value: "6"
-        }, {
-            text: "Vétérans",
-            value: "7"
-        }];
+        var categories;
 
         function exitHandler(e) {
             var p1exitChanged = false;
@@ -610,6 +585,70 @@
         };
 
         $(document).ready(function () {
+            categories = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        cache: false,
+                        url: "/../CategoriePratiquant/Get",
+                        dataType: "json"
+                        //complete: function (jqXHR, textStatus) {
+                        //    if (jqXHR.statusText === 'OK' && jqXHR.responseJSON.map) {
+                        //        timers = jqXHR.responseJSON.filter(function (cat) {
+                        //            return cat.Duree > 0;
+                        //        }).map(function (cat) {
+                        //            return cat.Duree;
+                        //        });
+                        //    }
+                        //    else {
+                        //        console.warn("Fall back to default timers");
+                        //        timers = defaultTimers;
+                        //    }
+                        //}
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "Id",
+                        fields: {
+                            Id: {
+                                field: "Id",
+                                nullable: false
+                            },
+                            Nom: {
+                                field: "Nom",
+                                nullable: false
+                            },
+                            Prenom: {
+                                field: "Prenom",
+                                nullable: false
+                            },
+                            Duree: {
+                                field: "Duree",
+                                nullable: false
+                            }
+                        }
+                    },
+                    parse: function (data) {
+                        var filtered = [];
+                        if (data.map) {
+                            var filtered = data.filter(function (cat) {
+                                return cat.Duree > 0;
+                            });
+
+                            timers = filtered.map(function (cat) {
+                                return cat.Duree;
+                            });
+                        }
+                        else {
+                            console.warn("Fall back to default timers");
+                            timers = defaultTimers;
+                        }
+                        return filtered;
+                    }
+                },
+                pageSize: 10
+            });
+
             var blue = getParameterByName('blue');
             var red = getParameterByName('red');
             var categorie = parseInt(getParameterByName('cat'), 10);
@@ -692,10 +731,10 @@
             });
 
             $("#categories").kendoDropDownList({
-                dataTextField: "text",
-                dataValueField: "value",
-                dataSource: data,
-                height: 100,
+                dataTextField: "Nom",
+                dataValueField: "Id",
+                dataSource: categories,
+                height: 200, //height:100,
                 optionLabel: "Choisissez une catégorie ...",
                 change: onChange
             });

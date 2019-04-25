@@ -44,14 +44,16 @@
 
             this.Property(c => c.InscritPourSongLuyen).IsRequired();
 
-            this.Property(c => c.EquipeSongLuyenNumero).IsRequired();
+            this.Property(c => c.InscritPourQuyenDongDien).IsRequired();
+
+            this.Property(c => c.NumeroEquipe).IsRequired();
             
             this.Property(c => c.ValidImport).IsRequired();
 
             this.HasRequired(c => c.CategoriePratiquant).WithMany(categorie => categorie.Competiteurs).HasForeignKey(
                 c => c.CategoriePratiquantId).WillCascadeOnDelete(false);            
 
-            this.HasOptional(c => c.EquipeSongLuyen).WithMany(e => e.Competiteurs).WillCascadeOnDelete(true);
+            this.HasOptional(c => c.Equipe).WithMany(e => e.Competiteurs).WillCascadeOnDelete(true);
             
         }
     }

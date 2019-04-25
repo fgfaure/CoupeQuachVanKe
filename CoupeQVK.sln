@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LamSonVodao.CoupeQuachVanKe.DataAccessLayer", "LamSonVodao.CoupeQuachVanKe.DataAccessLayer\LamSonVodao.CoupeQuachVanKe.DataAccessLayer.csproj", "{238A0CA8-4617-44FA-AC66-6F59CFC74D8F}"
 EndProject
@@ -49,6 +49,7 @@ Global
 		{79AA9DB1-D56D-4455-AFF6-AFE554651016}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B3AF2AE9-1C16-43FB-8CA9-0948E5E462CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3AF2AE9-1C16-43FB-8CA9-0948E5E462CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3AF2AE9-1C16-43FB-8CA9-0948E5E462CD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{B3AF2AE9-1C16-43FB-8CA9-0948E5E462CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3AF2AE9-1C16-43FB-8CA9-0948E5E462CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

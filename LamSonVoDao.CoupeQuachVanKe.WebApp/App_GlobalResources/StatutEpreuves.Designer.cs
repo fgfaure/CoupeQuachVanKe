@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Epreuve Exclue.
+        /// </summary>
+        internal static string Exclue {
+            get {
+                return ResourceManager.GetString("Exclue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Epreuve Fermée.
         /// </summary>
         internal static string Fermee {
@@ -93,6 +102,15 @@ namespace Resources {
         internal static string NotSet {
             get {
                 return ResourceManager.GetString("NotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Epreuve Ouverte.
+        /// </summary>
+        internal static string Ouverte {
+            get {
+                return ResourceManager.GetString("Ouverte", resourceCulture);
             }
         }
         

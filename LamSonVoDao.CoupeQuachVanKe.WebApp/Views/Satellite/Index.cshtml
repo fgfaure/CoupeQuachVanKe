@@ -1,6 +1,6 @@
 ﻿<div>
-    <div class="col-md-6 col-md-offset-3">
-        <h1>Interface de Gestion d'Epreuve</h1>
+    <div class="col-md-4 col-md-offset-4">
+        <h1>Gestion d'épreuve</h1>
         <hr />
         <div id="buttons"></div>
     </div>
@@ -8,14 +8,15 @@
 <script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/jquery.timer.js")"></script>
 <script>
     var timer;
-    var techBtn = $('<a class="btn btn-primary btn-lg" role="button" href="/Satellite/EpreuveTechnique">Ouvrir la gestion d\'Epreuve</a>');
-    var combBtn = $('<a class="btn btn-primary btn-lg" role="button" href="/Satellite/EpreuveCombat">Ouvrir la gestion d\'Epreuve</a>');
+    var techBtn = $('<a class="btn btn-primary btn-lg" role="button" href="/Satellite/EpreuveTechnique">Ouvrir l\'épreuve</a>');
+    var btn = $('<a class="btn btn-primary btn-lg" role="button">Ouvrir l\'épreuve</a>');
+    var combBtn = $('<a class="btn btn-primary btn-lg" role="button" href="/Satellite/EpreuveCombat">Ouvrir l\'épreuve</a>');
     function ajaxCall() {
         return $.ajax({
             cache: false,
             type: 'GET',
             async: true,
-            url: "/Satellite/GetEpreuve",
+            url: "Satellite/GetEpreuve"
         });
     }
 
@@ -23,20 +24,22 @@
         if (result.foundContest) {
             $("#buttons").children().remove();
             if (result.technique) {
-                $("#buttons").append(techBtn);
+                btn.attr('href', location.href + "/EpreuveTechnique");
+                $("#buttons").append(btn);
             }
             else {
-                $("#buttons").append(combBtn);
+                btn.attr('href', location.href + "/EpreuveCombat");
+                $("#buttons").append(btn);
             }
             $("#notification").data('kendoNotification').show({
-                title: "Une nouvelle épreuve est disponible."
+                title: "Epreuve disponible."
             }, "success");
             timer.stop();
         }
         else {
             $("#notification").data('kendoNotification').show({
-                title: "Pas d'Epreuve affectée à votre table."
-            }, "info");           
+                title: "Aucune Epreuve disponible."
+            }, "info");
         }
     }
 
@@ -46,23 +49,28 @@
         }, "error");
     }
 
-    $(document).ready(function (e) {              
+    $(document).ready(function (e) {     
+        $(window).on('unload', function () {
+            console.log('unlog');
+            window.location = location.href + "/../Auth/LogOut";
+        });   
+
         $.ajax({
             cache: false,
             type: 'GET',
             async: true,
-            url: "/Satellite/GetEpreuve",
+            url: "Satellite/GetEpreuve"
         }).success(function (result) {
-            if (result.foundContest)
-            {
+            if (result.foundContest) {
                 $("#buttons").children().remove();
-                if (result.technique)
-                {
-                    $("#buttons").append(techBtn);
+                if (result.technique) {
+                    btn.attr('href', location.href + "/EpreuveTechnique");
+                    $("#buttons").append(btn);
                 }
                 else {
-                    $("#buttons").append(combBtn);
-                }                
+                    btn.attr('href', location.href + "/EpreuveCombat");
+                    $("#buttons").append(btn);
+                }           
             }
             else {
                 $("#notification").data('kendoNotification').show({
@@ -73,7 +81,7 @@
                         .success(ajaxSucceeded)
                         .fail(ajaxFailed);
                 });
-                timer.set({ time: 30000, autostart: true });
+                timer.set({ time: 15000, autostart: true });
             }
         }).fail(ajaxFailed);
     });

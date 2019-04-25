@@ -3,6 +3,7 @@
 /// <author>fgf</author>
 /// </copyright>
 
+using System;
 namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
 {    
     /// <summary>
@@ -17,15 +18,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The participation.
         /// </value>
-        public Participation Participation { get; set; }
-
-        /// <summary>
-        /// Gets or sets the participation identifier.
-        /// </summary>
-        /// <value>
-        /// The participation identifier.
-        /// </value>
-        public int ParticipationId { get; set; }
+        public Participation Participation { get; set; }      
 
         /// <summary>
         /// Gets or sets a value indicating whether [inscription validee].
@@ -90,5 +83,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         ///   <c>true</c> if renvoi; otherwise, <c>false</c>.
         /// </value>
         public bool Renvoi { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date.
+        /// </summary>
+        /// <value>
+        /// The date.
+        /// </value>
+        public DateTime Date { get; set; }
     }
 }

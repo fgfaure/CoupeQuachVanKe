@@ -1,16 +1,26 @@
 ﻿
 using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
+using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
 using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Web;
 
 namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
 {
     public static class DataTransferObjectToModel
     {
+        public static CategoriePratiquantModel ToModel(this CategoriePratiquant dto)
+        {
+            return new CategoriePratiquantModel()
+            {
+                Id = dto.Id,
+                AgeMin = dto.AgeMin,
+                AgeMax = dto.AgeMax,
+                Duree = dto.Duree,
+                Nom = dto.Nom
+            };
+        }
+
         public static ClubModel ToModel(this Club dto)
         {
             ClubModel result = new ClubModel();
@@ -25,12 +35,11 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             CoupeModel result = new CoupeModel();
             result.Id = dto.Id;
             result.Nom = dto.Nom;
-            result.NombreTapis = dto.NombreTapis;
             result.CodePostal = dto.CodePostal;
             result.Complement = dto.Complement;
             result.DateDebut = dto.DateDebut;
             result.DateFin = dto.DateFin;
-            result.Description = dto.Description;            
+            result.Description = dto.Description;
             result.Numero = (int)dto.Numero;
             result.Ville = dto.Ville;
             result.Voie = dto.Voie;
@@ -44,13 +53,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.CategorieId = dto.CategoriePratiquantId;
             result.ClubId = dto.ClubId;
             result.DateNaissance = dto.DateNaissance;
-            result.EquipeSongLuyenNumero = dto.EquipeSongLuyenNumero;
+            result.NumeroEquipe = dto.NumeroEquipe;
             result.GradeId = (int)dto.Grade;
             result.InscriptionValidePourCoupe = dto.InscriptionValidePourCoupe;
             result.InscritPourBaiVuKhi = dto.InscritPourBaiVuKhi;
             result.InscritPourCombat = dto.InscritPourCombat;
             result.InscritPourQuyen = dto.InscritPourQuyen;
             result.InscritPourSongLuyen = dto.InscritPourSongLuyen;
+            result.InscritPourQuyenDongDien = dto.InscritPourQuyenDongDien;
             result.LicenceFFKDA = dto.LicenceFFKDA;
             result.NbAnneePratique = dto.NbAnneePratique;
             result.Nom = dto.Nom;
@@ -61,13 +71,24 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             return result;
         }
 
+        public static ParticipationModel ToModel(this Participation dto)
+        {
+            ParticipationModel result = new ParticipationModel();
+            result.Id = dto.Id;
+            result.EpreuveId = dto.EpreuveId;
+            result.ParticipantId = dto.ParticipantId;
+            result.Prenom = dto.Participant.Prenom;
+            result.Nom = dto.Participant.Nom;
+            return result;
+        }
+
         public static ParticipantModel ToModel(this Participant dto)
         {
             ParticipantModel result = new ParticipantModel();
-            result.Id = dto.Id;            
-            result.ClubId = dto.ClubId;           
-            result.Nom = dto.Nom;            
-            result.Prenom = dto.Prenom;         
+            result.Id = dto.Id;
+            result.ClubId = dto.ClubId;
+            result.Nom = dto.Nom;
+            result.Prenom = dto.Prenom;
             return result;
         }
 
@@ -96,7 +117,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.MailContact = dto.MailContact;
             result.GenreId = (int)dto.Sexe;
             result.TailleTenueId = (int)dto.TailleTenue;
-            result.Disponibilites = (dto.Disponibilites != null ? dto.Disponibilites.Select(d => d.ToModel()) : new List<DisponibiliteModel>());
+            result.DispoArbitre = (dto.Disponibilites != null ? dto.Disponibilites.Where(d => d.Role == Role.Arbitre).Select(d => d.ToModel()) : new List<DisponibiliteModel>());
+            result.DispoAdministrateur = (dto.Disponibilites != null ? dto.Disponibilites.Where(d => d.Role == Role.Administrateur).Select(d => d.ToModel()) : new List<DisponibiliteModel>());
             return result;
         }
 
@@ -108,7 +130,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.Date = dto.Date;
             result.Matin = dto.Matin;
             result.Role = dto.Role.ToString();
-
             return result;
         }
 
@@ -168,7 +189,15 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.GradeAutoriseId = (int)dto.GradeAutorise;
             result.StatutId = (int)dto.Statut;
             result.TypeEpreuveId = dto.TypeEpreuveId;
+            result.IsMerged = dto.IsMerged;
+            return result;
+        }
 
+        public static EpreuveModel ToModel(this Epreuve dto)
+        {
+            EpreuveModel result = new EpreuveModel();
+            result.EpreuveId = dto.Id;
+            result.Epreuve = dto.Nom;
             return result;
         }
 
@@ -184,7 +213,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             result.TypeEpreuveId = dto.TypeEpreuveId;
             result.PoidsMini = dto.PoidsMini;
             result.PoidsMaxi = dto.PoidsMaxi;
-
+            result.IsMerged = dto.IsMerged;
             return result;
         }
 
@@ -199,22 +228,9 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             return result;
         }
 
-        public static CategoriePratiquantModel ToModel(this CategoriePratiquant dto)
-        {
-            CategoriePratiquantModel result = new CategoriePratiquantModel();
-
-            result.Id = dto.Id;
-            result.Nom = dto.Nom;
-            result.AgeMin = dto.AgeMin;
-            result.AgeMax = dto.AgeMax;
-
-            return result;
-        }
-
         public static NetClientModel ToModel(this NetClient dto)
         {
             NetClientModel result = new NetClientModel();
-
             result.Id = dto.Id;
             result.ClientName = dto.ClientLogInName;
             result.IsConnected = dto.IsConnected;
@@ -225,9 +241,9 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
 
         public static ParticipationModel ToPresentielModel(this Competiteur dto, int epreuveId, bool present)
         {
-
-            ParticipationModel result = new ParticipationModel();            
+            ParticipationModel result = new ParticipationModel();
             result.ParticipantId = dto.Id;
+            result.CategoriePratiquantId = dto.CategoriePratiquantId;
             result.Nom = dto.Nom;
             result.Prenom = dto.Prenom;
             result.Present = present;
@@ -239,7 +255,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
             }
 
             return result;
-
         }
     }
 }

@@ -29,5 +29,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe.ParticipationModel> ParticipationModels { get; set; }
     }
 }

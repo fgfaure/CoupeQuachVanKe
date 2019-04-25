@@ -17,6 +17,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 
         private Repository<Participation> participationsRepository;
 
+        private Repository<CategoriePratiquant> categorieRepository;
+
         private Repository<Club> clubsRepository;
 
         private Repository<Epreuve> epreuvesRepository;
@@ -30,6 +32,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
             this.clubsRepository = this.unitOfWork.Repository<Club>();
             this.epreuvesRepository = this.unitOfWork.Repository<Epreuve>();
             this.typesRepository = this.unitOfWork.Repository<TypeEpreuve>();
+            this.categorieRepository = this.unitOfWork.Repository<CategoriePratiquant>();
         }
 
         public ActionResult Index()
@@ -76,14 +79,17 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             var typesEpreuves = this.typesRepository.Read();
             var participations = this.participationsRepository.Read();
+            var categories = this.categorieRepository.Read();
             var epreuves = this.epreuvesRepository.Read();
             var chosenEpreuves = epreuves.Where(e => e.Participations != null && e.Participations.Count() > 0 && e.Statut == StatutEpreuve.Ouverte).Select(e =>
                 new
                 {
                     EpreuveId = e.Id,
                     NomEpreuve = e.Nom,
-                    TypeEpreuve = e.TypeEpreuve.Nom
-                }).ToList();
+                    TypeEpreuve = e.TypeEpreuve.Nom,
+                    Categorie = e.CategoriePratiquant.Nom,
+                    AgeMin = e.CategoriePratiquant.AgeMin
+                }).OrderBy(l => l.AgeMin).ToList();
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.Data = chosenEpreuves;

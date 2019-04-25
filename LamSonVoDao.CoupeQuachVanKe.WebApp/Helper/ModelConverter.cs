@@ -24,6 +24,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Helper
         public static ParticipationCombatModel ConvertToCombat(this ParticipationModel input)
         {
             var result = new ParticipationCombatModel();
+            result.CategoriePratiquantId = input.CategoriePratiquantId;
             result.ParticipantId = input.ParticipantId;
             result.ClubId = input.ClubId;
             result.Club = input.Club;

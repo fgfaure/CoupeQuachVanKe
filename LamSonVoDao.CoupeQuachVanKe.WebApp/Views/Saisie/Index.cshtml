@@ -1,5 +1,5 @@
 ﻿<div>
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-8 col-md-offset-2">
         <h1>
             Saisie des poids
         </h1>
@@ -31,7 +31,7 @@
                     url: "Saisie/UpdateCompetiteur",
                     dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
                     contentType: "application/json",
-                    type: "GET",
+                    type: "POST",
                     complete: function (jqXHR, textStatus) {
                         console.log(textStatus, "update");
                         if (textStatus === "error") {
@@ -43,6 +43,7 @@
                             $("#notification").data('kendoNotification').show({
                                 title: "Mise à jour réussie."
                             }, "success");
+                            $("#combattantsGrid").data("kendoGrid").dataSource.read();
                         }
                     }
                 },
@@ -56,7 +57,7 @@
                 }
             },
             pageSize: 25,
-            schema: {
+            schema: {                
                 model: {
                     id: "Id",
                     fields: {
@@ -103,6 +104,10 @@
                         LicenceFFKDA: {
                             editable: false,
                             type: "string"
+                        },
+                        NbPesee: {
+                            editable: false,
+                            type: "number"
                         }
                     }
                 }
@@ -114,7 +119,7 @@
                 read: {
                     cache: false,
                     async: false,
-                    url: "../QVKApi/GetClubs",
+                    url: location.href+"/../QVKApi/GetClubs",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {
                         console.log(textStatus, "update");
@@ -175,7 +180,7 @@
         }
 
         $("#combattantsGrid").kendoGrid({
-            dataSource: combattantDS,
+            dataSource: combattantDS,         
             pageable: {
                 refresh: true,
                 pageSize: 25,
@@ -193,7 +198,8 @@
                     field: "DateNaissance", groupable: false, filterable: false, title: "Date de Naissance", template: '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #',
                     groupHeaderTemplate: 'Date de Naissance : #=  kendo.toString(value, "dd/MM/yyyy") #'
                 },
-                { field: "Poids", groupable: false, filterable: false, title: "Poids", editor: weightEditor, template: '#= kendo.toString(Poids,"\\#.000 kg") #' },                
+                { field: "Poids", groupable: false, filterable: false, title: "Poids", editor: weightEditor, template: '#= kendo.toString(Poids,"\\#.000 kg") #' },    
+                { field: "NbPesee", groupable: false, filterable: false, title: "Nombre de pesées", editable: false},    
             ],
             editable: "incell",
             save: function (e) {

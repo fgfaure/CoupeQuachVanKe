@@ -3,7 +3,8 @@
     @RenderPage("../Shared/_Menu.cshtml")
 </div>
 <div class="col-sm-10">
-    <div class="demo-section k-header">
+    <div class="k-header">
+        <h3>Glisser/déposer les fiches d'inscription à importer.</h3>
         <input name="files" id="files" type="file" />
     </div>
     <div id="gridClubs">
@@ -42,7 +43,7 @@
 
     $(document).ready(function () {
 
-        var tailles = new kendo.data.DataSource({            
+        var tailles = new kendo.data.DataSource({
             transport: {
                 read: {
                     async: false,
@@ -189,7 +190,9 @@
                 autoUpload: true
             },
             error: function (e) {
-                alert(e);
+                $("#notification").data('kendoNotification').show({
+                    title: "Erreur Import"
+                }, "error");
             },
             success: function (e) {
                 $("#gridClubs").data('kendoGrid').dataSource.read();
@@ -277,7 +280,7 @@
                     }
                 }
             },
-            pagesize : 10,
+            pagesize: 10,
             schema: {
                 model: {
                     id: "Id",
@@ -337,7 +340,7 @@
             });
 
             detailRow.find(".responsables").kendoGrid({
-                dataSource: {                    
+                dataSource: {
                     transport: {
                         read: {
                             cache: false,
@@ -361,7 +364,7 @@
                             return JSON.stringify(options);
                         }
                     },
-                    pageSize : 10,
+                    pageSize: 10,
                     schema: {
                         model: {
                             id: "Id",
@@ -408,7 +411,7 @@
                     { field: "Prenom", title: "Prénom" },
                     { field: "Adresse", title: "Adresse" },
                     { field: "MailContact", title: "Email de Contact" },
-                     { field: "Telephone", title: "Téléphone" }
+                    { field: "Telephone", title: "Téléphone" }
                 ]
             });
 
@@ -437,7 +440,7 @@
                             return JSON.stringify(options);
                         }
                     },
-                    pageSize : 10,
+                    pageSize: 10,
                     schema: {
                         model: {
                             id: "Id",
@@ -460,7 +463,7 @@
                                     editable: true,
                                     type: "date",
                                     validation: { required: true }
-                                },                                
+                                },
                                 LicenceFFKDA: {
                                     editable: true,
                                     type: "string",
@@ -494,11 +497,15 @@
                                     editable: true,
                                     type: "boolean"
                                 },
-                                InscritPourSongLuyen: {
+                                //InscritPourSongLuyen: {
+                                //    editable: true,
+                                //    type: "boolean"
+                                //},
+                                InscritPourQuyenDongDien: {
                                     editable: true,
                                     type: "boolean"
                                 },
-                                EquipeSongLuyenNumero: {
+                                NumeroEquipe: {
                                     editable: true,
                                     type: "number"
                                 },
@@ -526,16 +533,17 @@
                     { field: "Prenom", title: "Prénom" },
                     {
                         field: "DateNaissance", title: "Date de Naissance", template:
-                    '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #'
+                        '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #'
                     },
                     { field: "LicenceFFKDA", title: "Licence" },
                     { field: "CategorieId", values: categorieDataSource.data().toJSON(), title: "Catégorie" },
-                     { field: "GradeId", values: grades.data().toJSON(), title: "Grade" },
+                    { field: "GradeId", values: grades.data().toJSON(), title: "Grade" },
                     { field: "InscriptionValidePourCoupe", title: "Inscr. Ok", template: '<input type="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>' },
                     { field: "InscritPourBaiVuKhi", title: "Bai Vu Khi", template: '<input type="checkbox" #= InscritPourBaiVuKhi ? "checked=checked" : "" # disabled="disabled" ></input>' },
                     { field: "InscritPourQuyen", title: "Bai Quyen", template: '<input type="checkbox" #= InscritPourQuyen ? "checked=checked" : "" # disabled="disabled" ></input>' },
-                    { field: "InscritPourSongLuyen", title: "Song Luyen", template: '<input type="checkbox" #= InscritPourSongLuyen ? "checked=checked" : "" # disabled="disabled" ></input>' },
-                    { field: "EquipeSongLuyenNumero", title: "Equipe", width: "65px" },
+                    //{ field: "InscritPourSongLuyen", title: "Song Luyen", template: '<input type="checkbox" #= InscritPourSongLuyen ? "checked=checked" : "" # disabled="disabled" ></input>' },
+                    { field: "InscritPourQuyenDongDien", title: "Phan Te", template: '<input type="checkbox" #= InscritPourQuyenDongDien ? "checked=checked" : "" # disabled="disabled" ></input>' },
+                    { field: "NumeroEquipe", title: "Equipe", width: "65px" },
                     { field: "InscritPourCombat", title: "Combat", template: '<input type="checkbox" #= InscritPourCombat ? "checked=checked" : "" # disabled="disabled" ></input>', width: "65px" },
                     { field: "Poids", title: "Poids", width: "65px" }
                 ]
@@ -615,9 +623,9 @@
                     { field: "Nom", title: "Nom" },
                     { field: "Prenom", title: "Prénom" },
                     { field: "MailContact", title: "Email de contact" },
-                    { field: "TailleTenueId", title: "Taille", values : tailles.data().toJSON(), width: "60px" },
+                    { field: "TailleTenueId", title: "Taille", values: tailles.data().toJSON(), width: "60px" },
                     { field: "EstCompetiteur", title: "Participe", template: '<input type="checkbox" #= EstCompetiteur ? "checked=checked" : "" # disabled="disabled" ></input>' },
-                    { field: "GenreId", title: "Sexe", values :genres, width: "85px" }
+                    { field: "GenreId", title: "Sexe", values: genres, width: "85px" }
                 ]
             });
         }

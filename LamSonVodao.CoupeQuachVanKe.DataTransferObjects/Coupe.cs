@@ -25,14 +25,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the nombre tapis.
-        /// </summary>
-        /// <value>
-        /// The nombre tapis.
-        /// </value>
-        public int NombreTapis { get; set; }
-
-        /// <summary>
         /// Gets or sets the responsable.
         /// </summary>
         /// <value>
@@ -126,7 +118,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The types epreuve.
         /// </value>
-        public ICollection<TypeEpreuve> TypesEpreuve { get; set; }
-       
+        public ICollection<TypeEpreuve> TypesEpreuve { get; set; }       
     }
 }

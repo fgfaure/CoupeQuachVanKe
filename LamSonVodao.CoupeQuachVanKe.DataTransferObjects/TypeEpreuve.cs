@@ -56,5 +56,21 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         ///   <c>true</c> if technique; otherwise, <c>false</c>.
         /// </value>
         public bool Technique { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [use swiss system].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [use swiss system]; otherwise, <c>false</c>.
+        /// </value>
+        public bool UseSwissSystem { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public string Identifier { get; set; }
     }
 }

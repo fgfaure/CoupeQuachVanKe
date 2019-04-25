@@ -31,6 +31,14 @@
         public int AgeMin { get; set; }
 
         /// <summary>
+        /// Gets or sets the duree in seconds.
+        /// </summary>
+        /// <value>
+        /// The duree in seconds.
+        /// </value>
+        public int Duree { get; set; }
+
+        /// <summary>
         /// Gets or sets the epreuves.
         /// </summary>
         /// <value>

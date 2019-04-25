@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -9,7 +10,43 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
 {
     public class DisponibiliteModel
     {
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
         public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        public string Description
+        {
+            get
+            {
+                return string.Format("{0} {1}",this.Date.ToString("dddd", new CultureInfo("fr-Fr")), (this.Matin) ? "Matin" : "Après-Midi");
+            }
+            set
+            {
+                var date = value.Split(' ')[0];
+                var matin = value.Split(' ')[1];
+
+                if (date.ToLowerInvariant() == "samedi")
+                {
+                    this.Date = new DateTime(2015, 5, 16);
+                }
+                else
+                {
+                    this.Date = new DateTime(2015, 5, 17);
+                }
+
+                this.Matin = (matin.ToLowerInvariant() == "matin");
+            }
+        }
 
         /// <summary>
         /// Gets or sets the role.

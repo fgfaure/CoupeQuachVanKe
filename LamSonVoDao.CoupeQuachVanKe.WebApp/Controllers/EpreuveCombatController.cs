@@ -114,6 +114,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult ExcelSave(string contentType, string base64, string fileName)
+        {
+            var fileContents = Convert.FromBase64String(base64);
+
+            return File(fileContents, contentType, fileName);
+        }
+
         private static string BuildEpreuveName(EpreuveCombatModel model, string categorie, string typeEpreuve, string genre, string grade)
         {
             var nom = string.Empty;

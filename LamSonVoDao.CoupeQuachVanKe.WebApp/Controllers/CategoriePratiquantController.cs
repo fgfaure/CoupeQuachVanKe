@@ -28,8 +28,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 {
                     Nom = model.Nom,
                     AgeMin = model.AgeMin,
-                    AgeMax= model.AgeMax,
-                    Duree = model.Duree,                    
+                    AgeMax = model.AgeMax,
+                    Duree = model.Duree,
                     Competiteurs = new List<Competiteur>(),
                     Epreuves = new List<Epreuve>(),
                 };
@@ -70,6 +70,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         /// Gets this instance.
         /// </summary>
         /// <returns></returns>
+
+        [AllowAnonymous]
         public JsonResult Get()
         {
             var result = new JsonResult();

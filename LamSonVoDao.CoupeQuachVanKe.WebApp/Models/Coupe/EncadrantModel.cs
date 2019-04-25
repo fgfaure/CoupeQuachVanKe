@@ -73,7 +73,15 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The disponibilites.
         /// </value>
-        public IEnumerable<DisponibiliteModel> Disponibilites { get; set; }
+        public IEnumerable<DisponibiliteModel> DispoArbitre { get; set; }
+
+        /// <summary>
+        /// Gets or sets the disponibilites.
+        /// </summary>
+        /// <value>
+        /// The disponibilites.
+        /// </value>
+        public IEnumerable<DisponibiliteModel> DispoAdministrateur { get; set; }
 
         /// <summary>
         /// Gets or sets the role.

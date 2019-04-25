@@ -16,14 +16,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer
         }
 
         public DbSet<Aire> Aires { get; set; }
-        //public DbSet<CategoriePoids> CategoriesPoids { get; set; }
+        public DbSet<UIColor> Colors { get; set; }
         public DbSet<Club> Clubs { get; set; }        
         public DbSet<Competiteur> Competiteurs { get; set; }
         public DbSet<Coupe> Coupes { get; set; }
         public DbSet<Disponibilite> Disponibilites { get; set; }
         public DbSet<Encadrant> Encadrants { get; set; }
         public DbSet<Encadrement> Encadrements { get; set; }
-        public DbSet<EquipeSongLuyen> EquipesSongLuyen { get; set; }
+        public DbSet<Equipe> Equipes { get; set; }
         public DbSet<EpreuveCombat> EpreuvesCombat { get; set; }
         public DbSet<EpreuveTechnique> EpreuvesTechniques { get; set; }
         public DbSet<Medecin> Medecins { get; set; }
@@ -42,14 +42,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {                     
             modelBuilder.Configurations.Add(new AireMapper());
-            //modelBuilder.Configurations.Add(new CategoriePoidsMapper());
+            modelBuilder.Configurations.Add(new UIColorMapper());
             modelBuilder.Configurations.Add(new ClubMapper());
             modelBuilder.Configurations.Add(new CompetiteurMapper());
             modelBuilder.Configurations.Add(new CoupeMapper());
             modelBuilder.Configurations.Add(new DisponibiliteMapper());
             modelBuilder.Configurations.Add(new EncadrantMapper());
             modelBuilder.Configurations.Add(new EncadrementMapper());
-            modelBuilder.Configurations.Add(new EquipeSongLuyenMapper());
+            modelBuilder.Configurations.Add(new EquipeMapper());
             modelBuilder.Configurations.Add(new EpreuveCombatMapper());
             modelBuilder.Configurations.Add(new EpreuveTechniqueMapper());
             modelBuilder.Configurations.Add(new MedecinMapper());

@@ -8,7 +8,7 @@
     /// 
     /// </summary>
     public class Epreuve : BaseEntity
-    {      
+    {       
         /// <summary>
         /// Gets or sets the nom.
         /// </summary>
@@ -16,7 +16,7 @@
         /// The nom.
         /// </value>
         public string Nom { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the statut.
         /// </summary>
@@ -24,7 +24,7 @@
         /// The statut.
         /// </value>
         public StatutEpreuve Statut { get; set; }
-              
+
         /// <summary>
         /// Gets or sets the type epreuve.
         /// </summary>
@@ -71,7 +71,7 @@
         /// <value>
         /// The grade autorise.
         /// </value>
-        public Grade GradeAutorise { get; set; }      
+        public Grade GradeAutorise { get; set; }
 
         /// <summary>
         /// Gets or sets the encadrants.
@@ -87,7 +87,7 @@
         /// <value>
         /// The resultats.
         /// </value>
-        public ICollection<Participation> Participations { get; set; }       
+        public ICollection<Participation> Participations { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is merged.

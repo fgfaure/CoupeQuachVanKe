@@ -41,5 +41,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// The age maximum.
         /// </value>
         public int AgeMax { get; set; }
+
+        /// <summary>
+        /// Gets or sets the duree in seconds.
+        /// </summary>
+        /// <value>
+        /// The duree in seconds.
+        /// </value>
+        public int Duree { get; set; }
     }
 }

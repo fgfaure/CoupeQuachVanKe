@@ -9,11 +9,11 @@
 </div>
 <script type="text/x-kendo-template" id="template">
     <div class="tabstrip">
-        <ul>          
+        <ul>
             <li class="k-state-active">
                 Responsable
             </li>
-        </ul>        
+        </ul>
         <div>
             <div id="responsable">
             </div>
@@ -129,11 +129,6 @@
                             //data type of the field {Number|String|Boolean|Date} default is String
                             type: "string"
                         },
-                        NombreTapis: {
-                            //data type of the field {Number|String|Boolean|Date} default is String
-                            type: "number",
-                            validation: { required: true }
-                        },
                         Voie: {
                             //data type of the field {Number|String|Boolean|Date} default is String
                             type: "string"
@@ -177,7 +172,7 @@
                 refresh: true,
                 pageSizes: true,
                 buttonCount: 5
-            },          
+            },
             autosync: true,
             toolbar: ["create"],
             detailTemplate: kendo.template($("#template").html()),
@@ -187,13 +182,13 @@
                 { field: "Description", title: "Description" },
                 { field: "DateDebut", title: "Date Début", format: "{0:yyyy-MM-dd HH:mm}", editor: dateTimeEditor, width: "115px" },
                 { field: "DateFin", title: "Date Fin", format: "{0:yyyy-MM-dd HH:mm}", editor: dateTimeEditor, width: "115px" },
-                { field: "NombreTapis", title: "Tapis", width: "75px" },
                   { field: "Numero", title: "Numéro", width: "75px" },
                   { field: "Voie", title: "Voie" },
                   { field: "Complement", title: "Complément" },
-                  { field: "CodePostal", title: "Code Postal", width: "95px" },
+                  { field: "CodePostal", title: "Code Postal", width: "100px" },
                   { field: "Ville", title: "Ville" },
-                { command: ["edit", "destroy"], title: "&nbsp;", width:"190px" }],
+                { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }
+            ],
             editable: "popup"
         });
 

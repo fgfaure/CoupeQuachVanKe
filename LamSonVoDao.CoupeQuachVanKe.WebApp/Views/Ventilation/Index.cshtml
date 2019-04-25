@@ -14,85 +14,84 @@
     @RenderPage("../Shared/_Menu.cshtml")
 </div>
 <div class="col-sm-10">
-    <div>
-        <h2>Ventilation des Epreuves</h2>
-    </div>
-    <div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h2 class="panel-title">
-                    <a data-toggle="collapse" data-target="#technique"
-                       href="#technique">
-                        Epreuves Techniques
-                    </a>
-                </h2>
-            </div>
-            <div id="technique" class="panel-collapse collapse in">
-                <div class="panel-body">
-                    <div class="alert alert-warning" role="alert">
-                        Affecter les compétiteurs inscrits à toutes les épreuves techniques. Efface d'abord les inscriptions présentes!
-                        <button name="ventilationTechnique" class="btn btn-danger right" id="vt">Ventiler</button>
-                    </div>
-                    <div>
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    <a data-toggle="collapse" data-target="#listTechnique"
-                                       href="#listTechnique" class="collapsed">
-                                        Liste des Epreuves Techniques
-                                    </a>
-                                </h3>
-                            </div>
-                            <div id="listTechnique" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div id="techniquesGrid" />
-                                </div>
-                            </div>
+
+    <h2>Ventilation des Epreuves</h2>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">
+                <a data-toggle="collapse" data-target="#technique"
+                   href="#technique">
+                    Epreuves Techniques
+                </a>
+            </h2>
+        </div>
+        <div id="technique" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="alert alert-warning" role="alert">
+                    Affecter les compétiteurs inscrits à toutes les épreuves techniques. Efface d'abord les inscriptions présentes!
+                    <button name="ventilationTechnique" class="btn btn-danger right" id="vt">Ventiler</button>
+                </div>
+                <div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" data-target="#listTechnique"
+                                   href="#listTechnique" class="collapsed">
+                                    Liste des Epreuves Techniques
+                                </a>
+                            </h3>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">
-                                        <a data-toggle="collapse" data-target="#listTechniqueVentilee"
-                                           href="#listTechniqueVentilee" class="collapsed">
-                                            Liste des Epreuves Techniques Ventilées
-                                        </a>
-                                    </h3>
-                                </div>
-                                <div id="listTechniqueVentilee" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <div id="techniquesVentillees" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    <a data-toggle="collapse" data-target="#countedTechs"
-                                       href="#countedTechs" class="collapsed">
-                                        Liste des Epreuves Techniques (compte des compétiteurs)
-                                    </a>
-                                </h3>
-                            </div>
-                            <div id="countedTechs" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div id="countedTechsGrid" />
+                        <div id="listTechnique" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div id="techniquesGrid">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                @*<div class="row">
+                    <div class="col-md-6">*@
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" data-target="#listTechniqueVentilee"
+                               href="#listTechniqueVentilee" class="collapsed">
+                                Liste des Epreuves Techniques Ventilées
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="listTechniqueVentilee" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div id="techniquesVentillees">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*</div>
+                    </div>*@
+                @*<div class="col-md-6">*@
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" data-target="#countedTechs"
+                               href="#countedTechs" class="collapsed">
+                                Liste des Epreuves Techniques (compte des compétiteurs)
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="countedTechs" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div id="countedTechsGrid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*</div>*@
             </div>
         </div>
     </div>
-</div>
-<div>
-    <div>
+
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h2 class="panel-title">
@@ -120,51 +119,54 @@
                         </div>
                         <div id="listCombat" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <div id="combatGrid" />
+                                <div id="combatGrid">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                @*<div class="row">
                     <div class="col-md-6">
-                        <div>
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">
-                                        <a data-toggle="collapse" data-target="#listCombatVentilee"
-                                           href="#listCombatVentilee" class="collapsed">
-                                            Liste des Epreuves Combat Ventilées
-                                        </a>
-                                    </h3>
-                                </div>
-                                <div id="listCombatVentilee" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <div id="combatVentilees" />
-                                    </div>
-                                </div>
+                        <div>*@
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" data-target="#listCombatVentilee"
+                               href="#listCombatVentilee" class="collapsed">
+                                Liste des Epreuves Combat Ventilées
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="listCombatVentilee" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div id="combatVentilees">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div>
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    <a data-toggle="collapse" data-target="#countedCombat"
-                                       href="#countedCombat" class="collapsed">
-                                        Liste des Epreuves Combat (compte des compétiteurs)
-                                    </a>
-                                </h3>
-                            </div>
-                            <div id="countedCombat" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div id="countedCombatGrid" />
-                                </div>
+                @*</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>*@
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" data-target="#countedCombat"
+                               href="#countedCombat" class="collapsed">
+                                Liste des Epreuves Combat (compte des compétiteurs)
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="countedCombat" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div id="countedCombatGrid">
                             </div>
                         </div>
                     </div>
                 </div>
+                @*</div>
+                    </div>*@
             </div>
         </div>
     </div>
@@ -184,7 +186,7 @@
     </div>
 
 </script>
-
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/kendo.all.min.js")"></script>
 <script>
     function ventilate(e) {
         e.preventDefault();
@@ -196,7 +198,7 @@
             type: 'POST',
             async: true,
             url: "VentilationEpreuve",
-            data: JSON.stringify({id : dataItem.Id}),
+            data: JSON.stringify({ id: dataItem.Id }),
             contentType: 'application/json',
             dataType: 'json',
         }).fail(function (err) {
@@ -298,7 +300,7 @@
                             return JSON.stringify(options);
                         }
                     },
-                    pageSize: 10,
+                    pageSize: 20,
                     schema: {
                         model: {
                             id: "Id",
@@ -402,55 +404,94 @@
         });
         categorieDataSource.read();
         $("#vt").off('click').on('click', function () {
-            $.ajax({
-                url: 'VentilationTechnique',
-                cache: false
-            }).success(function (data) {
-                if (data.success) {
-                    //rafraichir la source de données des ventilations techniques
-                    $("#notification").data('kendoNotification').show({
-                        title: "Ventilation technique réussie."
-                    }, "success");
-                    var grid = $("#techniquesGrid").data('kendoGrid');
-                    grid.dataSource.read();
+            bootbox.confirm({
+                onEscape: true,
+                backdrop: true,
+                title: "Attention",
+                message: "<p>Ventiler les inscriptions vers les épreuves techniques va détruire les résultats existants.<br>Voulez vous continuer?</p>",
+                buttons: {
+                    confirm: {
+                        label: 'Continuer',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Annuler',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result === true) {
+                        console.log("Starting ventilation");
+                        $.ajax({
+                            url: 'VentilationTechnique',
+                            cache: false
+                        }).success(function (data) {
+                            if (data.success) {
+                                //rafraichir la source de données des ventilations techniques
+                                $("#notification").data('kendoNotification').show({
+                                    title: "Ventilation technique réussie."
+                                }, "success");
+                                var grid = $("#techniquesGrid").data('kendoGrid');
+                                grid.dataSource.read();
+                            }
+                            else {
+                                $("#notification").data('kendoNotification').show({
+                                    title: "Erreur"
+                                }, "error");
+                            }
+                        }).fail(function (err) {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Erreur: " + err.statusText
+                            }, "error");
+                        });
+                    }
                 }
-                else {
-                    $("#notification").data('kendoNotification').show({
-                        title: "Erreur"
-                    }, "error");
-                }
-            }).fail(function (err) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur: " + err.statusText
-                }, "error");
-            });;
-
+            });            
         });
 
         $("#vc").off('click').on('click', function () {
-            $.ajax({
-                url: 'VentilationCombat',
-                cache: false
-            }).success(function (data) {
-                if (data.success) {
-                    //rafraichir la source de données des ventilations techniques
-                    $("#notification").data('kendoNotification').show({
-                        title: "Ventilation combat réussie."
-                    }, "success");
-                    var grid = $("#combatVentilees").data('kendoGrid');
-                    grid.dataSource.read();
+            bootbox.confirm({
+                onEscape: true,
+                backdrop: true,
+                title: "Attention",
+                message: "<p>Ventiler les inscriptions vers les épreuves combat va détruire les résultats existants.<br>Voulez vous continuer?</p>",
+                buttons: {
+                    confirm: {
+                        label: 'Continuer',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Annuler',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result === true) {
+                        $.ajax({
+                            url: 'VentilationCombat',
+                            cache: false
+                        }).success(function (data) {
+                            if (data.success) {
+                                //rafraichir la source de données des ventilations techniques
+                                $("#notification").data('kendoNotification').show({
+                                    title: "Ventilation combat réussie."
+                                }, "success");
+                                var grid = $("#combatVentilees").data('kendoGrid');
+                                grid.dataSource.read();
+                            }
+                            else {
+                                $("#notification").data('kendoNotification').show({
+                                    title: "Erreur"
+                                }, "error");
+                            }
+                        }).fail(function (err) {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Erreur: " + err.statusText
+                            }, "error");
+                        });
+                    }
                 }
-                else {
-                    $("#notification").data('kendoNotification').show({
-                        title: "Erreur"
-                    }, "error");
-                }
-            }).fail(function (err) {
-                $("#notification").data('kendoNotification').show({
-                    title: "Erreur: " + err.statusText
-                }, "error");
             });
-
         });
 
         var countedTechniques = new kendo.data.DataSource({
@@ -496,7 +537,7 @@
                     }
                 }
             },
-            pageSize: 10
+            pageSize: 20
         });
 
         var countedCombat = new kendo.data.DataSource({
@@ -542,7 +583,7 @@
                     }
                 }
             },
-            pageSize: 10
+            pageSize: 20
         });
 
         var techniques = new kendo.data.DataSource({
@@ -583,7 +624,7 @@
                     }
                 }
             },
-            pageSize: 5
+            pageSize: 20
         });
 
         $("#techniquesGrid").kendoGrid({
@@ -655,7 +696,7 @@
                     }
                 }
             },
-            pageSize: 5
+            pageSize: 20
         });
 
         $("#techniquesVentillees").kendoGrid({
@@ -664,6 +705,15 @@
                 refresh: true,
                 pageSizes: true,
                 buttonCount: 5
+            },
+            toolbar: [
+               { name: "excel", text: "Exporter en Excel" }
+            ],
+            excel: {
+                allPages: true,
+                fileName: "ListingCompetiteursParEpreuveTechnique.xlsx",
+                proxyURL: "ExcelSave",
+                filterable: true
             },
             selectable: "multiple",
             sortable: true,
@@ -677,7 +727,6 @@
                     { field: "prenom", title: "Prénom" }
             ]
         });
-
 
         var combats = new kendo.data.DataSource({
             transport: {
@@ -717,7 +766,7 @@
                     }
                 }
             },
-            pageSize: 5
+            pageSize: 20
         });
 
         $("#combatGrid").kendoGrid({
@@ -740,7 +789,6 @@
                     { command: { text: "Ventiler", click: ventilate }, title: " ", width: "92px" }
             ]
         });
-
 
         var combats = new kendo.data.DataSource({
             group: { field: "epreuve" },
@@ -790,7 +838,7 @@
                     }
                 }
             },
-            pageSize: 10
+            pageSize: 20
         });
 
         $("#combatVentilees").kendoGrid({
@@ -799,6 +847,15 @@
                 refresh: true,
                 pageSizes: true,
                 buttonCount: 5
+            },
+            toolbar: [
+               { name: "excel", text: "Exporter en Excel" }
+            ],
+            excel: {
+                allPages: true,
+                fileName: "ListingCompetiteursParEpreuveCombat.xlsx",
+                proxyURL: "ExcelSave",
+                filterable: true
             },
             selectable: "multiple",
             sortable: true,
@@ -809,7 +866,8 @@
             columns: [
                     { field: "epreuve", title: "Epreuve", width: "350px" },
                     { field: "nom", title: "Nom" },
-                    { field: "prenom", title: "Prénom" }
+                    { field: "prenom", title: "Prénom" },
+                    { field: "poids", title: "Poids" }
             ]
         });
 
@@ -865,7 +923,7 @@
             ]
         });
 
-        $(".k-grid-mergeTechniques, .k-grid-mergeCombat").off('click').on('click', function (e) {            
+        $(".k-grid-mergeTechniques, .k-grid-mergeCombat").off('click').on('click', function (e) {
             var grid = ($(this).hasClass("k-grid-mergeTechniques")) ? $("#countedTechsGrid").data('kendoGrid') : $("#countedCombatGrid").data('kendoGrid');
             var tech = ($(this).hasClass("k-grid-mergeTechniques"));
             var selected = [];
@@ -873,7 +931,7 @@
                 selected.push(grid.dataItem(e));
             });
 
-            if (selected.length < 2){
+            if (selected.length < 2) {
                 $("#notification").data('kendoNotification').show({
                     title: "Au moins 2 épreuves pour fusion."
                 }, "info");
@@ -884,7 +942,7 @@
                     type: 'POST',
                     async: true,
                     url: "MergeEpreuve",
-                    data: kendo.stringify({areTechs : tech, epreuves:selected}),
+                    data: kendo.stringify({ areTechs: tech, epreuves: selected }),
                     contentType: 'application/json',
                     dataType: 'json'
                 }).success(function (jqXHR, textStatus) {
@@ -898,7 +956,7 @@
                         title: "Erreur Fusion"
                     }, "error");
                 });
-            }            
-        });
+            }
+        });   
     });
 </script>

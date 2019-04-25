@@ -11,7 +11,10 @@
     <AssemblyName>LamSonVodao.CoupeQuachVanKe.DataTransferOjbect</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>80c29676</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,7 +47,9 @@
     <Compile Include="Aire.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="CategoriePratiquant.cs" />
+    <Compile Include="Enumerations\ColorConstants.cs" />
     <Compile Include="Enumerations\GenreEpreuve.cs" />
+    <Compile Include="Enumerations\TypeEpreuveConstants.cs" />
     <Compile Include="EpreuveTechnique.cs" />
     <Compile Include="EpreuveCombat.cs" />
     <Compile Include="EquipeSongLuyen.cs" />
@@ -54,7 +59,6 @@
     <Compile Include="Participation.cs" />
     <Compile Include="Resultat.cs" />
     <Compile Include="Encadrement.cs" />
-    <Compile Include="Enumerations\TypeEpreuve.cs" />
     <Compile Include="Club.cs" />
     <Compile Include="Competiteur.cs" />
     <Compile Include="Coupe.cs" />
@@ -72,6 +76,7 @@
     <Compile Include="ResponsableClub.cs" />
     <Compile Include="ResponsableCoupe.cs" />
     <Compile Include="TypeEpreuve.cs" />
+    <Compile Include="UIColor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LamSonVodao.CoupeQuachVanKe.Contracts\LamSonVodao.CoupeQuachVanKe.Contracts.csproj">
@@ -82,16 +87,15 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="DataTransferObjects.cd" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" Condition="Exists('..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

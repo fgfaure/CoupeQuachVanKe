@@ -129,6 +129,10 @@
   <data name="NOTSET" xml:space="preserve">
     <value>-- Choisissez --</value>
   </data>
+  <data name="QUYENDONGDIEN" xml:space="preserve">
+    <value>Quyền Đồng Diễn avec Phân Thế</value>
+    <comment>Quyen Synchronisé avec application</comment>
+  </data>
   <data name="SONGLUYEN" xml:space="preserve">
     <value>Song Luyen</value>
   </data>

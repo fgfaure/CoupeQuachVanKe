@@ -5,9 +5,11 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations
     {        
         NotSet = 0,
         Fermee = 1,
-        Prete = 3,
-        Assignee = 2,
-        EnCours = 4,
-        Terminee = 5
+        Ouverte = 2,       
+        Assignee = 3,
+        Prete = 4,
+        EnCours = 5,
+        Terminee = 6,
+        Exclue = 7        
     }
 }

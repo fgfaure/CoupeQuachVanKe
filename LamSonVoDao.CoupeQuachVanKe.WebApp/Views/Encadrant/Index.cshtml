@@ -6,8 +6,64 @@
     <div id="encadrants">
     </div>
 </div>
-
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/kendo.all.min.js")"></script>
 <script>
+
+    var disponibilitesDataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: 'GetDates',
+                cache : false
+            }
+        },
+        schema: {
+            model: {
+                id: "Description",
+                fields: {
+                    Description: { type: "string" }
+                }
+            }
+        }
+    });
+
+    function arbitreEditor(container, options) {
+        $("<select multiple='multiple' data-bind='value : DispoArbitre'/>")
+                .appendTo(container)
+                .kendoMultiSelect({
+                    dataTextField: "Description",
+                    dataValueField: "Description",
+                    dataSource: disponibilitesDataSource
+                });
+    }
+
+    function administrateurEditor(container, options) {
+        $("<select multiple='multiple' data-bind='value : DispoAdministrateur'/>")
+                .appendTo(container)
+                .kendoMultiSelect({
+                    dataTextField: "Description",
+                    dataValueField: "Description",
+                    dataSource: disponibilitesDataSource
+                });
+    }
+
+    function arbitreTemplate(dataItem) {
+        var dispo = "";
+        for (var i = 0; i < dataItem.DispoArbitre.length; i++) {
+            dispo += dataItem.DispoArbitre[i].Description + ", "
+        }
+        dispo = dispo.substr(0, dispo.length - 2);
+        return dispo;
+    }
+
+    function comTemplate(dataItem) {
+        var dispo = "";
+        for (var i = 0; i < dataItem.DispoAdministrateur.length; i++) {
+            dispo += dataItem.DispoAdministrateur[i].Description + ", "
+        }
+        dispo = dispo.substr(0, dispo.length - 2);
+        return dispo;
+    }
+
     $(document).ready(function () {
         var tailles = new kendo.data.DataSource({
             transport: {
@@ -222,7 +278,7 @@
                         },
                         EstCompetiteur: {
                             editable: true,
-                            type: "boolean"                            
+                            type: "boolean"
                         },
                         TailleTenueId: {
                             editable: true,
@@ -241,7 +297,9 @@
                             defaultValue: 1,
                             type: "number",
                             validation: { required: true }
-                        }
+                        },
+                        DispoAdministrateur: {},
+                        DispoArbitre: {}
                     }
                 }
             },
@@ -259,15 +317,26 @@
             groupable: true,
             filterable: true,
             autosync: true,
-            toolbar: ["create"],
+            toolbar: [
+              { name: "excel", text: "Exporter en Excel" },
+              { name: "create", text: "Ajouter" }
+            ],
+            excel: {
+                allPages: true,
+                fileName: "ListingEncadrants.xlsx",
+                proxyURL: "ExcelSave",
+                filterable: true
+            },
             columns: [
                     { field: "Nom", title: "Nom" },
                     { field: "Prenom", title: "Prénom" },
                     { field: "MailContact", title: "Email" },
-                    { field: "EstCompetiteur", title: "Participe", template: '<input type="checkbox" #= EstCompetiteur ? "checked=checked" : "" # disabled="disabled" ></input>', width : "100px" },
+                    { field: "EstCompetiteur", title: "Participe", template: '<input type="checkbox" #= EstCompetiteur ? "checked=checked" : "" # disabled="disabled" ></input>', width: "100px" },
                     { field: "ClubId", title: "Club", values: clubsDataSource.data().toJSON() },
-                    { field: "TailleTenueId", title: "Taille", values: tailles.data().toJSON(), width: "75px" },                   
+                    { field: "TailleTenueId", title: "Taille", values: tailles.data().toJSON(), width: "75px" },
                     { field: "GenreId", title: "Sexe", values: genres, width: "85px" },
+                    { field: "DispoArbitre", title: "Arbitre", editor: arbitreEditor, template: arbitreTemplate },
+                    { field: "DispoAdministrateur", title: "Administrateur", editor: administrateurEditor, template: comTemplate },
                     { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }
             ],
             editable: "popup"

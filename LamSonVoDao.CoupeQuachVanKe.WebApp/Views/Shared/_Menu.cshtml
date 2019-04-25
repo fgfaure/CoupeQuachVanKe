@@ -1,4 +1,4 @@
-﻿<div class="sidebar-nav">
+﻿<div class="sidebar-nav" style="margin-top:10px">
     <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
@@ -12,44 +12,48 @@
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestion des Données Club<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administratif<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Club/")">Clubs</a></li>
-                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/ResponsableClub/")">Responsables des Clubs</a></li>
-                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Competiteur/")">Compétiteurs</a></li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/ResponsableClub/")">Responsables</a></li>
                         <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Encadrant/")">Encadrants</a></li>
+                        <li class="dropdown-header">Coupes</li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Competiteur/")">Compétiteurs</a></li>
                     </ul>
                 </li>
                 <li class="nav-divider"><a href="#"></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestion des Données Coupe<b class="caret"></b></a>
-                    <ul class="dropdown-menu">                        
-                        <li class="divider"></li>
-                        <li class="dropdown-header">Propriétés de Coupe</li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Quach Van Ke<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
                         <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Coupe/")">Coupes</a></li>
-                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/ResponsableCoupe/")">Responsable Coupe</a></li>
-                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Aire/")">Tapis</a></li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/ResponsableCoupe/")">Responsable</a></li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Aire/")">Aires</a></li>
                         <li class="divider"></li>
-                        <li class="dropdown-header">Encadrement</li>
+                        <li class="dropdown-header">Logistique</li>
                         <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Medecin/")">Médecins</a></li>
                         <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Encadrant/")">Encadrants</a></li>
                         <li class="divider"></li>
-                        <li class="dropdown-header">Configuration Informatique</li>
-                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Client/")">Création de Comptes Clients</a></li>
+                        <li class="dropdown-header">Informatique</li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Client/")">Clients</a></li>
                         <li class="divider"></li>
-                        <li class="dropdown-header">Configuration des Epreuves</li>
-                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/TypeEpreuve/")">Catégories d'Epreuve</a></li>
-                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/EpreuveTechnique/")">Epreuves Techniques</a></li>
-                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/EpreuveCombat/")">Epreuves Combat</a></li>
+                        <li class="dropdown-header">Contenu</li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/CategoriePratiquant/")">Catégories</a></li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/TypeEpreuve/")">Epreuves</a></li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/EpreuveTechnique/")">Technique</a></li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/EpreuveCombat/")">Combat</a></li>
                     </ul>
                 </li>
                 <li class="nav-divider"><a href="#"></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestion de Coupe<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Déroulement<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Ventilation/")">Ventilation</a></li>
-                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Affectation/")">Affectation des Epreuves</a></li>
-                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Gestion/")">Etat des Epreuves</a></li>
+                        <li class="nav-divider"><a href="#"></a></li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Print/")">Impression des appels</a></li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Affectation/")">Affectation</a></li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Participation/")">Dispatch Manuel</a></li>
+                        <li class="nav-divider"><a href="#"></a></li>
+                        <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Gestion/")">Suivi</a></li>
                         <li><a href="@System.Web.VirtualPathUtility.ToAbsolute("~/Resultat/")">Resultats</a></li>
                     </ul>
                 </li>

@@ -35,6 +35,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         public int StatutId { get; set; }
 
         /// <summary>
+        /// Gets or sets the statut.
+        /// </summary>
+        /// <value>
+        /// The statut.
+        /// </value>
+        public bool IsMerged { get; set; }
+
+        /// <summary>
         /// Gets or sets the type epreuve.
         /// </summary>
         /// <value>

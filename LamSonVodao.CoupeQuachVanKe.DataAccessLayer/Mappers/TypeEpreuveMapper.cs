@@ -22,10 +22,15 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataAccessLayer.Mappers
             this.Property(te => te.Nom).IsRequired();
             this.Property(te => te.Nom).HasMaxLength(255);
 
+            this.Property(te => te.Identifier).IsRequired();
+            this.Property(te => te.Identifier).HasMaxLength(255);          
+
             this.Property(te => te.Description).IsOptional();
             this.Property(te => te.Description).IsFixedLength().HasMaxLength(14);
 
             this.Property(te => te.Technique).IsRequired();
+
+            this.Property(te => te.UseSwissSystem).IsRequired();
 
             this.HasRequired(te => te.Coupe)
             .WithMany(c => c.TypesEpreuve)
