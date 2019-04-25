@@ -10,10 +10,10 @@
         content: "\e080";
     }
 </style>
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-12">
     <div class="well well-lg"><h2>Epreuve @ViewBag.ContestName</h2></div>
     <div>
-        <div class="panel panel-primary">
+        <div id="panelEncadrement" class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <a id="a1" data-toggle="collapse" data-target="#admins"
@@ -40,7 +40,7 @@
                                 <div class="panel-body">
                                     <div class="input-group">
                                         <span class="input-group-addon" id="admins-addon">Administrateurs : </span>
-                                        <input class="form-horizontal" id="coms" aria-describedby="admins-addon">
+                                        <input class="form-control" id="coms" aria-describedby="admins-addon">
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="panel panel-primary">
+    <div id="panelAppel" class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">
                 <a id="a2" data-toggle="collapse" data-target="#appel"
@@ -67,7 +67,7 @@
             </div>
         </div>
     </div>
-    <div class="panel panel-primary">
+    <div id="panelPool" class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">
                 <a id="a3" @*data-toggle="collapse" data-target="#epreuve"
@@ -80,7 +80,43 @@
             <div class="panel-body">
                 <div id="grid"></div>
                 <hr />
-                <p class="text-right">Valider les résultats et terminer l'épreuve.      <button id="validateContest" class="btn btn-success btn-lg right">Valider</button></p>
+                <p class="text-right">Afficher la finale.      <button id="showFinale" class="btn btn-success btn-lg right">Valider</button></p>
+
+            </div>
+        </div>
+    </div>
+    <div id="panelFinale" class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <a id="a4" @*data-toggle="collapse" data-target="#epreuve"
+                       href="#epreuve"*@ class="collapsed">
+                    Finale
+                </a>
+            </h3>
+        </div>
+        <div id="finale" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div id="finaleTree"></div>
+                <hr />
+                <p class="text-right">Afficher le classement.      <button id="showResults" class="btn btn-success btn-lg right">Valider</button></p>
+
+            </div>
+        </div>
+    </div>
+    <div id="panelResultats" class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <a id="a5" @*data-toggle="collapse" data-target="#epreuve"
+                       href="#epreuve"*@ class="collapsed">
+                    Classement Final
+                </a>
+            </h3>
+        </div>
+        <div id="classement" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div id="classementGrid"></div>
+                <hr />
+                <p class="text-right">Clôturer l'épreuve.      <button id="validateContest" class="btn btn-success btn-lg right">Valider</button></p>
 
             </div>
         </div>
@@ -126,7 +162,7 @@
     };
 
     var competiteursPresents = [];
-
+    var competiteursFinale = [];
     var encadrants = new kendo.data.DataSource({
         transport: {
             read: {
@@ -227,6 +263,10 @@
             model: {
                 id: "ParticipantId",
                 fields: {
+                    ParticipantId: {
+                        editable: false,
+                        nullable: false
+                    },
                     Nom: {
                         type: "string",
                         editable: false
@@ -271,11 +311,203 @@
                     }
                 }
             }
-        },
-        pageSize: 4
+        }
     });
 
+    function visualTemplate(options) {
+        var dataviz = kendo.dataviz;
+        var g = new dataviz.diagram.Group();
+        var dataItem = options.dataItem;
+        //console.log("visualTemplate " + dataItem.Nom);
+
+        g.append(new dataviz.diagram.Rectangle({
+            width: 200,
+            height: 30,
+            fill: dataItem.Couleur
+        }));
+
+        var fillTextColor = (dataItem.Couleur === "#FF0000" || dataItem.Couleur === "#0000FF") ? "#dedede" : "#000000";
+
+        g.append(new dataviz.diagram.TextBlock({
+            text: dataItem.Nom + ' ' + dataItem.Prenom,
+            x: 5,
+            y: 5,
+            fill: fillTextColor
+        }));
+
+        g.append(new dataviz.diagram.Rectangle({
+            width: 30,
+            x: 200,
+            height: 30,
+            fill: "ffffff"
+        }));
+
+        var textNode = "";
+
+        if (dataItem.Vainqueur !== null) {
+            textNode = (dataItem.Vainqueur) ? "G" : "P";
+        }
+
+        g.append(new dataviz.diagram.TextBlock({
+            text: textNode,
+            x: 210,
+            y: 6,
+            fill: "#000000"
+        }));
+
+        return g;
+    }
+
+    function findTreeviewNodeById(haystack, needle) {
+        var uid = null;
+
+        for (var i = 0; i < haystack.length; i++) {
+            haystack[i].load();
+            if (haystack[i].ParticipantId == needle) {
+                uid = haystack[i].uid;
+            }
+            else if (haystack[i].Children != null) {
+                uid = findTreeviewNodeById(haystack[i].Children, needle);
+            }
+
+            if (uid != null)
+                break;
+        }
+
+        return uid;
+    }
+
+
+    function cloneProperties(o1, o2) {
+        o1.Nom = o2.Nom;
+        o1.ParticipantId = o2.ParticipantId;
+        o1.Club = o2.Club;
+        o1.Prenom = o2.Prenom;
+        o1.EpreuveId = o2.EpreuveId;
+        o1.ClubId = o2.ClubId;
+
+        if (o1.parentNode && o1.parentNode() === undefined) {
+            o1.Vainqueur = o2.Vainqueur;
+        }
+    }
+
+    function createDiagram(selector, source) {
+        var kendodatasource = new kendo.data.HierarchicalDataSource({
+            transport: {
+                read: function (e) {
+                    console.log("reading competiteurs");
+                    e.success(source);
+                    $("div [data-role$='surface'").css('width', 'auto');
+                    var options = $(selector).data('kendoDiagram').options;
+                    var verticalSeparation = options.layout.verticalSeparation;
+                    var shapeHeight = options.shapeDefaults.height;
+                    var computed = 2 * shapeHeight + 5 * verticalSeparation;
+
+                    $(selector + " > div [data-role$='surface'").css('height', computed);
+                },
+                update: function (e) {
+                    var competiteur = e.data;
+                    console.log("updating compétiteurs");
+                    var uid = findTreeviewNodeById(competiteurDataSource.data(), competiteur.ParticipantId);
+                    var item = competiteurDataSource.getByUid(uid);
+                    item.set('Vainqueur', competiteur.Vainqueur);
+                    competiteurDataSource.read();
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read") {
+                        return { models: kendo.stringify(options.models || [options]) };
+                    }
+                }
+            },
+            error: function (e) {
+                alert("Status: " + e.status + "; Error message: " + e.errorThrown);
+            },
+            schema: {
+                model: {
+                    id: "id",
+                    fields: {
+                        id: { from: "Id", type: "number", editable: false },
+                        Nom: { type: "string", editable: false },
+                        Couleur: { type: "string", editable: false },
+                        Vainqueur: { type: "boolean", editable: true, nullable: true },
+                        Rank: { type: "number", editable: false, nullable: false },
+                        Classement: { type: "string", editable: false }
+                    },
+                    children: "Children"
+                }
+            }
+        });
+
+        $(selector).kendoDiagram({
+            dataSource: kendodatasource,
+            layout: {
+                type: "tree",
+                subtype: "left",
+                horizontalSeparation: 50,
+                verticalSeparation: 25
+            },
+            editable: {
+                resize: false,
+                tools: [""]
+            },
+            shapeDefaults: {
+                visual: visualTemplate,
+                height: 30,
+                content: {
+                    fontSize: 14,
+                    align: "left",
+                    color: "#DEDEDE"
+                },
+                editable: {
+                    tools: ["edit"],
+                    connect: false
+                }
+            },
+            connectionDefaults: {
+                editable: false,
+                selection: false
+            },
+            zoomRate: 1,
+            zoomMax: 1,
+            zoomMin: 1,
+            edit: function (e) {
+                console.log("edit");
+
+            },
+            save: function (e) {
+                if (e.shape.Vainqueur === null) {
+                    e.shape.Vainqueur = false;
+                }
+                var siblings = e.shape.parent();
+                var sibling = {};
+                if (e.shape.parent().length == 2) {
+                    for (var i = 0; i < siblings.length; i++) {
+                        if (siblings[i].uid != e.shape.uid) {
+                            sibling = siblings[i];
+                            break;
+                        }
+                    }
+
+                    sibling.Vainqueur = !e.shape.Vainqueur
+                    if (e.shape.Vainqueur) {
+                        cloneProperties(sibling.parentNode(), e.shape);
+                    }
+                    else {
+                        cloneProperties(sibling.parentNode(), sibling);
+                    }
+                }
+                kendodatasource.sync();
+                $(selector).data('kendoDiagram').setDataSource(kendodatasource);
+            }
+        });
+    }
+
     $(document).ready(function () {
+        $(window).on('beforeunload', function () {
+            return 'Attention une épreuve est en cours, il est important de ne pas quitter la page!';
+        });
+
+        $("#panelPool, #panelFinale, #panelResultats").hide();
         $("#juges").kendoMultiSelect({
             placeholder: "Choisissez les juges...",
             value: "Choisissez les juges...",
@@ -344,8 +576,7 @@
                         }
                     }
                 }
-            },
-            pageSize: 10
+            }
         });
 
         $("#competiteurs").kendoGrid({
@@ -355,6 +586,7 @@
                 pageSizes: true,
                 buttonCount: 5
             },
+            selectable : true,
             autosync: true,
             columns: [
                     { field: "Nom", title: "Nom" },
@@ -365,8 +597,93 @@
             editable: "incell"
         });
 
+        //
+        $("#showFinale").off('click').on('click', function (e) {
+            $("#panelFinale").show(1000);
+            var pool = $("#grid").data('kendoGrid');
+            var first = pool.dataSource.view().at(0);
+            var second = pool.dataSource.view().at(1);
+
+            competiteursFinale = [
+                {
+                    Id: 1,
+                    Nom: "",
+                    Prenom: "",
+                    Couleur: "#ffd700",
+                    Vainqueur: null,
+                    Rank: 0,
+                    Classement: 1,
+                    Children: [{
+                        Id: first.ParticipantId,
+                        ParticipantId: first.ParticipantId,
+                        Nom: first.Nom,
+                        Prenom: first.Prenom,
+                        Couleur: "#0000FF",
+                        Vainqueur: null,
+                        Rank: 1,
+                        Classement: 0,
+                        Children: []
+                    }, {
+                        Id: second.ParticipantId,
+                        ParticipantId: second.ParticipantId,
+                        Nom: second.Nom,
+                        Prenom: second.Prenom,
+                        Couleur: "#FF0000",
+                        Vainqueur: null,
+                        Rank: 1,
+                        Classement: 0,
+                        Children: []
+                    }]
+                }]
+
+            createDiagram("#finaleTree", competiteursFinale);
+            $("#a3").not('.collapsed').trigger('click');
+            $("#a3").removeAttr('data-toggle').removeAttr('data-target').attr('href', "#").addClass("collapsed");
+            $("#panelPool").hide(1000);
+            $("#a4").attr('data-toggle', 'collapse').attr('data-target', '#finale').attr('href', "#finale").removeClass("collapsed");
+            $("#a4").trigger('click');
+        });
+
+        $("#showResults").off('click').on('click', function (e) {
+            $("#panelResultats").show(1000);
+            var finaleData = $("#grid").data('kendoGrid').dataSource.view();
+            var first = finaleData[0];
+            var second = finaleData[1];
+
+            if ($("#finaleTree").data('kendoDiagram').dataSource.at(0).ParticipantId != first.ParticipantId) {
+                var b = finaleData[1];
+                finaleData[1] = finaleData[0];
+                finaleData[0] = b;
+            }
+
+            $("#classementGrid").kendoGrid({
+                dataSource: finaleData,
+                columns: [
+                    { field: "Nom", title: "Nom" },
+                    { field: "Prenom", title: "Prénom" },
+                    {
+                        field: "Classement",
+                        title: "Classement",
+                        width: 150,
+                        template: function (dataItem) {
+                            var grid = $("#classementGrid").data('kendoGrid');
+                            var rowIndex = grid.dataSource.view().indexOf(dataItem);
+                            dataItem.Classement = rowIndex + 1;
+                            return "<b>" + (rowIndex + 1) + "</b>";
+                        }
+                    }
+                ]
+            });
+
+            $("#a4").not('.collapsed').trigger('click');
+            $("#a4").removeAttr('data-toggle').removeAttr('data-target').attr('href', "#").addClass("collapsed");
+            $("#panelFinale").hide(1000);
+            $("#a5").attr('data-toggle', 'collapse').attr('data-target', '#classement').attr('href', "#classement").removeClass("collapsed");
+            $("#a5").trigger('click');
+        });
+
         $("#validateContest").off('click').on('click', function (e) {
-            var grid = $("#grid").data('kendoGrid');
+            var grid = $("#classementGrid").data('kendoGrid');
             var results = [];
             $.each(grid.dataSource.data(), function (i, e) {
                 results.push(e);
@@ -381,6 +698,7 @@
                 contentType: 'application/json',
                 dataType: 'json'
             }).success(function (response) {
+                $(window).off('beforeunload');
                 window.location.href = response.Uri;
             }).fail(function () {
                 $("#notification").data('kendoNotification').show({
@@ -413,15 +731,14 @@
                 contentType: 'application/json',
                 dataType: 'json'
             }).success(function (result, textStatus) {
+                $("#panelPool").show(1000);
                 console.log(textStatus, "validation OK");
                 $("#notification").data('kendoNotification').show({
                     title: "Appel des compétiteurs validé."
                 }, "success");
-                grid.dataSource.read(dataSource.data());
                 competiteursPresents = result;
                 $("#grid").kendoGrid({
                     dataSource: dataSource,
-                    //toolbar: ["save"],
                     groupable: false,
                     sortable: false,
                     resizable: false,
@@ -488,7 +805,7 @@
                             }]
                         }]
                     }, {
-                        field : "Classement",
+                        field: "Classement",
                         title: "Classement",
                         width: 90,
                         template: function (dataItem) {
@@ -522,8 +839,9 @@
                 });
                 $("#a1, #a2").not('.collapsed').trigger('click');
                 $("#a1, #a2").removeAttr('data-toggle').removeAttr('data-target').attr('href', "#").addClass("collapsed");
+                $("#panelEncadrement, #panelAppel").hide(1000);
                 $("#a3").attr('data-toggle', 'collapse').attr('data-target', '#epreuve').attr('href', "#epreuve").removeClass("collapsed");
-                $("#a3").trigger('click')
+                $("#a3").trigger('click');
 
             }).fail(function () {
                 $("#notification").data('kendoNotification').show({

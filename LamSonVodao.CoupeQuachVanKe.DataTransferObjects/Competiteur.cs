@@ -7,6 +7,7 @@
     /// <summary>
     /// 
     /// </summary>
+    /// <seealso cref="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Participant" />
     public class Competiteur : Participant
     {
         /////// <summary>
@@ -88,7 +89,14 @@
         /// The poids.
         /// </value>
         public float Poids { get; set; }
-    
+
+        /// <summary>
+        /// Gets or sets the nb pesee.
+        /// </summary>
+        /// <value>
+        /// The nb pesee.
+        /// </value>
+        public int NbPesee { get; set; } 
         /// <summary>
         /// Gets or sets a value indicating whether [inscrit pour quyen].
         /// </summary>
@@ -122,6 +130,14 @@
         public bool InscritPourSongLuyen { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether [inscrit pour quyen dong dien].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [inscrit pour quyen dong dien]; otherwise, <c>false</c>.
+        /// </value>
+        public bool InscritPourQuyenDongDien { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether [inscription valide pour coupe].
         /// </summary>
         /// <value>
@@ -130,28 +146,28 @@
         public bool InscriptionValidePourCoupe { get; set; }
 
         /// <summary>
-        /// Gets or sets the equipe song luyen numero.
+        /// Gets or sets the numero equipe.
         /// </summary>
         /// <value>
-        /// The equipe song luyen numero.
+        /// The numero equipe.
         /// </value>
-        public int EquipeSongLuyenNumero { get; set; }
+        public int NumeroEquipe { get; set; }
 
         /// <summary>
-        /// Gets or sets the equipe song luyen.
+        /// Gets or sets the equipe.
         /// </summary>
         /// <value>
-        /// The equipe song luyen.
+        /// The equipe.
         /// </value>
-        public virtual EquipeSongLuyen EquipeSongLuyen { get; set; }
+        public virtual Equipe Equipe { get; set; }
 
         /// <summary>
-        /// Gets or sets the equipe song luyen identifier.
+        /// Gets or sets the equipe identifier.
         /// </summary>
         /// <value>
-        /// The equipe song luyen identifier.
+        /// The equipe identifier.
         /// </value>
-        public int? EquipeSongLuyenId { get; set; }
+        public int? EquipeId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [inscription is correct].

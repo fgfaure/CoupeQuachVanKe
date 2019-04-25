@@ -10,6 +10,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations
         Cadets = 4,
         Juniors = 5,
         Seniors = 6,
-        Veterans = 7
+        Veterans = 7,
+        Poussins = 8
     }
 }

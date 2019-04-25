@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using LamSonVoDao.CoupeQuachVanKe.WebApp.Helper;
 using LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe;
 using Resources;
+using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
 
 namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
@@ -18,8 +19,10 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         private Repository<EpreuveTechnique> epreuvestechniquesRepository;
         private Repository<EpreuveCombat> epreuvesCombatRepository;
         private Repository<Competiteur> competiteursRepository;
+        private Repository<Equipe> equipesRepository;
         private Repository<Participation> participationsRepository;
         private Repository<TypeEpreuve> typesEpreuvesRepository;
+        private Repository<Participant> participantsRepository;
 
         public VentilationController()
         {
@@ -27,6 +30,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
             this.epreuvestechniquesRepository = this.unitOfWork.Repository<EpreuveTechnique>();
             this.epreuvesCombatRepository = this.unitOfWork.Repository<EpreuveCombat>();
             this.competiteursRepository = this.unitOfWork.Repository<Competiteur>();
+            this.equipesRepository = this.unitOfWork.Repository<Equipe>();
+            this.participantsRepository = this.unitOfWork.Repository<Participant>();
             this.participationsRepository = this.unitOfWork.Repository<Participation>();
             this.typesEpreuvesRepository = this.unitOfWork.Repository<TypeEpreuve>();
         }
@@ -40,8 +45,9 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            var clubs = this.unitOfWork.Repository<Club>().Read();
             var participations = participationsRepository.Read();
-            var competiteurs = competiteursRepository.Read();
+            var participants = this.participantsRepository.Read();
             var epreuvesCombat = epreuvesCombatRepository.Read();
             for (int i = 0; i < epreuvesCombat.Count(); i++)
             {
@@ -49,7 +55,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
             }
 
             var temp = (from participation in participations
-                        join comp in competiteurs on participation.ParticipantId equals comp.Id into comp_join
+                        join comp in participants on participation.ParticipantId equals comp.Id into comp_join
                         join ep in epreuvesCombat on participation.EpreuveId equals ep.Id into ep_join
                         from competiteur in comp_join
                         from epreuve in ep_join
@@ -59,17 +65,23 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                             participation.EpreuveId,
                             epreuve = epreuve.Nom,
                             competiteur.Nom,
-                            competiteur.Prenom
+                            competiteur.Prenom,
+                            ((Competiteur)competiteur).Poids,
+                            Club = competiteur.Club.Nom,
+                            ClubId = competiteur.Club.Id
                         }
                             into g
-                            orderby g.Key.EpreuveId ascending
-                            select new
-                            {
-                                epreuveId = g.Key.EpreuveId,
-                                epreuve = g.Key.epreuve,
-                                nom = g.Key.Nom,
-                                prenom = g.Key.Prenom
-                            }).ToList();
+                        orderby g.Key.EpreuveId ascending
+                        select new
+                        {
+                            epreuveId = g.Key.EpreuveId,
+                            epreuve = g.Key.epreuve,
+                            nom = g.Key.Nom,
+                            prenom = g.Key.Prenom,
+                            poids = g.Key.Poids,
+                            club = g.Key.Club,
+                            clubId = g.Key.ClubId
+                        }).ToList();
 
             result.Data = temp;
             return result;
@@ -79,15 +91,16 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            var clubs = this.unitOfWork.Repository<Club>().Read();
             var participations = participationsRepository.Read();
-            var competiteurs = competiteursRepository.Read();
+            var participants = this.participantsRepository.Read();
             var epreuvesTechniques = epreuvestechniquesRepository.Read();
             for (int i = 0; i < epreuvesTechniques.Count(); i++)
             {
                 epreuvesTechniques.ElementAt(i).TypeEpreuve = this.unitOfWork.Repository<TypeEpreuve>().Read(epreuvesTechniques.ElementAt(i).TypeEpreuveId);
             }
             var temp = (from participation in participations
-                        join comp in competiteurs on participation.ParticipantId equals comp.Id into comp_join
+                        join participant in participants on participation.ParticipantId equals participant.Id into comp_join
                         join ep in epreuvesTechniques on participation.EpreuveId equals ep.Id into ep_join
                         from competiteur in comp_join
                         from epreuve in ep_join
@@ -97,17 +110,21 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                             participation.EpreuveId,
                             epreuve = epreuve.Nom,
                             competiteur.Nom,
-                            competiteur.Prenom
+                            competiteur.Prenom,
+                            ClubId = competiteur.ClubId,
+                            Club = competiteur.Club.Nom
                         }
                             into g
-                            orderby g.Key.EpreuveId ascending
-                            select new
-                            {
-                                epreuveId = g.Key.EpreuveId,
-                                epreuve = g.Key.epreuve,
-                                nom = g.Key.Nom,
-                                prenom = g.Key.Prenom
-                            }).ToList();
+                        orderby g.Key.EpreuveId ascending
+                        select new
+                        {
+                            epreuveId = g.Key.EpreuveId,
+                            epreuve = g.Key.epreuve,
+                            nom = g.Key.Nom,
+                            prenom = g.Key.Prenom,
+                            club = g.Key.Club,
+                            clubId = g.Key.ClubId
+                        }).ToList();
             result.Data = temp;
             return result;
         }
@@ -119,11 +136,11 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             var participations = participationsRepository.Read();
-            var competiteurs = competiteursRepository.Read();
+            var participants = participantsRepository.Read();
             var epreuvesTechniques = epreuvestechniquesRepository.Read();
 
             var valuedTrials = (from participation in participations
-                                from comp in competiteurs
+                                from comp in participants
                                 where comp.Id == participation.ParticipantId
                                 && participation.Epreuve != null
                                 group participation by participation.EpreuveId into filteredEpreuves
@@ -193,13 +210,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 
         public JsonResult VentilationTechnique()
         {
-            var epreuvestechniques = this.unitOfWork.Repository<EpreuveTechnique>().Read();
-            var competiteurs = this.unitOfWork.Repository<Competiteur>();
-            var participations = this.unitOfWork.Repository<Participation>();
             var typesEpreuves = this.unitOfWork.Repository<TypeEpreuve>().Read();
+            var epreuvestechniques = this.unitOfWork.Repository<EpreuveTechnique>().Read();
+            var participants = this.participantsRepository.Read();
+            var participations = this.unitOfWork.Repository<Participation>();
 
             foreach (var epreuve in epreuvestechniques)
             {
+
                 epreuve.TypeEpreuve = typesEpreuves.First(tp => tp.Id == epreuve.TypeEpreuveId);
                 foreach (var participation in participations.Read())
                 {
@@ -210,100 +228,152 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 
             try
             {
-                var competiteursTechniques = competiteurs.Read(c => c.InscritPourBaiVuKhi || c.InscritPourQuyen || c.InscritPourSongLuyen).ToList();
+                var competiteursTechniques = participants.OfType<Competiteur>().Where(c => c.InscritPourBaiVuKhi || c.InscritPourQuyen || c.InscritPourSongLuyen || c.InscritPourQuyenDongDien).ToList();
                 foreach (var competiteur in competiteursTechniques)
                 {
-                    foreach (var epreuve in epreuvestechniques.Where(e => e.TypeEpreuveId < 3))
+                    foreach (var epreuve in epreuvestechniques.Where(e => e.TypeEpreuveId < 3 && e.Statut != StatutEpreuve.Exclue))
                     {
+                        var competiteurBoundToEpreuve = false;
                         if (epreuve.CategoriePratiquantId == competiteur.CategoriePratiquantId && (epreuve.GenreCategorie == GenreEpreuve.Mixte || ((int)epreuve.GenreCategorie == (int)competiteur.Sexe)))
                         {
-                            if (competiteur.InscritPourQuyen && epreuve.TypeEpreuveId == 1)
+                            if (competiteur.InscritPourQuyen && epreuve.TypeEpreuve.Identifier == TypeEpreuveConstants.BAIQUYEN)
                             {
                                 if (epreuve.GradeAutorise == Grade.TousGrades)
                                 {
-                                    participations.Create(new Participation
+                                    competiteurBoundToEpreuve = true;
+                                    this.participationsRepository.Create(new Participation
                                     {
                                         ParticipantId = competiteur.Id,
                                         EpreuveId = epreuve.Id,
                                         Resultat = new Resultat()
+                                        {
+                                            Date = DateTime.Now
+                                        }
                                     });
                                 }
                                 else if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
                                 {
-                                    participations.Create(new Participation
+                                    competiteurBoundToEpreuve = true;
+                                    this.participationsRepository.Create(new Participation
                                     {
                                         ParticipantId = competiteur.Id,
                                         EpreuveId = epreuve.Id,
                                         Resultat = new Resultat()
+                                        {
+                                            Date = DateTime.Now
+                                        }
                                     });
                                 }
                                 else if (epreuve.GradeAutorise == competiteur.Grade)
                                 {
-                                    participations.Create(new Participation
+                                    competiteurBoundToEpreuve = true;
+                                    this.participationsRepository.Create(new Participation
                                     {
                                         ParticipantId = competiteur.Id,
                                         EpreuveId = epreuve.Id,
                                         Resultat = new Resultat()
+                                        {
+                                            Date = DateTime.Now
+                                        }
                                     });
                                 }
                             }
 
-
-                            if (competiteur.InscritPourBaiVuKhi && epreuve.TypeEpreuveId == 2)
+                            if (competiteur.InscritPourBaiVuKhi && epreuve.TypeEpreuve.Identifier == TypeEpreuveConstants.BAIVUKHI)
                             {
+                                competiteurBoundToEpreuve = true;
                                 if (epreuve.GradeAutorise == Grade.TousGrades)
                                 {
-                                    participations.Create(new Participation
+                                    this.participationsRepository.Create(new Participation
                                     {
                                         ParticipantId = competiteur.Id,
                                         EpreuveId = epreuve.Id,
                                         Resultat = new Resultat()
+                                        {
+                                            Date = DateTime.Now
+                                        }
                                     });
                                 }
                                 else if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
                                 {
-                                    participations.Create(new Participation
+                                    competiteurBoundToEpreuve = true;
+                                    this.participationsRepository.Create(new Participation
                                     {
                                         ParticipantId = competiteur.Id,
                                         EpreuveId = epreuve.Id,
                                         Resultat = new Resultat()
+                                        {
+                                            Date = DateTime.Now
+                                        }
                                     });
                                 }
                                 else if (epreuve.GradeAutorise == competiteur.Grade)
                                 {
-                                    participations.Create(new Participation
+                                    competiteurBoundToEpreuve = true;
+                                    this.participationsRepository.Create(new Participation
                                     {
                                         ParticipantId = competiteur.Id,
                                         EpreuveId = epreuve.Id,
                                         Resultat = new Resultat()
+                                        {
+                                            Date = DateTime.Now
+                                        }
                                     });
                                 }
                             }
-                            //if (competiteur.InscritPourSongLuyen)
-                            //{
-                            //    if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
-                            //    {
-                            //        participations.Create(new Participation
-                            //        {
-                            //            CompetiteurId = competiteur.Id,
-                            //            EpreuveId = epreuve.Id,
-                            //            Resultat = new Resultat()
-                            //        });
-                            //    }
-                            //    else if (epreuve.GradeAutorise == Grade.CeintureNoire && competiteur.Grade == Grade.CeintureNoire)
-                            //    {
-                            //        participations.Create(new Participation
-                            //        {
-                            //            CompetiteurId = competiteur.Id,
-                            //            EpreuveId = epreuve.Id,
-                            //            Resultat = new Resultat()
-                            //        });
-                            //    }
-                            //}
+                        }
+                        if (competiteurBoundToEpreuve)
+                        {
+                            epreuve.Statut = StatutEpreuve.Ouverte;
+                            epreuvestechniquesRepository.Update(epreuve);
                         }
                     }
                 }
 
+                var equipes = participants.OfType<Equipe>().ToList();
+                foreach (var equipe in equipes)
+                {
+                    foreach (var epreuve in epreuvestechniques.Where(e => e.TypeEpreuve.Identifier == TypeEpreuveConstants.QUYENDONGDIEN))
+                    {
+                        var competiteurBoundToEpreuve = false;
+                        var membres = equipe.Competiteurs;
+                        var hasBlackBelt = membres.Select(m => m.Grade).Contains(Grade.CeintureNoire);
+
+                        if (membres.First().InscritPourQuyenDongDien && hasBlackBelt && epreuve.GradeAutorise == Grade.CeintureNoire)
+                        {
+                            this.participationsRepository.Create(new Participation
+                            {
+                                ParticipantId = equipe.Id,
+                                EpreuveId = epreuve.Id,
+                                Resultat = new Resultat()
+                                {
+                                    Date = DateTime.Now
+                                }
+                            });
+                            competiteurBoundToEpreuve = true;
+                        }
+                        else if (membres.First().InscritPourQuyenDongDien && !hasBlackBelt && epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire)
+                        {
+                            this.participationsRepository.Create(new Participation
+                            {
+                                ParticipantId = equipe.Id,
+                                EpreuveId = epreuve.Id,
+                                Resultat = new Resultat()
+                                {
+                                    Date = DateTime.Now
+                                }
+                            });
+                            competiteurBoundToEpreuve = true;
+                        }
+
+                        if (competiteurBoundToEpreuve)
+                        {
+                            epreuve.Statut = StatutEpreuve.Ouverte;
+                            epreuvestechniquesRepository.Update(epreuve);
+                        }
+                    }
+
+                }
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
@@ -331,40 +401,59 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                     }
                 }
 
-                foreach (var epreuve in epreuvesCombats)
+                foreach (var epreuve in epreuvesCombats.Where(e => e.Statut != StatutEpreuve.Exclue))
                 {
-                    foreach (var competiteur in competiteurs.Read())
+                    bool competiteurBoundToEpreuve = false;
+                    foreach (var competiteur in competiteurs.Read().Where(c => c.InscritPourCombat))
                     {
                         if (epreuve.CategoriePratiquantId == competiteur.CategoriePratiquantId && (epreuve.GenreCategorie == GenreEpreuve.Mixte || ((int)epreuve.GenreCategorie == (int)competiteur.Sexe)) && (competiteur.Poids >= epreuve.PoidsMini && competiteur.Poids < epreuve.PoidsMaxi))
                         {
                             if (epreuve.GradeAutorise == Grade.TousGrades)
                             {
+                                competiteurBoundToEpreuve = true;
                                 participations.Create(new Participation
                                 {
                                     ParticipantId = competiteur.Id,
                                     EpreuveId = epreuve.Id,
                                     Resultat = new Resultat()
+                                    {
+                                        Date = DateTime.Now
+                                    }
                                 });
                             }
                             else if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
                             {
+                                competiteurBoundToEpreuve = true;
                                 participations.Create(new Participation
                                 {
                                     ParticipantId = competiteur.Id,
                                     EpreuveId = epreuve.Id,
                                     Resultat = new Resultat()
+                                    {
+                                        Date = DateTime.Now
+                                    }
                                 });
                             }
                             else if (epreuve.GradeAutorise == competiteur.Grade)
                             {
+                                competiteurBoundToEpreuve = true;
                                 participations.Create(new Participation
                                 {
                                     ParticipantId = competiteur.Id,
                                     EpreuveId = epreuve.Id,
                                     Resultat = new Resultat()
+                                    {
+                                        Date = DateTime.Now
+                                    }
                                 });
                             }
                         }
+                    }
+
+                    if (competiteurBoundToEpreuve)
+                    {
+                        epreuve.Statut = StatutEpreuve.Ouverte;
+                        epreuvesCombatRepository.Update(epreuve);
                     }
                 }
 
@@ -383,15 +472,17 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 
             if (int.TryParse(id, out parsed) && parsed > 0)
             {
-                var epreuves = this.unitOfWork.Repository<Epreuve>().Read();
+                var epreuves = this.unitOfWork.Repository<Epreuve>();
                 var participants = this.unitOfWork.Repository<Participant>();
                 var participations = this.unitOfWork.Repository<Participation>();
                 var typesEpreuves = this.unitOfWork.Repository<TypeEpreuve>().Read();
 
-                var epreuve = epreuves.FirstOrDefault(e => e.Id == parsed);
+                var epreuve = epreuves.Read().FirstOrDefault(e => e.Id == parsed);
 
                 if (epreuve != null)
                 {
+                    bool competiteurBoundToEpreuve = false;
+
                     foreach (var participation in participations.Read().Where(p => p.EpreuveId == parsed))
                     {
                         participations.Delete(participation);
@@ -404,94 +495,126 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                             Competiteur competiteur = (Competiteur)participant;
                             if (epreuve.CategoriePratiquantId == competiteur.CategoriePratiquantId && (epreuve.GenreCategorie == GenreEpreuve.Mixte || ((int)epreuve.GenreCategorie == (int)competiteur.Sexe)))
                             {
-                                if (competiteur.InscritPourQuyen && epreuve.TypeEpreuveId == 1)
+                                if (competiteur.InscritPourQuyen && epreuve.TypeEpreuve.Identifier == TypeEpreuveConstants.BAIQUYEN)
                                 {
                                     if (epreuve.GradeAutorise == Grade.TousGrades)
                                     {
+                                        competiteurBoundToEpreuve = true;
                                         participations.Create(new Participation
                                         {
                                             ParticipantId = competiteur.Id,
                                             EpreuveId = epreuve.Id,
                                             Resultat = new Resultat()
+                                            {
+                                                Date = DateTime.Now
+                                            }
                                         });
                                     }
                                     else if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
                                     {
+                                        competiteurBoundToEpreuve = true;
                                         participations.Create(new Participation
                                         {
                                             ParticipantId = competiteur.Id,
                                             EpreuveId = epreuve.Id,
                                             Resultat = new Resultat()
+                                            {
+                                                Date = DateTime.Now
+                                            }
                                         });
                                     }
                                     else if (epreuve.GradeAutorise == competiteur.Grade)
                                     {
+                                        competiteurBoundToEpreuve = true;
                                         participations.Create(new Participation
                                         {
                                             ParticipantId = competiteur.Id,
                                             EpreuveId = epreuve.Id,
                                             Resultat = new Resultat()
+                                            {
+                                                Date = DateTime.Now
+                                            }
                                         });
                                     }
                                 }
 
 
-                                if (competiteur.InscritPourBaiVuKhi && epreuve.TypeEpreuveId == 2)
+                                if (competiteur.InscritPourBaiVuKhi && epreuve.TypeEpreuve.Identifier == TypeEpreuveConstants.BAIVUKHI)
                                 {
                                     if (epreuve.GradeAutorise == Grade.TousGrades)
                                     {
+                                        competiteurBoundToEpreuve = true;
                                         participations.Create(new Participation
                                         {
                                             ParticipantId = competiteur.Id,
                                             EpreuveId = epreuve.Id,
                                             Resultat = new Resultat()
+                                            {
+                                                Date = DateTime.Now
+                                            }
                                         });
                                     }
                                     else if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
                                     {
+                                        competiteurBoundToEpreuve = true;
                                         participations.Create(new Participation
                                         {
                                             ParticipantId = competiteur.Id,
                                             EpreuveId = epreuve.Id,
                                             Resultat = new Resultat()
+                                            {
+                                                Date = DateTime.Now
+                                            }
                                         });
                                     }
                                     else if (epreuve.GradeAutorise == competiteur.Grade)
                                     {
+                                        competiteurBoundToEpreuve = true;
                                         participations.Create(new Participation
                                         {
                                             ParticipantId = competiteur.Id,
                                             EpreuveId = epreuve.Id,
                                             Resultat = new Resultat()
+                                            {
+                                                Date = DateTime.Now
+                                            }
                                         });
                                     }
                                 }
                             }
                         }
 
-                        if (epreuve.TypeEpreuveId == 4)
+                        if (epreuve.TypeEpreuve.Identifier == TypeEpreuveConstants.QUYENDONGDIEN)
                         {
-                            foreach (var equipe in participants.Read().OfType<EquipeSongLuyen>())
+                            foreach (var equipe in participants.Read().OfType<Equipe>())
                             {
-                                var membres = participants.Read().Cast<Competiteur>().Where(c => c.EquipeSongLuyenNumero == equipe.Numero);
+                                var membres = equipe.Competiteurs;
                                 var hasBlackBelt = membres.Select(m => m.Grade).Contains(Grade.CeintureNoire);
 
-                                if (membres.First().InscritPourSongLuyen && hasBlackBelt && epreuve.GradeAutorise == Grade.CeintureNoire)
+                                if (membres.First().InscritPourQuyenDongDien && hasBlackBelt && epreuve.GradeAutorise == Grade.CeintureNoire)
                                 {
+                                    competiteurBoundToEpreuve = true;
                                     participations.Create(new Participation
                                     {
                                         ParticipantId = equipe.Id,
                                         EpreuveId = parsed,
                                         Resultat = new Resultat()
+                                        {
+                                            Date = DateTime.Now
+                                        }
                                     });
                                 }
-                                else if (membres.First().InscritPourSongLuyen && !hasBlackBelt && epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire)
+                                else if (membres.First().InscritPourQuyenDongDien && !hasBlackBelt && epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire)
                                 {
+                                    competiteurBoundToEpreuve = true;
                                     participations.Create(new Participation
                                     {
                                         ParticipantId = equipe.Id,
                                         EpreuveId = parsed,
                                         Resultat = new Resultat()
+                                        {
+                                            Date = DateTime.Now
+                                        }
                                     });
                                 }
                             }
@@ -505,33 +628,56 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                             {
                                 if (epreuve.GradeAutorise == Grade.TousGrades)
                                 {
+                                    competiteurBoundToEpreuve = true;
                                     participations.Create(new Participation
                                     {
                                         ParticipantId = competiteur.Id,
                                         EpreuveId = epreuve.Id,
                                         Resultat = new Resultat()
+                                        {
+                                            Date = DateTime.Now
+                                        }
                                     });
                                 }
                                 else if (epreuve.GradeAutorise == Grade.MoinsDeCeintureNoire && (competiteur.Grade == Grade.CeintureBlancheA4emeCap || competiteur.Grade == Grade.Plus4emeCapACeintureMarron))
                                 {
+                                    competiteurBoundToEpreuve = true;
                                     participations.Create(new Participation
                                     {
                                         ParticipantId = competiteur.Id,
                                         EpreuveId = epreuve.Id,
                                         Resultat = new Resultat()
+                                        {
+                                            Date = DateTime.Now
+                                        }
                                     });
                                 }
                                 else if (epreuve.GradeAutorise == competiteur.Grade)
                                 {
+                                    competiteurBoundToEpreuve = true;
                                     participations.Create(new Participation
                                     {
                                         ParticipantId = competiteur.Id,
                                         EpreuveId = epreuve.Id,
                                         Resultat = new Resultat()
+                                        {
+                                            Date = DateTime.Now
+                                        }
                                     });
                                 }
                             }
                         }
+                    }
+
+                    if (competiteurBoundToEpreuve)
+                    {
+                        epreuve.Statut = StatutEpreuve.Ouverte;
+                        epreuves.Update(epreuve);
+                    }
+                    else
+                    {
+                        epreuve.Statut = StatutEpreuve.Fermee;
+                        epreuves.Update(epreuve);
                     }
                     var result = new JsonResult();
                     result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -565,6 +711,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                         foreach (var item in matches)
                         {
                             sources.Add(item);
+                            item.Statut = StatutEpreuve.Exclue;
+                            this.epreuvestechniquesRepository.Update(item);
                         }
 
                     }
@@ -578,6 +726,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                         foreach (var item in matches)
                         {
                             sources.Add(item);
+                            item.Statut = StatutEpreuve.Exclue;
+                            this.epreuvesCombatRepository.Update(item);
                         }
                     }
 
@@ -608,8 +758,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                         merged.GenreCategorie = sources.First().GenreCategorie;
                     }
 
-                    merged.GradeAutorise = sources.First().GradeAutorise;
-                    merged.Statut = StatutEpreuve.Fermee;
+                    merged.GradeAutorise =   mergeGrades(sources);
+                    merged.Statut = StatutEpreuve.Ouverte;
                     merged.TypeEpreuveId = sources.First().TypeEpreuveId;
 
                     var genre = GenreEpreuves.ResourceManager.GetString(merged.GenreCategorie.ToString());
@@ -618,10 +768,11 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                     merged.Nom = string.Format("{0} {1} {2} {3}", typeEpreuve, string.Join(" ", categoryNames.ToArray()), genre, grade);
                     if (!techEpreuve)
                     {
-
                         ((EpreuveCombat)merged).PoidsMaxi = sources.Cast<EpreuveCombat>().Max(e => e.PoidsMaxi);
                         ((EpreuveCombat)merged).PoidsMini = sources.Cast<EpreuveCombat>().Min(e => e.PoidsMini);
-                        merged.Nom = string.Format("{0} de {1}kgs à {2}kgs", merged.Nom, ((EpreuveCombat)merged).PoidsMini, ((EpreuveCombat)merged).PoidsMaxi);
+                        merged.Nom = BuildEpreuveName(sources.First().CategoriePratiquant.Nom, typeEpreuve, genre, grade, ((EpreuveCombat)merged).PoidsMini, ((EpreuveCombat)merged).PoidsMaxi);
+
+                        //merged.Nom = string.Format("{0} de {1}kgs à {2}kgs", merged.Nom, ((EpreuveCombat)merged).PoidsMini, ((EpreuveCombat)merged).PoidsMaxi);
                     }
 
                     if (techEpreuve)
@@ -660,7 +811,62 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
             {
                 throw new ArgumentException("Passed parameter can't be parsed to bool type", "areTechs");
             }
+        }
 
+        private Grade mergeGrades(List<Epreuve> sources)
+        {
+            var orderedGrades = sources.OrderBy(s => s.GradeAutorise).Select( s  => s.GradeAutorise).ToList();
+            Grade merged = Grade.NotSet;
+            var first = orderedGrades.First();
+            var last = orderedGrades.Last();
+
+            if (first == Grade.CeintureBlancheA4emeCap && last == Grade.Plus4emeCapACeintureMarron)
+            {
+                merged = Grade.MoinsDeCeintureNoire;
+            }
+            else if (first == Grade.MoinsDeCeintureNoire && last == Grade.CeintureNoire)
+            {
+                merged = Grade.TousGrades;
+            }
+            else if(first == Grade.CeintureBlancheA4emeCap && last == Grade.CeintureNoire)
+            {
+                merged = Grade.TousGrades;
+            }
+            else
+            {
+                merged = sources.First().GradeAutorise;
+            }
+            return merged;
+        }
+
+        [HttpPost]
+        public ActionResult ExcelSave(string contentType, string base64, string fileName)
+        {
+            var fileContents = Convert.FromBase64String(base64);
+
+            return File(fileContents, contentType, fileName);
+        }
+
+        private static string BuildEpreuveName(string categorie, string typeEpreuve, string genre, string grade, float poidsMini, float poidsMaxi)
+        {
+            var nom = string.Empty;
+            if (poidsMini == 0 && poidsMaxi == 1000)
+            {
+                nom = string.Format("{0} {1} {2} {3} tous poids confondus", typeEpreuve, categorie, genre, grade, poidsMaxi);
+            }
+            else if (poidsMini == 0 && poidsMaxi != 1000)
+            {
+                nom = string.Format("{0} {1} {2} {3} -{4} kgs", typeEpreuve, categorie, genre, grade, poidsMaxi);
+            }
+            else if (poidsMini != 0 && poidsMaxi == 1000)
+            {
+                nom = string.Format("{0} {1} {2} {3} +{4} kgs", typeEpreuve, categorie, genre, grade, poidsMini);
+            }
+            else
+            {
+                nom = string.Format("{0} {1} {2} {3} de {4}kgs à {5}kgs", typeEpreuve, categorie, genre, grade, poidsMini, poidsMaxi);
+            }
+            return nom;
         }
     }
 }

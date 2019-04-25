@@ -64,9 +64,9 @@
             if (client != null)
             {
                 var aire = this.aires.Read().FirstOrDefault(a => a.Id == client.AireId);
-                if (aire.Epreuves != null)
+                if (aire != null && aire.Epreuves != null)
                 {
-                    var epreuve = aire.Epreuves.Where(e => e.Statut == StatutEpreuve.Assignee).FirstOrDefault();
+                    var epreuve = aire.Epreuves.Where(e => e.Statut == StatutEpreuve.Assignee || e.Statut == StatutEpreuve.EnCours || e.Statut == StatutEpreuve.Prete).FirstOrDefault();
                     if (epreuve != null)
                     {
                         if (epreuve.TypeEpreuve.Technique)
@@ -90,7 +90,7 @@
             }
             else
             {
-                throw new ArgumentException("Unknow client");
+                throw new ArgumentException("Unknown client");
             }
 
             return result;
@@ -105,7 +105,7 @@
             var client = this.clients.Read(c => string.Compare(c.ClientLogInName, log, false) == 0).FirstOrDefault();
             if (client != null)
             {
-                var epreuve = this.aires.Read(a => a.Id == client.AireId).FirstOrDefault().Epreuves.FirstOrDefault(e => e.Statut == StatutEpreuve.Assignee);
+                var epreuve = this.aires.Read(a => a.Id == client.AireId).FirstOrDefault().Epreuves.FirstOrDefault(e => e.Statut == StatutEpreuve.Assignee || e.Statut == StatutEpreuve.EnCours || e.Statut == StatutEpreuve.Prete);
                 if (epreuve != null)
                 {
                     this.ViewBag.ContestName = epreuve.Nom;
@@ -126,15 +126,15 @@
             var client = this.clients.Read(c => string.Compare(c.ClientLogInName, log, false) == 0).FirstOrDefault();
             if (client != null)
             {
-                var epreuve = this.aires.Read(a => a.Id == client.AireId).FirstOrDefault().Epreuves.FirstOrDefault(e => e.Statut == StatutEpreuve.Assignee);
+                var epreuve = this.aires.Read(a => a.Id == client.AireId).FirstOrDefault().Epreuves.FirstOrDefault(e => e.Statut == StatutEpreuve.Assignee || e.Statut == StatutEpreuve.EnCours || e.Statut == StatutEpreuve.Prete);
                 if (epreuve != null)
                 {
                     this.ViewBag.ContestName = epreuve.Nom;
                     epreuve.Statut = StatutEpreuve.Prete;
                     this.epreuves.Update(epreuve);
-
                 }
             }
+
             return View();
         }
 
@@ -150,14 +150,15 @@
             var client = this.clients.Read(c => string.Compare(c.ClientLogInName, log, false) == 0).FirstOrDefault();
             if (client != null)
             {
-                var epreuve = this.aires.Read(a => a.Id == client.AireId).FirstOrDefault().Epreuves.FirstOrDefault();
+                var test = this.aires.Read(a => a.Id == client.AireId);
+                var epreuve = this.aires.Read(a => a.Id == client.AireId).FirstOrDefault().Epreuves.FirstOrDefault(e => e.Statut == StatutEpreuve.Prete || e.Statut == StatutEpreuve.EnCours);
 
                 if (epreuve != null && epreuve.Id != 0)
                 {
                     var participationsForThisContest = this.participations.Read().Where(p => p.EpreuveId == epreuve.Id);
                     var clubs = this.clubs.Read();
                     var competiteurs = this.competiteurs.Read(c => (from participation in participationsForThisContest
-                                                                    select participation.ParticipantId).Contains(c.Id));
+                                                                    select participation.ParticipantId).Contains(c.Id) ); //&& c.InscriptionValidePourCoupe
 
                     result.Data = competiteurs.Select(c => c.ToPresentielModel(epreuve.Id, !participationsForThisContest.FirstOrDefault(p => p.ParticipantId == c.Id).Resultat.Absence)).ToList();
                 }
@@ -176,39 +177,27 @@
                 {
                     var dbitem = this.participations.Read().FirstOrDefault(p => p.ParticipantId == resultat.ParticipantId);
                     if (dbitem != null)
-                    {
-                        int score = 0;
-
-                        if (string.IsNullOrEmpty(resultat.Score2))
-                        {
-                            score = int.Parse(resultat.Score1);
-                        }
-                        else
-                        {
-                            score = int.Parse(resultat.Score2);
-                        }
-                        dbitem.Resultat.Score = score;
+                    {                       
+                        dbitem.Resultat.Score = BuildScore(int.Parse(resultat.Classement));
                         dbitem.Resultat.Classement = int.Parse(resultat.Classement);
-
+                        dbitem.Resultat.Date = DateTime.Now;
                         this.participations.Update(dbitem);
                     }
                 }
 
                 var epreuveId = resultats.First().EpreuveId;
                 var epreuve = this.epreuvesTechniques.Read().FirstOrDefault(e => e.Id == epreuveId);
-
                 if (epreuve != null)
                 {
                     epreuve.Statut = StatutEpreuve.Terminee;
                     this.epreuvesTechniques.Update(epreuve);
                 }
-
             }
             catch (Exception)
             {
-
                 throw;
             }
+
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.Data = new { Uri = new UrlHelper(Request.RequestContext).Action("Index", "Satellite") };
             return result;
@@ -278,19 +267,28 @@
                 {
                     throw new ArgumentException("oups !!");
                 }
-
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
         [HttpPost]
-        public JsonResult UpdatePresentielCombat(IEnumerable<ParticipationModel> participations, IEnumerable<EncadrantModel> encadrants)
+        public JsonResult ValidatePool(IEnumerable<ParticipationCombatModel> participations)
+        {
+            var result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            var tree = TournamentHelper.BuildTree(participations);
+            result.Data = new { competiteurs = tree, count = participations.Count(), usePool = false };
+            return result;
+        }
+
+        [HttpPost]
+        public JsonResult UpdatePresentielCombat(IEnumerable<ParticipationModel> participations, IEnumerable<EncadrantModel> encadrants, string getTree)
         {
             this.resultats.Read();
+            var types = this.types.Read();
             bool inError = false;
             try
             {
@@ -302,65 +300,79 @@
                     if (participationCompetiteur != null)
                     {
                         participationCompetiteur.Resultat.Absence = !participation.Present;
+                        this.participations.Update(participationCompetiteur);
                     }
                     else
                     {
                         inError = true;
                     }
-
                 }
+
                 var encadrements = this.unitOfWork.Repository<Encadrement>();
-
-                foreach (var encadrant in encadrants)
+                if (encadrants != null)
                 {
-                    var dbItem = this.encadrements.Read(e => e.EncadrantId == encadrant.Id).FirstOrDefault();
-                    if (dbItem == null)
+                    foreach (var encadrant in encadrants)
                     {
-                        encadrements.Create(new Encadrement
+                        var dbItem = this.encadrements.Read(e => e.EncadrantId == encadrant.Id).FirstOrDefault();
+                        if (dbItem == null)
                         {
-                            EpreuveId = epreuveId,
-                            EncadrantId = encadrant.Id,
-                            Role = encadrant.Role == "Arbitre" ? Role.Arbitre : Role.Administrateur
-                        });
+                            encadrements.Create(new Encadrement
+                            {
+                                EpreuveId = epreuveId,
+                                EncadrantId = encadrant.Id,
+                                Role = encadrant.Role == "Arbitre" ? Role.Arbitre : Role.Administrateur
+                            });
+                        }
+                        else
+                        {
+                            dbItem.EncadrantId = encadrant.Id;
+                            dbItem.EpreuveId = epreuveId;
+                            dbItem.Role = encadrant.Role == "Arbitre" ? Role.Arbitre : Role.Administrateur;
+                            encadrements.Update(dbItem);
+                        }
                     }
-                    else
-                    {
-                        dbItem.EncadrantId = encadrant.Id;
-                        dbItem.EpreuveId = epreuveId;
-                        dbItem.Role = encadrant.Role == "Arbitre" ? Role.Arbitre : Role.Administrateur;
-                        encadrements.Update(dbItem);
-                    }
-
                 }
 
                 if (!inError)
                 {
-                    var result = new JsonResult();
-                    result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-                    var competiteurs = participations.Where(p => p.Present).Select(p => p.ConvertToCombat()).OrderBy(c => Guid.NewGuid());
-                    //var connexions = BuildConnections(competiteurs);
 
-                    var tree = TreeHelper.BuildTree(competiteurs);
-                    //result.Data = new { competiteurs = shapes, connexions = connexions };
-                    result.Data = new { competiteurs = tree, count = competiteurs.Count() };
                     var epreuve = this.epreuvesCombat.Read().FirstOrDefault(e => e.Id == epreuveId);
-
                     if (epreuve != null)
                     {
+                        bool needTree;
+
+                        if (!bool.TryParse(getTree, out needTree))
+                        {
+                            needTree = false;
+                        }
+                        var result = new JsonResult();
+                        result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
                         epreuve.Statut = StatutEpreuve.EnCours;
                         this.epreuvesCombat.Update(epreuve);
+
+                        var competiteurs = participations.Where(p => p.Present).Select(p => p.ConvertToCombat()).OrderBy(c => Guid.NewGuid());
+                        if (!epreuve.TypeEpreuve.UseSwissSystem || needTree)
+                        {
+                            var tree = TournamentHelper.BuildTree(competiteurs);
+                            result.Data = new { competiteurs = tree, count = competiteurs.Count(), usePool = false };
+                        }
+                        else
+                        {
+                            var rounds = TournamentHelper.BuildRounds(competiteurs);
+                            result.Data = new { rounds = rounds, count = competiteurs.Count(), usePool = true };
+                        }
+                        return result;
                     }
-                    return result;
+
+                    throw new ArgumentException("unable to find contest !!");                
                 }
                 else
                 {
                     throw new ArgumentException("oups !!");
                 }
-
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -369,11 +381,11 @@
         public JsonResult TerminerEpreuveCombat(IEnumerable<ParticipationCombatModel> resultats)
         {
             var result = new JsonResult();
-            var flatten = resultats.Flatten(node => node.Children).Where(node => node.Classement != null);
+            //var flatten = resultats.Flatten(node => node.Children).Where(node => node.Classement != null);
             var dbResultats = this.resultats.Read();
             try
             {
-                foreach (var resultat in flatten)
+                foreach (var resultat in resultats)
                 {
                     var dbitem = this.participations.Read().FirstOrDefault(p => p.ParticipantId == resultat.ParticipantId && p.EpreuveId == resultat.EpreuveId);
                     if (dbitem != null)
@@ -384,17 +396,16 @@
                         {
                             classement = int.Parse(resultat.Classement);
                         }
-                       
+
                         dbitem.Resultat.Score = BuildScore(classement);
                         dbitem.Resultat.Classement = classement;
-
+                        dbitem.Resultat.Date = DateTime.Now;
                         this.participations.Update(dbitem);
                     }
                 }
 
                 var epreuveId = resultats.First().EpreuveId;
                 var epreuve = this.epreuvesCombat.Read().FirstOrDefault(e => e.Id == epreuveId);
-
                 if (epreuve != null)
                 {
                     epreuve.Statut = StatutEpreuve.Terminee;
@@ -404,9 +415,9 @@
             }
             catch (Exception)
             {
-
                 throw;
             }
+
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.Data = new { Uri = new UrlHelper(Request.RequestContext).Action("Index", "Satellite") };
             return result;
@@ -425,6 +436,6 @@
                 default:
                     return 0;
             }
-        }        
+        }
     }
 }

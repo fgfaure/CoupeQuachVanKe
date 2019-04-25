@@ -78,7 +78,7 @@
 
            var source = list.OrderBy(a => Guid.NewGuid());
 
-            var tree = TreeHelper.BuildTree(source);
+            var tree = TournamentHelper.BuildTree(source);
 
             Console.ReadLine();
         }

@@ -22,8 +22,6 @@
 
             this.Property(coupe => coupe.Description).IsRequired().HasMaxLength(255);
 
-            this.Property(coupe => coupe.NombreTapis).IsRequired();
-
             this.Property(coupe => coupe.Voie).IsOptional().HasMaxLength(255);
 
             this.Property(coupe => coupe.Numero).IsOptional();

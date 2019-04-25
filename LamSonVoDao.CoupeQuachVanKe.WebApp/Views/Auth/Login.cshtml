@@ -65,7 +65,7 @@
                     url: "Login",
                     data: JSON.stringify(log),
                     contentType: 'application/json',
-                    dataType: 'json',
+                    dataType: 'json'
                 }).success(function (result) {
                     if (result.success) {
                         window.location.href = result.url;
@@ -74,7 +74,7 @@
                     if (result.status != 200) {
                         console.log("unable to log in");
                         $("#notification").data('kendoNotification').show({
-                            title: "Connexion refusée!"
+                            title: "Connexion impossible!"
                         }, "error");
                     }
                     else {

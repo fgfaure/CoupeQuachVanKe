@@ -44,21 +44,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// The epreuve identifier.
         /// </value>
         public int EpreuveId { get; set; }
-
+    
         /// <summary>
         /// Gets or sets the resultat.
         /// </summary>
         /// <value>
         /// The resultat.
         /// </value>
-        public Resultat Resultat { get; set; }
-
-        /// <summary>
-        /// Gets or sets the resultat identifier.
-        /// </summary>
-        /// <value>
-        /// The resultat identifier.
-        /// </value>
-        public int ResultatId { get; set; }
+        public Resultat Resultat { get; set; }      
     }
 }

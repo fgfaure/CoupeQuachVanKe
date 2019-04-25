@@ -11,8 +11,9 @@
     @Scripts.Render("~/bundles/kendo")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
-      
-    <script src="@Url.Content("~/Scripts/cultures/kendo.culture.fr-FR.min.js")"></script>
+    @Scripts.Render("~/bundles/jszip")
+
+    @*<script src="@Url.Content("~/Scripts/cultures/kendo.culture.fr-FR.min.js")"></script>*@
 
 </head>
 <body>
@@ -24,15 +25,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="#" class="navbar-brand">Gestion Coupe Quach Van ke</a>
-
+                <a href="#" class="navbar-brand">Gestion Coupe Quach Van Ke</a>
             </div>
 
             @{
                 if (User.Identity.IsAuthenticated)
                 {
-                    @:<div class="navbar-brand float-right"><a title="Déconnexion" href="@Url.Action("logout", "auth")">@this.Request.GetOwinContext().Authentication.User.Claims.First().Value</a></div>
-            }}
+                    @:<div class="navbar-brand pull-right"><a class="navbar-link" title="Déconnexion" href="@Url.Action("logout", "auth")"> Déconnexion : @this.Request.GetOwinContext().Authentication.User.Claims.First().Value</a></div>
+                }
+            }
         </div>
     </div>
     <div class="container-fluid">
@@ -45,7 +46,7 @@
     @RenderSection("scripts", required: false)
     <script id="infoTemplate" type="text/x-kendo-template">
         <div class="alert alert-info no-bottom-margin">
-            <span class="glyphicon glyphicon-wrench bigger-text"> #= title #</span>
+            <span class="glyphicon glyphicon-signal bigger-text"> #= title #</span>
         </div>
     </script>
 

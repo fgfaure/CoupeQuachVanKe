@@ -91,3 +91,16 @@ ul {
 .no-bottom-margin{    
     margin-bottom: 0;
 }
+
+
+.widerMenu .k-widget.k-dropdown.k-header,
+.widerMenu .k-widget.k-datepicker.k-header,
+.widerMenu .k-textbox,
+.widerMenu .k-widget.k-numerictextbox {
+    width: 24em !important;
+}
+
+.widerMenu.k-widget.k-window,
+.widerMenu .k-header.k-window-titlebar {
+    width: 600px !important;
+}

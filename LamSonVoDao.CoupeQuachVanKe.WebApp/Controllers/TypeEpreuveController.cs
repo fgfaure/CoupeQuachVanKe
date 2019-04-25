@@ -22,7 +22,8 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 Description = m.Description,
                 Id = m.Id,
                 CoupeId = m.CoupeId,
-                Technique = m.Technique
+                Technique = m.Technique,
+                UseSwissSystem = m.UseSwissSystem
             });
 
             return result;
@@ -40,6 +41,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                     Nom = typeEpreuve.Nom,
                     Description = typeEpreuve.Description,
                     Technique = typeEpreuve.Technique,
+                    UseSwissSystem = typeEpreuve.UseSwissSystem,
                     CoupeId = typeEpreuve.CoupeId
                 });
 
@@ -63,6 +65,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                 dbmodel.Nom = model.Nom;
                 dbmodel.CoupeId = model.CoupeId;
                 dbmodel.Technique = model.Technique;
+                dbmodel.UseSwissSystem = model.UseSwissSystem;
                 this.repository.Update(dbmodel);
                 return Json(model);
             }

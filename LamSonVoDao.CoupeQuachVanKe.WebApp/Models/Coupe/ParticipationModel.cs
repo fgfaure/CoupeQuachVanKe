@@ -1,15 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
+﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
 {
     /// <summary>
     /// 
     /// </summary>
     public class ParticipationModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParticipationModel"/> class.
+        /// </summary>
+        /// <param name="participantId">The participant identifier.</param>
+        /// <param name="epreuveId">The epreuve identifier.</param>
+        public ParticipationModel(int participantId, int epreuveId)
+        {
+            ParticipantId = participantId;
+            EpreuveId = epreuveId;
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParticipationModel"/> class.
+        /// </summary>
+        public ParticipationModel()
+        {
+
+        }
+
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
@@ -80,5 +93,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// The classement.
         /// </value>
         public string Classement { get; set; }
+
+        /// <summary>
+        /// Gets or sets the categorie id for pratiquant.
+        /// </summary>
+        /// <value>
+        /// The categorie id for pratiquant.
+        /// </value>
+        public int CategoriePratiquantId { get; set; }
     }
 }

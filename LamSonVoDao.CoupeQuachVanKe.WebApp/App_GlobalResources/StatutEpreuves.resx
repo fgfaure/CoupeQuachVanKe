@@ -123,11 +123,17 @@
   <data name="EnCours" xml:space="preserve">
     <value>Epreuve En Cours</value>
   </data>
+  <data name="Exclue" xml:space="preserve">
+    <value>Epreuve Exclue</value>
+  </data>
   <data name="Fermee" xml:space="preserve">
     <value>Epreuve Fermée</value>
   </data>
   <data name="NotSet" xml:space="preserve">
     <value>-- Statut --</value>
+  </data>
+  <data name="Ouverte" xml:space="preserve">
+    <value>Epreuve Ouverte</value>
   </data>
   <data name="Prete" xml:space="preserve">
     <value>Epreuve Prête</value>

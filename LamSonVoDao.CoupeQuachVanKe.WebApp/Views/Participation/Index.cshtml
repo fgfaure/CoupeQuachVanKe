@@ -1,0 +1,296 @@
+﻿
+<div class="col-sm-2">
+    @RenderPage("../Shared/_Menu.cshtml")
+</div>
+<div class="col-sm-10">
+    <h2>Liste des Compétiteurs</h2>
+    <div id="grid">
+    </div>
+</div>
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/kendo.all.min.js")"></script>
+<script>
+
+    $(document).ready(function () {
+        var epreuvesDataSource, participations;
+        var competiteurs = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: '../QVKApi/GetCompetiteurs',
+                    cache: false
+                }
+            },
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        NomPrenom: { type: "string" },
+                        Id: { type: "number" }
+                    }
+                },
+                parse: function (data) {
+                    return data.map(function (competitor) {
+                        return {
+                            ParticipantId: competitor.Id,
+                            NomPrenom: competitor.Nom + " " + competitor.Prenom
+                        };
+                    });
+                }
+            }
+        });
+
+        function epreuveEditor(container, options) {
+            var epreuves = epreuvesDataSource.data().map(function (d) {
+                return d;
+            });
+            var dispatched = participations.data();
+
+            var rowInEditMode = $("#grid").find("tr.k-grid-edit-row");
+            var itemBeingEdited = $("#grid").data("kendoGrid").dataSource.getByUid(rowInEditMode.data("uid"));
+            var length = epreuves.length;
+            var item, i, raw;
+            for (i = length - 1; i >= 0; i--) {
+                item = epreuves[i];
+                for (var j = 0; j < dispatched.length; j++) {
+                    raw = dispatched[j]
+                    if (raw.EpreuveId == item.value && item.value != itemBeingEdited.EpreuveId) {
+                        epreuves.splice(epreuves.indexOf(item), 1);
+                        //epreuves.remove(item);
+                        // break loop
+                        break;
+                    }
+                }
+            }
+
+            epreuves = epreuves.map(function (e) {
+                return { Nom: e.text, EpreuveId: e.value };
+            });
+
+            var found = epreuves.find(function (epreuve) {
+                return epreuve.EpreuveId === itemBeingEdited.EpreuveId;
+            });
+
+            if (!found) {
+                var index = epreuvesDataSource.find(function (epreuve) {
+                    return epreuve.EpreuveId === itemBeingEdited.EpreuveId;
+                });
+
+                epreuves.push(index);
+            }
+
+            $("<select multiple='multiple' data-bind='value : EpreuveId'/>")
+                .appendTo(container)
+                .kendoMultiSelect({
+                    dataTextField: "Nom",
+                    dataValueField: "EpreuveId",
+                    dataSource: epreuves
+                });
+        }
+        function competitorEditor(container, options) {
+            $("<select multiple='multiple' data-bind='value : ParticipationModels'/>")
+                .appendTo(container)
+                .kendoMultiSelect({
+                    dataTextField: "NomPrenom",
+                    dataValueField: "ParticipantId",
+                    dataSource: competiteurs
+                });
+        }
+
+        function competitorTemplate(dataItem) {
+            var competitors = "";
+            if (dataItem.ParticipationModels) {
+                for (var i = 0; i < dataItem.ParticipationModels.length; i++) {
+                    competitors += "<b>" + dataItem.ParticipationModels[i].Nom + "</b> " + dataItem.ParticipationModels[i].Prenom + ", "
+                }
+            }
+            competitors = competitors.substr(0, competitors.length - 2);
+            return competitors;
+        }
+
+        epreuvesDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    cache: false,
+                    async: false,
+                    url: "../QVKApi/GetEpreuves",
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Lecture des clubs."
+                            }, "error");
+                        }
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                parse: function (data) {
+                    return data.map(function (item) {
+                        return { value: item.EpreuveId, text: item.Epreuve };
+                    });
+                },
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            //this field will not be editable (default value is true)
+                            editable: false,
+                            // a defaultValue will not be assigned (default value is false)
+                            nullable: false
+                        },
+                        Nom: {
+                            //set validation rules
+                            type: "string",
+                        }
+                    }
+                }
+            }
+        });
+        epreuvesDataSource.read();
+
+        participations = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    cache: false,
+                    url: "Get",
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Impossible d'obtenir les participations."
+                            }, "error");
+                        }
+                    }
+                },
+                update: {
+                    url: "Update",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Mise à jour."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Mise à jour réussie."
+                            }, "success");
+                        }
+                    }
+                },
+                destroy: {
+                    url: "Delete",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Suppression."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Suppression réussie."
+                            }, "success");
+                        }
+                    }
+                },
+                create: {
+                    url: "Create",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Création."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Création réussie."
+                            }, "success");
+                        }
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else if (operation === "create" && !options.models) {
+                        var toSave = {
+                            EpreuveId: options.EpreuveId[0].EpreuveId,
+                            ParticipationModels: options.ParticipationModels.map(function (p) {
+                                p.EpreuveId = options.EpreuveId[0].EpreuveId;
+                                return p;
+                            })
+                        };
+
+                        return kendo.stringify(toSave);
+                    } else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "EpreuveId",
+                    fields: {
+                        EpreuveId: {
+                            field: "EpreuveId",
+                            nullable: false
+                        }
+                    }
+                }
+            },
+            pageSize: 10
+        });
+
+        $("#grid").kendoGrid({
+            dataSource: participations,
+            pageable: {
+                pageSizes: [10, 25, 50],
+                buttonCount: 5
+            },
+            toolbar: [
+                { name: "create", text: "Créer manuellement" }
+            ],
+            sortable: true,
+            groupable: true,
+            filterable: {
+                extra: false,
+                mode: "menu"
+            },
+            sync: true,
+            autosync: true,
+            columns: [
+                { field: "EpreuveId", title: "Epreuve", values: epreuvesDataSource.data().toJSON(), editor: epreuveEditor },
+                {
+                    field: "ParticipationModels",
+                    title: "Competiteurs",
+                    editor: competitorEditor,
+                    template: competitorTemplate,
+                    filterable: false,
+                    sortable: false
+                },
+                {
+                    command: [
+                        { name: "edit", text: "Modifier" },
+                        { name: "destroy", text: "Supprimer" }],
+                    title: "&nbsp;", width: "240px"
+                }
+            ],
+            editable: "inline"
+        });
+    });
+</script>

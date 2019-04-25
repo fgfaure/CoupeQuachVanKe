@@ -4,4 +4,7 @@
     <IgnoreFilePattern>jquery*.js</IgnoreFilePattern>
     <IgnoreFilePattern>*.cs</IgnoreFilePattern>
   </IgnoreFilePatterns>
+  <GeneralProperties>
+  <SearchInheritedCommentsOnlyWithinProject>False</SearchInheritedCommentsOnlyWithinProject>
+  </GeneralProperties>
 </GhostDoc>

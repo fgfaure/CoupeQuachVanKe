@@ -29,7 +29,7 @@
             this.Property(r => r.Adresse).HasMaxLength(255);
 
             this.Property(r => r.Telephone).IsOptional();
-            this.Property(r => r.Telephone).IsFixedLength().HasMaxLength(14);
+            this.Property(r => r.Telephone).IsOptional().HasMaxLength(14);
 
             this.Property(r => r.MailContact).IsOptional();
             this.Property(r => r.MailContact).HasMaxLength(255);

@@ -104,52 +104,13 @@
                 throw;
             }
         }
-        
-        //[HttpPost]
-        //public JsonResult Merge(IEnumerable<EpreuveTechniqueModel> models)
-        //{
-        //    var result = new JsonResult();
-        //    var merged = new EpreuveTechnique();
-        //    models.OrderByDescending(m => m.CategorieId);
-        //    var categories = (from cat in this.unitOfWork.Repository<CategoriePratiquant>().Read()
-        //                      join model in models on cat.Id equals model.CategorieId
-        //                      select cat.Nom);
 
-        //    merged.Nom = string.Join(" ", categories.ToArray());
-        //    merged.IsMerged = true;
-        //    merged.CategoriePratiquantId = models.First().CategorieId;
-        //    var isGenreMerged = models.GroupBy(m => m.GenreCategorieId).Distinct().Count() > 1;
-        //    if (isGenreMerged)
-        //    {
-        //        merged.GenreCategorie = GenreEpreuve.Mixte;
-        //    }
-        //    else
-        //    {
-        //        merged.GenreCategorie = (GenreEpreuve)models.First().GenreCategorieId;
-        //    }
+        [HttpPost]
+        public ActionResult ExcelSave(string contentType, string base64, string fileName)
+        {
+            var fileContents = Convert.FromBase64String(base64);
 
-        //    merged.GradeAutorise = (Grade)models.First().GradeAutoriseId;
-        //    merged.Statut = StatutEpreuve.Fermee;
-        //    merged.TypeEpreuveId = models.First().TypeEpreuveId;
-
-        //    this.repository.Create(merged);
-
-        //    var idForNewEpreuve = merged.Id;
-
-        //    var partipations = this.unitOfWork.Repository<Participation>();
-
-        //    var participationsToChange = (from participation in partipations.Read()
-        //                                  join model in models
-        //                                  on participation.EpreuveId equals model.Id
-        //                                  select participation).ToList();
-
-        //    for (int i = 0; i < participationsToChange.Count(); i++)
-        //    {
-        //        participationsToChange[i].EpreuveId = idForNewEpreuve;
-        //        partipations.Update(participationsToChange[i]);
-        //    }
-
-        //    return result;
-        //}
+            return File(fileContents, contentType, fileName);
+        }
     }
 }

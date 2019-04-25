@@ -32,7 +32,6 @@
                 Complement = coupe.Complement,
                 DateDebut = coupe.DateDebut,
                 DateFin = coupe.DateFin,
-                NombreTapis = coupe.NombreTapis,
                 Numero = coupe.Numero,
                 Ville = coupe.Ville,
                 Voie = coupe.Voie               
@@ -56,8 +55,7 @@
                     CodePostal = model.CodePostal,
                     Complement = model.Complement,
                     DateDebut = model.DateDebut,
-                    DateFin = model.DateFin,
-                    NombreTapis = model.NombreTapis,
+                    DateFin = model.DateFin,                    
                     Numero = model.Numero,
                     Ville = model.Ville,
                     Voie = model.Voie               
@@ -118,7 +116,6 @@
                     dbmodel.Complement = model.Complement;
                     dbmodel.DateDebut = model.DateDebut;
                     dbmodel.DateFin = model.DateFin;
-                    dbmodel.NombreTapis = model.NombreTapis;
                     dbmodel.Numero = model.Numero;
                     dbmodel.Ville = model.Ville;
                     dbmodel.Voie = model.Voie;

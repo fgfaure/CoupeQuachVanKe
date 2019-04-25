@@ -1,0 +1,100 @@
+﻿<div class="col-sm-2">
+    @RenderPage("../Shared/_Menu.cshtml")
+</div>
+<div class="col-sm-10">
+    <h2>Impression des fiches d'appel.</h2>
+    <div class="col-md-8 col-sm-10">
+        <input id="epreuves" style="width:100%" />
+        <hr />
+        <div id="competiteurs" />
+    </div>
+</div>
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/kendo.all.min.js")"></script>
+<script>
+    var epreuve = '';
+    var fileName = "Appel.xlsx";
+    $(document).ready(function () {
+        $("#competiteurs").hide();
+        $("#competiteurs").kendoGrid({
+            toolbar: [{ name: "excel", text: "Exporter en Excel" }],
+            excel: {
+                allPages: true,
+                fileName: fileName,
+                proxyURL: "ExcelSave",
+                filterable: true
+            },
+            columns: [
+                { field: "Nom", title: "Nom" },
+                { field: "Prenom", title: "Prénom" },
+                { field: "Club", title: "Club" },
+                { field: "Present", title: "Présent", template: '<input type="checkbox" #= Present ? "checked=checked" : "" # disabled="disabled" ></input>' }
+            ]
+        });
+
+        $("#epreuves").kendoDropDownList({
+            dataTextField: "NomEpreuve",
+            dataValueField: "EpreuveId",
+            height: 450,
+            optionLabel: "Choisissez une épreuve...",
+            dataSource: {
+                transport: {
+                    read: {
+                        dataType: "json",
+                        url: "GetEpreuves",
+                        cache: false
+                    }
+                },
+                //group: { field: "TypeEpreuve" },
+                sort: [
+                    // sort by "category" in descending order and then by "name" in ascending order
+                    { field: "Categorie", dir: "asc" },
+                    { field: "AgeMin", dir: "asc" }
+                ],
+                group: [
+                    { field: "TypeEpreuve", dir :"asc" }
+                    //{ field: "NomEpreuve", dir :"asc" }
+                ]
+            },
+
+            change: function (e) {
+                var epreuveId = $("#epreuves").data('kendoDropDownList').value();
+                epreuve = $("#epreuves").data('kendoDropDownList').text();
+
+                if (parseInt(epreuveId, 10) > 0) {
+                    $.ajax({
+                        cache: false,
+                        type: 'POST',
+                        async: true,
+                        url: "GetCompetiteursForEpreuve",
+                        data: JSON.stringify({ id: epreuveId }),
+                        contentType: 'application/json',
+                        dataType: 'json'
+                    }).success(function (data) {
+                        var options = $("#competiteurs").data('kendoGrid').options;
+                        filename = "Appel " + epreuve + " .xlsx";
+                        options.excel.fileName = filename;
+                        $("#competiteurs").data('kendoGrid').setOptions(options);
+                        $("#competiteurs").data('kendoGrid').dataSource.data(data);
+
+                        //$.each($(".k-grid"), function (idx, grid) {
+                        //    var title = $('<div class="k-grid-header"><table><thead><tr><th class="k-header"></th></tr></thead></table></div>');
+                        //    if ($(grid).find("div.k-grid-header").length > 1) {
+                        //        $(grid).find("div.k-grid-header").first().remove();
+                        //    }
+
+                        //    title.text(epreuve);
+
+                        //    $(grid).data("kendoGrid").wrapper.prepend(title);
+                        //});
+                        $("#competiteurs").show();
+                    }).fail(function () {
+                        $("#notification").data('kendoNotification').show({
+                            title: "Echec Lecture des compétiteurs du club."
+                        }, "error");
+                    });
+                }
+
+            }
+        });
+    });
+</script>

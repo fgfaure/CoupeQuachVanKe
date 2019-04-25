@@ -1,5 +1,6 @@
 ﻿namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 {
+    using LamSonVodao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
     using LamSonVoDao.CoupeQuachVanKe.AccesPattern;
     using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect;
     using LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Enumerations;
@@ -63,7 +64,10 @@
         /// The medecins
         /// </summary>
         private Repository<Medecin> medecins;
-
+        /// <summary>
+        /// The epreuves
+        /// </summary>
+        private Repository<Epreuve> epreuves;
         /// <summary>
         /// The epreuves combat
         /// </summary>
@@ -105,6 +109,11 @@
         private Repository<Participant> participants;
 
         /// <summary>
+        /// The participants
+        /// </summary>
+        private Repository<UIColor> colors;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="QVKApiController"/> class.
         /// </summary>
         public QVKApiController()
@@ -117,6 +126,7 @@
             this.responsableCoupe = this.unitOfWork.Repository<ResponsableCoupe>();
             this.aires = this.unitOfWork.Repository<Aire>();
             this.medecins = this.unitOfWork.Repository<Medecin>();
+            this.epreuves = this.unitOfWork.Repository<Epreuve>();
             this.epreuvesCombat = this.unitOfWork.Repository<EpreuveCombat>();
             this.epreuvesTechniques = this.unitOfWork.Repository<EpreuveTechnique>();
             this.typeEpreuves = this.unitOfWork.Repository<TypeEpreuve>();
@@ -125,6 +135,7 @@
             this.participants = this.unitOfWork.Repository<Participant>();
             this.participations = this.unitOfWork.Repository<Participation>();
             this.resultats = this.unitOfWork.Repository<Resultat>();
+            this.colors = this.unitOfWork.Repository<UIColor>();
         }
 
         /// <summary>
@@ -161,7 +172,7 @@
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.Data = this.clubs.Read().Select(club => club.ToModel());
             return result;
-        }
+        }     
 
         /// <summary>
         /// Gets the encadrants.
@@ -239,6 +250,18 @@
         /// Gets the epreuves.
         /// </summary>
         /// <returns></returns>
+        public JsonResult GetEpreuves()
+        {
+            var result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            result.Data = this.epreuves.Read().Select(epreuve => epreuve.ToModel());
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the epreuves.
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetEpreuvesCombat()
         {
             var result = new JsonResult();
@@ -279,7 +302,7 @@
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = this.categories.Read().Select(c => c.ToModel()).ToList();
+            result.Data = this.categories.Read().Select(c => c.ToModel()).OrderBy(cat => cat.AgeMin).ToList();
             return result;
         }
 
@@ -391,8 +414,15 @@
             return result;
         }
 
+        [System.Web.Mvc.AllowAnonymous]
         public JsonResult GetClassementClubs()
         {
+            var couleurs = colors.Read();
+            var goldColor = couleurs.First(c => c.Identifier == ColorConstants.FIRST).RGB_Code;
+            var silverColor = couleurs.First(c => c.Identifier == ColorConstants.SECOND).RGB_Code;
+            var bronzeColor = couleurs.First(c => c.Identifier == ColorConstants.THIRD).RGB_Code;
+            var defaultColor = couleurs.First(c => c.Identifier == ColorConstants.DEFAULT).RGB_Code;
+
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             var clubs = this.clubs.Read();
@@ -414,12 +444,110 @@
                 }
                 clubsAndScore.Add(new ScoreClub {
                     Id = club.Id,
+                    Score = totalPoint,
                     Nom = club.Nom,
-                    Score = totalPoint
+                    UserColor = defaultColor
                 });
             }
+            var temp = clubsAndScore.OrderByDescending(a => a.Score).Take(10).ToList();
+            if (clubsAndScore.Count >= 3 )
+            {
+                var first = temp[0];
+                var second = temp[1];
+                var third = temp[2];
+                first.UserColor = goldColor;
+                second.UserColor = silverColor;
+                third.UserColor = bronzeColor;
+                temp.RemoveRange(0, 3);                
+                temp.InsertRange(0, new List<ScoreClub>() { first, second, third });
+            }
+            else if (clubsAndScore.Count == 2)
+            {
+                var first = temp[0];
+                var second = temp[1];                
+                first.UserColor = goldColor;
+                second.UserColor = silverColor;               
+                temp.Clear();
+                temp.InsertRange(0, new List<ScoreClub>() { first, second });
+            }
+            else if (clubsAndScore.Count == 1)
+            {
+                var first = temp[0];                
+                first.UserColor = goldColor;                
+                temp.Clear();
+                temp.Add(first);
+            }
+            
+            result.Data = temp;
+            return result;
+        }
 
-            result.Data = clubsAndScore.OrderByDescending(a => a.Score).Take(6);
+        [System.Web.Mvc.AllowAnonymous]
+        public JsonResult GetClassementClubsForToday()
+        {
+            var couleurs = colors.Read();
+            var goldColor = couleurs.First(c => c.Identifier == ColorConstants.FIRST).RGB_Code;
+            var silverColor = couleurs.First(c => c.Identifier == ColorConstants.SECOND).RGB_Code;
+            var bronzeColor = couleurs.First(c => c.Identifier == ColorConstants.THIRD).RGB_Code;
+            var defaultColor = couleurs.First(c => c.Identifier == ColorConstants.DEFAULT).RGB_Code;
+
+            var result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            var clubs = this.clubs.Read();
+            var participants = this.participants.Read();
+            var resultats = this.resultats.Read();
+            var participations = this.participations.Read();
+
+            List<ScoreClub> clubsAndScore = new List<ScoreClub>();
+
+            foreach (var club in clubs)
+            {
+                var totalPoint = 0;
+                foreach (var participant in club.Participants.Where(p => p.Participations != null))
+                {
+                    foreach (var participation in participant.Participations.Where(p => p.Resultat.Date.Day == DateTime.Today.Day))
+                    {
+                        totalPoint += participation.Resultat.Score;
+                    }
+                }
+                clubsAndScore.Add(new ScoreClub
+                {
+                    Id = club.Id,
+                    Score = totalPoint,
+                    Nom = club.Nom,
+                    UserColor = defaultColor
+                });
+            }
+            var temp = clubsAndScore.OrderByDescending(a => a.Score).Take(10).ToList();
+            if (clubsAndScore.Count >= 3)
+            {
+                var first = temp[0];
+                var second = temp[1];
+                var third = temp[2];
+                first.UserColor = goldColor;
+                second.UserColor = silverColor;
+                third.UserColor = bronzeColor;
+                temp.RemoveRange(0, 3);
+                temp.InsertRange(0, new List<ScoreClub>() { first, second, third });
+            }
+            else if (clubsAndScore.Count == 2)
+            {
+                var first = temp[0];
+                var second = temp[1];
+                first.UserColor = goldColor;
+                second.UserColor = silverColor;
+                temp.Clear();
+                temp.InsertRange(0, new List<ScoreClub>() { first, second });
+            }
+            else if (clubsAndScore.Count == 1)
+            {
+                var first = temp[0];
+                first.UserColor = goldColor;
+                temp.Clear();
+                temp.Add(first);
+            }
+
+            result.Data = temp;
             return result;
         }
     }    

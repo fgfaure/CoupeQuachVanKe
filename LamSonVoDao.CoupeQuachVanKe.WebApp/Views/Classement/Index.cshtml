@@ -1,0 +1,102 @@
+﻿<div class="col-md-12 col-md-offset-0">    
+    <div class="row">
+        <div class="col-md-6">
+            <div id="classementClubForToday">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="classementClub">
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/jquery.timer.js")"></script>
+<script>
+    var timer;
+    function refreshData() {
+        $("#classementClub").data('kendoChart').dataSource.read();
+        $("#classementClubForToday").data('kendoChart').dataSource.read();
+    }
+
+    function chartResize(arrayOfSelector) {
+        arrayOfSelector.forEach(function (value, index) {
+            $(value).outerHeight($(document).outerHeight() - $(".navbar.navbar-inverse.navbar-fixed-top").outerHeight() - 20 - $(".panel-heading").outerHeight());
+        });
+    }
+
+    function createChart(selector, url, title, reverse) {
+        //$("#classementClub").kendoChart({
+        $(selector).kendoChart({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: url,
+                        //url: "../QVKApi/GetClassementClubs",
+                        dataType: "json",
+                        cache: false
+                    }
+                }
+            },
+            height: "100%",
+            legend: {
+                visible: true
+            },
+            seriesDefaults: {
+                type: "bar",
+                labels: {
+                    visible: true,
+                    background: "transparent"
+                }
+            },
+            series: [{
+                field: "Score",
+                colorField: "UserColor",
+                labels: {
+                    visible: true,
+                    font: "24px sans-serif"
+                }
+            }],
+            valueAxis: {
+                majorGridLines: {
+                    visible: false
+                },
+                visible: false
+            },
+            title: {
+                text: title,
+                font: "36px sans-serif"
+            },
+            categoryAxis: {
+                axisCrossingValues: reverse ? [99,99] : [0,0],
+                field: "Nom",
+                labels: {
+                    font: "24px sans-serif"
+                },
+                justified: true,
+                majorGridLines: {
+                    visible: false
+                },
+                line: {
+                    visible: false
+                }
+            }
+        });
+    }
+    $(document).ready(function () {
+        var host = location.href;
+        createChart("#classementClub", host + "/../QVKApi/GetClassementClubs", "Classement total", false);
+        createChart("#classementClubForToday", host + "/../QVKApi/GetClassementClubsForToday", "Classement du jour", true);
+        timer = $.timer(function () {
+            refreshData();
+        });
+        timer.set({ time: 30000, autostart: true });
+        chartResize(["#classementClub", "#classementClubForToday"]);
+        //console.log($(document).outerHeight() - (2 * $("navbar.navbar-inverse.navbar-fixed-top").outerHeight()) - (2 * $("h1").outerHeight()) - $(".panel-heading").outerHeight());
+        //$("#classementClub").outerHeight($(document).outerHeight() - $(".navbar.navbar-inverse.navbar-fixed-top").outerHeight() - (2*$("h1").outerHeight()) - $(".panel-heading").outerHeight());
+        $(window).resize(function () {
+            chartResize(["#classementClub", "#classementClubForToday"]);
+            //$("#classementClub").outerHeight($(document).outerHeight() - $(".navbar.navbar-inverse.navbar-fixed-top").outerHeight() - (2 * $("h1").outerHeight()) - $(".panel-heading").outerHeight());
+        });
+    });
+</script>

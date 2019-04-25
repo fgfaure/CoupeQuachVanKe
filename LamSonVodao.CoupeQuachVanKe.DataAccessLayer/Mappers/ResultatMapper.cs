@@ -32,6 +32,8 @@
 
             this.Property(resultat => resultat.Renvoi).IsRequired();
 
+            this.Property(resultat => resultat.Date).IsRequired();
+
             this.HasRequired(resultat => resultat.Participation).WithRequiredDependent(participation => participation.Resultat).WillCascadeOnDelete(true);
         }
     }

@@ -1,5 +1,5 @@
 ﻿<div>    
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-8 col-md-offset-2">
         <h1>
             Validation Inscription
         </h1>
@@ -58,6 +58,12 @@
             },
             pageSize: 25,
             schema: {
+                //parse: function (data) {                                  
+                //    return data.filter(function (inscrit) {
+                //        // ne montrer que les non-inscrits
+                //        return !inscrit.InscriptionValidePourCoupe;
+                //    });
+                //},
                 model: {
                     id: "Id",
                     fields: {
@@ -115,7 +121,7 @@
             transport: {
                 read: {
                     async: false,
-                    url: "../QVKApi/GetClubs",
+                    url: location.href+ "/../QVKApi/GetClubs",
                     dataType: "json",
                     complete: function (jqXHR, textStatus) {
                         console.log(textStatus, "update");
@@ -167,8 +173,8 @@
             dataSource: competiteurDatasource,
             pageable: {
                 refresh: true,
-                pageSize: 25,
-                pageSizes: [10, 25, 50]
+                pageSize: 50,
+                pageSizes: [25, 50, 100]
             },
             autosync: true,
             groupable: true,
@@ -182,14 +188,15 @@
                     field: "DateNaissance", groupable: false, filterable: false, title: "Date de Naissance", template: '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #',
                     groupHeaderTemplate: 'Date de Naissance : #=  kendo.toString(value, "dd/MM/yyyy") #'
                 },
-                { field: "InscriptionValidePourCoupe", title: "Inscription validée", groupable: false, filterable: false, template: '<input type="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>' }
+                { field: "InscriptionValidePourCoupe", title: "Inscription validée", groupable: false, filterable: false, template: '<input type="checkbox" class="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>' },
+                {command: ["edit"]}
             ],
-            editable: "incell",
-            save: function (e) {
-                setTimeout(function () {
-                    $('#competiteursGrid').data('kendoGrid').dataSource.sync();
-                });
-            }
+            editable: "popup"
+            //save: function (e) {
+            //    setTimeout(function () {
+            //        $('#competiteursGrid').data('kendoGrid').dataSource.sync();
+            //    });
+            //}
         });
     });
 

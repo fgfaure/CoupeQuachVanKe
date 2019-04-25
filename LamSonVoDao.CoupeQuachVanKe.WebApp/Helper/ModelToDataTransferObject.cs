@@ -21,13 +21,14 @@
             result.CategoriePratiquantId = model.CategorieId; 
             result.ClubId = model.ClubId;
             result.DateNaissance = model.DateNaissance;
-            result.EquipeSongLuyenNumero = model.EquipeSongLuyenNumero;
+            result.NumeroEquipe = model.NumeroEquipe;
             result.Grade = (Grade)model.GradeId;
             result.InscriptionValidePourCoupe = model.InscriptionValidePourCoupe;
             result.InscritPourBaiVuKhi = model.InscritPourBaiVuKhi;
             result.InscritPourCombat = model.InscritPourCombat;
             result.InscritPourQuyen = model.InscritPourQuyen;
             result.InscritPourSongLuyen = model.InscritPourSongLuyen;
+            result.InscritPourQuyenDongDien = model.InscritPourQuyenDongDien;
             result.LicenceFFKDA = model.LicenceFFKDA;
             result.NbAnneePratique = model.NbAnneePratique;
             result.Nom = model.Nom;
@@ -71,11 +72,11 @@
             result.MailContact = model.MailContact;
             result.Sexe = (Genre)model.GenreId;
             result.TailleTenue =(TailleTenue)model.TailleTenueId;
-            result.Disponibilites = (model.Disponibilites != null)?model.Disponibilites.Select(d => d.ToDTO()).ToList(): new List<Disponibilite>();
+            result.Disponibilites = ((model.DispoAdministrateur != null) ? model.DispoAdministrateur.Select(d => d.ToDTO()).ToList() : new List<Disponibilite>()).Union((model.DispoArbitre != null) ? model.DispoArbitre.Select(d => d.ToDTO()).ToList() : new List<Disponibilite>()).ToList();
             return result;
         }
 
-        public static Disponibilite ToDTO (this DisponibiliteModel model)
+        public static Disponibilite ToDTO (this DisponibiliteModel model, Role role = Role.Administrateur)
         {
             Disponibilite result = new Disponibilite();
             if (model.Id != 0)
@@ -86,8 +87,14 @@
             result.EncadrantId = model.EncadrantId;
             result.Date = model.Date;            
             result.Matin = model.Matin;
-            result.Role = new EnumConverter<Role>().ConvertToEnum(model.Role);            
-
+            if (model.Role != null)
+            {
+                result.Role = new EnumConverter<Role>().ConvertToEnum(model.Role);
+            }
+            else
+            {
+                result.Role = role;
+            }
             return result;
         }
 
@@ -103,6 +110,19 @@
             result.AgeMax = model.AgeMax;
             
             return result;
+        }
+
+        public static Participation ToDTO(this ParticipationModel model)
+        {
+            Participation participation = new Participation();
+            if (model.Id != 0)
+            {
+                participation.Id = model.Id;
+            }
+
+            participation.EpreuveId = model.EpreuveId;
+            participation.ParticipantId = model.ParticipantId;           
+            return participation;
         }
     }    
 }

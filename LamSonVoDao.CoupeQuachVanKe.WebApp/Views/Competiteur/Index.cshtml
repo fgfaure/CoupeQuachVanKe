@@ -7,7 +7,7 @@
     <div id="competiteurs">
     </div>
 </div>
-
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/kendo.all.min.js")"></script>
 <script>
 
     function onDataBound() {
@@ -282,7 +282,7 @@
                             type: "date",
                             validation: { required: true }
                         },
-                        GenreId : {
+                        GenreId: {
                             field: "GenreId",
                             type: "number",
                             defaultValue: 1
@@ -325,11 +325,15 @@
                             editable: true,
                             type: "boolean"
                         },
-                        InscritPourSongLuyen: {
+                        //InscritPourSongLuyen: {
+                        //    editable: true,
+                        //    type: "boolean"
+                        //},
+                        InscritPourQuyenDongDien: {
                             editable: true,
                             type: "boolean"
                         },
-                        EquipeSongLuyenNumero: {
+                        NumeroEquipe: {
                             editable: true,
                             type: "number"
                         },
@@ -344,13 +348,16 @@
                         ValidImport: {
                             editable: false,
                             type: "boolean",
-                            defaultValue : true
+                            defaultValue: true
                         }
                     }
                 }
             },
-            pageSize: 10
+            pageSize: 25
         });
+        function getDocName(e) {
+            return "ListingCompetiteurs.xlsx";
+        };
 
         var genres = [{ value: 1, text: "Féminin" }, { value: 2, text: "Masculin" }];
 
@@ -358,37 +365,91 @@
             dataSource: competiteurDataSource,
             pageable: {
                 refresh: true,
-                pageSizes: true,
+                pagesize: 50,
+                pageSizes: [25, 50, 300],
                 buttonCount: 5
             },
             sortable: true,
             groupable: true,
             filterable: true,
+            filterMenuInit: function (e) {
+                e.container.addClass("widerMenu");
+            },
             autosync: true,
-            toolbar: ["create"],
+            toolbar: [
+                { name: "excel", text: "Exporter en Excel" },
+                { name: "create", text: "Ajouter" }
+            ],
+            excel: {
+                allPages: true,
+                fileName: getDocName(),
+                proxyURL: "ExcelSave",
+                filterable: true
+            },
             columns: [
-                    { field: "Nom", title: "Nom" },
-                    { field: "Prenom", title: "Prénom" },
-                    {
-                        field: "DateNaissance", title: "Date de Naissance", template: '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #',
-                        groupHeaderTemplate: 'Date de Naissance : #=  kendo.toString(value, "dd/MM/yyyy") #'
+                { field: "Nom", title: "Nom" },
+                { field: "Prenom", title: "Prénom" },
+                {
+                    field: "DateNaissance", title: "Date de Naissance", template: '#= kendo.toString(DateNaissance, "dd/MM/yyyy") #',
+                    groupHeaderTemplate: 'Date de Naissance : #=  kendo.toString(value, "dd/MM/yyyy") #'
+                },
+                { field: "GenreId", values: genres, filterable: true, title: "Sexe" },
+                { field: "ClubId", width: "200px", values: clubsDataSource.data().toJSON(), title: "Club" },
+                { field: "LicenceFFKDA", title: "Licence", filterable: false },
+                { field: "CategorieId", values: categorieDataSource.data().toJSON(), title: "Catégorie" },
+                { field: "GradeId", values: grades.data().toJSON(), title: "Grade" },
+                { field: "InscriptionValidePourCoupe", title: "Validé", filterable: false, template: '<input type="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>', width: "60px" },
+                {
+                    field: "InscritPourBaiVuKhi", filterable: {
+                        messages: {
+                            isTrue: "Oui",
+                            isFalse: "Non"
+                        }
+                    }, title: "Vu Khi", template: '<input type="checkbox" #= InscritPourBaiVuKhi ? "checked=checked" : "" # disabled="disabled" ></input>', width: "65px" },
+                {
+                    field: "InscritPourQuyen", filterable: {
+                        messages: {
+                            isTrue: "Oui",
+                            isFalse: "Non"
+                        }
+                    }, title: "Quyen", template: '<input type="checkbox" #= InscritPourQuyen ? "checked=checked" : "" # disabled="disabled" ></input>', width: "65px" },
+                //{ field: "InscritPourSongLuyen", filterable: false, title: "Song Luyen", template: '<input type="checkbox" #= InscritPourSongLuyen ? "checked=checked" : "" # disabled="disabled" ></input>', width: "100px" },
+                {
+                    field: "InscritPourQuyenDongDien", filterable: {
+                        messages: {
+                            isTrue: "Oui",
+                            isFalse: "Non"
+                        }
                     },
-                    { field: "GenreId", values: genres, title: "Sexe" },
-                     { field: "ClubId", width: "200px", values: clubsDataSource.data().toJSON(), title: "Club" },
-                    { field: "LicenceFFKDA", title: "Licence" },
-                    { field: "CategorieId", values: categorieDataSource.data().toJSON(), title: "Catégorie" },
-                     { field: "GradeId", values: grades.data().toJSON(), title: "Grade" },
-                    { field: "InscriptionValidePourCoupe", title: "Inscr. Ok", template: '<input type="checkbox" #= InscriptionValidePourCoupe ? "checked=checked" : "" # disabled="disabled" ></input>' },
-                    { field: "InscritPourBaiVuKhi", title: "Bai Vu Khi", template: '<input type="checkbox" #= InscritPourBaiVuKhi ? "checked=checked" : "" # disabled="disabled" ></input>' },
-                    { field: "InscritPourQuyen", title: "Bai Quyen", template: '<input type="checkbox" #= InscritPourQuyen ? "checked=checked" : "" # disabled="disabled" ></input>' },
-                    { field: "InscritPourSongLuyen", title: "Song Luyen", template: '<input type="checkbox" #= InscritPourSongLuyen ? "checked=checked" : "" # disabled="disabled" ></input>' },
-                    { field: "EquipeSongLuyenNumero", title: "Equipe", width: "65px" },
-                    { field: "InscritPourCombat", title: "Combat", template: '<input type="checkbox" #= InscritPourCombat ? "checked=checked" : "" # disabled="disabled" ></input>', width: "65px" },
-                    { field: "Poids", title: "Poids", width: "65px" },
-                    { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }
+                    title: "Phan Te", template: '<input type="checkbox" #= InscritPourQuyenDongDien ? "checked=checked" : "" # disabled="disabled" ></input>', width: "80px"
+                },
+                { field: "NumeroEquipe", title: "Equipe", width: "70px" },
+                {
+                    field: "InscritPourCombat",
+                    filterable: {
+                        messages: {
+                            isTrue: "Oui",
+                            isFalse: "Non"
+                        }
+                    },
+                    title: "Combat", template: '<input type="checkbox" #= InscritPourCombat ? "checked=checked" : "" # disabled="disabled" ></input>', width: "70px"
+                },
+                { field: "Poids", title: "Poids", filterable: false, width: "60px" },
+                { command: ["edit", "destroy"], title: "&nbsp;", width: "180px" }
             ],
             dataBound: onDataBound,
-            editable: "popup"
+            editable: "popup",
+            edit: function (e) {
+                var editWindow = this.editable.element.data("kendoWindow");
+                editWindow.wrapper.addClass("widerMenu");
+
+                var container = e.container;
+                //var startWidget = container.find("[data-role=datepicker]").each(function (i, datepicker) {
+                //    $(datepicker).data("kendoDatePicker").setOptions({
+                //        format: "dd/MM/yyyy"
+                //    });
+                //});
+            }
         });
     });
 

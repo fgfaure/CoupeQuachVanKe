@@ -6,6 +6,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
     /// <summary>
     /// 
     /// </summary>
+    /// <seealso cref="LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect.Epreuve" />
     public class EpreuveCombat : Epreuve
     {
         /// <summary>
@@ -22,6 +23,6 @@ namespace LamSonVoDao.CoupeQuachVanKe.DataTransferOjbect
         /// <value>
         /// The valeur haute.
         /// </value>
-        public float PoidsMaxi { get; set; }
+        public float PoidsMaxi { get; set; }     
     }
 }

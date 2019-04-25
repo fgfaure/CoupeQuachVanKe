@@ -43,12 +43,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            //var techniques = this.techniques.Read(e => e.Statut == StatutEpreuve.Fermee).Select(e => e.ToModel());
-            //var epreuves = this.epreuves.Read(e => e.Statut == StatutEpreuve.Fermee).Where(e => this.participations.Read().Where(p => p.EpreuveId == e.Id).Count() > 0).Select(e => new { Id = e.Id, Nom = e.Nom });
-            //var combat = this.combat.Read(e => e.Statut == StatutEpreuve.Fermee).Where(e =>  this.participations.Read().Where(p => p.EpreuveId == e.Id).Count() > 0).Select(e => e.ToModel());
-            var tapis = this.tapis.Read().Where(t => t.Epreuves == null || t.Epreuves.Count(e => e.Statut == StatutEpreuve.Terminee || e.Statut == StatutEpreuve.Assignee) == t.Epreuves.Count).Select(t => t.ToModel());
-            //var clients = this.clients.Read(c => c.NetClientTypeId == 2).Select(c => c.ToModel());
-
+            var tapis = this.tapis.Read().Where(t => t.Epreuves == null || t.Epreuves.Count(e => e.Statut == StatutEpreuve.Terminee || e.Statut == StatutEpreuve.Assignee) == t.Epreuves.Count).Select(t => t.ToModel());          
             result.Data = tapis;
             return result;
         }
@@ -58,7 +53,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
         {
             var result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            var epreuves = this.epreuves.Read(e => e.Statut == StatutEpreuve.Fermee).Where(e => this.participations.Read().Where(p => p.EpreuveId == e.Id).Count() > 0).Select(e => new { value = e.Id, text = e.Nom });
+            var epreuves = this.epreuves.Read(e => e.Statut == StatutEpreuve.Ouverte).Where(e => this.participations.Read().Where(p => p.EpreuveId == e.Id && e.Statut == StatutEpreuve.Ouverte).Count() > 0).Select(e => new { value = e.Id, text = e.Nom });
             result.Data = epreuves;
             return result;
         }
@@ -88,7 +83,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
                     }
                     else
                     {
-                        throw new ArgumentException("Cette épreuve a déjà une épreuve assignée non terminée");
+                        throw new ArgumentException("Ce tapis a déjà une épreuve assignée non terminée");
                     }
                 }
 
@@ -131,7 +126,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
             var contests = this.epreuves.Read();
             try
             {
-                var overContests = contests.Where(e => e.Statut != StatutEpreuve.Fermee && e.Statut != StatutEpreuve.NotSet);
+                var overContests = contests.Where(e => e.Statut != StatutEpreuve.Fermee && e.Statut != StatutEpreuve.Ouverte && e.Statut != StatutEpreuve.NotSet && e.Statut != StatutEpreuve.Exclue);
                 result.Data = overContests.Select(e => new
                 {
                     EpreuveId = e.Id,

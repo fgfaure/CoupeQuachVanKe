@@ -30,5 +30,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// The score.
         /// </value>
         public int Score { get; set; }
+
+        /// <summary>
+        /// Gets or sets the color of the user.
+        /// </summary>
+        /// <value>
+        /// The color of the user.
+        /// </value>
+        public string UserColor { get; set; }
     }
 }

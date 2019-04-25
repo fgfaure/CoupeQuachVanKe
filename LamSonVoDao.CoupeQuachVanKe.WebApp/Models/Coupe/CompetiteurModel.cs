@@ -132,6 +132,14 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         public bool InscritPourSongLuyen { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether [inscrit pour quyen dong dien].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [inscrit pour quyen dong dien]; otherwise, <c>false</c>.
+        /// </value>
+        public bool InscritPourQuyenDongDien { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether [inscription valide pour coupe].
         /// </summary>
         /// <value>
@@ -145,7 +153,7 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         /// <value>
         /// The equipe song luyen.
         /// </value>
-        public int EquipeSongLuyenNumero { get; set; }
+        public int NumeroEquipe { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [valid import].
@@ -154,5 +162,13 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Models.Coupe
         ///   <c>true</c> if [valid import]; otherwise, <c>false</c>.
         /// </value>
         public bool ValidImport { get; set; }
+
+        /// <summary>
+        /// Gets or sets the nb pesee.
+        /// </summary>
+        /// <value>
+        /// The nb pesee.
+        /// </value>
+        public int NbPesee { get; set; }
     }
 }

@@ -44,7 +44,8 @@
                 Nom = c.Nom,
                 Prenom = c.Prenom,
                 Poids = c.Poids,
-                GenreId = (int)c.Sexe
+                GenreId = (int)c.Sexe,
+                NbPesee = c.NbPesee
             });
 
             return result;
@@ -70,14 +71,10 @@
             var dbItem = this.competiteursRepo.Read(competiteur.Id);
             if (dbItem != null)
             {
-                dbItem.CategoriePratiquantId = competiteur.CategorieId;
-                //dbItem.DateNaissance = competiteur.DateNaissance;
+                dbItem.CategoriePratiquantId = competiteur.CategorieId;               
                 dbItem.InscriptionValidePourCoupe = competiteur.InscriptionValidePourCoupe;
-                //dbItem.LicenceFFKDA = competiteur.LicenceFFKDA;
-                //dbItem.Nom = competiteur.Nom;
-                //dbItem.Prenom = competiteur.Prenom;
-                dbItem.Poids = competiteur.Poids;
-                //dbItem.Sexe = (Genre)competiteur.GenreId;
+                dbItem.Poids = competiteur.Poids;               
+                dbItem.NbPesee += 1;
 
                 try
                 {

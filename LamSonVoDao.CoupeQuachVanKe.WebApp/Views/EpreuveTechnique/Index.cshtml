@@ -24,7 +24,7 @@
         </div>
     </div>
 </script>
-
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/kendo.all.min.js")"></script>
 <script>
     $(document).ready(function () {
 
@@ -72,7 +72,7 @@
                     autosync: true,
                     toolbar: ["create"],
                     detailTemplate: kendo.template($("#template").html()),
-                    detailInit: detailInit,                   
+                    detailInit: detailInit,
                     columns: [
                         { field: "epreuve", title: "Nom" }
                     ]
@@ -441,6 +441,10 @@
                             editable: true,
                             type: "number",
                             defaultValue: 1,
+                        },
+                        IsMerged: {
+                            editable: false,
+                            type: "boolean"
                         }
                     }
                 }
@@ -454,53 +458,36 @@
                 refresh: true,
                 pageSizes: true,
                 buttonCount: 5
-            },            
+            },
             selectable: "single",
             sortable: true,
             groupable: true,
             filterable: true,
             autosync: true,
-            toolbar: [{name : "create", text : "Ajouter"}],
+            toolbar: [
+                { name: "excel", text: "Exporter en Excel" },
+                { name: "create", text: "Ajouter" }
+            ],
+            excel: {
+                allPages: true,
+                fileName: "EpreuvesTechnique.xlsx",
+                proxyURL: "ExcelSave",
+                filterable: true
+            },
             columns: [
-                    { field: "Nom", title: "Nom" },
-                    { field: "TypeEpreuveId", title: "Type d'Epreuve", values: techniques.data().toJSON() },
-                    { field: "CategorieId", title: "Catégorie", values: categories.data().toJSON() },
-                    { field: "GenreCategorieId", title: "Genre", values: genres.data().toJSON() },
-                    { field: "GradeAutoriseId", title: "Grade", values: grades.data().toJSON() },
-                    { field: "StatutId", title: "Statut", values: statuses.data().toJSON() },
-                    { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }
+                { field: "Nom", title: "Nom" },
+                { field: "TypeEpreuveId", title: "Type d'Epreuve", values: techniques.data().toJSON() },
+                { field: "CategorieId", title: "Catégorie", values: categories.data().toJSON() },
+                { field: "GenreCategorieId", title: "Genre", values: genres.data().toJSON() },
+                { field: "GradeAutoriseId", title: "Grade", values: grades.data().toJSON() },
+                { field: "StatutId", title: "Statut", values: statuses.data().toJSON() },
+                { field: "IsMerged", title: "Fusion", template: '<input type="checkbox" #= IsMerged ? "checked=checked" : "" # disabled="disabled" ></input>' },
+                { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }
             ],
             editable: {
                 mode: "popup",
                 template: $("#popup_editor").html()
             },
         });
-
-        //$(".k-grid-merge").off('click').on('click', function (e) {
-        //    var grid = $("#epreuvesTechniques").data('kendoGrid');
-        //    var selected = [];
-        //    $.each(grid.select(), function (i, e) {
-        //        selected.push(grid.dataItem(e));
-        //    });
-
-        //    $.ajax({
-        //        cache: false,
-        //        type: 'POST',
-        //        async: true,
-        //        url: "Merge",
-        //        data: JSON.stringify(selected),
-        //        contentType: 'application/json',
-        //        dataType: 'json'
-        //    }).success(function (jqXHR, textStatus) {
-        //        console.log(textStatus, "update");
-        //        $("#notification").data('kendoNotification').show({
-        //            title: "Mise à jour réussie."
-        //        }, "success");
-        //    }).fail(function () {
-        //        $("#notification").data('kendoNotification').show({
-        //            title: "Erreur"
-        //        }, "error");
-        //    });
-        //});
     });
 </script>

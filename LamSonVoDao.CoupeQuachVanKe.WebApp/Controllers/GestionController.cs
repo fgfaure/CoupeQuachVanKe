@@ -51,11 +51,11 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
 
             var epreuves = epreuvesRepo.Read();
 
-            var counted = from epreuve in epreuves
+            var counted = from epreuve in epreuves.Where(e => e.Statut != StatutEpreuve.Exclue && e.Statut != StatutEpreuve.Fermee)
                           group epreuve by epreuve.Statut into res
                           orderby res.Key
                           select new { Statut = res.Key, EpreuveStatut = StatutEpreuves.ResourceManager.GetString(((StatutEpreuve)res.Key).ToString()), Count = res.Count(), Couleur = ColorChoice((StatutEpreuve)res.Key) };
-            result.Data = counted.OrderBy(a => a.EpreuveStatut);
+            result.Data = counted.OrderBy(a => a.Statut);
             return result;
         }
 
@@ -66,19 +66,19 @@ namespace LamSonVoDao.CoupeQuachVanKe.WebApp.Controllers
             switch (statutEpreuve)
             {
                 case StatutEpreuve.Assignee:
-                    result = "#ff8300";
+                    result = "#00609f";
                     break;
                 case StatutEpreuve.EnCours:
-                    result = "#0011de";
+                    result = "#00b14f";
                     break;
-                case StatutEpreuve.Fermee:
-                    result = "#ff0000";
+                case StatutEpreuve.Ouverte:
+                    result = "#0000ff";
                     break;
                 case StatutEpreuve.Prete:
-                    result = "#FFFF66";
+                    result = "#00857a";
                     break;
                 case StatutEpreuve.Terminee:
-                    result = "#00de00";
+                    result = "#00ff00";
                     break;
             }
 
