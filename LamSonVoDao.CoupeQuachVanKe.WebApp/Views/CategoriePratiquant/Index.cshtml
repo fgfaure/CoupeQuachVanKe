@@ -1,0 +1,156 @@
+﻿
+<div class="col-sm-2">
+    @RenderPage("../Shared/_Menu.cshtml")
+</div>
+<div class="col-sm-10">
+    <h2>Liste des Catégories de Pratiquants</h2>
+    <div id="categorie">
+    </div>
+</div>
+<script src="@System.Web.VirtualPathUtility.ToAbsolute("~/Scripts/kendo.all.min.js")"></script>
+<script>
+
+    function formatTime(duree) {
+        return Math.floor(duree / 60) + ":" + (duree % 60 ? duree % 60 : '00');
+    }
+
+    $(document).ready(function () {  
+        var dataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    cache: false,
+                    url: "Get",
+                    dataType: "json",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec de lecture des catégories."
+                            }, "error");
+                        }
+                    }
+                },
+                update: {
+                    url: "Update",
+                    dataType: "json", // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+                    contentType: "application/json",
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "update");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Mise à jour."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Mise à jour réussie."
+                            }, "success");
+                        }
+                    }
+                },
+                destroy: {
+                    url: "Delete",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "delete");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Suppression."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Suppression réussie."
+                            }, "success");
+                        }
+                    }
+                },
+                create: {
+                    url: "Create",
+                    dataType: "json",
+                    contentType: "application/json",
+                    type: "POST",
+                    complete: function (jqXHR, textStatus) {
+                        console.log(textStatus, "create");
+                        if (textStatus === "error") {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Echec Création."
+                            }, "error");
+                        }
+                        else {
+                            $("#notification").data('kendoNotification').show({
+                                title: "Création réussie."
+                            }, "success");
+                        }
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
+                    }
+                    else {
+                        return kendo.stringify(options);
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: {
+                            editable: false,
+                            nullable: false
+                        },
+                        Nom: {
+                            editable: true,
+                            type: "string",
+                            validation: { required: true }
+                        },
+                        AgeMin: {
+                            editable: true,
+                            type: "number",
+                            validation: { required: true }
+                        },
+                        AgeMax: {
+                            editable: true,
+                            type: "number",
+                            validation: { required: true }
+                        },
+                        Duree: {                            
+                            editable: true,
+                            type: "number",
+                            validation: { required: true }
+                        }
+                    }
+                }
+            },
+            pageSize: 10
+        });
+      
+        $("#categorie").kendoGrid({
+            dataSource: dataSource,
+            pageable: {
+                refresh: true,
+                pagesize: 10,
+                pageSizes: [5, 10, 25]
+            },
+            toolbar: ["create"],
+            sortable: true,
+            groupable: true,
+            filterable: true,            
+            autosync: true,
+            columns: [
+                { field: "Nom", title: "Nom" },
+                { field: "AgeMin", title: "Age Minimum" },
+                { field: "AgeMax", title: "Age maximum"},
+                { field: "Duree", title: "Durée", template: '#= formatTime(Duree)#'  },
+                { command: ["edit", "destroy"], title: "&nbsp;", width: "180px" }
+            ],
+            editable: "popup"
+        });
+    });
+
+</script>

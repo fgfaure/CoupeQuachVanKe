@@ -1,0 +1,823 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-2.1.3.min.js"></script>
+    <script src="~/Scripts/kendo.core.js"></script>
+    <link href="~/Content/kendo.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/kendo.common-bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/kendo.all.min.js"></script>
+    <script src="~/Scripts/jquery.timer.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Chronométrage des combats</title>
+    <style type="text/css">
+        span.k-widget.k-dropdown.k-header.form-control {
+            background-color: whitesmoke;
+        }
+
+        html, body {
+            height: 100%;
+            background-color: whitesmoke;
+        }
+
+        .full-height {
+            height: 100%;
+        }
+
+        .half-height {
+            height: 50%;
+        }
+
+        .third-height {
+            height: 33%;
+        }
+
+        .red {
+            background-color: #ff0000;
+            color: white;
+            border-radius: 6px;
+            border-width: 0;
+        }
+
+        .dimgray {
+            background-color: dimgray;
+            color: white;
+            border-radius: 6px;
+            border-width: 0;
+        }
+
+        .black {
+            background-color: black;
+            color: white;
+            border-radius: 6px;
+            border-width: 0;
+        }
+
+        .blue {
+            background-color: blue;
+            color: white;
+            border-radius: 6px;
+            border-width: 0;
+        }
+
+        .myBootstrap {
+            border-radius: 6px;
+            padding: 15px 15px 15px 15px;
+        }
+
+        .vertical-pad {
+            padding-bottom: 15px;
+            padding-top: 15px;
+        }
+
+        .paddington {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .centered {
+            text-align: center;
+        }
+
+        .adjust {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /*.points > div > button {
+            font-size: xx-large;
+        }*/
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid full-height">
+        <div class="row full-height">
+            <div class="col-sm-4 full-height" id="P1">
+                <div class="points btn-group btn-group-justified" style="height:10%">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-lg" data-bind-score-p1>1</button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-lg" data-bind-score-p1>2</button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-lg" data-bind-score-p1>3</button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-lg" data-bind-score-p1>4</button>
+                    </div>
+                </div>
+                <div style="height:10%" class="myBootstrap row">
+                    <div class="col-sm-12 blue full-height centered" data-bind-saisie>
+                        <div class="input-group col-sm-12">
+                            <input type="text" class="form-control blue" data-bind-competiteur />
+                        </div>
+                        <label id="p1Name" class="adjust"></label>
+                    </div>
+                </div>
+                <div style="height:40%" class="myBootstrap row">
+                    <div class="col-sm-12 blue full-height centered">
+                        <label id="p1Score" class="adjust">0</label>
+                        <button id="score1Minus" type="button" class="btn btn-info btn-xs bottom-right">
+                            <span class="fa fa-minus-circle" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="row" style="height:10%">
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified">
+                            <div class="btn-group ">
+                                <button type="button" class="btn btn-info btn-lg disabled ">Sorties</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified" id="p1Exits">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg" data-bind-exit-p1>1</button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg" data-bind-exit-p1>2</button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg" data-bind-exit-p1>3</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="height:10%">
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info btn-lg btn-block disabled">Comptage</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified" id="p1Comptage">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg btn-block" data-bind-count-p1>1</button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg btn-block" data-bind-count-p1>2</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="height:10%">
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info btn-lg disabled" style="min-width:124px !important">Pénalités</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified" id="p1Penalties">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg" data-bind-penalty-p1>1</button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg" data-bind-penalty-p1>2</button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg" data-bind-penalty-p1>3</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height:10%" class="btn-group btn-group-justified">
+                    <div class="btn-group">
+                        <button type="button" id="p1DisqualifiedGiveUp" class="btn btn-primary btn-lg btn-block">Disqualification/Abandon</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4 full-height" id="Commands">
+                <div class="myBootstrap row" style="height:20%">
+                    <div class="col-sm-12 black full-height centered">
+                        <label id="chronoText" class="adjust"></label>
+                    </div>
+                </div>
+                <div class="myBootstrap row" style="height:20%">
+                    <div id="results1" class="col-sm-12 dimgray full-height">
+                        <div class="row third-height">
+                            <div class="col-sm-12 centered">
+                                <label class="adjust ignore" style="font-size: x-large">Reprise 1</label>
+                            </div>
+                            <div class="col-sm-offset-1 col-sm-4 blue full-height centered">
+                                <label id="r1scp1" class="adjust">0</label>
+                            </div>
+                            <div class="col-sm-offset-2 col-sm-4 red full-height centered">
+                                <label id="r1scp2" class="adjust">0</label>
+                            </div>
+                        </div>
+                        <div class="row third-height">
+                            <div class="col-sm-offset-1 col-sm-4 black full-height centered">
+                                <label id="r1p1" class="adjust"></label>
+                            </div>
+                            <div class="col-sm-offset-2 col-sm-4 black full-height centered">
+                                <label id="r1p2" class="adjust"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="myBootstrap row" style="height:20%">
+                    <div id="divFinale" class="full-height col-sm-12">
+                        <button id="goFinals" type="button" class="btn btn-primary btn-lg btn-block">Finale</button>
+                    </div>
+                    <div id="results2" class="col-sm-12 dimgray full-height">
+                        <div class="row third-height">
+                            <div class="col-sm-12 centered">
+                                <label class="adjust ignore" style="font-size: x-large">Reprise 2</label>
+                            </div>
+                            <div class="col-sm-offset-1 col-sm-4 blue full-height centered">
+                                <label id="r2scp1" class="adjust ignore">0</label>
+                            </div>
+                            <div class="col-sm-offset-2 col-sm-4 red full-height centered">
+                                <label id="r2scp2" class="adjust ignore">0</label>
+                            </div>
+                        </div>
+                        <div class="row third-height">
+                            <div class="col-sm-offset-1 col-sm-4 dimgray full-height centered">
+                                <label id="r2p1" class="adjust"></label>
+                            </div>
+                            <div class="col-sm-offset-2 col-sm-4  dimgray full-height centered">
+                                <label id="r2p2" class="adjust"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="commands" style="height:10%" class="btn-group btn-group-justified">
+                    <div class="btn-group">
+                        <button id="doctor" type="button" class="btn btn-danger btn-lg" disabled="disabled">
+                            <span class="fa fa-2x fa-user-md" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button id="play" type="button" class="btn btn-primary btn-lg btn-block" disabled="disabled">
+                            <span class="fa fa-2x fa-play" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button id="reset" type="button" class="btn btn-info btn-lg">
+                            <span class="fa fa-2x fa-refresh" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+                <div id="cat1" style="height:10%" class="btn-group btn-group-justified">
+                    <div class="form-group input-group input-group-lg col-sm-12 col-sm-12 col-lg-12">
+                        <input id="categories" type="text" class="form-control" />
+                    </div>
+                </div>
+                <div id="cat2" style="height:10%" class="row">
+                </div>
+                <div style="height:10%">
+                </div>
+            </div>
+            <div class="col-sm-4 full-height" id="P2">
+                <div class="points btn-group btn-group-justified" style="height:10%">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-lg" data-bind-score-p2>1</button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-lg" data-bind-score-p2>2</button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-lg" data-bind-score-p2>3</button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-lg" data-bind-score-p2>4</button>
+                    </div>
+                </div>
+                <div class="myBootstrap row" style="height:10%;">
+                    <div class="col-sm-12 red full-height centered" data-bind-saisie>
+                        <div class="input-group col-sm-12">
+                            <input type="text" class="form-control red" data-bind-competiteur />
+                        </div>
+                        <label id="p2Name" class="adjust"></label>
+                    </div>
+                </div>
+                <div class="myBootstrap row" style="height:40%">
+                    <div class="col-sm-12 red full-height centered">
+                        <button id="score2Minus" type="button" class="btn btn-info btn-xs bottom-left">
+                            <span class="fa fa-minus-circle" aria-hidden="true"></span>
+                        </button>
+                        <label id="p2Score" class="adjust">0</label>
+                    </div>
+                </div>
+                <div class="row" style="height:10%">
+
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified" id="p2Exits">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg btn-block" data-bind-exit-p2>3</button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg btn-block" data-bind-exit-p2>2</button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg btn-block" data-bind-exit-p2>1</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified">
+                            <div class="btn-group ">
+                                <button type="button" class="btn btn-info btn-lg disabled ">Sorties</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="height:10%">
+
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified" id="p2compte" style="height:10%">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg btn-block" data-bind-count-p2>2</button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg btn-block" data-bind-count-p2>1</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info btn-lg btn-block disabled">Comptage</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="height:10%">
+
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified" id="p2Penalties" style="height:10%">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg btn-block" data-bind-penalty-p2>3</button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg btn-block" data-bind-penalty-p2>2</button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-lg btn-block" data-bind-penalty-p2>1</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="btn-group btn-group-justified">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info btn-lg disabled" style="min-width:124px !important">Pénalités</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-group btn-group-justified" style="height:10%">
+                    <div class="btn-group">
+                        <button type="button" id="p2DisqualifiedGiveUp" class="btn btn-primary btn-lg btn-block">Disqualification/Abandon</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var timers = [90, 90, 120, 120, 120, 120, 90];
+        var timer;
+        var currentTime;
+        var pauseTimer;
+        var pauseTime = 75000;
+        var medicalTimer;
+        var medicalTime = 180000;
+        var $countdown;
+        var incrementTime = 70;
+        var pauseBetweenFinals;
+        var selectedCategorieId = 0;
+        var p1exits = 0;
+        var p2exits = 0;
+        var reprise1 = true;
+        var data = [{
+            text: "Pupilles",
+            value: "1"
+        }, {
+            text: "Benjamins",
+            value: "2"
+        }, {
+            text: "Minimes",
+            value: "3"
+        }, {
+            text: "Cadets",
+            value: "4"
+        }, {
+            text: "Juniors",
+            value: "5"
+        }, {
+            text: "Séniors",
+            value: "6"
+        }, {
+            text: "Vétérans",
+            value: "7"
+        }];
+
+        function exitHandler(e) {
+            var p1exitChanged = false;
+            var p2exitChanged = false;
+
+            e.stopImmediatePropagation();
+            $(this).off('click');
+            var p1 = $(this).attr('data-bind-exit-p1') !== undefined;
+
+            $(this).removeClass("btn-default").addClass('btn-warning');
+            if (p1) {
+                p1exits++;
+                p1exitChanged = true;
+            }
+            else {
+                p2exitChanged = true;
+                p2exits++;
+            }
+
+            if (p1exits > 2 && p1exitChanged) {
+                $('[data-bind-penalty-p1]').not('.btn-warning').first().trigger('click');
+                $('[data-bind-exit-p1]').removeClass('btn-warning').addClass('btn-default').on('click', exitHandler);
+            }
+            else if (p2exits > 2 && p2exitChanged) {
+                $('[data-bind-penalty-p2]').not('.btn-warning').last().trigger('click');
+                $('[data-bind-exit-p2]').removeClass('btn-warning').addClass('btn-default').on('click', exitHandler);
+            }
+        }
+
+        function penaltyHandler(e) {
+            e.stopImmediatePropagation();
+            $(this).off('click');
+            var p1 = $(this).attr('data-bind-penalty-p1') !== undefined;
+            var score = parseInt($(this).text(), 10);
+            $(this).removeClass("btn-default").addClass('btn-warning');
+            var currentScore = p1 ? parseInt($("#p1Score").text(), 10) : parseInt($("#p2Score").text(), 10)
+            if (isNaN(currentScore)) {
+                currentScore = 0;
+            }
+
+            currentScore -= 1;
+            if (p1) {
+                $("#p1Score").text(currentScore);
+                if (reprise1) {
+                    setIntValue('#r1p1', -1);
+                }
+                else {
+                    setIntValue('#r2p1', -1);
+                }
+
+                if ($(".btn-warning[data-bind-penalty-p1]").length === 3) {
+                    $("#p1DisqualifiedGiveUp").trigger('click');
+                }
+            }
+            else {
+                $("#p2Score").text(currentScore);
+                if (reprise1) {
+                    setIntValue('#r1p2', -1);
+                }
+                else {
+                    setIntValue('#r2p2', -1);
+                }
+
+                if ($(".btn-warning[data-bind-penalty-p2]").length === 3) {
+                    $("#p2DisqualifiedGiveUp").trigger('click');
+                }
+            }
+        }
+
+        function countHandler(e) {
+            e.stopImmediatePropagation();
+            $(this).off('click');
+            $(this).removeClass("btn-default").addClass('btn-warning');
+
+            var p1 = $(this).attr('data-bind-count-p1') !== undefined;
+            if ($('.btn-warning[data-bind-count-p1]').length == 2) {
+                $("#p1DisqualifiedGiveUp").trigger('click');
+            }
+            else if ($('.btn-warning[data-bind-count-p2]').length == 2) {
+                $("#p2DisqualifiedGiveUp").trigger('click');
+            }
+        }
+
+        function minusHandler(e) {
+            e.stopImmediatePropagation();
+            switch ($(this).attr('id')) {
+                case 'score1Minus':
+                    $('#p1Score').text(parseInt($('#p1Score').text(), 10) - 1);
+                    break;
+                default:
+                    $('#p2Score').text(parseInt($('#p2Score').text(), 10) - 1);
+            }
+        }
+
+        function updateTimerOnDoctorCall() {
+            var timeString = formatTime(medicalTime);
+            $countdown.html(timeString);
+
+            if (medicalTime == 0) {
+                medicalTimer.stop();
+                return;
+            }
+
+            medicalTime -= incrementTime;
+            if (medicalTime < 0) medicalTime = 0;
+        }
+
+        function updateTimerForPause() {
+            var timeString = formatTime(pauseTime);
+            $countdown.html(timeString);
+
+            if (pauseTime == 0) {
+                pauseTimer.stop();
+                $("#results2").show();
+                $('#results2').find('label.adjust').each(function () {
+                    var spanWidth = $(this).width();
+                    var sectionWidth = $(this).parent().width();
+                    var sectionHeight = $(this).parent().height();
+                    var newFontSize = sectionHeight - 10; //(sectionWidth / spanWidth) * originalFontSize;
+                    $(this).css({ "font-size": newFontSize, "line-height": newFontSize + "px" });
+                });
+                var newTime = timers[selectedCategorieId - 1] * 1000;
+                if (newTime > 0) { currentTime = newTime; }
+
+                var timeString = formatTime(currentTime);
+                $countdown.html(timeString);
+                $("#p2DisqualifiedGiveUp, #p1DisqualifiedGiveUp").removeClass('btn-danger').addClass('btn-primary');
+                $('.btn-warning').removeClass('btn-warning').addClass('btn-default');
+
+                p1exits = 0;
+                p2exits = 0;
+                $("[data-bind-exit-p1], [data-bind-exit-p2]").off('click').on('click', exitHandler);
+                $("[data-bind-penalty-p1], [data-bind-penalty-p2]").off('click').on('click', penaltyHandler);
+                $("[data-bind-count-p1], [data-bind-count-p2]").off('click').on('click', countHandler);
+                $("#play").find('span').first().removeClass('fa-pause').addClass('fa-play');
+                return;
+            }
+
+            pauseTime -= incrementTime;
+            if (pauseTime < 0) pauseTime = 0;
+        }
+
+        function updateTimer() {
+            var timeString = formatTime(currentTime);
+            $countdown.html(timeString);
+
+            if (currentTime == 0) {
+                timer.stop();
+
+                return;
+            }
+
+            currentTime -= incrementTime;
+            if (currentTime < 0) currentTime = 0;
+        }
+
+        function onChange(e) {
+            var ddl = $("#categories").data('kendoDropDownList');
+            var categorie = ddl.text();
+            var catId = ddl.value();
+            if (catId !== "") {
+                selectedCategorieId = catId;
+
+                var newTime = timers[selectedCategorieId - 1] * 1000;
+                if (newTime > 0) { currentTime = newTime; }
+
+                var timeString = formatTime(currentTime);
+                $countdown.html(timeString);
+                $("#play").prop('disabled', false);
+                $("#doctor").prop('disabled', false);
+                ddl.enable(false);
+
+                if (catId > 4) {
+                    $("#divFinale").show();
+                    $("#goFinals").off('click').on('click', goFinals);
+                }
+            }
+            else {
+                selectedCategorieId = -1;
+                $countdown.html('');
+            }
+        };
+
+        $(document).ready(function () {
+            var blue = getParameterByName('blue');
+            var red = getParameterByName('red');
+            var categorie = parseInt(getParameterByName('cat'), 10);
+            $("#divFinale, #results2").hide();
+            $("#p2DisqualifiedGiveUp, #p1DisqualifiedGiveUp").off('click').on('click', function () {
+                var isP1 = $(this).attr('id').indexOf('p1') >= 0;
+                $(this).addClass('btn-danger').removeClass('btn-primary');
+                timer.stop();
+                if (isP1) {
+                    $("#p1Score").text(0);
+                    $("#p2Score").text(3);
+                    if (reprise1) {
+                        $("#r1scp1").text(0);
+                        $("#r1scp2").text(3);
+                    }
+                    else {
+                        $("#r2scp1").text(0);
+                        $("#r2scp2").text(3);
+                    }
+                }
+                else {
+                    $("#p1Score").text(3);
+                    $("#p2Score").text(0);
+                    if (reprise1) {
+                        $("#r1scp1").text(3);
+                        $("#r1scp2").text(0);
+                    }
+                    else {
+                        $("#r2scp1").text(3);
+                        $("#r2scp2").text(0);
+                    }
+                }
+            });
+            $("[data-bind-score-p1], [data-bind-score-p2]").off('click').on('click', function () {
+                var p1 = $(this).attr('data-bind-score-p1') !== undefined;
+
+                if (p1) {
+                    setIntValue("#p1Score", parseInt($(this).text(), 10));
+                    if (reprise1) {
+                        setIntValue("#r1scp1", parseInt($(this).text(), 10));
+                    }
+                    else {
+                        setIntValue("#r2scp1", parseInt($(this).text(), 10));
+                    }
+                }
+                else {
+                    setIntValue("#p2Score", parseInt($(this).text(), 10));
+                    if (reprise1) {
+                        setIntValue("#r1scp2", parseInt($(this).text(), 10));
+                    }
+                    else {
+                        setIntValue("#r2scp2", parseInt($(this).text(), 10));
+
+                    }
+                }
+            });
+            $("[data-bind-exit-p1], [data-bind-exit-p2]").off('click').on('click', exitHandler);
+            $("[data-bind-penalty-p1], [data-bind-penalty-p2]").off('click').on('click', penaltyHandler);
+            $("[data-bind-count-p1], [data-bind-count-p2]").off('click').on('click', countHandler);
+            $("[data-bind-competiteur]").hide().on('blur', function () {
+                $(this).parent().parent().find('label.adjust').html($(this).val());
+                $(this).hide();
+            });
+            $("[data-bind-saisie]").off('clik').on('click', function () {
+                $(this).parent().find('[data-bind-competiteur]').show().focus();
+            });
+            $("#score1Minus, #score2Minus").off('click').on('click', minusHandler);
+
+            $countdown = $('#chronoText');
+            timer = $.timer(updateTimer, incrementTime, false);
+            medicalTimer = $.timer(updateTimerOnDoctorCall, incrementTime, false);
+            pauseTimer = $.timer(updateTimerForPause, incrementTime, false);
+            var originalFontSize = 12;
+            $('label.adjust').each(function () {
+                var spanWidth = $(this).width();
+                var sectionWidth = $(this).parent().width();
+                var sectionHeight = $(this).parent().height();
+                var newFontSize = sectionHeight - 10; //(sectionWidth / spanWidth) * originalFontSize;
+                $(this).css({ "font-size": newFontSize, "line-height": newFontSize + "px" });
+            });
+
+            $("#categories").kendoDropDownList({
+                dataTextField: "text",
+                dataValueField: "value",
+                dataSource: data,
+                height: 100,
+                optionLabel: "Choisissez une catégorie ...",
+                change: onChange
+            });
+
+            if (blue) {
+                $("[data-bind-competiteur]").first().val(blue).trigger('blur');
+            }
+
+            if (red) {
+                $("[data-bind-competiteur]").last().val(red).trigger('blur');
+            }
+
+            if (categorie) {
+                $("#categories").data('kendoDropDownList').select(categorie);
+                $("#categories").data('kendoDropDownList').trigger('change');
+            }
+
+            $("#play").off('click').on('click', function (e) {
+                var icon = $(this).find('span').first();
+                if (icon.hasClass('fa-play')) {
+                    icon.removeClass('fa-play').addClass('fa-pause');
+                    var timeString = formatTime(currentTime);
+                    $countdown.html(timeString);
+                    medicalTimer.pause();
+                    timer.play();
+                }
+                else if (icon.hasClass('fa-pause')) {
+                    icon.addClass('fa-play').removeClass('fa-pause');
+                    timer.pause();
+                }
+            });
+
+            $("#doctor").off('click').on('click', function (e) {
+                if (timer.isActive) {
+                    $("#play").trigger('click');
+                }
+                var timeString = formatTime(medicalTime);
+                $countdown.html(timeString);
+                if (medicalTimer.isActive) {
+                    medicalTimer.pause();
+                }
+                else {
+                    medicalTimer.play();
+                }
+            });
+
+            $("#reset").off('click').on('click', function (e) {
+                reprise1 = true;
+                timer.stop();
+                $("#results2").hide();
+                medicalTimer.stop();
+                pauseTimer.stop();
+
+                $("label.adjust").not('.ignore').each(function () {
+                    $(this).html('');
+                });
+                var ddl = $("#categories").data('kendoDropDownList');
+                ddl.enable(true);
+                $("#play").find('span').first().addClass('fa-play').removeClass('fa-pause');
+                $("#play").prop('disabled', true);
+                $("#doctor").prop('disabled', true);
+                ddl.select(-1);
+                $("[data-bind-exit-p1], [data-bind-exit-p2]").off('click').on('click', exitHandler);
+                $("[data-bind-penalty-p1], [data-bind-penalty-p2]").off('click').on('click', penaltyHandler);
+                $("[data-bind-count-p1], [data-bind-count-p2]").off('click').on('click', countHandler);
+                $("#p2DisqualifiedGiveUp, #p1DisqualifiedGiveUp").removeClass('btn-danger').addClass('btn-primary');
+                $("[data-bind-competiteur]").val('');
+                $('.btn-warning').removeClass('btn-warning').addClass('btn-default');
+                $("#p1Score, #p2Score, #r1scp1, #r1scp2").text(0);
+                p1exits = 0;
+                p2exits = 0;
+            });
+            $(window).on('resize', function () {
+                $('#results2').find('label.adjust').each(function () {
+                    var spanWidth = $(this).width();
+                    var sectionWidth = $(this).parent().width();
+                    var sectionHeight = $(this).parent().height();
+                    var newFontSize = sectionHeight - 10; //(sectionWidth / spanWidth) * originalFontSize;
+                    $(this).css({ "font-size": newFontSize, "line-height": newFontSize + "px" });
+                });
+            });
+        });
+
+        //common script
+        function setIntValue(selector, increment) {
+            var value = parseInt($(selector).text(), 10);
+            if (isNaN(value)) {
+                value = 0;
+            }
+            value += increment;
+            $(selector).text(value);
+        }
+
+        function goFinals() {
+            reprise1 = false;
+            $(this).hide();
+            var timeString = formatTime(pauseTime);
+            $countdown.html(timeString);
+            pauseTimer.play();
+            timer.stop();
+        }
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        function pad(number, length) {
+            var str = '' + number;
+            while (str.length < length) { str = '0' + str; }
+            return str;
+        }
+        function formatTime(time) {
+            time = time / 10;
+            var min = parseInt(time / 6000),
+                sec = parseInt(time / 100) - (min * 60),
+                hundredths = pad(time - (sec * 100) - (min * 6000), 2);
+            return (min >= 0 ? pad(min, 1) : "00") + ":" + pad(sec, 2) + ":" + hundredths;
+        }
+
+    </script>
+</body>
+</html>
